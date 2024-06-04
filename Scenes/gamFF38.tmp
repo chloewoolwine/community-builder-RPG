@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bx0i1fqjjvygy"]
+
+[ext_resource type="PackedScene" uid="uid://dy236j24tdfmr" path="res://Scenes/player.tscn" id="1_vlfca"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_vlfca")]
+speed = null
+friction = 0.5
+acceleration = null
+
+[node name="Camera2D" type="Camera2D" parent="."]
+scale = Vector2(1.03838, 0.985256)
+zoom = Vector2(4, 4)
