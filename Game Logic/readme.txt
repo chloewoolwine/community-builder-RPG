@@ -11,3 +11,4 @@ brief overview:
 	inventory.gd recieves an inventory data instance (generally created at runtime, or loaded from a save)
 	items are created as resources in item/items, see apple.tres
 	
+	

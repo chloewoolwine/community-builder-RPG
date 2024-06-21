@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cwyeg4vhep7na"]
+[gd_scene load_steps=3 format=3 uid="uid://cwyeg4vhep7na"]
 
 [ext_resource type="Script" path="res://Game Logic/inventory/slot.gd" id="1_v83v1"]
+[ext_resource type="Texture2D" uid="uid://c032gq53k54f6" path="res://icon.svg" id="2_drxbf"]
 
 [node name="Slot" type="PanelContainer"]
 custom_minimum_size = Vector2(64, 64)
@@ -20,6 +21,15 @@ layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Highlight" type="TextureRect" parent="MarginContainer"]
+visible = false
+modulate = Color(0, 1, 1, 0.498039)
+self_modulate = Color(0, 1, 1, 0.470588)
+layout_mode = 2
+texture = ExtResource("2_drxbf")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="QuantityLabel" type="Label" parent="."]
 visible = false
 layout_mode = 2
@@ -29,3 +39,5 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
 theme_override_constants/shadow_outline_size = 0
 text = "-1"
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

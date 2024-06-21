@@ -1,20 +1,37 @@
-[gd_resource type="Resource" script_class="InventoryData" load_steps=7 format=3 uid="uid://cblqgmedaij75"]
+[gd_resource type="Resource" script_class="InventoryData" load_steps=12 format=3 uid="uid://cblqgmedaij75"]
 
-[ext_resource type="Script" path="res://Game Logic/inventory/inventory_data.gd" id="1_oe6jt"]
-[ext_resource type="Resource" uid="uid://b1v5a5qu2iw7w" path="res://Game Logic/item/items/apple.tres" id="2_sdhq1"]
-[ext_resource type="Script" path="res://Game Logic/inventory/slot_data.gd" id="3_87dte"]
-[ext_resource type="Resource" uid="uid://bp3cdm1463vmp" path="res://Game Logic/item/items/carrot.tres" id="4_asgtr"]
+[ext_resource type="Script" path="res://Game Logic/data/inventory_data.gd" id="1_oe6jt"]
+[ext_resource type="Resource" uid="uid://j4ubp0int25h" path="res://Game Logic/item/items/health_potion.tres" id="2_6hh1t"]
+[ext_resource type="Resource" uid="uid://b1v5a5qu2iw7w" path="res://Game Logic/item/items/test_apple.tres" id="2_sdhq1"]
+[ext_resource type="Script" path="res://Game Logic/data/slot_data.gd" id="3_87dte"]
+[ext_resource type="Resource" uid="uid://bp3cdm1463vmp" path="res://Game Logic/item/items/test_carrot.tres" id="4_x4272"]
+[ext_resource type="Resource" uid="uid://cum0uus22nf72" path="res://Game Logic/item/items/stick.tres" id="6_wy1kp"]
 
 [sub_resource type="Resource" id="Resource_0mw5q"]
 script = ExtResource("3_87dte")
+item_data = ExtResource("2_6hh1t")
+quantity = 3
+
+[sub_resource type="Resource" id="Resource_it2nq"]
+script = ExtResource("3_87dte")
 item_data = ExtResource("2_sdhq1")
-quantity = 10
+quantity = 1
 
 [sub_resource type="Resource" id="Resource_saj3i"]
 script = ExtResource("3_87dte")
-item_data = ExtResource("4_asgtr")
+item_data = ExtResource("4_x4272")
 quantity = 12
+
+[sub_resource type="Resource" id="Resource_jw270"]
+script = ExtResource("3_87dte")
+item_data = ExtResource("4_x4272")
+quantity = 98
+
+[sub_resource type="Resource" id="Resource_f3h4m"]
+script = ExtResource("3_87dte")
+item_data = ExtResource("6_wy1kp")
+quantity = 1
 
 [resource]
 script = ExtResource("1_oe6jt")
-slot_datas = Array[ExtResource("3_87dte")]([null, SubResource("Resource_0mw5q"), null, null, null, null, SubResource("Resource_saj3i"), null, null, null, null, null])
+slot_datas = Array[ExtResource("3_87dte")]([SubResource("Resource_0mw5q"), SubResource("Resource_it2nq"), SubResource("Resource_saj3i"), SubResource("Resource_jw270"), SubResource("Resource_f3h4m"), null, null, null, null, null, null, null])
