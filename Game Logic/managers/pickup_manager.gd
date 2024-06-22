@@ -1,6 +1,6 @@
 extends Node
 
-const PICK_UP = preload("res://Game Logic/item/pickup/pick_up.tscn")
+const PICK_UP = preload("res://Scenes/pick_up.tscn")
 @onready var player = $"../EntityManager/Player"
 
 func _on_inventory_interface_drop_slot_data_into_world(slot_data):

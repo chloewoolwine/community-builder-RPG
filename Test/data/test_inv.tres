@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="InventoryData" load_steps=12 format=3 uid="uid://cblqgmedaij75"]
 
-[ext_resource type="Script" path="res://Game Logic/data/inventory_data.gd" id="1_oe6jt"]
+[ext_resource type="Script" path="res://Game Logic/data/inventory/inventory_data.gd" id="1_oe6jt"]
 [ext_resource type="Resource" uid="uid://j4ubp0int25h" path="res://Game Logic/item/items/health_potion.tres" id="2_6hh1t"]
 [ext_resource type="Resource" uid="uid://b1v5a5qu2iw7w" path="res://Game Logic/item/items/test_apple.tres" id="2_sdhq1"]
-[ext_resource type="Script" path="res://Game Logic/data/slot_data.gd" id="3_87dte"]
+[ext_resource type="Script" path="res://Game Logic/data/inventory/slot_data.gd" id="3_87dte"]
 [ext_resource type="Resource" uid="uid://bp3cdm1463vmp" path="res://Game Logic/item/items/test_carrot.tres" id="4_x4272"]
 [ext_resource type="Resource" uid="uid://cum0uus22nf72" path="res://Game Logic/item/items/stick.tres" id="6_wy1kp"]
 

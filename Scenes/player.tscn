@@ -1,6 +1,6 @@
 [gd_scene load_steps=23 format=3 uid="uid://dy236j24tdfmr"]
 
-[ext_resource type="Script" path="res://Game Logic/player.gd" id="1_bstad"]
+[ext_resource type="Script" path="res://Game Logic/managers/player.gd" id="1_bstad"]
 [ext_resource type="Texture2D" uid="uid://c3l1w12sb1v2c" path="res://Temp Assets/Prototype_Character.png" id="1_w1del"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vkrqs"]

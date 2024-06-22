@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="StoryData" load_steps=2 format=3 uid="uid://b33haxa1ag8tc"]
+
+[ext_resource type="Script" path="res://Game Logic/data/world/story_data.gd" id="1_tqhb5"]
+
+[resource]
+script = ExtResource("1_tqhb5")
+year = 2
+day = 23
+current_weather = 0
+wind_direction = 2
+tutorial_completed = false
