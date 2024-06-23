@@ -18,7 +18,7 @@ func _ready() -> void:
 	#TODO: make a "fresh game" resource save so i dont have to worry about chagning this
 	saver_loader.world = world_manager.world_data
 	saver_loader.player = player
-	saver_loader.story_data = story_manager.story_data
+	saver_loader.story = story_manager.story_data
 	
 	
 	#this should work OK as long as i do it after the world is fully loaded

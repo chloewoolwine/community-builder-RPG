@@ -84,6 +84,7 @@ debug = true
 
 [node name="StoryManager" type="Node2D" parent="."]
 script = ExtResource("19_by7u0")
+story_data = ExtResource("21_hwjbe")
 
 [node name="WorldManager" type="Node2D" parent="."]
 script = ExtResource("2_a3ciy")
@@ -171,7 +172,7 @@ offset_bottom = 90.0
 [node name="SaverLoader" type="Node2D" parent="."]
 script = ExtResource("17_d5xvq")
 player = ExtResource("20_6aqm4")
-story_data = ExtResource("21_hwjbe")
+story = ExtResource("21_hwjbe")
 
 [connection signal="drop_slot_data_into_world" from="UI/InventoryInterface" to="PickupManager" method="_on_inventory_interface_drop_slot_data_into_world"]
 [connection signal="gui_input" from="UI/InventoryInterface" to="UI/InventoryInterface" method="_on_gui_input"]

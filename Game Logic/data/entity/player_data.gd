@@ -1,4 +1,6 @@
 extends EntityData
 class_name PlayerData
 
-@export var stat_array: Array[int]
+@export var combat : int
+@export var farming : int
+@export var building : int

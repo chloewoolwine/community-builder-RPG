@@ -11,4 +11,4 @@ script = ExtResource("1_qulho")
 [node name="SaverLoader" type="Node2D" parent="."]
 script = ExtResource("19_23sl0")
 player = ExtResource("20_3sa3p")
-story_data = ExtResource("21_gfawe")
+story = ExtResource("21_gfawe")
