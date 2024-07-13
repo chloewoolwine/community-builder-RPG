@@ -1,66 +1,58 @@
 extends CharacterBody2D
 class_name Player
-#partially taken from reddit
-#https://www.reddit.com/r/godot/comments/tefk75/best_top_down_movement_in_godot_4/
 
 signal toggle_menu()
+signal toggle_options() #options menu is a special boy
 signal action(facing: int)
 #signal taken_damage
 
+#player inventory
 @export var inventory_data: InventoryData
 var equiped_item: SlotData
 
 @export var speed: int = 100
 @export var friction: float = 0.01
-@export var acceleration: float = 0.1
+@export var acceleration: float = 0.101
+@export var dash_length: float = .3
+@export var dash_cooldown: float = 3
+var can_dash : bool = true
 
+# raycast for world interaction
 @onready var ray_cast_2d = $RayCast2D
-@onready var animations = $AnimatedSprite2D
+#reference to sprite
+@onready var body :AnimatedSprite2D = $Body
+@onready var hair :AnimatedSprite2D = $Hair
+@onready var outfit :AnimatedSprite2D = $Outfit
 
-#hopefully this will be useful for combat :D
-enum {STATE_MENU, STATE_IDLE, STATE_ACTION, STATE_TOOL, STATE_WALK, STATE_SPELL, STATE_HURT} 
+#TODO: possibly somehow switch the animations out in the animation player
+# when the user changes their hairstyle/outfit/etc etc 
+@onready var animation_player = $AnimationPlayer
+@onready var animation_tree = $AnimationTree
+
+@onready var health_handler = $HealthHandler
+@onready var velocity_handler = $VelocityHandler
+
+
+enum {STATE_MENU, STATE_IDLE, STATE_ACTION, STATE_TOOL, STATE_WALK, STATE_SPELL, 
+		STATE_HURT, STATE_DASH} 
 var state = STATE_IDLE
 #used to store state whenever the game is paused + restore action
 var prevState = STATE_IDLE
-var prevVelocity 
 var input: Vector2
-#1 = up, 2 = right, 3 = left, 4 = down todo: make a real enum
-var facing = 4
+#(-1, 0) = right, (1,0) = left, (0,-1) = back, (0,1) = forward
+var facing: Vector2 = Vector2(0, 1)
 
 func _ready():
-	toggle_menu.connect(turn_state_to_menu)
-
-func updateAnimation():
-	animations.set_flip_h(false)
-	if facing == 3:
-		animations.set_flip_h(true)
-	match state:
-		STATE_IDLE:
-			match facing:
-				1:
-					animations.play("idle_back")
-				2:
-					animations.play("idle_side")
-				3:
-					animations.play("idle_side")
-				4:
-					animations.play("idle_forward")
-		STATE_WALK:
-			match facing:
-				1:
-					animations.play("walk_back")
-				2:
-					animations.play("walk_side")
-				3:
-					animations.play("walk_side")
-				4:
-					animations.play("walk_forward")
-		STATE_ACTION:
-			pass
-		STATE_TOOL:
-			pass #TODO: different animations for different actions
-			#if player not holding item, no animation
-			
+	toggle_menu.connect(toggle_menu_state)
+	toggle_options.connect(toggle_menu_state)
+	
+	#TODO: link these up with the GUI through GAME
+	health_handler.health_zero.connect(die)
+	health_handler.health_increased.connect(heal)
+	health_handler.health_decreased.connect(hurt)
+	
+	#set hair and outfit... eventually 
+	#animation_player.add_animation_library()
 
 func _physics_process(_delta):
 	match state:
@@ -76,36 +68,51 @@ func _physics_process(_delta):
 				velocity = velocity.lerp(Vector2.ZERO, friction)
 				state = STATE_IDLE
 			move_and_slide()
+		STATE_DASH:
+			velocity = velocity.lerp(facing * speed * 2, acceleration * 10)
+			move_and_slide()
 		STATE_ACTION:
 			pass
 		STATE_TOOL:
 			pass
-			#todo: do something here
-			#if in front of interactable, interact w it (open menu,
-			#if holding tool, play animation until completion, then revert back to idle state
 	updateAnimation()
+	
+func purge_speed():
+	input.y = 0
+	input.x = 0
+	velocity.x = 0
+	velocity.y = 0
 	
 func get_input():
 	#TODO: *maybe* change this structure to a match instead of ifs
 	#not sure how that would effect perfomrance
-	#match event.button_index:
-	#		MOUSE_BUTTON_LEFT: 
 	if Input.is_action_pressed('down'):
 		input.y = 1
-		facing = 4
+		facing = Vector2(0, 1)
 		ray_cast_2d.rotation_degrees = 0
-	if Input.is_action_pressed('up'):
+		state = STATE_WALK
+	elif Input.is_action_pressed('up'):
 		input.y = -1
-		facing = 1
+		facing = Vector2(0, -1)
 		ray_cast_2d.rotation_degrees = 180
+		state = STATE_WALK
+	else:
+		input.y = 0 
 	if Input.is_action_pressed('right'):
 		input.x = 1
-		facing = 2
+		facing = Vector2(1, 0)
 		ray_cast_2d.rotation_degrees = 270
-	if Input.is_action_pressed('left'):
+		state = STATE_WALK
+	elif Input.is_action_pressed('left'):
 		input.x = -1
-		facing = 3
+		facing = Vector2(-1, 0)
 		ray_cast_2d.rotation_degrees = 90
+		state = STATE_WALK
+	else:
+		input.x = 0 
+	
+	if input.x == 0 && input.y == 0:
+		state = STATE_IDLE
 	
 	#fix diagonals
 	if Input.is_action_just_released('up'):
@@ -117,24 +124,87 @@ func get_input():
 	if Input.is_action_just_released('down'):
 		input.y = 0
 	
+#TODO: free me from this mortal coil and make an animation handler
+func updateAnimation():
+	body.set_flip_h(false)
+	hair.set_flip_h(false)
+	outfit.set_flip_h(false)
+	if facing.x == -1:
+		body.set_flip_h(true)
+		hair.set_flip_h(true)
+		outfit.set_flip_h(true)
+	if facing.y == 1:
+		move_child(hair, 1)
+	else:
+		move_child(hair, 2)
+	match state:
+		STATE_IDLE, STATE_MENU:
+			animation_tree.get("parameters/playback").travel("Idle")
+			animation_tree.set("parameters/Idle/BlendSpace2D/blend_position", facing)
+		STATE_WALK:
+			animation_tree.get("parameters/playback").travel("Walk")
+			animation_tree.set("parameters/Walk/BlendSpace2D/blend_position", facing)
+		STATE_ACTION:
+			animation_tree.get("parameters/playback").travel("Slash")
+			animation_tree.set("parameters/Slash/BlendSpace2D/blend_position", facing)
+			#remove later
+			hair.visible = false
+			outfit.visible = false
+		STATE_DASH:
+			#dash animation
+			animation_tree.get("parameters/playback").travel("Idle")
+			animation_tree.set("parameters/Idle/BlendSpace2D/blend_position", facing)
+			pass
+		STATE_TOOL:
+			pass #TODO: different animations for different actions
+			#if player not holding item, no animation
+			
 
-func _unhandled_input(_event: InputEvent) -> void: 
-	#TODO: this is going to need to be changed when construction + dialogue happens
-	#need to check what *kind* of menu we're in- a construction or dialogue menu
-	#shouldn't be closed with an escape
-	if Input.is_action_just_pressed("menu_toggle"):
-		#if menu is closable by the player THEN toggle menu
+func _unhandled_input(_event: InputEvent)  -> void: 
+	#Note: chests + dialogues are opened up with do_action and state is handled
+	#there. they emit their OWN toggle menu events
+	if Input.is_action_just_pressed("inventory_menu"):
 		toggle_menu.emit()
+	if Input.is_action_just_pressed("option_menu"):
+		toggle_options.emit()
 	
 	if Input.is_action_just_pressed("action"):
-		do_action()
-		
-func turn_state_to_menu():
+		if state == STATE_IDLE || state == STATE_WALK:
+			do_action()
+	if Input.is_action_just_pressed("dash"): 
+		if state == STATE_IDLE || state == STATE_WALK && can_dash:
+			state = STATE_DASH
+			time_dash()
+			time_dash_cooldown()
+			
+func time_dash():
+	await get_tree().create_timer(dash_length).timeout
+	state = STATE_IDLE
+	purge_speed()
+	
+func time_dash_cooldown():
+	can_dash = false
+	await get_tree().create_timer(dash_cooldown).timeout
+	can_dash = true
+	
+func die():
+	print("if youre reading this... i am dead...")
+	
+func hurt(knockback, _current_health):
+	print(str("knockback go here C:, knockback = ", knockback))
+	
+func heal(_current_health):
+	print("some gui notice should go here too")
+
+func toggle_menu_state():
+	velocity = Vector2(0,0)
+	input.y = 0
+	input.x = 0
 	if(state == STATE_MENU):
 		state = prevState
-		velocity = prevVelocity
+		if state == STATE_MENU: #FAILSAFE
+			state == STATE_IDLE
 	else:
-		prevVelocity = velocity
 		prevState = state
 		state = STATE_MENU
 	
@@ -143,10 +213,9 @@ func turn_state_to_menu():
 #2 = object is there, not interactable. nothing happens
 #3 = object is there, interactable, but player does not meet requirements. nothing happens. (touching tree w/out axe)
 #4 = object is there, interactable, has requirements that player meets. animation plays/menu opens
+#5 = nothing is there, but the player has an item equiped. something happens with the item depending on it 
 func do_action():
-	#action.emit(facing) 
 	#if player is holding tool, or if player is in front of interactable
-	print_if_debug("player action clicked")
 	var cast = ray_cast_2d.get_collider()
 	if cast && cast.has_method("player_interact"):
 		print_if_debug("hit" + cast.get_name())
@@ -154,12 +223,11 @@ func do_action():
 			pass
 		else:
 			cast.player_interact()
-			#todo: check if its a chest?
-			turn_state_to_menu()
+			toggle_menu_state()
 	#if we are holding a usuable item...
 	elif equiped_item && equiped_item.item_data:
 		if equiped_item.item_data is ItemDataTool: 
-			print_if_debug("violence: taken")
+			state = STATE_ACTION
 		if equiped_item.item_data is ItemDataConsumable: 
 			print_if_debug("munch munch munch munch")
 			equiped_item.quantity -= 1
@@ -186,9 +254,19 @@ func get_raycast_target(subtract = Vector2(0,0)) -> Vector2:
 			target_position =  target_position.orthogonal() * Vector2(-1, -1)
 		4:
 			pass
-	print_if_debug("raycast target local vector: %v", target_position)
+	#print_if_debug("raycast target local vector: %v", target_position)
 	return to_global(target_position - subtract)
 
+func _on_animation_tree_animation_finished(anim_name):
+	if "slash" in anim_name:
+		state = STATE_IDLE
+		hair.visible = true
+		outfit.visible = true
+		purge_speed()
+	#when i *have* a dash animation, link this up instead 
+
+
+#remove later
 @onready var debug = self.get_parent().get_parent().debug	
 func print_if_debug(message, _vector = null):
 	if debug:
@@ -196,3 +274,6 @@ func print_if_debug(message, _vector = null):
 			print(message, _vector)
 		else:
 			print(message)
+
+#partially taken from reddit
+#https://www.reddit.com/r/godot/comments/tefk75/best_top_down_movement_in_godot_4/

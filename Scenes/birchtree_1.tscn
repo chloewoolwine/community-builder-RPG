@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bcavqq0rtvcju"]
 
-[ext_resource type="Texture2D" uid="uid://cc2oqxsvbihkd" path="res://Testy Assets/birch_tree_1.png" id="1_l13ri"]
+[ext_resource type="Texture2D" uid="uid://cc2oqxsvbihkd" path="res://Temp Assets/Testy Assets/birch_tree_1.png" id="1_l13ri"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c11gi"]
 atlas = ExtResource("1_l13ri")
@@ -39,7 +39,6 @@ height = 104.0
 [node name="birchtree1" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_l6rxr")
 animation = &"new_animation"
-autoplay = "new_animation"
 
 [node name="leaves" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -215)

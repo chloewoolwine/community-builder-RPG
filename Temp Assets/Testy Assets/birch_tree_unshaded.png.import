@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://85o06uombxa3"
-path="res://.godot/imported/birch_tree_shaded.png-565c9fee2b9e028e4b9ab124e22e009d.ctex"
+uid="uid://dtdsl0ngv4bxs"
+path="res://.godot/imported/birch_tree_unshaded.png-9ce78bdffee689487cfc490942b685ba.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Testy Assets/birch_tree_shaded.png"
-dest_files=["res://.godot/imported/birch_tree_shaded.png-565c9fee2b9e028e4b9ab124e22e009d.ctex"]
+source_file="res://Temp Assets/Testy Assets/birch_tree_unshaded.png"
+dest_files=["res://.godot/imported/birch_tree_unshaded.png-9ce78bdffee689487cfc490942b685ba.ctex"]
 
 [params]
 

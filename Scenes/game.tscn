@@ -1,8 +1,8 @@
-[gd_scene load_steps=27 format=3 uid="uid://bx0i1fqjjvygy"]
+[gd_scene load_steps=34 format=3 uid="uid://bx0i1fqjjvygy"]
 
 [ext_resource type="Script" path="res://Game Logic/managers/game.gd" id="1_lgntb"]
 [ext_resource type="Texture2D" uid="uid://0dwk7n0a6v31" path="res://Temp Assets/Tilemap_Flat.png" id="1_urmoq"]
-[ext_resource type="PackedScene" uid="uid://dy236j24tdfmr" path="res://Scenes/player.tscn" id="1_vlfca"]
+[ext_resource type="PackedScene" uid="uid://dy236j24tdfmr" path="res://Scenes/Entities/player.tscn" id="1_vlfca"]
 [ext_resource type="PackedScene" uid="uid://bcavqq0rtvcju" path="res://Scenes/birchtree_1.tscn" id="2_1g8gy"]
 [ext_resource type="Script" path="res://Game Logic/managers/world_manager.gd" id="2_a3ciy"]
 [ext_resource type="Resource" uid="uid://cblqgmedaij75" path="res://Test/data/test_inv.tres" id="3_xku57"]
@@ -10,17 +10,24 @@
 [ext_resource type="Script" path="res://Game Logic/inventory/inventory_interface.gd" id="6_uons4"]
 [ext_resource type="Script" path="res://Game Logic/managers/entity_manager.gd" id="8_3dv0o"]
 [ext_resource type="PackedScene" uid="uid://cwyeg4vhep7na" path="res://Scenes/UI/Inventory/slot.tscn" id="8_pioji"]
-[ext_resource type="PackedScene" uid="uid://ho7dtji22ka2" path="res://Game Logic/inventory/temp_chest.tscn" id="9_3yqre"]
+[ext_resource type="PackedScene" uid="uid://ho7dtji22ka2" path="res://Scenes/temp_chest.tscn" id="9_3yqre"]
 [ext_resource type="Script" path="res://Game Logic/data/inventory/inventory_data.gd" id="10_c51hr"]
 [ext_resource type="Script" path="res://Game Logic/managers/pickup_manager.gd" id="10_d5qv3"]
+[ext_resource type="PackedScene" uid="uid://evpjtd4qv6g0" path="res://Scenes/Entities/temp_dialogue_tester.tscn" id="11_24i8v"]
 [ext_resource type="Resource" uid="uid://b1v5a5qu2iw7w" path="res://Game Logic/item/items/test_apple.tres" id="11_cwce4"]
 [ext_resource type="Script" path="res://Game Logic/data/inventory/slot_data.gd" id="12_iyjdd"]
 [ext_resource type="PackedScene" uid="uid://cdeeqt3ae70lq" path="res://Scenes/pick_up.tscn" id="13_pouw6"]
+[ext_resource type="PackedScene" uid="uid://dmon4gb0cktkd" path="res://Game Logic/entity/enemy/mock_enemy.tscn" id="15_onnaq"]
 [ext_resource type="PackedScene" uid="uid://b48eubjn547dd" path="res://Scenes/UI/Inventory/hot_bar_inventory.tscn" id="16_j6efu"]
 [ext_resource type="Script" path="res://Game Logic/data/saves/saverloader.gd" id="17_d5xvq"]
 [ext_resource type="Script" path="res://Game Logic/managers/story_manager.gd" id="19_by7u0"]
+[ext_resource type="PackedScene" uid="uid://cdrtf2c53anpa" path="res://Scenes/UI/player_interface.tscn" id="19_l4305"]
 [ext_resource type="Resource" uid="uid://cqt2p8og2awro" path="res://Test/data/test_player_data.tres" id="20_6aqm4"]
+[ext_resource type="PackedScene" uid="uid://dtu5t8l4754r1" path="res://Scenes/UI/data_tabs.tscn" id="20_eexrm"]
+[ext_resource type="PackedScene" uid="uid://ci7frj803w55q" path="res://Scenes/UI/options.tscn" id="20_fjp20"]
+[ext_resource type="PackedScene" uid="uid://b2sgcn3ke8bos" path="res://Scenes/UI/entity_interface.tscn" id="20_vmo70"]
 [ext_resource type="Resource" uid="uid://b33haxa1ag8tc" path="res://Test/data/test_story_data.tres" id="21_hwjbe"]
+[ext_resource type="Texture2D" uid="uid://mnupcj832kya" path="res://Temp Assets/Testy Assets/Untitled_Artwork.png" id="22_ftgui"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gnttx"]
 texture = ExtResource("1_urmoq")
@@ -71,7 +78,7 @@ quantity = 1
 
 [sub_resource type="Resource" id="Resource_ua7xy"]
 script = ExtResource("10_c51hr")
-slot_datas = Array[ExtResource("12_iyjdd")]([SubResource("Resource_2xli3"), null, null, null, null, null])
+slot_datas = Array[ExtResource("12_iyjdd")]([SubResource("Resource_2xli3"), null, null, null, null, null, null, null, null, null, null])
 
 [sub_resource type="Resource" id="Resource_qmoje"]
 script = ExtResource("12_iyjdd")
@@ -96,30 +103,42 @@ format = 2
 layer_0/name = "Floor"
 layer_0/tile_data = PackedInt32Array(-131071, 65537, 1, -65536, 65537, 1, -131072, 65537, 1, -65535, 65537, 1, 65534, 65537, 1, 65535, 65537, 1, 0, 65537, 1, -65537, 65537, 1, -65538, 65537, 1, -3, 65537, 1, 65533, 65537, 1, 131070, 65537, 1, 196607, 65537, 2, 65536, 65537, 1, -1, 65537, 1, -2, 65537, 1, 131071, 65537, 1, 1, 65537, 1, -262149, 1, 0, -196613, 1, 1, -131077, 1, 1, -65541, 1, 1, -5, 1, 1, 65531, 1, 1, 131067, 1, 1, 196603, 1, 2, -262148, 65537, 0, -196612, 65537, 1, -131076, 65537, 1, -65540, 65537, 1, -4, 65537, 1, 65532, 65537, 1, 131068, 65537, 1, 196604, 65537, 2, -262147, 65537, 0, -196611, 65537, 1, -131075, 65537, 1, -65539, 65537, 1, 131069, 65537, 1, 196605, 65537, 2, -262146, 65537, 0, -196610, 65537, 1, -131074, 65537, 1, 196606, 65537, 2, -262145, 65537, 0, -196609, 65537, 1, -131073, 65537, 1, -327680, 65537, 0, -262144, 65537, 1, -196608, 65537, 1, 131072, 65537, 2, -327679, 65537, 0, -262143, 65537, 1, -196607, 65537, 1, 65537, 65537, 1, 131073, 65537, 2, -327678, 65537, 0, -262142, 65537, 1, -196606, 65537, 1, -131070, 65537, 1, -65534, 65537, 1, 2, 65537, 1, 65538, 65537, 1, 131074, 65537, 2, -327677, 131073, 0, -262141, 131073, 1, -196605, 131073, 1, -131069, 131073, 1, -65533, 131073, 1, 3, 131073, 1, 65539, 131073, 1, 131075, 131073, 2)
 
-[node name="TempChest" parent="WorldManager" instance=ExtResource("9_3yqre")]
+[node name="TempChest" parent="WorldManager" groups=["closeable_menu"] instance=ExtResource("9_3yqre")]
 position = Vector2(92, -83)
 scale = Vector2(2.15625, 2.46875)
 inventory_data = SubResource("Resource_ua7xy")
 
+[node name="TempDialogueTester" parent="WorldManager" instance=ExtResource("11_24i8v")]
+position = Vector2(-201, 13)
+scale = Vector2(3.145, 3.145)
+
 [node name="birchtree1" parent="WorldManager" instance=ExtResource("2_1g8gy")]
 position = Vector2(-81, -210)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.502256, 0.5)
 
 [node name="EntityManager" type="Node2D" parent="."]
 editor_description = "Holds things with AI- player, npcs, enemies, etc"
 script = ExtResource("8_3dv0o")
 
-[node name="Player" parent="EntityManager" instance=ExtResource("1_vlfca")]
+[node name="Player" parent="EntityManager" groups=["enemy_target"] instance=ExtResource("1_vlfca")]
 position = Vector2(3, 1)
-scale = Vector2(4, 6)
+scale = Vector2(0.455, 0.455)
 inventory_data = ExtResource("3_xku57")
-speed = 400
-friction = 0.5
+friction = 0.01
+acceleration = 0.101
+dash_length = 0.3
+dash_cooldown = 3.0
 
 [node name="Camera2D" type="Camera2D" parent="EntityManager/Player"]
 position = Vector2(1.49012e-08, -10.25)
 scale = Vector2(0.259594, 0.246314)
 position_smoothing_enabled = true
+
+[node name="MockEnemy" parent="EntityManager" instance=ExtResource("15_onnaq")]
+position = Vector2(-274, -226)
+scale = Vector2(3.77, 3.77)
+collision_layer = 1
+collision_mask = 8
 
 [node name="PickupManager" type="Node2D" parent="."]
 editor_description = "Holds pickups"
@@ -131,8 +150,9 @@ slot_data = SubResource("Resource_qmoje")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
+[node name="EntityInterface" parent="UI" instance=ExtResource("20_vmo70")]
+
 [node name="InventoryInterface" type="Control" parent="UI"]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -142,37 +162,86 @@ grow_vertical = 2
 script = ExtResource("6_uons4")
 
 [node name="PlayerInventory" parent="UI/InventoryInterface" instance=ExtResource("4_kq4io")]
-layout_mode = 0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 50.0
-offset_bottom = 50.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.489583
+anchor_top = 0.439814
+anchor_right = 0.510417
+anchor_bottom = 0.476852
+offset_right = 6.10352e-05
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="ExternalInventory" parent="UI/InventoryInterface" instance=ExtResource("4_kq4io")]
 visible = false
-layout_mode = 0
-offset_left = 7.0
-offset_top = 245.0
-offset_right = 47.0
-offset_bottom = 285.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.201562
+anchor_top = 0.437963
+anchor_right = 0.222396
+anchor_bottom = 0.475
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="GrabbedSlot" parent="UI/InventoryInterface" instance=ExtResource("8_pioji")]
 visible = false
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_right = 64.0
-offset_bottom = 64.0
+offset_right = 96.0
+offset_bottom = 96.0
+
+[node name="PlayerInterface" parent="UI/InventoryInterface" instance=ExtResource("19_l4305")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.729167
+anchor_top = 0.246296
+anchor_right = 0.729167
+anchor_bottom = 0.246296
+grow_horizontal = 0
+
+[node name="DataTabs" parent="UI/InventoryInterface" instance=ExtResource("20_eexrm")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.00260417
+anchor_top = 0.269444
+anchor_right = 0.00260417
+anchor_bottom = 0.269444
+grow_horizontal = 1
+scale = Vector2(1.80617, 2.17431)
+metadata/_edit_use_anchors_ = true
 
 [node name="HotBarInventory" parent="UI" instance=ExtResource("16_j6efu")]
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 362.0
-offset_bottom = 90.0
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -176.0
+offset_top = -80.0
+offset_right = 176.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="OptionsMenu" parent="UI" instance=ExtResource("20_fjp20")]
+visible = false
 
 [node name="SaverLoader" type="Node2D" parent="."]
 script = ExtResource("17_d5xvq")
 player = ExtResource("20_6aqm4")
 story = ExtResource("21_hwjbe")
+
+[node name="UntitledArtwork" type="Sprite2D" parent="."]
+position = Vector2(1002, -396)
+scale = Vector2(0.460144, 0.471995)
+texture = ExtResource("22_ftgui")
 
 [connection signal="drop_slot_data_into_world" from="UI/InventoryInterface" to="PickupManager" method="_on_inventory_interface_drop_slot_data_into_world"]
 [connection signal="gui_input" from="UI/InventoryInterface" to="UI/InventoryInterface" method="_on_gui_input"]

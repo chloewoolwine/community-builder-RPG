@@ -15,6 +15,8 @@ func _ready():
 func _physics_process(_delta):
 	pass #TODO: cute animation here while it waits to be picked up
 
+#TODO: this should be opposite- it should look for the players hurt box/pickup box (an area) to enter
+#this will make it easier for items to be picked up.
 func _on_body_entered(body):
 	if self.get_parent().get_parent().debug:
 		print("body entered, pickup registered")

@@ -10,7 +10,6 @@ region = Rect2(0, 288, 32, 32)
 [resource]
 script = ExtResource("1_gm0vi")
 heal_value = 1
-unique_id = "g_potion"
 name = "Health Potion"
 description = "BIG RED!"
 magical = false

@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c032gq53k54f6" path="res://icon.svg" id="2_drxbf"]
 
 [node name="Slot" type="PanelContainer"]
-custom_minimum_size = Vector2(64, 64)
+custom_minimum_size = Vector2(96, 96)
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_v83v1")

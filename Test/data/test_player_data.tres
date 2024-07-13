@@ -5,9 +5,10 @@
 
 [resource]
 script = ExtResource("2_fekw4")
-combat = 2
-farming = 5
-building = 3
+hair = 0
+shirt = 0
+pants = 0
+shoes = 0
 unique_id = "player_test"
 name = "Boy"
 entity_type = 0

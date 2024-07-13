@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtdsl0ngv4bxs"
-path="res://.godot/imported/birch_tree_unshaded.png-edd9b81e401819b7ccc405697cade35c.ctex"
+uid="uid://da768tqgkql4q"
+path="res://.godot/imported/pinkhair_walk_idle.png-9c2b1cd4cdc1e94b43903c39a9341957.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Testy Assets/birch_tree_unshaded.png"
-dest_files=["res://.godot/imported/birch_tree_unshaded.png-edd9b81e401819b7ccc405697cade35c.ctex"]
+source_file="res://Temp Assets/Testy Assets/Player/pinkhair_walk_idle.png"
+dest_files=["res://.godot/imported/pinkhair_walk_idle.png-9c2b1cd4cdc1e94b43903c39a9341957.ctex"]
 
 [params]
 

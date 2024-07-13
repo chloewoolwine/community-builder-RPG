@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2sgcn3ke8bos"]
+
+[ext_resource type="Script" path="res://Game Logic/entity/entity_interface.gd" id="1_glyp4"]
+[ext_resource type="Script" path="res://Game Logic/entity/conversation_controller.gd" id="2_s0qjy"]
+
+[node name="EntityInterface" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_glyp4")
+
+[node name="ConversationController" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -521.0
+offset_top = -201.0
+offset_right = -35.0
+offset_bottom = -119.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(2.14912, 1.99268)
+script = ExtResource("2_s0qjy")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ConversationController"]
+layout_mode = 2
+mouse_filter = 1
+text = "This will be some dialogue, one day"
+scroll_active = false
+
+[connection signal="gui_input" from="ConversationController" to="ConversationController" method="_on_gui_input"]

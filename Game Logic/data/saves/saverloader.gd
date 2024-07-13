@@ -21,8 +21,9 @@ func create_current_filename() -> String:
 func save() -> bool:
 	if !check_for_vars():
 		return false
-		
-	create_current_filename()
+	
+	if !save_name: 
+		create_current_filename()
 	var file = FileAccess.open(prefix + save_name, FileAccess.WRITE)
 	
 	file.store_var(create_player_dict())
@@ -143,9 +144,9 @@ func check_for_vars() -> bool:
 		return false
 	return true
 
-func load(save_name) -> bool:
-	if FileAccess.file_exists(prefix + save_name + ".dat"):
-		var file = FileAccess.open(prefix + save_name + ".dat", FileAccess.READ)
+func load(load_save_name) -> bool:
+	if FileAccess.file_exists(prefix + load_save_name + ".dat"):
+		var file = FileAccess.open(prefix + load_save_name + ".dat", FileAccess.READ)
 			
 		loaded_player = build_player_data(file.get_var())
 		loaded_story = build_story_data(file.get_var())
@@ -247,9 +248,10 @@ func build_square_data(square_dict: Dictionary) -> SquareData:
 func build_entities_data(entity_dict: Dictionary) -> Array[EntityData]:
 	var all_entities_arr : Array[EntityData] = []
 	for id in entity_dict:
-		var entity = entity_dict[id]
+		#var entity = entity_dict[id]
 		#TODO:
 		#I DONT exactly know how entities are going to work.
+		pass
 		
 	
 	return all_entities_arr

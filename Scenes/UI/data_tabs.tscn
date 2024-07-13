@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://dtu5t8l4754r1"]
+
+[node name="DataTabs" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel5" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 92.0
+offset_top = 23.0
+offset_right = 132.0
+offset_bottom = 63.0
+scale = Vector2(3.97958, 3.31652)
+
+[node name="TabBar" type="TabBar" parent="."]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 151.0
+offset_right = 150.0
+offset_bottom = 191.0
+rotation = -1.5708
+tab_count = 4
+tab_0/title = "A"
+tab_1/title = "B"
+tab_2/title = "C"
+tab_3/title = "D"

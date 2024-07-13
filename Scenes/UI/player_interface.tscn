@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdrtf2c53anpa"]
+
+[ext_resource type="Script" path="res://Game Logic/player/player_interface.gd" id="1_lfg0r"]
+
+[node name="PlayerPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lfg0r")
+
+[node name="Gear" type="PanelContainer" parent="."]
+offset_top = 28.0
+offset_right = 68.0
+offset_bottom = 96.0
+scale = Vector2(5.65956, 6.34897)
+
+[node name="Craft" type="PanelContainer" parent="."]
+offset_top = 28.0
+offset_right = 68.0
+offset_bottom = 96.0
+scale = Vector2(5.65956, 6.34897)
+
+[node name="Spells" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_top = 28.0
+offset_right = 68.0
+offset_bottom = 96.0
+scale = Vector2(5.65956, 6.34897)
+
+[node name="TabBar" type="TabBar" parent="."]
+layout_mode = 0
+offset_left = 100.0
+offset_top = -1.0
+offset_right = 485.0
+offset_bottom = 39.0
+tab_count = 3
+tab_0/title = "Gear"
+tab_1/title = "Craft"
+tab_2/title = "Spells"

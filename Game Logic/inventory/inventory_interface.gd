@@ -8,8 +8,13 @@ var external_inventory_owner
 @onready var player_inventory: PanelContainer = $PlayerInventory
 @onready var grabbed_slot = $GrabbedSlot
 @onready var external_inventory = $ExternalInventory
+@onready var player_interface = $PlayerInterface #panel where player can Equip Stuff
+@onready var data_tabs = $DataTabs
 
-func _physics_process(delta) -> void:
+func _ready():
+	self.visible = false
+
+func _physics_process(_delta) -> void:
 	if grabbed_slot.visible:
 		grabbed_slot.global_position = get_global_mouse_position() + Vector2(5,5)
 
@@ -17,7 +22,8 @@ func _physics_process(delta) -> void:
 func set_player_inventory_data(inventory_data: InventoryData, player: Player) -> void:
 	inventory_data.inventory_interact.connect(on_inventory_interact)
 	player_inventory.set_inventory_data(inventory_data)
-	inventory_data.setOwner(player)
+	player_interface.set_player(player)
+	#todo: set player panel data 
 
 func set_external_inventory(new_external_inventory_owner):
 	#print("set external inventory, inventory_interface.gd")
@@ -29,6 +35,7 @@ func set_external_inventory(new_external_inventory_owner):
 	
 	#TODO: check if external inventory is a chest/npc/shop
 	external_inventory.show()
+	data_tabs.hide()
 
 func clear_external_inventory():
 	#print("set external inventory, inventory_interface.gd")
@@ -41,6 +48,7 @@ func clear_external_inventory():
 		#TODO: check if external inventory is a chest/npc/shop
 		external_inventory.hide()
 		external_inventory_owner = null
+	data_tabs.show()
 	
 #runs whenever the inventory data connected to this interface is interacted w
 func on_inventory_interact(inventory_data: InventoryData, 
@@ -81,7 +89,6 @@ func _on_gui_input(event):
 				if grabbed_slot_data.quantity < 1:
 					grabbed_slot_data = null
 	update_grabbed_slot()
-				#print("drop data")
 
 func _on_visibility_changed():
 	if grabbed_slot_data:
