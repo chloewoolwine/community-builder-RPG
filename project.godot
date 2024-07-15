@@ -15,6 +15,10 @@ run/main_scene="res://Scenes/game.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[debug]
+
+gdscript/warnings/untyped_declaration=1
+
 [display]
 
 window/size/viewport_width=1920
@@ -110,7 +114,8 @@ dash={
 2d_physics/layer_2="enemies"
 2d_physics/layer_3="interactables"
 2d_physics/layer_4="player"
-2d_physics/layer_8="pickups (mask)"
+2d_physics/layer_5="npcs"
+2d_physics/layer_8=" pickups"
 
 [rendering]
 

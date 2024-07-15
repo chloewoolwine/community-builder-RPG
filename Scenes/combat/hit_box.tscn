@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://f418q6xspp1w"]
+
+[ext_resource type="Script" path="res://Game Logic/entity/entity components/hit_box_component.gd" id="1_2sqw1"]
+
+[node name="HitBox" type="Area2D"]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_2sqw1")
+knockback = 2.0

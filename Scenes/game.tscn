@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bx0i1fqjjvygy"]
+[gd_scene load_steps=37 format=3 uid="uid://bx0i1fqjjvygy"]
 
 [ext_resource type="Script" path="res://Game Logic/managers/game.gd" id="1_lgntb"]
 [ext_resource type="Texture2D" uid="uid://0dwk7n0a6v31" path="res://Temp Assets/Tilemap_Flat.png" id="1_urmoq"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://Game Logic/managers/world_manager.gd" id="2_a3ciy"]
 [ext_resource type="Resource" uid="uid://cblqgmedaij75" path="res://Test/data/test_inv.tres" id="3_xku57"]
 [ext_resource type="PackedScene" uid="uid://dqm8g7yybo0pf" path="res://Scenes/UI/Inventory/inventory.tscn" id="4_kq4io"]
+[ext_resource type="Gradient" uid="uid://4skxunb41d7g" path="res://Scenes/color gradient save.tres" id="5_8xq0a"]
+[ext_resource type="Script" path="res://Game Logic/managers/calendar_manager.gd" id="5_cki0q"]
 [ext_resource type="Script" path="res://Game Logic/inventory/inventory_interface.gd" id="6_uons4"]
 [ext_resource type="Script" path="res://Game Logic/managers/entity_manager.gd" id="8_3dv0o"]
 [ext_resource type="PackedScene" uid="uid://cwyeg4vhep7na" path="res://Scenes/UI/Inventory/slot.tscn" id="8_pioji"]
@@ -17,7 +19,7 @@
 [ext_resource type="Resource" uid="uid://b1v5a5qu2iw7w" path="res://Game Logic/item/items/test_apple.tres" id="11_cwce4"]
 [ext_resource type="Script" path="res://Game Logic/data/inventory/slot_data.gd" id="12_iyjdd"]
 [ext_resource type="PackedScene" uid="uid://cdeeqt3ae70lq" path="res://Scenes/pick_up.tscn" id="13_pouw6"]
-[ext_resource type="PackedScene" uid="uid://dmon4gb0cktkd" path="res://Game Logic/entity/enemy/mock_enemy.tscn" id="15_onnaq"]
+[ext_resource type="PackedScene" uid="uid://dmon4gb0cktkd" path="res://Game Logic/entity/enemies/mock_enemy.tscn" id="15_onnaq"]
 [ext_resource type="PackedScene" uid="uid://b48eubjn547dd" path="res://Scenes/UI/Inventory/hot_bar_inventory.tscn" id="16_j6efu"]
 [ext_resource type="Script" path="res://Game Logic/data/saves/saverloader.gd" id="17_d5xvq"]
 [ext_resource type="Script" path="res://Game Logic/managers/story_manager.gd" id="19_by7u0"]
@@ -28,6 +30,9 @@
 [ext_resource type="PackedScene" uid="uid://b2sgcn3ke8bos" path="res://Scenes/UI/entity_interface.tscn" id="20_vmo70"]
 [ext_resource type="Resource" uid="uid://b33haxa1ag8tc" path="res://Test/data/test_story_data.tres" id="21_hwjbe"]
 [ext_resource type="Texture2D" uid="uid://mnupcj832kya" path="res://Temp Assets/Testy Assets/Untitled_Artwork.png" id="22_ftgui"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qxxh8"]
+gradient = ExtResource("5_8xq0a")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gnttx"]
 texture = ExtResource("1_urmoq")
@@ -93,6 +98,13 @@ debug = true
 script = ExtResource("19_by7u0")
 story_data = ExtResource("21_hwjbe")
 
+[node name="Lighting" type="CanvasModulate" parent="StoryManager"]
+scale = Vector2(0.550946, 4.54629)
+color = Color(0.193862, 0.19257, 0.432045, 1)
+script = ExtResource("5_cki0q")
+proccessTime = true
+light_gradient = SubResource("GradientTexture1D_qxxh8")
+
 [node name="WorldManager" type="Node2D" parent="."]
 script = ExtResource("2_a3ciy")
 
@@ -124,10 +136,8 @@ script = ExtResource("8_3dv0o")
 position = Vector2(3, 1)
 scale = Vector2(0.455, 0.455)
 inventory_data = ExtResource("3_xku57")
-friction = 0.01
-acceleration = 0.101
-dash_length = 0.3
-dash_cooldown = 3.0
+speed = 230
+dash_length = 0.4
 
 [node name="Camera2D" type="Camera2D" parent="EntityManager/Player"]
 position = Vector2(1.49012e-08, -10.25)

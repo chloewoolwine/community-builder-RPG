@@ -20,21 +20,18 @@ var can_dash : bool = true
 # raycast for world interaction
 @onready var ray_cast_2d = $RayCast2D
 #reference to sprite
-@onready var body :AnimatedSprite2D = $Body
 @onready var hair :AnimatedSprite2D = $Hair
 @onready var outfit :AnimatedSprite2D = $Outfit
 
-#TODO: possibly somehow switch the animations out in the animation player
-# when the user changes their hairstyle/outfit/etc etc 
-@onready var animation_player = $AnimationPlayer
-@onready var animation_tree = $AnimationTree
-
 @onready var health_handler = $HealthHandler
 @onready var velocity_handler = $VelocityHandler
+@onready var animation_handler = $AnimationHandler
 
+#THIS IS TEMPORARY. TODO: remove this when the animations create hitboxes properly
+@onready var sword_hitbox = $HitBox/CollisionShape2D
 
-enum {STATE_MENU, STATE_IDLE, STATE_ACTION, STATE_TOOL, STATE_WALK, STATE_SPELL, 
-		STATE_HURT, STATE_DASH} 
+enum {STATE_MENU, STATE_IDLE, STATE_ACTION, STATE_TOOL, STATE_WALK, STATE_SPELL, STATE_DASH, 
+		STATE_KNOCKBACK} 
 var state = STATE_IDLE
 #used to store state whenever the game is paused + restore action
 var prevState = STATE_IDLE
@@ -54,34 +51,27 @@ func _ready():
 	#set hair and outfit... eventually 
 	#animation_player.add_animation_library()
 
-func _physics_process(_delta):
+func _physics_process(_delta): 
 	match state:
 		STATE_IDLE:
 			get_input()
-			if input.length() > 0:
-				state = STATE_WALK
 		STATE_WALK:
 			get_input()
 			if input.length() > 0:
-				velocity = velocity.lerp(input.normalized() * speed, acceleration)
+				velocity_handler.move_to(input)
 			else:
-				velocity = velocity.lerp(Vector2.ZERO, friction)
-				state = STATE_IDLE
-			move_and_slide()
+				velocity_handler.stop()
 		STATE_DASH:
-			velocity = velocity.lerp(facing * speed * 2, acceleration * 10)
-			move_and_slide()
+			velocity_handler.move_to_accel(facing, 3, acceleration)
 		STATE_ACTION:
 			pass
 		STATE_TOOL:
 			pass
 	updateAnimation()
 	
-func purge_speed():
+func purge_input():
 	input.y = 0
 	input.x = 0
-	velocity.x = 0
-	velocity.y = 0
 	
 func get_input():
 	#TODO: *maybe* change this structure to a match instead of ifs
@@ -90,12 +80,19 @@ func get_input():
 		input.y = 1
 		facing = Vector2(0, 1)
 		ray_cast_2d.rotation_degrees = 0
+		#TODO: removethese when the slash animations are fixed
+		sword_hitbox.position.y = 127
+		sword_hitbox.position.x = 0
+		sword_hitbox.rotation_degrees = 0
 		state = STATE_WALK
 	elif Input.is_action_pressed('up'):
 		input.y = -1
 		facing = Vector2(0, -1)
 		ray_cast_2d.rotation_degrees = 180
 		state = STATE_WALK
+		sword_hitbox.position.y = -127
+		sword_hitbox.position.x = 0
+		sword_hitbox.rotation_degrees = 0
 	else:
 		input.y = 0 
 	if Input.is_action_pressed('right'):
@@ -103,11 +100,17 @@ func get_input():
 		facing = Vector2(1, 0)
 		ray_cast_2d.rotation_degrees = 270
 		state = STATE_WALK
+		sword_hitbox.position.y = 0
+		sword_hitbox.position.x = 127
+		sword_hitbox.rotation_degrees = 90
 	elif Input.is_action_pressed('left'):
 		input.x = -1
 		facing = Vector2(-1, 0)
 		ray_cast_2d.rotation_degrees = 90
 		state = STATE_WALK
+		sword_hitbox.position.y = 0
+		sword_hitbox.position.x = -127
+		sword_hitbox.rotation_degrees = 90
 	else:
 		input.x = 0 
 	
@@ -124,41 +127,30 @@ func get_input():
 	if Input.is_action_just_released('down'):
 		input.y = 0
 	
-#TODO: free me from this mortal coil and make an animation handler
 func updateAnimation():
-	body.set_flip_h(false)
-	hair.set_flip_h(false)
-	outfit.set_flip_h(false)
+	animation_handler.flip_all_sprites(false)
 	if facing.x == -1:
-		body.set_flip_h(true)
-		hair.set_flip_h(true)
-		outfit.set_flip_h(true)
+		animation_handler.flip_all_sprites(true)
 	if facing.y == 1:
 		move_child(hair, 1)
 	else:
 		move_child(hair, 2)
 	match state:
 		STATE_IDLE, STATE_MENU:
-			animation_tree.get("parameters/playback").travel("Idle")
-			animation_tree.set("parameters/Idle/BlendSpace2D/blend_position", facing)
+			animation_handler.travel_to_and_blend("Idle", facing)
 		STATE_WALK:
-			animation_tree.get("parameters/playback").travel("Walk")
-			animation_tree.set("parameters/Walk/BlendSpace2D/blend_position", facing)
+			animation_handler.travel_to_and_blend("Walk", facing)
 		STATE_ACTION:
-			animation_tree.get("parameters/playback").travel("Slash")
-			animation_tree.set("parameters/Slash/BlendSpace2D/blend_position", facing)
+			animation_handler.travel_to_and_blend("Slash", facing)
 			#remove later
 			hair.visible = false
 			outfit.visible = false
 		STATE_DASH:
 			#dash animation
-			animation_tree.get("parameters/playback").travel("Idle")
-			animation_tree.set("parameters/Idle/BlendSpace2D/blend_position", facing)
-			pass
+			animation_handler.travel_to_and_blend("Idle", facing)
 		STATE_TOOL:
 			pass #TODO: different animations for different actions
 			#if player not holding item, no animation
-			
 
 func _unhandled_input(_event: InputEvent)  -> void: 
 	#Note: chests + dialogues are opened up with do_action and state is handled
@@ -172,7 +164,7 @@ func _unhandled_input(_event: InputEvent)  -> void:
 		if state == STATE_IDLE || state == STATE_WALK:
 			do_action()
 	if Input.is_action_just_pressed("dash"): 
-		if state == STATE_IDLE || state == STATE_WALK && can_dash:
+		if can_dash && (state == STATE_IDLE || state == STATE_WALK):
 			state = STATE_DASH
 			time_dash()
 			time_dash_cooldown()
@@ -180,7 +172,7 @@ func _unhandled_input(_event: InputEvent)  -> void:
 func time_dash():
 	await get_tree().create_timer(dash_length).timeout
 	state = STATE_IDLE
-	purge_speed()
+	velocity_handler.purge_speed()
 	
 func time_dash_cooldown():
 	can_dash = false
@@ -190,8 +182,9 @@ func time_dash_cooldown():
 func die():
 	print("if youre reading this... i am dead...")
 	
-func hurt(knockback, _current_health):
-	print(str("knockback go here C:, knockback = ", knockback))
+func hurt(culprit, _current_health):
+	if culprit and "knockback" in culprit:
+		velocity_handler.knockback(culprit.global_position, culprit.knockback)
 	
 func heal(_current_health):
 	print("some gui notice should go here too")
@@ -211,9 +204,12 @@ func toggle_menu_state():
 #cases:
 #1 = nothing is there, player is holding no tool. nothing happens
 #2 = object is there, not interactable. nothing happens
-#3 = object is there, interactable, but player does not meet requirements. nothing happens. (touching tree w/out axe)
+#3 = object is there, interactable, but player does not meet requirements. nothing happens. 
+#(touching tree w/out axe)
 #4 = object is there, interactable, has requirements that player meets. animation plays/menu opens
-#5 = nothing is there, but the player has an item equiped. something happens with the item depending on it 
+#5 = nothing is there, but the player has an item equiped. something happens with the item depending 
+#on it 
+#TODO: clean this up!!
 func do_action():
 	#if player is holding tool, or if player is in front of interactable
 	var cast = ray_cast_2d.get_collider()
@@ -226,8 +222,9 @@ func do_action():
 			toggle_menu_state()
 	#if we are holding a usuable item...
 	elif equiped_item && equiped_item.item_data:
-		if equiped_item.item_data is ItemDataTool: 
+		if equiped_item.item_data is ItemDataTool: #todo change this to Weapon
 			state = STATE_ACTION
+			sword_hitbox.disabled = false
 		if equiped_item.item_data is ItemDataConsumable: 
 			print_if_debug("munch munch munch munch")
 			equiped_item.quantity -= 1
@@ -262,10 +259,10 @@ func _on_animation_tree_animation_finished(anim_name):
 		state = STATE_IDLE
 		hair.visible = true
 		outfit.visible = true
-		purge_speed()
+		velocity_handler.purge_speed()
+		sword_hitbox.disabled = true
 	#when i *have* a dash animation, link this up instead 
-
-
+	
 #remove later
 @onready var debug = self.get_parent().get_parent().debug	
 func print_if_debug(message, _vector = null):

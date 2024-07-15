@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b2sgcn3ke8bos"]
 
-[ext_resource type="Script" path="res://Game Logic/entity/entity_interface.gd" id="1_glyp4"]
-[ext_resource type="Script" path="res://Game Logic/entity/conversation_controller.gd" id="2_s0qjy"]
+[ext_resource type="Script" path="res://Game Logic/entity/GUIinteracters/entity_interface.gd" id="1_glyp4"]
+[ext_resource type="Script" path="res://Game Logic/entity/GUIinteracters/conversation_controller.gd" id="2_s0qjy"]
 
 [node name="EntityInterface" type="Control"]
 layout_mode = 3

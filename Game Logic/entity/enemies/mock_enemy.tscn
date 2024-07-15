@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://dmon4gb0cktkd"]
+[gd_scene load_steps=12 format=3 uid="uid://dmon4gb0cktkd"]
 
 [ext_resource type="Texture2D" uid="uid://c3l1w12sb1v2c" path="res://Temp Assets/Prototype_Character.png" id="1_vf3ds"]
-[ext_resource type="Script" path="res://Game Logic/entity/hit_box_component.gd" id="2_cm8mq"]
+[ext_resource type="PackedScene" uid="uid://f418q6xspp1w" path="res://Scenes/combat/hit_box.tscn" id="2_0i5f4"]
+[ext_resource type="PackedScene" uid="uid://erdkvldy5ggp" path="res://Scenes/combat/health_component.tscn" id="3_vi6cl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3opvg"]
 atlas = ExtResource("1_vf3ds")
@@ -45,9 +46,12 @@ radius = 2.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_ipv6b"]
 radius = 12.0416
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ufgsa"]
+
 [node name="MockEnemy" type="CharacterBody2D"]
 collision_layer = 0
 collision_mask = 0
+motion_mode = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_42a28")
@@ -56,10 +60,13 @@ autoplay = "default"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_kbnd7")
 
-[node name="HitBox" type="Area2D" parent="."]
-collision_layer = 8
-collision_mask = 0
-script = ExtResource("2_cm8mq")
+[node name="HitBox" parent="." instance=ExtResource("2_0i5f4")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 shape = SubResource("CircleShape2D_ipv6b")
+
+[node name="HealthHandler" parent="." instance=ExtResource("3_vi6cl")]
+collision_mask = 2
+
+[node name="Hurtbox" type="CollisionShape2D" parent="HealthHandler"]
+shape = SubResource("CircleShape2D_ufgsa")

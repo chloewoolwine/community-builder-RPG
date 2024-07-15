@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cdrtf2c53anpa"]
 
-[ext_resource type="Script" path="res://Game Logic/player/player_interface.gd" id="1_lfg0r"]
+[ext_resource type="Script" path="res://Game Logic/entity/GUIinteracters/player_interface.gd" id="1_lfg0r"]
 
 [node name="PlayerPanel" type="Control"]
 layout_mode = 3

@@ -10,7 +10,7 @@ region = Rect2(0, 544, 32, 32)
 [resource]
 script = ExtResource("1_2g230")
 efficiency = 1
-type = 4
+type = 1
 name = "Stick"
 description = "brown and sticky"
 magical = false
