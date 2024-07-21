@@ -1,19 +1,20 @@
 extends PanelContainer
+class_name HotBarInventory
 
-const Slot = preload("res://Scenes/UI/Inventory/slot.tscn")
+const SlotScene = preload("res://Scenes/UI/Inventory/slot.tscn")
 
 signal hot_bar_use(index: int)
 
-@onready var h_box_container = $MarginContainer/HBoxContainer
+@onready var h_box_container:HBoxContainer = $MarginContainer/HBoxContainer
 
-var highlight = -1
+var highlight:int = -1
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if !visible or !event.is_pressed():
 		return
 	#TODO: make this work with the input map
 	if range(KEY_1, KEY_6).has(event.keycode):
-		var index = event.keycode - KEY_1
+		var index:int = event.keycode - KEY_1
 		set_highlight(index)
 	#todo: this doesnt work either :c
 	if Input.is_action_just_released('scrollup'):
@@ -21,13 +22,13 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if Input.is_action_just_released('scrolldown'):
 		set_highlight(highlight - 1)
 
-func set_highlight(index: int):
+func set_highlight(index: int) -> void:
 	if index < 0:
 		index = 4
 	if index > 4:
 		index = 0
 	highlight = index
-	var children = h_box_container.get_children()
+	var children:Array = h_box_container.get_children()
 	for x in children.size():
 		children[x].set_highlight(false)
 		if x == highlight:
@@ -47,8 +48,8 @@ func populate_hot_bar(inventory_data: InventoryData) -> void:
 			child.queue_free()
 	#populate based on data 
 	for x in 5: #TODO: change this based on how I want hotbar to function
-		var slot_data = inventory_data.slot_datas[x]
-		var slot = Slot.instantiate()
+		var slot_data: SlotData = inventory_data.slot_datas[x]
+		var slot:Slot = SlotScene.instantiate()
 		h_box_container.add_child(slot)
 		
 		if (slot_data != null):

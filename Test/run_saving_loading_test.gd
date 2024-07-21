@@ -1,11 +1,11 @@
 extends Node
 
-@onready var saver_loader = $SaverLoader
+@onready var saver_loader:SaverLoader = $SaverLoader
 
-func _ready():
+func _ready() -> void:
 	saver_loader.world = make_random_world(20, 20)
-	var save = saver_loader.save()
-	var load = saver_loader.load("Boy2024-06-22")
+	var save:bool = saver_loader.save()
+	var load:bool = saver_loader.load("Boy2024-06-22")
 	
 	if compare_entities(saver_loader.player, saver_loader.loaded_player):
 		print("player good!")

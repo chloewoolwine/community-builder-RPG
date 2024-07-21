@@ -7,15 +7,17 @@ signal inventory_interact(inventory_data: InventoryData, index: int, button: int
 @export var slot_datas: Array[SlotData]
 var equiped: int
 
+@warning_ignore("untyped_declaration")
 var owner
 #if the type == player, add the 4 toolsbars?
 #use whenever instantiating with code. chests = null
-func setOwner(_owner):
+@warning_ignore("untyped_declaration")
+func setOwner(_owner) -> void:
 	owner = _owner
 
 #SHOULD ONLY BE an entities inventory... 
 func use_slot_data(index: int) -> void:
-	var slot_data = slot_datas[index]
+	var slot_data:SlotData = slot_datas[index]
 	print(slot_data)
 	if !slot_data || index > 6:
 		return
@@ -25,7 +27,7 @@ func use_slot_data(index: int) -> void:
 	inventory_updated.emit(self)
 	equiped = index
 
-func delete_item(index: int):
+func delete_item(index: int) -> void:
 	slot_datas[index] = null
 	inventory_updated.emit(self)
 
@@ -45,7 +47,7 @@ func pick_up_slot(slot_data: SlotData) -> bool:
 	return false
 
 func grab_slot_data(index: int) -> SlotData:
-	var data = slot_datas[index]
+	var data:SlotData = slot_datas[index]
 	
 	#if it exists, return it
 	if(data):
@@ -54,7 +56,7 @@ func grab_slot_data(index: int) -> SlotData:
 	return data
 	
 func drop_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
-	var data = slot_datas[index]
+	var data:SlotData = slot_datas[index]
 	
 	var return_slot_data: SlotData
 	if data && data.can_merge(grabbed_slot_data):
@@ -68,7 +70,7 @@ func drop_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
 	
 	
 func drop_single_slot_data(grabbed_slot_data: SlotData, index: int) -> SlotData:
-	var data = slot_datas[index]
+	var data:SlotData = slot_datas[index]
 	
 	if !data:
 		slot_datas[index] = grabbed_slot_data.create_single_slot_data()

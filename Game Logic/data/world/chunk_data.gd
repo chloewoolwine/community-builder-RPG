@@ -11,3 +11,4 @@ var biome : Biome
 #entities that are in this chunk
 var entities : Array[EntityData]
 var square_datas : Array[SquareData]
+var object_data : Array[ObjectData]

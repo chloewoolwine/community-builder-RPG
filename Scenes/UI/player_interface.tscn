@@ -12,12 +12,14 @@ grow_vertical = 2
 script = ExtResource("1_lfg0r")
 
 [node name="Gear" type="PanelContainer" parent="."]
+layout_mode = 0
 offset_top = 28.0
 offset_right = 68.0
 offset_bottom = 96.0
 scale = Vector2(5.65956, 6.34897)
 
 [node name="Craft" type="PanelContainer" parent="."]
+layout_mode = 0
 offset_top = 28.0
 offset_right = 68.0
 offset_bottom = 96.0

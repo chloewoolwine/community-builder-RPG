@@ -1,4 +1,5 @@
 extends Node2D
+class_name AnimationHandler
 
 @export var sprites : Array[AnimatedSprite2D]
 

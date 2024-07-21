@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://bij4p30cjjrli"]
+
+[ext_resource type="Texture2D" uid="uid://cuoqf4ww0ey1t" path="res://Assets/crops/cabbot.png" id="1_o317d"]
+
+[resource]
+atlas = ExtResource("1_o317d")
+region = Rect2(-0.461924, 0.367603, 442.133, 165.372)

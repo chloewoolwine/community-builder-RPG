@@ -1,4 +1,5 @@
 extends Area2D
+class_name HitBox
 
 @export var touch_damage: int = 15:
 	get:

@@ -1,20 +1,22 @@
 extends Control
+class_name InventoryInterface
 
 signal drop_slot_data_into_world(slot_data: SlotData)
 
 var grabbed_slot_data: SlotData
+@warning_ignore("untyped_declaration")
 var external_inventory_owner
 
-@onready var player_inventory: PanelContainer = $PlayerInventory
-@onready var grabbed_slot = $GrabbedSlot
-@onready var external_inventory = $ExternalInventory
-@onready var player_interface = $PlayerInterface #panel where player can Equip Stuff
-@onready var data_tabs = $DataTabs
+@onready var player_inventory: GenericInventoryDisplay = $PlayerInventory
+@onready var grabbed_slot: Slot= $GrabbedSlot
+@onready var external_inventory:GenericInventoryDisplay = $ExternalInventory
+@onready var player_interface:PlayerInterface = $PlayerInterface #panel where player can Equip Stuff
+@onready var data_tabs:Control = $DataTabs
 
-func _ready():
+func _ready() -> void:
 	self.visible = false
 
-func _physics_process(_delta) -> void:
+func _physics_process(_delta:float) -> void:
 	if grabbed_slot.visible:
 		grabbed_slot.global_position = get_global_mouse_position() + Vector2(5,5)
 
@@ -25,7 +27,8 @@ func set_player_inventory_data(inventory_data: InventoryData, player: Player) ->
 	player_interface.set_player(player)
 	#todo: set player panel data 
 
-func set_external_inventory(new_external_inventory_owner):
+@warning_ignore("untyped_declaration")
+func set_external_inventory(new_external_inventory_owner) -> void:
 	#print("set external inventory, inventory_interface.gd")
 	external_inventory_owner = new_external_inventory_owner
 	var inventory_data = external_inventory_owner.inventory_data
@@ -37,10 +40,10 @@ func set_external_inventory(new_external_inventory_owner):
 	external_inventory.show()
 	data_tabs.hide()
 
-func clear_external_inventory():
+func clear_external_inventory() -> void:
 	#print("set external inventory, inventory_interface.gd")
 	if external_inventory_owner:
-		var inventory_data = external_inventory_owner.inventory_data
+		var inventory_data:InventoryData = external_inventory_owner.inventory_data
 		
 		inventory_data.inventory_interact.disconnect(on_inventory_interact)
 		external_inventory.clear_inventory_data(inventory_data)
@@ -75,7 +78,7 @@ func update_grabbed_slot() -> void:
 		grabbed_slot.hide()
 
 #misc input event - dropping something into the world
-func _on_gui_input(event):
+func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton \
 			&& event.is_pressed() \
 			&& grabbed_slot_data:
@@ -90,7 +93,7 @@ func _on_gui_input(event):
 					grabbed_slot_data = null
 	update_grabbed_slot()
 
-func _on_visibility_changed():
+func _on_visibility_changed() -> void:
 	if grabbed_slot_data:
 		drop_slot_data_into_world.emit(grabbed_slot_data)
 		grabbed_slot_data = null

@@ -1,7 +1,7 @@
 extends Node
 class_name SaverLoader
 
-var prefix = "user://"
+var prefix: String = "user://"
 var save_name: String
 
 #*ALL* this node worries about is getting whatever is in these three datas into a file
@@ -24,7 +24,7 @@ func save() -> bool:
 	
 	if !save_name: 
 		create_current_filename()
-	var file = FileAccess.open(prefix + save_name, FileAccess.WRITE)
+	var file: FileAccess = FileAccess.open(prefix + save_name, FileAccess.WRITE)
 	
 	file.store_var(create_player_dict())
 	file.store_var(create_story_dict())
@@ -34,9 +34,9 @@ func save() -> bool:
 	return true
 	
 func create_player_dict() -> Dictionary:
-	var player_dict = {}
+	var player_dict:Dictionary = {}
 	
-	var player_script = player.get_script()
+	var player_script:Script = player.get_script()
 	
 	#get all properties in the player script- in case i add more later :D 
 	for property in player_script.get_script_property_list():
@@ -47,9 +47,9 @@ func create_player_dict() -> Dictionary:
 	return player_dict
 	
 func create_story_dict() -> Dictionary:
-	var story_dict = {}
+	var story_dict:Dictionary = {}
 	
-	var story_script = story.get_script()
+	var story_script:Script = story.get_script()
 	
 	#get all properties in the player script- WHEN i add more later >:D
 	for property in story_script.get_script_property_list():
@@ -59,7 +59,7 @@ func create_story_dict() -> Dictionary:
 	return story_dict
 
 func create_world_dict() -> Dictionary:
-	var world_dict = {}
+	var world_dict:Dictionary = {}
 	
 	#store general world data
 	
@@ -67,7 +67,7 @@ func create_world_dict() -> Dictionary:
 	world_dict.world_size = world.world_size
 	world_dict.chunk_size = world.chunk_size
 
-	var chunks_array = []
+	var chunks_array: Array = []
 	for chunk_data in world.chunk_datas:
 		chunks_array.append(create_chunk_dict(chunk_data))
 	#print(chunks_array)
@@ -76,7 +76,7 @@ func create_world_dict() -> Dictionary:
 	return world_dict
 	
 func create_chunk_dict(chunk_data: ChunkData) -> Dictionary:
-	var chunk_dict = {}
+	var chunk_dict:Dictionary = {}
 	
 	chunk_dict.chunk_size = chunk_data.chunk_size
 	chunk_dict.chunk_position = chunk_data.chunk_position
@@ -84,7 +84,7 @@ func create_chunk_dict(chunk_data: ChunkData) -> Dictionary:
 	if chunk_data.entities:
 		chunk_dict.entities = create_entity_dict(chunk_data.entities)
 	
-	var square_array = []
+	var square_array:Array = []
 	for square_data in chunk_data.square_datas:
 		square_array.append(create_square_dict(square_data))
 	chunk_dict.square_datas = square_array
@@ -92,8 +92,9 @@ func create_chunk_dict(chunk_data: ChunkData) -> Dictionary:
 	return chunk_dict
 	
 func create_square_dict(square_data: SquareData) -> Dictionary:
-	var square_dict = {}
+	var square_dict:Dictionary = {}
 	
+	@warning_ignore("untyped_declaration")
 	for property in square_data.get_script().get_script_property_list():
 		if property.name.right(3) != ".gd" && property.name != "inventory":
 			square_dict[property.name] = square_data.get(property.name)
@@ -106,9 +107,10 @@ func create_square_dict(square_data: SquareData) -> Dictionary:
 #TODO: i have no idea if this actually works. 
 #good luck, me in 10 weeks ! :D 
 func create_entity_dict(entity_datas: Array[EntityData]) -> Dictionary:
-	var all_entities_dict = {}
+	var all_entities_dict:Dictionary = {}
 	for entity_data in entity_datas:
-		var entity_dict = {}
+		var entity_dict:Dictionary = {}
+		@warning_ignore("untyped_declaration")
 		for property in entity_data.get_script().get_script_property_list():
 			if property.name.right(3) != ".gd" && property.name != "inventory":
 				entity_dict[property.name] = entity_data.get(property.name)
@@ -121,10 +123,10 @@ func create_entity_dict(entity_datas: Array[EntityData]) -> Dictionary:
 	
 	return all_entities_dict
 	
-func create_inventory_dict(inventory_data: InventoryData):
-	var inventory_dict = {}
+func create_inventory_dict(inventory_data: InventoryData) -> Dictionary:
+	var inventory_dict:Dictionary = {}
 	for i in inventory_data.slot_datas.size():
-		var slot = inventory_data.slot_datas[i]
+		var slot:SlotData = inventory_data.slot_datas[i]
 		if slot:
 			inventory_dict[i] = [slot.quantity, slot.item_data.get_path().get_file().left(-5)]
 		else: 
@@ -144,9 +146,9 @@ func check_for_vars() -> bool:
 		return false
 	return true
 
-func load(load_save_name) -> bool:
+func load(load_save_name:String) -> bool:
 	if FileAccess.file_exists(prefix + load_save_name + ".dat"):
-		var file = FileAccess.open(prefix + load_save_name + ".dat", FileAccess.READ)
+		var file:FileAccess = FileAccess.open(prefix + load_save_name + ".dat", FileAccess.READ)
 			
 		loaded_player = build_player_data(file.get_var())
 		loaded_story = build_story_data(file.get_var())
@@ -157,29 +159,31 @@ func load(load_save_name) -> bool:
 		return false
 		
 func build_player_data(player_dict: Dictionary) -> PlayerData:
-	var player_data = PlayerData.new()
+	var player_data:PlayerData = PlayerData.new()
 	
-	var player_script = player.get_script()
+	var player_script:Script = player.get_script()
 	
 	#print(player_dict)
 	
 	#get all properties in the player script- in case i add more later :D 
 	for property in player_script.get_script_property_list():
 		if property.name.right(3) != ".gd" && property.name != "inventory":
-			player_data.set(property.name, player_dict[property.name])
+			if property.name in player_dict:
+				player_data.set(property.name, player_dict[property.name])
 	
 	player_data.inventory = build_inventory_data(player_dict["inventory"])
 	return player_data
 	
 func build_inventory_data(inventory_dict: Dictionary) -> InventoryData:
-	var inventory_data = InventoryData.new()
+	var inventory_data:InventoryData = InventoryData.new()
+	@warning_ignore("untyped_declaration")
 	for val in inventory_dict:
-		var arr = inventory_dict[val]
+		var arr:Array = inventory_dict[val]
 		if arr.size() > 0:
-			var slot = SlotData.new()
-			var item_name = "res://Game Logic/item/items/" + arr[1] + ".tres"
-			#TODO: determine if this needs to be threaded
+			var item_name:String = "res://Game Logic/item/items/" + arr[1] + ".tres"
+			var slot:SlotData = SlotData.new()
 			slot.item_data = ResourceLoader.load(item_name)
+			#TODO: determine if this needs to be threaded
 			slot.quantity = arr[0]
 			inventory_data.slot_datas.append(slot)
 		else:
@@ -188,9 +192,9 @@ func build_inventory_data(inventory_dict: Dictionary) -> InventoryData:
 	return inventory_data
 
 func build_story_data(story_dict: Dictionary) -> StoryData:
-	var story_data = StoryData.new()
+	var story_data:StoryData = StoryData.new()
 	
-	var story_script = story.get_script()
+	var story_script:Script = story.get_script()
 	
 	#get all properties in the player script- in case i add more later :D 
 	for property in story_script.get_script_property_list():
@@ -200,13 +204,14 @@ func build_story_data(story_dict: Dictionary) -> StoryData:
 	return story_data
 	
 func build_world_data(world_dict: Dictionary) -> WorldData:
-	var world_data = WorldData.new()
+	var world_data:WorldData = WorldData.new()
 	
 	world_data.world_seed = world_dict.world_seed
 	world_data.world_size = world_dict.world_size
 	world_data.chunk_size = world_dict.chunk_size
 	
 	var chunk_datas: Array[ChunkData] = []
+	@warning_ignore("untyped_declaration")
 	for chunk in world_dict.chunk_datas:
 		chunk_datas.append(build_chunk_data(chunk))
 		
@@ -215,16 +220,17 @@ func build_world_data(world_dict: Dictionary) -> WorldData:
 	return world_data
 	
 func build_chunk_data(chunk_dict: Dictionary) -> ChunkData:
-	var chunk_data = ChunkData.new()
+	var chunk_data:ChunkData = ChunkData.new()
 	
 	chunk_data.chunk_size = chunk_dict.chunk_size
 	chunk_data.chunk_position = chunk_dict.chunk_position
 	chunk_data.biome = chunk_dict.biome
 	
 	if chunk_dict.has("entities"):
-		chunk_data.entities = build_entities_data(chunk_data.entities)
+		chunk_data.entities = build_entities_data(chunk_dict.entities)
 		
 	var square_datas: Array[SquareData] = []
+	@warning_ignore("untyped_declaration")
 	for square_dict in chunk_dict.square_datas:
 		square_datas.append(build_square_data(square_dict))
 	chunk_data.square_datas = square_datas
@@ -232,8 +238,9 @@ func build_chunk_data(chunk_dict: Dictionary) -> ChunkData:
 	return chunk_data
 	
 func build_square_data(square_dict: Dictionary) -> SquareData:
-	var square_data = SquareData.new()
+	var square_data:SquareData = SquareData.new()
 	
+	@warning_ignore("untyped_declaration")
 	for property in square_data.get_script().get_script_property_list():
 		if property.name.right(3) != ".gd" && property.name != "inventory":
 			square_data.set(property.name, square_dict[property.name])
@@ -247,6 +254,7 @@ func build_square_data(square_dict: Dictionary) -> SquareData:
 #your problem now fuckhead! 
 func build_entities_data(entity_dict: Dictionary) -> Array[EntityData]:
 	var all_entities_arr : Array[EntityData] = []
+	@warning_ignore("untyped_declaration")
 	for id in entity_dict:
 		#var entity = entity_dict[id]
 		#TODO:

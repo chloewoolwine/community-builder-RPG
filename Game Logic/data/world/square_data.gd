@@ -11,5 +11,3 @@ var type: SquareType
 
 enum SquareStatus {EMPTY, PASSABLE, IMPASSABLE}
 var status: SquareStatus
-var object_id : String #NULL if empty C:
-var inventory : InventoryData #NULL if not chest

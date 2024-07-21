@@ -1,4 +1,5 @@
 extends PanelContainer
+class_name GenericInventoryDisplay
 
 #structure of all of this:
 # Resources                       Scenes
@@ -16,7 +17,7 @@ extends PanelContainer
 
 #this script *loads* an inventory_data and displays it using slot.tscn
 
-const Slot = preload("res://Scenes/UI/Inventory/slot.tscn")
+const slot_scene = preload("res://Scenes/UI/Inventory/slot.tscn")
 
 @onready var item_grid: GridContainer = $MarginContainer/ItemGrid
 
@@ -37,7 +38,7 @@ func populate_item_grid(inventory_data: InventoryData) -> void:
 		
 	#populate based on data 
 	for slot_data in inventory_data.slot_datas:
-		var slot = Slot.instantiate()
+		var slot: Slot = slot_scene.instantiate()
 		item_grid.add_child(slot)
 		
 		slot.slot_clicked.connect(inventory_data.on_slot_clicked)

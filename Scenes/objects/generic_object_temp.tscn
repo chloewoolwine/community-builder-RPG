@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://d3kov3ehthpy"]
+
+[ext_resource type="PackedScene" uid="uid://ddc1ksqr6pedu" path="res://Scenes/objects/plants/plant_component.tscn" id="1_g1cq6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ubcxi"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cdqjf"]
+load_path = "res://.godot/imported/cabbot.png-48190009479f573dbf31f9a002a57a21.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h2wue"]
+atlas = SubResource("CompressedTexture2D_cdqjf")
+region = Rect2(69.3498, 118.948, 39.2364, 37.6564)
+
+[node name="GenericObject" type="StaticBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ubcxi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_h2wue")
+
+[node name="ChestComponent" type="Node2D" parent="."]
+
+[node name="CraftingComponent" type="Node2D" parent="."]
+
+[node name="CraftingComponent2" type="Node2D" parent="."]
+
+[node name="PlantComponent" parent="." instance=ExtResource("1_g1cq6")]

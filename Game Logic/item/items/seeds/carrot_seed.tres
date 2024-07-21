@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="ItemDataSeed" load_steps=4 format=3 uid="uid://bm7deaa4jskcr"]
+
+[ext_resource type="Script" path="res://Game Logic/data/inventory/item_data_seed.gd" id="1_hp4jn"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nk77v"]
+load_path = "res://.godot/imported/cabbot.png-48190009479f573dbf31f9a002a57a21.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p88em"]
+atlas = SubResource("CompressedTexture2D_nk77v")
+region = Rect2(10.1037, 127.9, 36.3397, 32.1264)
+
+[resource]
+script = ExtResource("1_hp4jn")
+plant_name = "Carrot"
+spring = true
+summer = false
+autumn = true
+winter = false
+name = "Carrot Seeds"
+description = "Plant these in spring or autmn to grow some carrots. "
+magical = false
+magicalDescription = ""
+stackable = true
+texture = SubResource("AtlasTexture_p88em")
+value = 1
+rarity = 1
