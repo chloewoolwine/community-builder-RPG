@@ -1,6 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://evpjtd4qv6g0"]
+[gd_scene load_steps=6 format=3 uid="uid://evpjtd4qv6g0"]
 
 [ext_resource type="Script" path="res://Game Logic/entity/enemies/tempEntity.gd" id="1_tdnrq"]
+[ext_resource type="Script" path="res://Game Logic/object/interaction_hitbox.gd" id="2_60p3h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b4pb2"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_rsksn"]
 load_path = "res://.godot/imported/#1 - Transparent Icons.png-13545c48bffa21483b1102eab61f8d2a.ctex"
@@ -9,15 +12,17 @@ load_path = "res://.godot/imported/#1 - Transparent Icons.png-13545c48bffa21483b
 atlas = SubResource("CompressedTexture2D_rsksn")
 region = Rect2(288, 512, 32, 32)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_b4pb2"]
+[node name="FriendlyOctopus" type="Node2D" groups=["entity_interactable"]]
+script = ExtResource("1_tdnrq")
 
-[node name="TempDialogueTester" type="StaticBody2D" groups=["entity_interactable"]]
+[node name="InteractionHitbox" type="StaticBody2D" parent="."]
 collision_layer = 5
 collision_mask = 0
-script = ExtResource("1_tdnrq")
+script = ExtResource("2_60p3h")
+is_entity = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionHitbox"]
+shape = SubResource("RectangleShape2D_b4pb2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_axoh7")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_b4pb2")

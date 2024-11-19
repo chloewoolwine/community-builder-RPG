@@ -11,6 +11,7 @@ class_name ItemData
 @export_multiline var magicalDescription: String = ""
 @export var stackable: bool = false
 @export var texture: AtlasTexture
+@export var placeable: bool = false
 
 #unsure about these
 @export var value: int = 1

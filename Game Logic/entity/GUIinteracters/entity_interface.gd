@@ -3,18 +3,15 @@ class_name EntityInterface
 
 signal close_dialogue()
 
-#TODO: make some kind of "entity" class that all enemies/npcs can inherit from
-@warning_ignore("untyped_declaration")
-var current_entity
+var current_entity: Entity
 
-@onready var conversation_controller:ConversationController = $ConversationController
+@onready var conversation_button: Button = $ConversationButton
 
 func _ready() -> void:
 	self.visible = false
-	conversation_controller.end_conversation.connect(close)
-	
-@warning_ignore("untyped_declaration")
-func setup_entity(entity) -> void:
+
+## Sets up [param entity] into this interface
+func setup_entity(entity: Entity) -> void:
 	current_entity = entity
 	
 	#if the entity has conversation, tell the conservation controller
@@ -23,3 +20,8 @@ func setup_entity(entity) -> void:
 func close() -> void:
 	close_dialogue.emit(current_entity)
 	current_entity = null
+
+
+func _on_conversation_button_pressed() -> void:
+	# do more complex conversation logic here
+	close() # Replace with function body.

@@ -4,22 +4,23 @@ class_name Player
 enum PlayerStates{STATE_MENU, STATE_IDLE, STATE_ACTION, STATE_TOOL, STATE_WALK, STATE_SPELL, STATE_DASH, 
 		STATE_KNOCKBACK}
 
+signal health_changed(new_health:int, total_health:int)
 signal toggle_menu()
 signal toggle_options() #options menu is a special boy
+@warning_ignore("unused_signal")
 signal action(facing: int)
 #signal taken_damage
 
 @export var player_data: PlayerData
 @export var inventory_data: InventoryData
-@export var speed: int = 100
+@export var speed: int = 170
 @export var friction: float = 0.01
 @export var acceleration: float = 0.101
 @export var dash_length: float = .3
 @export var dash_cooldown: float = 3
 
 var can_dash : bool = true
-var equiped_item: SlotData
-var state : PlayerStates = PlayerStates.STATE_IDLE
+var state : PlayerStates = PlayerStates.STATE_MENU
 #used to store state whenever the game is paused + restore action
 var prevState : PlayerStates = PlayerStates.STATE_IDLE
 var input: Vector2
@@ -27,29 +28,41 @@ var input: Vector2
 var facing: Vector2 = Vector2(0, 1)
 
 # raycast for world interaction
-@onready var ray_cast_2d : RayCast2D = $RayCast2D
+@onready var ray_cast_2d : RayCast2D = $PlayerActionHandler/RayCast2D
 #reference to sprite
-@onready var hair :AnimatedSprite2D = $Hair
-@onready var outfit :AnimatedSprite2D = $Outfit
 
+@onready var elevation_handler: ElevationHandler = $ElevationHandler
 @onready var health_handler:HealthHandler= $HealthHandler
 @onready var velocity_handler:VelocityHandler = $VelocityHandler
 @onready var animation_handler:AnimationHandler = $AnimationHandler
+@onready var player_action_handler: PlayerActionHandler = $PlayerActionHandler
+@onready var player_outfit_handler: PlayerOutfitHandler = $PlayerOutfitHandler
 
 #THIS IS TEMPORARY. TODO: remove this when the animations create hitboxes properly
 @onready var sword_hitbox:CollisionShape2D = $HitBox/CollisionShape2D
- 
+@onready var tile_indicator: Indicator = $TileIndicator
+
 func _ready() -> void:
 	toggle_menu.connect(toggle_menu_state)
-	toggle_options.connect(toggle_menu_state)
+	toggle_options.connect(toggle_menu_state)  
 	
 	#TODO: link these up with the GUI through GAME
 	health_handler.health_zero.connect(die)
 	health_handler.health_increased.connect(heal)
 	health_handler.health_decreased.connect(hurt)
 	
+	player_action_handler.player_using_tool.connect(use_tool)
+	player_action_handler.player_wants_to_eat.connect(attempt_eat)
+	player_action_handler.player_wants_to_plant.connect(attempt_plant)
+	player_action_handler.player_opened_menu.connect(toggle_menu_state)
+	
+	## notify that we are ready for collisions
+	elevation_handler.set_parents_collision_mask(elevation_handler.current_elevation, true)
+	
 	#set hair and outfit... eventually 
 	#animation_player.add_animation_library()
+	await get_tree().create_timer(.3).timeout
+	state = PlayerStates.STATE_IDLE
 
 func _physics_process(_delta: float) -> void: 
 	match state:
@@ -134,25 +147,19 @@ func updateAnimation() -> void:
 	animation_handler.flip_all_sprites(false)
 	if facing.x == -1:
 		animation_handler.flip_all_sprites(true)
-	if facing.y == 1:
-		move_child(hair, 1)
-	else:
-		move_child(hair, 2)
 	match state:
 		PlayerStates.STATE_IDLE, PlayerStates.STATE_MENU:
 			animation_handler.travel_to_and_blend("Idle", facing)
 		PlayerStates.STATE_WALK:
 			animation_handler.travel_to_and_blend("Walk", facing)
 		PlayerStates.STATE_ACTION:
+			## TODO: different animations for different weapons
 			animation_handler.travel_to_and_blend("Slash", facing)
-			#remove later
-			hair.visible = false
-			outfit.visible = false
 		PlayerStates.STATE_DASH:
 			#dash animation
 			animation_handler.travel_to_and_blend("Idle", facing)
 		PlayerStates.STATE_TOOL:
-			pass #TODO: different animations for different actions
+			pass #TODO: different animations for different tools
 
 func _unhandled_input(_event: InputEvent)  -> void: 
 	#Note: chests + dialogues are opened up with do_action and state is handled
@@ -164,7 +171,7 @@ func _unhandled_input(_event: InputEvent)  -> void:
 	
 	if Input.is_action_just_pressed("action"):
 		if state == PlayerStates.STATE_IDLE || state == PlayerStates.STATE_WALK:
-			do_action()
+			player_action_handler.do_action()
 	if Input.is_action_just_pressed("dash"): 
 		if can_dash && (state == PlayerStates.STATE_IDLE || state == PlayerStates.STATE_WALK):
 			state = PlayerStates.STATE_DASH
@@ -183,16 +190,43 @@ func time_dash_cooldown() -> void:
 	
 func die() -> void:
 	print("if youre reading this... i am dead...")
+	health_changed.emit(health_handler.current_health, health_handler.max_health)
 	
 func hurt(culprit:HitBox, _current_health:int) -> void:
 	if culprit and "knockback" in culprit:
 		@warning_ignore("narrowing_conversion")
 		velocity_handler.knockback(culprit.global_position, culprit.knockback)
+	health_changed.emit(health_handler.current_health, health_handler.max_health)
 	
 func heal(_current_health:int) -> void:
-	print("some gui notice should go here too")
+	health_changed.emit(health_handler.current_health, health_handler.max_health)
+	
+func use_tool(item:SlotData)->void:
+	match item.item_data.type:
+		ItemDataTool.WeaponType.SWORD:
+			state = PlayerStates.STATE_ACTION
+			sword_hitbox.disabled = false
+		ItemDataTool.WeaponType.HOE:
+			print("tool not yet implemented")
+		ItemDataTool.WeaponType.AXE:
+			print("tool not yet implemented")
+		ItemDataTool.WeaponType.PICKAXE:
+			print("tool not yet implemented")
+		ItemDataTool.WeaponType.HAMMER:
+			print("tool not yet implemented")
+		ItemDataTool.WeaponType.ROD:
+			print("tool not yet implemented")
 
-func toggle_menu_state() -> void:
+func attempt_eat(item:SlotData)->void:
+	#TODO: check if the player is missing health/hunger first
+	health_handler.change_health(item.item_data.heal_value)
+	decrease_item_val(item)
+	
+func attempt_plant(item:SlotData)->void:
+	if tile_indicator.signal_placement_if_valid(item.item_data, self.global_position):
+		decrease_item_val(item)
+
+func toggle_menu_state(_type:String = "") -> void:
 	velocity = Vector2(0,0)
 	input.y = 0
 	input.x = 0
@@ -203,84 +237,43 @@ func toggle_menu_state() -> void:
 	else:
 		prevState = state
 		state = PlayerStates.STATE_MENU
-	
-#cases:
-#1 = nothing is there, player is holding no tool. nothing happens
-#2 = object is there, not interactable. nothing happens
-#3 = object is there, interactable, but player does not meet requirements. nothing happens. 
-#(touching tree w/out axe)
-#4 = object is there, interactable, has requirements that player meets. animation plays/menu opens
-#5 = nothing is there, but the player has an item equiped. something happens with the item depending 
-#on it 
-#TODO: clean this up!!
-func do_action() -> void:
-	#if player is holding tool, or if player is in front of interactable
-	var cast:Object = ray_cast_2d.get_collider()
-	if cast && cast.has_method("player_interact"):
-		print_if_debug("hit" + cast.get_name())
-		if cast.has_method("interact_requirements"):
-			pass
-		else:
-			cast.player_interact()
-			toggle_menu_state()
-	#if we are holding a usuable item...
-	elif equiped_item && equiped_item.item_data:
-		if equiped_item.item_data is ItemDataTool: #todo change this to Weapon
-			match equiped_item.item_data.type:
-				ItemDataTool.WeaponType.AXE:
-					pass
-				ItemDataTool.WeaponType.SWORD:
-					state = PlayerStates.STATE_ACTION
-					sword_hitbox.disabled = false
-				ItemDataTool.WeaponType.HOE:
-					pass
-				ItemDataTool.WeaponType.PICKAXE:
-					pass
-				ItemDataTool.WeaponType.HAMMER:
-					pass
-		if equiped_item.item_data is ItemDataConsumable: 
-			print_if_debug("munch munch munch munch")
-			equiped_item.quantity -= 1
-			if equiped_item.quantity < 1:
-				inventory_data.delete_item(inventory_data.equiped)
-				equiped_item = null
-			inventory_data.inventory_updated.emit(inventory_data)
+			
+func get_equiped_item() -> SlotData:
+	return player_action_handler.equiped_item
 		
 func equip_item(slot_data: SlotData) -> void:
-	equiped_item = slot_data
-	if slot_data:
-		print_if_debug("item equiped" + equiped_item.item_data.name)
+	player_action_handler.equiped_item = slot_data
+	tile_indicator.set_vis_based_on_item(slot_data)
 
-#(-1, 0) = right, (1,0) = left, (0,-1) = back, (0,1) = forward
-#TODO; fix this method, it's wrong
-#input subtract will subtract that vector from local pos before converting to global
-func get_raycast_target(subtract:Vector2 = Vector2(0,0)) -> Vector2:
-	var target_position:Vector2 = ray_cast_2d.target_position
-	match facing:
-		1:
-			target_position =  target_position * Vector2(1, -1)
-		2:
-			target_position =  target_position.orthogonal() 
-		3:
-			target_position =  target_position.orthogonal() * Vector2(-1, -1)
-		4:
-			pass
-	print_if_debug("raycast target local vector: %v", target_position)
-	return to_global(target_position - subtract)
-
+func decrease_item_val(item:SlotData)->void:
+	item.quantity -= 1
+	if item.quantity < 1:
+		inventory_data.delete_item(inventory_data.equiped)
+		item = null
+		tile_indicator.visible = false
+		player_action_handler.equiped_item = null
+	inventory_data.inventory_updated.emit(inventory_data)
+		
 func _on_animation_tree_animation_finished(anim_name:String) -> void:
 	if "slash" in anim_name:
 		state = PlayerStates.STATE_IDLE
-		hair.visible = true
-		outfit.visible = true
 		velocity_handler.purge_speed()
 		sword_hitbox.disabled = true
 	#when i *have* a dash animation, link this up instead 
 	if "hoe" in anim_name:
 		state = PlayerStates.STATE_IDLE
 	
+#(-1, 0) = right, (1,0) = left, (0,-1) = back, (0,1) = forward
+#TODO; fix this method, it's wrong
+#input subtract will subtract that vector from local pos before converting to global
+func get_raycast_target() -> Vector2:
+	var target_position:Vector2 = ray_cast_2d.target_position
+	print_if_debug("raycast target local vector: %v", target_position)
+	return to_global(target_position)
+	
+
 #remove later
-@onready var debug:bool = self.get_parent().get_parent().debug	
+@onready var debug:bool = false
 @warning_ignore("untyped_declaration")
 func print_if_debug(message:String, _vector = null) -> void:
 	if debug:

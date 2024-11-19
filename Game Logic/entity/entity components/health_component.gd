@@ -26,13 +26,13 @@ func _ready()->void:
 	npc_layer = get_collision_layer_value(5)
 
 func change_health(amount: int, _culprit:HitBox = null)->void:
+	current_health = current_health + amount
 	if amount > 0:
 		health_increased.emit(current_health)
 	elif amount < 0:
 		health_decreased.emit(_culprit, current_health)
 	else: #amount == 0
 		return
-	current_health = current_health + amount
 	if current_health > max_health:
 		current_health = max_health
 	if current_health < 0:

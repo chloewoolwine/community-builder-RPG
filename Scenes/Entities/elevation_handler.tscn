@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://bx67biud0kdck"]
+
+[ext_resource type="Script" path="res://Game Logic/entity/entity components/elevation_handler_component.gd" id="1_y2k7c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ot3nc"]
+size = Vector2(1, 2.53289)
+
+[node name="ElevationHandler" type="Area2D" groups=["elevation_handler"]]
+collision_layer = 0
+collision_mask = 256
+script = ExtResource("1_y2k7c")
+
+[node name="CollisionBox2" type="CollisionShape2D" parent="."]
+position = Vector2(0, 141)
+rotation = 3.14159
+scale = Vector2(1.51274, -0.712651)
+shape = SubResource("RectangleShape2D_ot3nc")
+
+[node name="WaterDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionBox2" type="CollisionShape2D" parent="WaterDetector"]
+position = Vector2(0, 141)
+rotation = -3.14159
+scale = Vector2(55.3031, 15.5762)
+shape = SubResource("RectangleShape2D_ot3nc")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="body_entered" from="WaterDetector" to="." method="_on_water_detector_body_entered"]
+[connection signal="body_exited" from="WaterDetector" to="." method="_on_water_detector_body_exited"]

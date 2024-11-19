@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="InventoryData" load_steps=15 format=3 uid="uid://b8xs2ofig05hq"]
+
+[ext_resource type="Script" path="res://Game Logic/data/inventory/inventory_data.gd" id="1_r08uo"]
+[ext_resource type="Script" path="res://Game Logic/data/inventory/slot_data.gd" id="2_n1jth"]
+[ext_resource type="Resource" uid="uid://bhhgw66haki3j" path="res://Game Logic/item/items/tools/axe.tres" id="3_6gdja"]
+[ext_resource type="Resource" uid="uid://nqerwfpldacr" path="res://Game Logic/item/items/tools/hammer.tres" id="4_36bw6"]
+[ext_resource type="Resource" uid="uid://bttbsjkake846" path="res://Game Logic/item/items/tools/hoe.tres" id="4_i8yrb"]
+[ext_resource type="Resource" uid="uid://cum0uus22nf72" path="res://Game Logic/item/items/tools/stick.tres" id="4_u5dmx"]
+[ext_resource type="Resource" uid="uid://b7hmhg25msl4x" path="res://Game Logic/item/items/tools/pickaxe.tres" id="5_6t5mw"]
+[ext_resource type="Resource" uid="uid://d0wd2vtdrd13o" path="res://Game Logic/item/items/tools/rod.tres" id="7_cqwjf"]
+
+[sub_resource type="Resource" id="Resource_yddo7"]
+script = ExtResource("2_n1jth")
+item_data = ExtResource("3_6gdja")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_1qfm2"]
+script = ExtResource("2_n1jth")
+item_data = ExtResource("4_36bw6")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_f3h4m"]
+script = ExtResource("2_n1jth")
+item_data = ExtResource("4_i8yrb")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_0mw5q"]
+script = ExtResource("2_n1jth")
+item_data = ExtResource("5_6t5mw")
+quantity = 3
+
+[sub_resource type="Resource" id="Resource_0nolj"]
+script = ExtResource("2_n1jth")
+item_data = ExtResource("7_cqwjf")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_it2nq"]
+script = ExtResource("2_n1jth")
+item_data = ExtResource("4_u5dmx")
+quantity = 1
+
+[resource]
+script = ExtResource("1_r08uo")
+slot_datas = Array[ExtResource("2_n1jth")]([SubResource("Resource_yddo7"), SubResource("Resource_1qfm2"), SubResource("Resource_f3h4m"), SubResource("Resource_0mw5q"), SubResource("Resource_0nolj"), SubResource("Resource_it2nq"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])

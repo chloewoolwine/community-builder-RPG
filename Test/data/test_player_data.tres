@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PlayerData" load_steps=3 format=3 uid="uid://cqt2p8og2awro"]
 
-[ext_resource type="Resource" uid="uid://cblqgmedaij75" path="res://Test/data/test_inv.tres" id="1_xfg4w"]
+[ext_resource type="Resource" uid="uid://cblqgmedaij75" path="res://Test/data/inventories/test_inv.tres" id="1_xfg4w"]
 [ext_resource type="Script" path="res://Game Logic/data/entity/player_data.gd" id="2_fekw4"]
 
 [resource]

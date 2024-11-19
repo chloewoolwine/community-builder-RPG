@@ -1,14 +1,23 @@
 extends Resource
 class_name ChunkData
 
-var chunk_size: Vector2
+## Size of chunk x * y
+@export var chunk_size: Vector2i
+## Position of chunk in terms of other chunks
+## Position of chunk in tile layers = chunk_position * chunk_size
+@export var chunk_position : Vector2i
 
-var chunk_position : Vector2
-
+## Biome of chunk- 
+## Not entirely sure what this is going to do, yet, 
+## I think it's just going to be for terrain generation? 
+## then particle effects/entity spawns/music will be determined
+## by the aggregate number of tile types. 
+## like terraria!
 enum Biome{Dead, Forest}
-var biome : Biome
+@export var biome : Biome
 
-#entities that are in this chunk
-var entities : Array[EntityData]
-var square_datas : Array[SquareData]
-var object_data : Array[ObjectData]
+## Entities that are in this chunk
+@export var entities : Array[EntityData]
+
+## Granular info for tiles in the chunk
+@export var square_datas : Dictionary

@@ -23,6 +23,4 @@ texture = SubResource("AtlasTexture_h2wue")
 
 [node name="CraftingComponent" type="Node2D" parent="."]
 
-[node name="CraftingComponent2" type="Node2D" parent="."]
-
 [node name="PlantComponent" parent="." instance=ExtResource("1_g1cq6")]

@@ -15,8 +15,9 @@ var gui_state: GuiState
 @onready var entity_manager:EntityManager = $EntityManager
 @onready var pickup_manager:PickupManager = $PickupManager
 @onready var story_manager:StoryManager = $StoryManager
-@onready var saver_loader:SaverLoader = $SaverLoader
+#@onready var saver_loader:SaverLoader = $SaverLoader
 @onready var player:Player = $EntityManager/Player
+@onready var lighting:CalendarManager= $StoryManager/Lighting
 
 #UI
 @onready var inventory_interface:InventoryInterface = $UI/InventoryInterface
@@ -26,24 +27,66 @@ var gui_state: GuiState
 
 func _ready() -> void:
 	#TODO: make a "fresh game" resource save so i dont have to worry about chagning this
-	saver_loader.world = world_manager.world_data
-	saver_loader.player = player.player_data
-	saver_loader.story = story_manager.story_data
+	#saver_loader.world = world_manager.world_data
+	#saver_loader.player = player.player_data
+	#saver_loader.story = story_manager.story_data
 	
 	#this should work OK as long as i do it after the world is fully loaded
 	handle_inventory_setup()
 	handle_entity_setup()
+	handle_plant_setup()
+	handle_player_setup()
+	handle_world_setup()
 	
+	handle_final_presentation()
+
+## TURNS ON THE SPICE! After everything else has finished loading. 
+func handle_final_presentation() -> void: 
+	## TODO: make some juice here, like a fade in from black :D 
+	lighting.proccessTime = true
+
+## Connects events dynamically
+func handle_world_setup() -> void:
+	world_manager.crop_placed.connect(connect_crop_to_sky)
+	world_manager.player = player
+
+## Connects plants (crops) to the timer so they can grow
+func connect_crop_to_sky(crop: Crop) -> void:
+	crop.spawn_pickups.connect(pickup_manager.generate_pickups_from_list)
+	lighting.time_tick.connect(crop.plant_component.minute_pass)
+
+## Connects events involving the playe
+func handle_player_setup() -> void:
+	player.health_changed.connect(hot_bar_inventory.update_health)
+	player.tile_indicator.move_me.connect(world_manager.move_indicator)
+	player.tile_indicator.placement.connect(world_manager.place_object)
+
+## Connects events for already existing plants (growing + spawning pickups)
+func handle_plant_setup() -> void:
+	for node in get_tree().get_nodes_in_group("plant_growable"):
+		node.spawn_pickups.connect(pickup_manager.generate_pickups_from_list)
+		lighting.time_tick.connect(node.plant_component.minute_pass)
+	
+## Connects entity events (open entity menu and close dialogue)
+## TODO: all of this needs to be dynamically done whenever an entity
+## loads in to the game -> a lot like "connect crop to sky" for entities
 func handle_entity_setup() -> void:
 	for node in get_tree().get_nodes_in_group("entity_interactable"):
 		node.toggle_menu.connect(toggle_entity_interface)
+	for node in get_tree().get_nodes_in_group("elevation_handler"): 
+		node.give_me_layer_please.connect(world_manager.give_requested_layer)
 	
 	entity_interface.close_dialogue.connect(toggle_entity_interface)
 	
+## Connects inventory events
+## 1. Sets up the inventory GUI & hotbar with the player's inventory data
+## 2. Sets up the player's inventory toggle *and* pause menu toggle
+## 3. Iteratively sets external_inventories inventory data (non-entity)
 func handle_inventory_setup() -> void:
 	inventory_interface.set_player_inventory_data(player.inventory_data, player)
 	player.inventory_data.setOwner(player)
 	hot_bar_inventory.set_inventory_data(player.inventory_data)
+	lighting.time_tick.connect(hot_bar_inventory.update_circle)
 	player.toggle_menu.connect(toggle_inventory_interface)
 	#TODO: link story data to DataTabs through inventory interface
 	
@@ -53,7 +96,8 @@ func handle_inventory_setup() -> void:
 		
 	player.toggle_options.connect(handle_options_press)
 	gui_state = GuiState.WORLD
-	
+
+## Toggles the pause menu
 func handle_options_press() -> void:
 	if gui_state == GuiState.INVENTORY || gui_state == GuiState.CHEST:
 		toggle_inventory_interface()
@@ -65,9 +109,14 @@ func handle_options_press() -> void:
 		
 		if options_menu.visible:
 			gui_state = GuiState.OPTIONS
+			lighting.proccessTime = false
 		else:
 			gui_state = GuiState.WORLD
+			lighting.proccessTime = true
 
+## Turns on the inventory interface. Takes [param external_inventory_owner] as 
+## the inventory to display and [param _isPerson] to distinguish between a chest 
+## and an entity's inventory (unimplemented, possibly unused?)
 @warning_ignore("untyped_declaration")
 func toggle_inventory_interface(external_inventory_owner = null, _isPerson : bool = false) -> void:
 	if gui_state == GuiState.OPTIONS || gui_state == GuiState.ENTITY:
@@ -91,8 +140,8 @@ func toggle_inventory_interface(external_inventory_owner = null, _isPerson : boo
 			gui_state = GuiState.WORLD
 			
 
-@warning_ignore("untyped_declaration")
-func toggle_entity_interface(entity) -> void:
+## Turns on the entity GUI. Takes [param entity] for it's setup
+func toggle_entity_interface(entity: Entity) -> void:
 	entity_interface.visible = !entity_interface.visible
 	hot_bar_inventory.visible = !hot_bar_inventory.visible
 	

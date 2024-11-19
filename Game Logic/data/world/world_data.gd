@@ -8,10 +8,12 @@ class_name WorldData
 #(except for entities)
 
 @export var world_seed: int
-@export var world_size: Vector2
-@export var chunk_size: Vector2
+@export var world_size: Vector2i
+@export var chunk_size: Vector2i
 
-@export var chunk_datas: Array[ChunkData]
+# GOTTA CAHNGE THIS IN SAVER LOADER YOU HAVENT DONE THAT YET!
+# Key- Vector2i, place of chunk, value- chunk data
+@export var chunk_datas: Dictionary
 #to load chunks:
 #i will STORE the current chunk that the player is standing in
 #when the player moves in a cardinal direction, i should be able 

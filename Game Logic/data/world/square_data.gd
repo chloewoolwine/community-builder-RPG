@@ -1,13 +1,12 @@
 extends Resource
 class_name SquareData
 
-var chunk_location: Vector2
+## Overall location in chunk- layer irrelevant
+@export var location_in_chunk: Vector2i
 
-var elevation: int
-var water_saturation: int 
-var fertility: int 
-enum SquareType{Dirt, Rock, Water, Sand}
-var type: SquareType
-
-enum SquareStatus {EMPTY, PASSABLE, IMPASSABLE}
-var status: SquareStatus
+@export var elevation: int
+@export var water_saturation: int 
+@export var fertility: int 
+enum SquareType{Dirt, Grass, Rock, Water, DeepWater, Sand}
+@export var type: SquareType
+@export var object_data: ObjectData

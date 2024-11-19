@@ -1,18 +1,107 @@
-[gd_scene load_steps=2 format=3 uid="uid://b48eubjn547dd"]
+[gd_scene load_steps=12 format=3 uid="uid://b48eubjn547dd"]
 
+[ext_resource type="Texture2D" uid="uid://ble0mvej0lqio" path="res://Assets/GUI/hotbar_background.png" id="1_7vess"]
 [ext_resource type="Script" path="res://Game Logic/inventory/hot_bar_inventory.gd" id="1_kl8tc"]
+[ext_resource type="Texture2D" uid="uid://cw23ogwcfk3ij" path="res://Assets/GUI/daylight_wheel.png" id="2_t4ctg"]
+[ext_resource type="PackedScene" uid="uid://cwyeg4vhep7na" path="res://Scenes/UI/Inventory/slot.tscn" id="3_0m4ld"]
+[ext_resource type="Texture2D" uid="uid://bjjtjghe08jfa" path="res://Assets/GUI/health_empty.png" id="3_dllb1"]
+[ext_resource type="Texture2D" uid="uid://86cptjidx1xs" path="res://Assets/GUI/time_dial.png" id="3_gh0en"]
+[ext_resource type="Texture2D" uid="uid://bppjwtcol2sdn" path="res://Assets/GUI/health_full.png" id="4_tb36w"]
+[ext_resource type="Texture2D" uid="uid://bohhl8uu3i5nd" path="res://Assets/GUI/pointer.png" id="5_snmdp"]
+[ext_resource type="Texture2D" uid="uid://cpld85xs8d2ao" path="res://Assets/GUI/hunger_empty.png" id="9_afn0l"]
+[ext_resource type="Texture2D" uid="uid://bvs7ehaug2vex" path="res://Assets/GUI/hunger_full.png" id="10_r860s"]
 
-[node name="HotBarInventory" type="PanelContainer"]
-offset_right = 40.0
-offset_bottom = 40.0
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o3ges"]
+
+[node name="HotBarInventory" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+scale = Vector2(1, 0.997904)
 script = ExtResource("1_kl8tc")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
+[node name="CircleyThingy" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 57.0
+offset_top = -247.519
+offset_right = 534.0
+offset_bottom = 229.481
+scale = Vector2(0.405, 0.405)
+pivot_offset = Vector2(238.5, 238.5)
+texture = ExtResource("2_t4ctg")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -223.195
+offset_top = -59.124
+offset_right = 2311.8
+offset_bottom = 364.876
+scale = Vector2(0.41, 0.41)
+texture = ExtResource("1_7vess")
+
+[node name="TimeDial" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 198.0
+offset_top = -107.225
+offset_right = 673.0
+offset_bottom = 125.775
+scale = Vector2(0.41, 0.41)
+texture = ExtResource("3_gh0en")
+
+[node name="TextureRect" type="TextureRect" parent="TimeDial"]
+layout_mode = 0
+offset_left = 197.561
+offset_top = 149.093
+offset_right = 273.561
+offset_bottom = 267.093
+texture = ExtResource("5_snmdp")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_right = 592.0
+offset_bottom = 96.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_o3ges")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_direction = 1
+layout_mode = 2
+theme_override_constants/separation = 28
+
+[node name="Slot" parent="PanelContainer/MarginContainer/HBoxContainer" instance=ExtResource("3_0m4ld")]
+layout_mode = 2
+
+[node name="Slot2" parent="PanelContainer/MarginContainer/HBoxContainer" instance=ExtResource("3_0m4ld")]
+layout_mode = 2
+
+[node name="Slot3" parent="PanelContainer/MarginContainer/HBoxContainer" instance=ExtResource("3_0m4ld")]
+layout_mode = 2
+
+[node name="Slot4" parent="PanelContainer/MarginContainer/HBoxContainer" instance=ExtResource("3_0m4ld")]
+layout_mode = 2
+
+[node name="Slot5" parent="PanelContainer/MarginContainer/HBoxContainer" instance=ExtResource("3_0m4ld")]
+layout_mode = 2
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+layout_mode = 2
+offset_left = -68.0
+offset_top = -40.084
+offset_right = 594.0
+offset_bottom = 10.916
+scale = Vector2(0.41, 0.41)
+value = 100.0
+texture_under = ExtResource("3_dllb1")
+texture_progress = ExtResource("4_tb36w")
+
+[node name="HungerBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = 388.0
+offset_top = -40.084
+offset_right = 1050.0
+offset_bottom = 10.916
+scale = Vector2(0.41, 0.41)
+value = 100.0
+texture_under = ExtResource("9_afn0l")
+texture_progress = ExtResource("10_r860s")

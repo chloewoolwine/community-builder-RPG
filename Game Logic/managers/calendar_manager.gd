@@ -38,6 +38,7 @@ func calculate_gametime() -> void:
 	var minute := int(minutes_of_today % minutes_per_hour)
 	
 	if previous_minute != minute: 
+		previous_minute = minute
 		time_tick.emit(day, hour, minute)
 		#print(str("day: ", day, " time: ", hour, ":", minute))
 
@@ -45,7 +46,7 @@ func change_time_of_day(target: int) -> void:
 	time = target * gametime_to_minute * minutes_per_hour
 	update_lighting()
 	calculate_gametime()
-	print(str("time of day changed to: ", target))
+	#print(str("time of day changed to: ", target))
 
 func update_lighting() -> void:
 	self.color = light_gradient.gradient.sample(

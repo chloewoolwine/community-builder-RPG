@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://dex38lerq6cof"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iwcy4"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1qun3"]
+load_path = "res://.godot/imported/poplar_tree.png-2ca11918c6893eac3c66ba8b7f2b99e8.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqggy"]
+atlas = SubResource("CompressedTexture2D_1qun3")
+region = Rect2(4.82652, 431.882, 219.762, 106.529)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gl1nl"]
+load_path = "res://.godot/imported/poplar_tree.png-2ca11918c6893eac3c66ba8b7f2b99e8.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sp7v8"]
+atlas = SubResource("CompressedTexture2D_gl1nl")
+region = Rect2(280.446, 157.908, 154.414, 349.881)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ta55d"]
+load_path = "res://.godot/imported/poplar_tree.png-2ca11918c6893eac3c66ba8b7f2b99e8.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tyviv"]
+atlas = SubResource("CompressedTexture2D_ta55d")
+region = Rect2(0, 3.86463, 256.745, 396.769)
+
+[node name="PoplarTree" type="Node2D"]
+z_as_relative = false
+y_sort_enabled = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(0, 140)
+scale = Vector2(2.52805, 1.36214)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("CapsuleShape2D_iwcy4")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+y_sort_enabled = true
+position = Vector2(0, 213)
+texture = SubResource("AtlasTexture_dqggy")
+offset = Vector2(0, -53)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(0, 151)
+texture = SubResource("AtlasTexture_sp7v8")
+offset = Vector2(0, -151)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 2
+y_sort_enabled = true
+position = Vector2(0, -133)
+texture = SubResource("AtlasTexture_tyviv")

@@ -1,0 +1,60 @@
+[gd_scene load_steps=13 format=3 uid="uid://bj6lndqpmd2as"]
+
+[ext_resource type="Script" path="res://Test/world_generator_v1.gd" id="1_xkwe4"]
+[ext_resource type="Resource" uid="uid://b33haxa1ag8tc" path="res://Test/data/test_story_data.tres" id="3_h1g0a"]
+[ext_resource type="Texture2D" uid="uid://bnqoytdxlngjc" path="res://Assets/tiles/terrain_helper.png" id="4_homew"]
+[ext_resource type="Script" path="res://Game Logic/managers/world_manager.gd" id="5_vvugq"]
+[ext_resource type="Script" path="res://Game Logic/world/terrain_rules_handler.gd" id="6_od1mn"]
+[ext_resource type="TileSet" uid="uid://ba8dti5ve5424" path="res://Scenes/objects/basetileset.tres" id="7_jhhop"]
+[ext_resource type="Script" path="res://Game Logic/world/elevation_layer.gd" id="8_6qs6m"]
+[ext_resource type="PackedScene" uid="uid://dy236j24tdfmr" path="res://Scenes/Entities/player.tscn" id="15_1qhcq"]
+[ext_resource type="Script" path="res://Game Logic/data/saves/saverloader.gd" id="31_vphtr"]
+[ext_resource type="Resource" uid="uid://cqt2p8og2awro" path="res://Test/data/test_player_data.tres" id="32_5k680"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s7bwd"]
+texture = ExtResource("4_homew")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_mha1r"]
+tile_size = Vector2i(64, 64)
+custom_data_layer_0/name = "elevation"
+custom_data_layer_0/type = 0
+sources/0 = SubResource("TileSetAtlasSource_s7bwd")
+
+[node name="SoChunksHuh" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_xkwe4")
+
+[node name="WorldManager" type="Node2D" parent="."]
+y_sort_enabled = true
+script = ExtResource("5_vvugq")
+
+[node name="TerrainRulesHandler" type="Node2D" parent="WorldManager"]
+script = ExtResource("6_od1mn")
+
+[node name="Elevation0" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler"]
+y_sort_enabled = true
+use_parent_material = true
+tile_set = SubResource("TileSet_mha1r")
+script = ExtResource("8_6qs6m")
+
+[node name="CliffMarkers" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler/Elevation0"]
+y_sort_enabled = true
+tile_set = ExtResource("7_jhhop")
+
+[node name="Decor" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler/Elevation0"]
+y_sort_enabled = true
+tile_set = ExtResource("7_jhhop")
+
+[node name="SaverLoader" type="Node2D" parent="."]
+script = ExtResource("31_vphtr")
+player = ExtResource("32_5k680")
+story = ExtResource("3_h1g0a")
+
+[node name="Player" parent="." instance=ExtResource("15_1qhcq")]

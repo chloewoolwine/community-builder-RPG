@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemDataTool" load_steps=4 format=3 uid="uid://cum0uus22nf72"]
 
 [ext_resource type="Script" path="res://Game Logic/data/inventory/item_data_tool.gd" id="1_2g230"]
-[ext_resource type="Texture2D" uid="uid://cjjxdql4dl6j3" path="res://Assets/#1 - Transparent Icons.png" id="2_5bsgt"]
+[ext_resource type="Texture2D" uid="uid://cjjxdql4dl6j3" path="res://Assets/Testy Assets/#1 - Transparent Icons.png" id="2_5bsgt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bd3e2"]
 atlas = ExtResource("2_5bsgt")
@@ -17,5 +17,6 @@ magical = false
 magicalDescription = ""
 stackable = false
 texture = SubResource("AtlasTexture_bd3e2")
+placeable = false
 value = 1
 rarity = 1

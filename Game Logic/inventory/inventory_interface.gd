@@ -38,7 +38,7 @@ func set_external_inventory(new_external_inventory_owner) -> void:
 	
 	#TODO: check if external inventory is a chest/npc/shop
 	external_inventory.show()
-	data_tabs.hide()
+	#data_tabs.hide()
 
 func clear_external_inventory() -> void:
 	#print("set external inventory, inventory_interface.gd")
@@ -51,7 +51,7 @@ func clear_external_inventory() -> void:
 		#TODO: check if external inventory is a chest/npc/shop
 		external_inventory.hide()
 		external_inventory_owner = null
-	data_tabs.show()
+	#data_tabs.show()
 	
 #runs whenever the inventory data connected to this interface is interacted w
 func on_inventory_interact(inventory_data: InventoryData, 

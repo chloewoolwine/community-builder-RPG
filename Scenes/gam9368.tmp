@@ -1,0 +1,284 @@
+[gd_scene load_steps=36 format=4 uid="uid://bx0i1fqjjvygy"]
+
+[ext_resource type="Script" path="res://Game Logic/managers/game.gd" id="1_lgntb"]
+[ext_resource type="PackedScene" uid="uid://dy236j24tdfmr" path="res://Scenes/Entities/player.tscn" id="1_vlfca"]
+[ext_resource type="Script" path="res://Game Logic/managers/world_manager.gd" id="2_a3ciy"]
+[ext_resource type="Resource" uid="uid://cblqgmedaij75" path="res://Test/data/test_inv.tres" id="3_xku57"]
+[ext_resource type="PackedScene" uid="uid://dqm8g7yybo0pf" path="res://Scenes/UI/Inventory/inventory.tscn" id="4_kq4io"]
+[ext_resource type="Script" path="res://Game Logic/managers/calendar_manager.gd" id="5_cki0q"]
+[ext_resource type="TileSet" uid="uid://ba8dti5ve5424" path="res://Scenes/objects/basetileset.tres" id="6_00ewg"]
+[ext_resource type="Script" path="res://Game Logic/world/terrain_rules_handler.gd" id="6_8d50o"]
+[ext_resource type="Script" path="res://Game Logic/inventory/inventory_interface.gd" id="6_uons4"]
+[ext_resource type="Script" path="res://Game Logic/world/elevation_layer.gd" id="7_kflin"]
+[ext_resource type="Script" path="res://Game Logic/managers/entity_manager.gd" id="8_3dv0o"]
+[ext_resource type="PackedScene" uid="uid://cwyeg4vhep7na" path="res://Scenes/UI/Inventory/slot.tscn" id="8_pioji"]
+[ext_resource type="PackedScene" uid="uid://ho7dtji22ka2" path="res://Scenes/objects/temp_chest.tscn" id="9_3yqre"]
+[ext_resource type="Script" path="res://Game Logic/managers/pickup_manager.gd" id="10_d5qv3"]
+[ext_resource type="PackedScene" uid="uid://evpjtd4qv6g0" path="res://Scenes/Entities/temp_dialogue_tester.tscn" id="11_24i8v"]
+[ext_resource type="Resource" uid="uid://b1v5a5qu2iw7w" path="res://Game Logic/item/items/test/test_apple.tres" id="11_cwce4"]
+[ext_resource type="Script" path="res://Game Logic/data/inventory/slot_data.gd" id="12_iyjdd"]
+[ext_resource type="PackedScene" uid="uid://ce2mxsx5h0vwk" path="res://Scenes/objects/crop/carrot.tscn" id="13_6mjwj"]
+[ext_resource type="PackedScene" uid="uid://4k022q3s2f4l" path="res://Scenes/objects/crop/cabbage.tscn" id="13_jk7w3"]
+[ext_resource type="PackedScene" uid="uid://cdeeqt3ae70lq" path="res://Scenes/objects/pick_up.tscn" id="13_pouw6"]
+[ext_resource type="PackedScene" uid="uid://dex38lerq6cof" path="res://Scenes/objects/plants/poplar_tree.tscn" id="14_lhsa0"]
+[ext_resource type="PackedScene" uid="uid://b48eubjn547dd" path="res://Scenes/UI/Inventory/hot_bar_inventory.tscn" id="16_j6efu"]
+[ext_resource type="PackedScene" uid="uid://df2qdt4sw2ptf" path="res://Scenes/Entities/enemies/dust_bunny.tscn" id="17_6hk27"]
+[ext_resource type="Script" path="res://Game Logic/data/saves/saverloader.gd" id="17_d5xvq"]
+[ext_resource type="Script" path="res://Game Logic/managers/story_manager.gd" id="19_by7u0"]
+[ext_resource type="PackedScene" uid="uid://cdrtf2c53anpa" path="res://Scenes/UI/player_interface.tscn" id="19_l4305"]
+[ext_resource type="Resource" uid="uid://cqt2p8og2awro" path="res://Test/data/test_player_data.tres" id="20_6aqm4"]
+[ext_resource type="PackedScene" uid="uid://dtu5t8l4754r1" path="res://Scenes/UI/data_tabs.tscn" id="20_eexrm"]
+[ext_resource type="PackedScene" uid="uid://ci7frj803w55q" path="res://Scenes/UI/options.tscn" id="20_fjp20"]
+[ext_resource type="PackedScene" uid="uid://b2sgcn3ke8bos" path="res://Scenes/UI/entity_interface.tscn" id="20_vmo70"]
+[ext_resource type="Resource" uid="uid://b33haxa1ag8tc" path="res://Test/data/test_story_data.tres" id="21_hwjbe"]
+[ext_resource type="Script" path="res://Game Logic/UI/options_menu.gd" id="28_uohxa"]
+
+[sub_resource type="Gradient" id="Gradient_yfqml"]
+offsets = PackedFloat32Array(0, 0.235931, 0.325444, 0.431953, 0.545858, 0.703402, 1)
+colors = PackedColorArray(0.153943, 0.14085, 0.369463, 1, 0.238675, 0.187243, 0.399567, 1, 0.409649, 0.225679, 0.461929, 1, 0.883571, 0.507168, 0.724278, 1, 0.87952, 0.756383, 0.51972, 1, 0.98696, 0.927832, 0.81915, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6o1tu"]
+gradient = SubResource("Gradient_yfqml")
+
+[sub_resource type="Resource" id="Resource_qmoje"]
+script = ExtResource("12_iyjdd")
+item_data = ExtResource("11_cwce4")
+quantity = 1
+
+[node name="Game" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_lgntb")
+debug = true
+
+[node name="StoryManager" type="Node2D" parent="."]
+script = ExtResource("19_by7u0")
+story_data = ExtResource("21_hwjbe")
+
+[node name="Lighting" type="CanvasModulate" parent="StoryManager"]
+visible = false
+position = Vector2(-1, 0)
+scale = Vector2(0.550946, 4.54629)
+color = Color(0.193862, 0.19257, 0.432045, 1)
+script = ExtResource("5_cki0q")
+proccessTime = true
+light_gradient = SubResource("GradientTexture1D_6o1tu")
+
+[node name="WorldManager" type="Node2D" parent="."]
+y_sort_enabled = true
+script = ExtResource("2_a3ciy")
+
+[node name="TerrainRulesHandler" type="Node2D" parent="WorldManager"]
+script = ExtResource("6_8d50o")
+
+[node name="Elevation0" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler"]
+y_sort_enabled = true
+use_parent_material = true
+tile_map_data = PackedByteArray("AAAjAAAAAAAFAAQAAAAjAAEAAAAFAAQAAAAjAAIAAAAFAAQAAAAkAAAAAAAFAAQAAAAkAAEAAAAFAAQAAAAkAAIAAAAFAAQAAAAlAAAAAAAFAAQAAAAlAAEAAAAFAAQAAAAlAAIAAAAFAAQAAAAjAAMAAAAFAAQAAAAkAAMAAAAFAAQAAAAlAAMAAAAFAAQAAAAmAAAAAAAFAAQAAAAmAAEAAAAFAAQAAAAmAAIAAAAFAAQAAAAmAAMAAAAFAAQAAAAnAAAAAAAFAAQAAAAnAAEAAAAFAAQAAAAnAAIAAAAFAAQAAAAnAAMAAAAFAAQAAAAjAAQAAAACAAMAAAAkAAQAAAACAAMAAAAlAAQAAAACAAMAAAAmAAQAAAACAAMAAAAnAAQAAAACAAMAAAAjAP//AAAFAAQAAAAkAP//AAAFAAQAAAAlAP//AAAFAAQAAAAmAP//AAAFAAQAAAAnAP//AAAFAAQAAAA=")
+tile_set = ExtResource("6_00ewg")
+script = ExtResource("7_kflin")
+
+[node name="CliffMarkers" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler/Elevation0"]
+y_sort_enabled = true
+tile_set = ExtResource("6_00ewg")
+
+[node name="Decor" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler/Elevation0"]
+y_sort_enabled = true
+tile_set = ExtResource("6_00ewg")
+
+[node name="Elevation1" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler"]
+y_sort_enabled = true
+use_parent_material = true
+position = Vector2(1, -2)
+tile_map_data = PackedByteArray("AAABAP7/AAAFAAMAAAAAAP//AAAFAAQAAAAAAP7/AAAFAAMAAAABAP//AAAGAAMAAAD+/wAAAAAGAAMAAAD//wAAAAAFAAQAAAAAAAAAAAAGAAMAAAD///7/AAAFAAQAAAD+//7/AAAFAAQAAAD9////AAAFAAQAAAD9/wAAAAAFAAQAAAD+/wEAAAAFAAMAAAD//wIAAAAFAAMAAAAAAAEAAAAFAAQAAAD/////AAAGAAMAAAD+////AAAFAAMAAAD//wEAAAAFAAMAAAABAAAAAAAGAAMAAAD7//v/AAAGAAMAAAD7//z/AAAFAAMAAAD7//3/AAAGAAMAAAD7//7/AAAGAAMAAAD7////AAAFAAQAAAD7/wAAAAAFAAMAAAD7/wEAAAAGAAMAAAD7/wIAAAAFAAMAAAD8//v/AAAGAAMAAAD8//z/AAAFAAMAAAD8//3/AAAFAAAAAAD8//7/AAAFAAMAAAD8////AAAFAAQAAAD8/wAAAAAGAAMAAAD8/wEAAAAFAAQAAAD8/wIAAAAFAAMAAAD9//v/AAAGAAMAAAD9//z/AAAFAAAAAAD9//3/AAAGAAMAAAD9//7/AAAFAAQAAAD9/wEAAAAFAAQAAAD9/wIAAAAFAAMAAAD+//v/AAAFAAMAAAD+//z/AAAGAAMAAAD+//3/AAAGAAMAAAD+/wIAAAAFAAMAAAD///v/AAAFAAMAAAD///z/AAAGAAMAAAD///3/AAAGAAMAAAAAAPv/AAAFAAQAAAAAAPz/AAAGAAMAAAAAAP3/AAAFAAQAAAAAAAIAAAAFAAMAAAABAPv/AAAFAAMAAAABAPz/AAAGAAMAAAABAP3/AAAFAAQAAAABAAEAAAAFAAMAAAABAAIAAAAGAAMAAAACAPv/AAAGAAMAAAACAPz/AAAFAAQAAAACAP3/AAAFAAMAAAACAP7/AAAGAAMAAAACAP//AAAGAAMAAAACAAAAAAAGAAMAAAACAAEAAAAFAAMAAAACAAIAAAAFAAIAAAADAPv/AAAFAAQAAAADAPz/AAAGAAMAAAADAP3/AAAGAAMAAAADAP7/AAAGAAMAAAADAP//AAAGAAEAAAADAAAAAAAFAAQAAAADAAEAAAAFAAQAAAADAAIAAAAGAAEAAAAEAP//AAAFAAMAAAAEAAAAAAAFAAMAAAAFAP3/AAAFAAQAAAAEAP7/AAAGAAMAAAAGAP7/AAAGAAMAAAAGAP3/AAAFAAQAAAAHAP3/AAAFAAMAAAAHAP7/AAAGAAMAAAAEAAEAAAAGAAMAAAAEAAIAAAAGAAMAAAAFAP//AAAFAAMAAAAFAAEAAAAGAAMAAAAFAAIAAAAFAAMAAAAGAP//AAAFAAQAAAAGAAAAAAAFAAQAAAAGAAEAAAAGAAMAAAAHAP//AAAFAAQAAAAHAAEAAAAFAAQAAAAHAAIAAAAFAAMAAAAEAPz/AAAFAAMAAAAFAP7/AAAGAAMAAAAFAAAAAAAGAAMAAAAHAAAAAAAFAAQAAAAIAP3/AAAFAAMAAAAIAP7/AAAFAAMAAAAIAAAAAAAGAAMAAAAIAAEAAAAGAAMAAAAEAPv/AAAFAAMAAAAEAP3/AAAGAAMAAAAFAPz/AAAFAAMAAAAGAPv/AAAFAAMAAAAGAPz/AAAFAAQAAAAGAAIAAAAFAAQAAAAHAPv/AAAFAAMAAAAHAPz/AAAGAAMAAAAIAPv/AAAFAAMAAAAIAPz/AAAFAAMAAAAIAP//AAAGAAIAAAAIAAIAAAAFAAMAAAAFAPv/AAAGAAMAAAAHAPr/AAAFAAEAAAAJAAIAAAAFAAQAAAAKAAIAAAAFAAMAAAAKAAEAAAAFAAQAAAAKAAAAAAAFAAMAAAAKAP//AAAFAAMAAAAKAP7/AAAFAAQAAAAJAP7/AAAFAAQAAAAJAAEAAAAGAAAAAAALAAEAAAAGAAMAAAALAAAAAAAFAAQAAAALAP//AAAGAAMAAAALAP7/AAAGAAMAAAAKAP3/AAAFAAQAAAAJAP3/AAAFAAMAAAAJAP//AAAIAAIAAAAJAAAAAAAFAAMAAAAJAPz/AAAFAAMAAAAKAPz/AAAFAAQAAAALAPz/AAAFAAQAAAALAP3/AAAGAAMAAAAMAP3/AAAFAAQAAAAMAP7/AAAFAAQAAAAMAP//AAAFAAMAAAAMAAAAAAAFAAMAAAAMAAEAAAAGAAMAAAAMAAIAAAAFAAMAAAALAAIAAAAGAAMAAAAMAPz/AAAFAAMAAAANAPz/AAAFAAQAAAANAP3/AAAGAAMAAAANAP7/AAAHAAEAAAANAP//AAAFAAMAAAAOAP//AAAFAAMAAAAOAAAAAAAFAAQAAAAOAAEAAAAFAAMAAAANAAEAAAAFAAQAAAANAAIAAAAGAAMAAAANAAAAAAAGAAMAAAAOAAIAAAAFAAQAAAAOAP7/AAAFAAQAAAAOAP3/AAAFAAQAAAAOAPz/AAAFAAQAAAAPAP3/AAAFAAMAAAAQAP7/AAAGAAMAAAAPAP//AAAFAAMAAAAPAAAAAAAHAAEAAAAPAAEAAAAGAAMAAAAPAAIAAAAFAAMAAAAPAP7/AAAFAAMAAAAPAPz/AAAFAAQAAAAPAPv/AAAFAAQAAAAQAPz/AAAFAAMAAAAQAP3/AAAFAAQAAAAQAP//AAAFAAQAAAAQAAAAAAAFAAQAAAARAAAAAAAFAAMAAAARAAEAAAAFAAQAAAAJAPv/AAAFAAMAAAAKAPv/AAAGAAMAAAALAPv/AAAFAAQAAAAMAPv/AAAFAAQAAAANAPv/AAAFAAMAAAAOAPv/AAAFAAMAAAAQAPv/AAAGAAMAAAAQAAEAAAAGAAMAAAAQAAIAAAAFAAMAAAARAPv/AAAGAAMAAAARAPz/AAAFAAQAAAARAP3/AAAFAAMAAAARAP7/AAAGAAMAAAARAP//AAAFAAQAAAARAAIAAAAFAAQAAAADAAQAAAACAAMAAAAEAAQAAAACAAMAAAAFAAQAAAACAAMAAAAGAAQAAAACAAMAAAAHAAQAAAACAAMAAAAIAAQAAAACAAMAAAAJAAQAAAACAAMAAAAKAAQAAAACAAMAAAALAAQAAAACAAMAAAAMAAQAAAACAAMAAAANAAQAAAACAAMAAAAOAAQAAAACAAMAAAAOAAUAAAACAAMAAAAPAAQAAAACAAMAAAAPAAUAAAACAAMAAAAQAAQAAAACAAMAAAAQAAUAAAACAAMAAAARAAQAAAACAAMAAAARAAUAAAACAAMAAAADAAUAAAACAAMAAAADAAYAAAACAAMAAAADAAcAAAACAAMAAAAEAAUAAAACAAMAAAAEAAYAAAACAAMAAAAEAAcAAAACAAMAAAAFAAUAAAACAAMAAAAFAAYAAAACAAMAAAAFAAcAAAACAAMAAAAGAAUAAAACAAMAAAAGAAYAAAACAAMAAAAGAAcAAAACAAMAAAAHAAUAAAACAAMAAAAHAAYAAAACAAMAAAAHAAcAAAACAAMAAAAIAAUAAAACAAMAAAAIAAYAAAACAAMAAAAIAAcAAAACAAMAAAAJAAUAAAACAAMAAAAJAAYAAAACAAMAAAAJAAcAAAACAAMAAAAKAAUAAAACAAMAAAAKAAYAAAACAAMAAAAKAAcAAAACAAMAAAALAAUAAAACAAMAAAALAAYAAAACAAMAAAALAAcAAAACAAMAAAAMAAUAAAACAAMAAAAMAAYAAAACAAMAAAAMAAcAAAACAAMAAAANAAUAAAACAAMAAAANAAYAAAACAAMAAAANAAcAAAACAAMAAAAOAAYAAAACAAMAAAAOAAcAAAACAAMAAAAPAAYAAAACAAMAAAAPAAcAAAACAAMAAAAQAAYAAAACAAMAAAAQAAcAAAACAAMAAAARAAYAAAACAAMAAAARAAcAAAACAAMAAAAkAAIAAAAFAAQAAAAkAAMAAAAFAAQAAAAlAAIAAAAFAAQAAAAlAAMAAAAFAAQAAAAmAAIAAAAFAAQAAAAkAAQAAAACAAMAAAAlAAQAAAACAAMAAAAmAAQAAAACAAMAAAAmAAEAAAAFAAQAAAAkAAEAAAAFAAQAAAAlAAEAAAAFAAQAAAAnAAIAAQAJAAcAAAAnAAEAAQAHAAUAAAA=")
+tile_set = ExtResource("6_00ewg")
+script = ExtResource("7_kflin")
+
+[node name="CliffMarkers" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler/Elevation1"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAD8/wMAAQAGAAQAAAD9/wMAAQAGAAQAAAD+/wMAAQAGAAQAAAD//wMAAQAGAAQAAAAAAAMAAQAGAAQAAAABAAMAAQAGAAQAAAACAAMAAQAGAAQAAAADAAMAAQAGAAQAAAAEAAMAAQAGAAQAAAAFAAMAAQAGAAQAAAAGAAMAAQAGAAQAAAAHAAMAAQAGAAQAAAAIAAMAAQAGAAQAAAAJAAMAAQAGAAQAAAAKAAMAAQAGAAQAAAALAAMAAQAGAAQAAAAMAAMAAQAGAAQAAAANAAMAAQAGAAQAAAAOAAMAAQAGAAQAAAAPAAMAAQAGAAQAAAAQAAMAAQAGAAQAAAD7/wMAAQABAAcAAAARAAMAAQAIAAcAAAASAAMAAQAJAAcAAAASAAIAAQAJAAYAAAARAAIAAQAIAAYAAAASAAEAAQAJAAUAAAASAP7/AQAJAAIAAAASAP3/AQAHAAUAAAASAPz/AQAHAAUAAAASAPv/AQAJAAEAAAASAPr/AQAJAAAAAAARAPr/AQAIAAAAAAARAPv/AQAIAAEAAAD8//r/AQAHAAAAAAD9//r/AQAHAAAAAAD+//r/AQAHAAAAAAD///r/AQAHAAAAAAAAAPr/AQAHAAAAAAABAPr/AQAHAAAAAAACAPr/AQAHAAAAAAADAPr/AQAHAAAAAAAEAPr/AQAHAAAAAAAFAPr/AQAHAAAAAAAGAPr/AQAHAAAAAAAHAPr/AQAHAAAAAAAIAPr/AQAHAAAAAAAJAPr/AQAHAAAAAAAKAPr/AQAHAAAAAAALAPr/AQAHAAAAAAAMAPr/AQAHAAAAAAANAPr/AQAHAAAAAAAOAPr/AQAHAAAAAAAPAPr/AQAHAAAAAAAQAPr/AQAHAAAAAAD7//r/AQABAAAAAAD6//r/AQAAAAAAAAD6//v/AQAAAAEAAAD7//v/AQABAAEAAAD6//z/AQAFAAUAAAD6//3/AQAFAAUAAAD6//7/AQAFAAUAAAD6////AQAFAAUAAAD6/wAAAQAFAAUAAAD6/wEAAQAFAAUAAAD6/wIAAQAFAAUAAAD6/wMAAQAAAAcAAAD7/wIAAQABAAYAAAARAP//AQAGAAMAAAASAAAAAQAJAAQAAAASAP//AQAJAAMAAAARAAAAAQAGAAMAAAAlAAMAAQACAAcAAAAmAAMAAQAJAAcAAAAmAAIAAQAGAAQAAAAkAAMAAQACAAcAAAAkAAIAAQACAAcAAAAkAAEAAQACAAcAAAAlAAEAAQACAAcAAAAjAAMAAQAAAAcAAAAjAAIAAQAAAAYAAAAjAAEAAQAAAAYAAAAnAAEAAQAJAAEAAAAmAAEAAQAIAAEAAAAmAAAAAQAIAAAAAAAnAAAAAQAJAAAAAAA=")
+tile_set = ExtResource("6_00ewg")
+
+[node name="Decor" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler/Elevation1"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAARAP//AQAGAAIAAAARAAAAAQAFAAIAAAA=")
+tile_set = ExtResource("6_00ewg")
+
+[node name="PoplarTree" parent="WorldManager/TerrainRulesHandler/Elevation1" instance=ExtResource("14_lhsa0")]
+position = Vector2(-50, -124)
+
+[node name="Elevation2" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler"]
+y_sort_enabled = true
+use_parent_material = true
+position = Vector2(2, -4)
+tile_map_data = PackedByteArray("AAADAAYAAAACAAMAAAADAAcAAAACAAMAAAAEAAYAAAACAAMAAAAEAAcAAAACAAMAAAAFAAYAAAACAAMAAAAFAAcAAAACAAMAAAAGAAYAAAACAAMAAAAGAAcAAAACAAMAAAAHAAYAAAACAAMAAAAHAAcAAAACAAMAAAAIAAYAAAACAAMAAAAIAAcAAAACAAMAAAAJAAYAAAACAAMAAAAJAAcAAAACAAMAAAAKAAYAAAACAAMAAAAKAAcAAAACAAMAAAALAAYAAAACAAMAAAALAAcAAAACAAMAAAAMAAYAAAACAAMAAAAMAAcAAAACAAMAAAANAAYAAAACAAMAAAANAAcAAAACAAMAAAAOAAYAAAACAAMAAAAOAAcAAAACAAMAAAAPAAYAAAACAAMAAAAPAAcAAAACAAMAAAAQAAYAAAACAAMAAAAQAAcAAAACAAMAAAARAAYAAAACAAMAAAARAAcAAAACAAMAAAAkAAEAAAAFAAQAAAA=")
+tile_set = ExtResource("6_00ewg")
+script = ExtResource("7_kflin")
+
+[node name="CliffMarkers" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler/Elevation2"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAkAAIAAQABAAcAAAAjAAIAAQAAAAcAAAAjAAEAAQAAAAYAAAAjAAMAAQAAAAYAAAAlAAIAAQAJAAcAAAAlAAEAAQAHAAUAAAAkAAAAAQAHAAcAAAAlAAAAAQAHAAcAAAAjAAAAAQAAAAYAAAA=")
+tile_set = ExtResource("6_00ewg")
+
+[node name="Decor" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler/Elevation2"]
+y_sort_enabled = true
+tile_set = ExtResource("6_00ewg")
+
+[node name="Elevation3" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler"]
+y_sort_enabled = true
+use_parent_material = true
+position = Vector2(1, -2)
+tile_map_data = PackedByteArray("AAAOAAUAAAACAAMAAAAPAAUAAAACAAMAAAAQAAUAAAACAAMAAAARAAUAAAACAAMAAAADAAUAAAACAAMAAAADAAYAAAACAAMAAAADAAcAAAACAAMAAAAEAAUAAAACAAMAAAAEAAYAAAACAAMAAAAEAAcAAAACAAMAAAAFAAUAAAACAAMAAAAFAAYAAAACAAMAAAAFAAcAAAACAAMAAAAGAAUAAAACAAMAAAAGAAYAAAACAAMAAAAGAAcAAAACAAMAAAAHAAUAAAACAAMAAAAHAAYAAAACAAMAAAAHAAcAAAACAAMAAAAIAAUAAAACAAMAAAAIAAYAAAACAAMAAAAIAAcAAAACAAMAAAAJAAUAAAACAAMAAAAJAAYAAAACAAMAAAAJAAcAAAACAAMAAAAKAAUAAAACAAMAAAAKAAYAAAACAAMAAAAKAAcAAAACAAMAAAALAAUAAAACAAMAAAALAAYAAAACAAMAAAALAAcAAAACAAMAAAAMAAUAAAACAAMAAAAMAAYAAAACAAMAAAAMAAcAAAACAAMAAAANAAUAAAACAAMAAAANAAYAAAACAAMAAAANAAcAAAACAAMAAAAOAAYAAAACAAMAAAAOAAcAAAACAAMAAAAPAAYAAAACAAMAAAAPAAcAAAACAAMAAAAQAAYAAAACAAMAAAAQAAcAAAACAAMAAAARAAYAAAACAAMAAAARAAcAAAACAAMAAAAkAP//AAAFAAQAAAAlAP//AAAFAAQAAAA=")
+tile_set = ExtResource("6_00ewg")
+script = ExtResource("7_kflin")
+
+[node name="CliffMarkers" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler/Elevation3"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAkAAAAAQABAAcAAAAlAAAAAQAIAAcAAAAmAAAAAQAJAAcAAAAjAAAAAQAAAAcAAAAjAP//AQAAAAEAAAAmAP//AQAEAAUAAAAkAP7/AQABAAAAAAAlAP7/AQAIAAAAAAAmAP7/AQAJAAAAAAAjAP7/AQAAAAAAAAAkAP//AQABAAEAAAAlAP//AQAIAAEAAAA=")
+tile_set = ExtResource("6_00ewg")
+
+[node name="Decor" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler/Elevation3"]
+y_sort_enabled = true
+tile_set = ExtResource("6_00ewg")
+
+[node name="TempChest" parent="WorldManager" groups=["closeable_menu"] instance=ExtResource("9_3yqre")]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(92, -83)
+scale = Vector2(2.15625, 2.46875)
+
+[node name="TempDialogueTester" parent="WorldManager" instance=ExtResource("11_24i8v")]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(-201, 13)
+scale = Vector2(3.145, 3.145)
+
+[node name="Carrot" parent="WorldManager" instance=ExtResource("13_6mjwj")]
+position = Vector2(160, 0)
+
+[node name="Cabbage" parent="WorldManager" instance=ExtResource("13_jk7w3")]
+position = Vector2(381, 0)
+
+[node name="EntityManager" type="Node2D" parent="."]
+editor_description = "Holds things with AI- player, npcs, enemies, etc"
+y_sort_enabled = true
+script = ExtResource("8_3dv0o")
+
+[node name="Player" parent="EntityManager" groups=["enemy_target"] instance=ExtResource("1_vlfca")]
+z_index = 1
+position = Vector2(3, 1)
+scale = Vector2(0.37, 0.37)
+inventory_data = ExtResource("3_xku57")
+speed = 210
+dash_length = 0.4
+
+[node name="Camera2D" type="Camera2D" parent="EntityManager/Player"]
+position = Vector2(1.49012e-08, -10.25)
+scale = Vector2(0.259594, 0.246314)
+position_smoothing_enabled = true
+
+[node name="DustBunny" parent="EntityManager" instance=ExtResource("17_6hk27")]
+position = Vector2(-254, -264)
+scale = Vector2(0.335, 0.335)
+
+[node name="PickupManager" type="Node2D" parent="."]
+editor_description = "Holds pickups"
+script = ExtResource("10_d5qv3")
+
+[node name="PickUp" parent="PickupManager" instance=ExtResource("13_pouw6")]
+position = Vector2(104, -177)
+slot_data = SubResource("Resource_qmoje")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="EntityInterface" parent="UI" instance=ExtResource("20_vmo70")]
+
+[node name="InventoryInterface" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_uons4")
+
+[node name="PlayerInventory" parent="UI/InventoryInterface" instance=ExtResource("4_kq4io")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.489583
+anchor_top = 0.439814
+anchor_right = 0.510417
+anchor_bottom = 0.476852
+offset_right = 6.10352e-05
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ExternalInventory" parent="UI/InventoryInterface" instance=ExtResource("4_kq4io")]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0963542
+anchor_top = 0.225
+anchor_right = 0.252604
+anchor_bottom = 0.687963
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GrabbedSlot" parent="UI/InventoryInterface" instance=ExtResource("8_pioji")]
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+
+[node name="PlayerInterface" parent="UI/InventoryInterface" instance=ExtResource("19_l4305")]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.729167
+anchor_top = 0.246296
+anchor_right = 0.729167
+anchor_bottom = 0.246296
+grow_horizontal = 0
+
+[node name="DataTabs" parent="UI/InventoryInterface" instance=ExtResource("20_eexrm")]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.00260417
+anchor_top = 0.269444
+anchor_right = 0.00260417
+anchor_bottom = 0.269444
+grow_horizontal = 1
+scale = Vector2(1.80617, 2.17431)
+metadata/_edit_use_anchors_ = true
+
+[node name="HotBarInventory" parent="UI" instance=ExtResource("16_j6efu")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -294.0
+offset_top = -100.0
+offset_right = -294.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.00152, 1)
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="OptionsMenu" parent="UI" instance=ExtResource("20_fjp20")]
+visible = false
+script = ExtResource("28_uohxa")
+
+[node name="SaverLoader" type="Node2D" parent="."]
+script = ExtResource("17_d5xvq")
+player = ExtResource("20_6aqm4")
+story = ExtResource("21_hwjbe")
+
+[connection signal="drop_slot_data_into_world" from="UI/InventoryInterface" to="PickupManager" method="_on_inventory_interface_drop_slot_data_into_world"]
+[connection signal="gui_input" from="UI/InventoryInterface" to="UI/InventoryInterface" method="_on_gui_input"]
+[connection signal="visibility_changed" from="UI/InventoryInterface" to="UI/InventoryInterface" method="_on_visibility_changed"]

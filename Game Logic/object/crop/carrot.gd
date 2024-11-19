@@ -1,2 +1,2 @@
 extends Crop
-class_name Carrot
+class_name CarrotCrop

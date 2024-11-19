@@ -12,12 +12,13 @@ region = Rect2(96, 320, 32, 32)
 [resource]
 script = ExtResource("1_mh6wh")
 efficiency = 0
-type = 0
-name = ""
+type = 2
+name = "Hoe"
 description = ""
 magical = false
 magicalDescription = ""
 stackable = false
 texture = SubResource("AtlasTexture_7ecy5")
+placeable = false
 value = 1
 rarity = 1

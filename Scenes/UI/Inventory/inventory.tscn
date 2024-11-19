@@ -1,18 +1,33 @@
-[gd_scene load_steps=2 format=3 uid="uid://dqm8g7yybo0pf"]
+[gd_scene load_steps=4 format=3 uid="uid://dqm8g7yybo0pf"]
 
 [ext_resource type="Script" path="res://Game Logic/inventory/inventory.gd" id="1_kckvy"]
+[ext_resource type="Texture2D" uid="uid://bw0qgv05w5uhj" path="res://Assets/GUI/blank_panel.png" id="1_qxkyu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_c1l6r"]
 
 [node name="Inventory" type="PanelContainer"]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 400.0
+offset_bottom = 400.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_c1l6r")
 script = ExtResource("1_kckvy")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
 layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
+texture = ExtResource("1_qxkyu")
+patch_margin_left = 100
+patch_margin_top = 100
+patch_margin_right = 100
+patch_margin_bottom = 100
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(300, 500)
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
 
 [node name="ItemGrid" type="GridContainer" parent="MarginContainer"]
 layout_mode = 2

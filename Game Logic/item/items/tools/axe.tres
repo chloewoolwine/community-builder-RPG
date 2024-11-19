@@ -19,5 +19,6 @@ magical = false
 magicalDescription = ""
 stackable = false
 texture = SubResource("AtlasTexture_7ecy5")
+placeable = false
 value = 1
 rarity = 1

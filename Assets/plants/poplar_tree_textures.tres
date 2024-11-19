@@ -1,0 +1,6 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://bkjvfrvehujjc"]
+
+[ext_resource type="Texture2D" uid="uid://m140rxw0ug17" path="res://Assets/plants/poplar_tree.png" id="1_uuxg5"]
+
+[resource]
+atlas = ExtResource("1_uuxg5")

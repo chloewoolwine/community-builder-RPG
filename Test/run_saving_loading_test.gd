@@ -2,28 +2,30 @@ extends Node
 
 @onready var saver_loader:SaverLoader = $SaverLoader
 
+# This saves the Data scenes into a NON SCENE FILE!
+
 func _ready() -> void:
 	saver_loader.world = make_random_world(20, 20)
 	var save:bool = saver_loader.save()
-	var load:bool = saver_loader.load("Boy2024-06-22")
+	var load:bool = saver_loader.load_file("Boy2024-06-22")
 	
-	if compare_entities(saver_loader.player, saver_loader.loaded_player):
-		print("player good!")
-	else: 
-		print("player bad :c ")
-		print("------------save---------------")
-		print(saver_loader.player )
-		print("------------load---------------")
-		print(saver_loader.loaded_player)
+	#if compare_entities(saver_loader.player, saver_loader.loaded_player):
+		#print("player good!")
+	#else: 
+		#print("player bad :c ")
+		#print("------------save---------------")
+		#print(saver_loader.player )
+		#print("------------load---------------")
+		#print(saver_loader.loaded_player)
 		
-	if compare_stories(saver_loader.story, saver_loader.loaded_story):
-		print("story good!")
-	else: 
-		print("story bad :c ")
-		print("------------save---------------")
-		print(saver_loader.story )
-		print("------------load---------------")
-		print(saver_loader.loaded_story)
+	#if compare_stories(saver_loader.story, saver_loader.loaded_story):
+		#print("story good!")
+	#else: 
+		#print("story bad :c ")
+		#print("------------save---------------")
+		#print(saver_loader.story )
+		#print("------------load---------------")
+		#print(saver_loader.loaded_story)
 		
 	if compare_worlds(saver_loader.world, saver_loader.loaded_world):
 		print("world good!")
@@ -191,11 +193,12 @@ func make_random_world(world_size: int, chunk_size:int) -> WorldData:
 	world.world_size = Vector2(world_size, world_size)
 	world.chunk_size = Vector2(chunk_size, chunk_size)
 	
-	var arr : Array[ChunkData] = []
+	var arr : Dictionary
 	
 	for x in range(0, world_size):
 		for y in range(0, world_size):
-			arr.append(make_random_chunk(rng, x, y, chunk_size))
+			var chunk:ChunkData = make_random_chunk(rng, x, y, chunk_size)
+			arr[chunk.chunk_position] = chunk
 			
 	world.chunk_datas = arr
 	

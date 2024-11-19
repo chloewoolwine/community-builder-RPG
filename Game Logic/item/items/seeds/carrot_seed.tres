@@ -11,7 +11,7 @@ region = Rect2(10.1037, 127.9, 36.3397, 32.1264)
 
 [resource]
 script = ExtResource("1_hp4jn")
-plant_name = "Carrot"
+plant_name = "carrot"
 spring = true
 summer = false
 autumn = true
@@ -22,5 +22,6 @@ magical = false
 magicalDescription = ""
 stackable = true
 texture = SubResource("AtlasTexture_p88em")
+placeable = true
 value = 1
 rarity = 1

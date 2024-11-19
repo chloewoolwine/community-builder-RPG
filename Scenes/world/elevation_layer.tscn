@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=3 uid="uid://1b78ipp0k2t8"]
+
+[ext_resource type="TileSet" uid="uid://c8n6wdgsbpml0" path="res://Scenes/world/tilesets/ruined_plains_biome.tres" id="1_t8v4r"]
+[ext_resource type="Script" path="res://Game Logic/world/elevation_layer.gd" id="2_xeqao"]
+[ext_resource type="Script" path="res://Plugins/TileMapDual.gd" id="3_sc88q"]
+
+[node name="Elevation0" type="TileMapLayer"]
+use_parent_material = true
+tile_set = ExtResource("1_t8v4r")
+script = ExtResource("2_xeqao")
+
+[node name="Base" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
+position = Vector2(-32, -32)
+tile_set = ExtResource("1_t8v4r")
+script = ExtResource("3_sc88q")
+world_tilemap = NodePath("..")
+use_external_atlas_id = true
+external_atlas_id = 3
+is_base_layer = true
+
+[node name="Pond" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
+position = Vector2(-32, -32)
+tile_set = ExtResource("1_t8v4r")
+script = ExtResource("3_sc88q")
+world_tilemap = NodePath("..")
+use_external_atlas_id = true
+external_atlas_id = 4
+
+[node name="Sand" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
+position = Vector2(-32, -32)
+tile_set = ExtResource("1_t8v4r")
+script = ExtResource("3_sc88q")
+world_tilemap = NodePath("..")
+use_external_atlas_id = true
+external_atlas_id = 2
+
+[node name="Till" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
+position = Vector2(-32, -32)
+tile_set = ExtResource("1_t8v4r")
+script = ExtResource("3_sc88q")
+world_tilemap = NodePath("..")
+use_external_atlas_id = true
+external_atlas_id = 8
+
+[node name="Grass" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
+position = Vector2(-32, -32)
+tile_set = ExtResource("1_t8v4r")
+script = ExtResource("3_sc88q")
+world_tilemap = NodePath("..")
+use_external_atlas_id = true
+external_atlas_id = 2
+
+[node name="Stone" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
+position = Vector2(-32, -32)
+tile_set = ExtResource("1_t8v4r")
+script = ExtResource("3_sc88q")
+world_tilemap = NodePath("..")
+use_external_atlas_id = true
+external_atlas_id = 6
+
+[node name="Decor" type="TileMapLayer" parent="."]

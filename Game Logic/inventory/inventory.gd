@@ -20,6 +20,7 @@ class_name GenericInventoryDisplay
 const slot_scene = preload("res://Scenes/UI/Inventory/slot.tscn")
 
 @onready var item_grid: GridContainer = $MarginContainer/ItemGrid
+#@onready var item_grid: GridContainer = $ItemGrid
 
 func set_inventory_data(inventory_data: InventoryData) -> void:
 	inventory_data.inventory_updated.connect(populate_item_grid)

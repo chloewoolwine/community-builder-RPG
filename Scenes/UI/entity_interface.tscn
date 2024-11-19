@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b2sgcn3ke8bos"]
 
 [ext_resource type="Script" path="res://Game Logic/entity/GUIinteracters/entity_interface.gd" id="1_glyp4"]
-[ext_resource type="Script" path="res://Game Logic/entity/GUIinteracters/conversation_controller.gd" id="2_s0qjy"]
+[ext_resource type="Texture2D" uid="uid://bw0qgv05w5uhj" path="res://Assets/GUI/blank_panel.png" id="3_23afy"]
 
 [node name="EntityInterface" type="Control"]
 layout_mode = 3
@@ -12,26 +12,38 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_glyp4")
 
-[node name="ConversationController" type="PanelContainer" parent="."]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -521.0
-offset_top = -201.0
-offset_right = -35.0
-offset_bottom = -119.0
-grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(2.14912, 1.99268)
-script = ExtResource("2_s0qjy")
-
-[node name="RichTextLabel" type="RichTextLabel" parent="ConversationController"]
+[node name="NinePatchRect2" type="NinePatchRect" parent="."]
 layout_mode = 2
+offset_left = 412.0
+offset_top = 766.0
+offset_right = 1499.0
+offset_bottom = 1122.0
+scale = Vector2(1, 0.759998)
+texture = ExtResource("3_23afy")
+patch_margin_left = 100
+patch_margin_top = 100
+patch_margin_right = 100
+patch_margin_bottom = 100
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+offset_left = 474.0
+offset_top = 813.0
+offset_right = 1446.0
+offset_bottom = 997.0
 mouse_filter = 1
-text = "This will be some dialogue, one day"
+theme_override_font_sizes/normal_font_size = 32
+text = "I dont know what to write here but i need to write something long in order to test the text box, so here it is, here is the really long line of text. can i be done now? it looks kinda ugly but i dont know enough about graphic design to fix it. 
+"
+fit_content = true
 scroll_active = false
 
-[connection signal="gui_input" from="ConversationController" to="ConversationController" method="_on_gui_input"]
+[node name="ConversationButton" type="Button" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 1918.0
+offset_bottom = 1075.0
+
+[connection signal="pressed" from="ConversationButton" to="." method="_on_conversation_button_pressed"]

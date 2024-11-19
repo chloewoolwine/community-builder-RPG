@@ -1,8 +1,11 @@
 extends Node2D
-class_name TempEntity
+class_name Entity
 
-signal toggle_menu(entity: TempEntity)
+signal toggle_menu(entity: Entity)
+@onready var interaction_hitbox:InteractionHitbox = $InteractionHitbox
 
-# Called when the node enters the scene tree for the first time.
-func player_interact() -> void:
+func _ready() -> void:
+	interaction_hitbox.player_interacted.connect(emit_menu_toggle)
+	
+func emit_menu_toggle(_hitbox: InteractionHitbox) -> void:
 	toggle_menu.emit(self)

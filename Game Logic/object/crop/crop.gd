@@ -7,9 +7,15 @@ signal spawn_pickups(spawnpoint: Vector2, datas: Array[ItemData])
 
 @onready var plant_appearance : PlantApperance= $PlantAppearance
 @onready var plant_component : PlantComponent= $PlantComponent
+@onready var interaction_hitbox : InteractionHitbox = $InteractionHitbox
 
 func _ready() -> void:
 	plant_component.change_stage.connect(plant_appearance.change_growth_stage)
+	interaction_hitbox.player_interacted.connect(checkForHarvest)
+	
+func checkForHarvest(_hitbox: InteractionHitbox) -> void:
+	if plant_component.mature:
+		harvest()
 
 func harvest() -> void:
 	plant_appearance.playharvestanim()

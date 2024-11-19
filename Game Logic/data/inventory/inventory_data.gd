@@ -18,10 +18,7 @@ func setOwner(_owner) -> void:
 #SHOULD ONLY BE an entities inventory... 
 func use_slot_data(index: int) -> void:
 	var slot_data:SlotData = slot_datas[index]
-	print(slot_data)
-	if !slot_data || index > 6:
-		return
-	print(index)
+	#print("inventory_data.use_slot_data; slot=", index)
 	
 	owner.equip_item(slot_data)
 	inventory_updated.emit(self)
