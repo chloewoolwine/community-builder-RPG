@@ -6,13 +6,13 @@ extends Control
 @onready var camera_2d: Camera2D = $"../../Camera2D"
 
 @export var camera_zooms : Array[float]
-var curr_zoom : int = 0
+var curr_zoom : int = 1
 
 var paint: bool = false
 var erase: bool = false
 
 func _ready() -> void:
-	file_dialog.file_selected.connect(func(filename: String) -> void: world_manager.world_data = ResourceLoader.load(filename, "WorldData"))
+	file_dialog.file_selected.connect(func(filename: String) -> void: world_manager.set_world_data(ResourceLoader.load(filename, "WorldData")))
 	file_dialog_2.file_selected.connect(func(filename: String) -> void:
 			#print("filename: ", filename) 
 			if(!filename.ends_with(".tres")):

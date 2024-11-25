@@ -8,7 +8,6 @@ func _ready() -> void:
 	self.zoom.x = control.camera_zooms[control.curr_zoom]
 	self.zoom.y = control.camera_zooms[control.curr_zoom]
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	self.zoom.x = control.camera_zooms[control.curr_zoom]
@@ -38,4 +37,4 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_released('down'):
 		input.y = 0
 	if can_move:
-		position += input * speed
+		position += input * speed * control.camera_zooms[abs(control.camera_zooms.size()- 1 - control.curr_zoom)]

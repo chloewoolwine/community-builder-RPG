@@ -1,0 +1,57 @@
+[gd_resource type="TileSet" load_steps=6 format=3 uid="uid://daplxp32jm5hh"]
+
+[ext_resource type="Shader" path="res://Game Logic/shaders/tilemap/red_shader.gdshader" id="1_2m0y2"]
+[ext_resource type="Texture2D" uid="uid://dbxri2o2co5ub" path="res://Assets/Testy Assets/water_texture.png" id="5_0jnm5"]
+[ext_resource type="Texture2D" uid="uid://xrkqjde0b3tn" path="res://Assets/tiles/ruined_fields/water_lonesome.png" id="12_lj1t0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8w8xe"]
+shader = ExtResource("1_2m0y2")
+shader_parameter/scale = 0.00694444
+shader_parameter/overlay_tex = ExtResource("5_0jnm5")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_goin5"]
+texture = ExtResource("12_lj1t0")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+0:0/0/material = SubResource("ShaderMaterial_8w8xe")
+1:0/0 = 0
+1:0/0/material = SubResource("ShaderMaterial_8w8xe")
+3:0/0 = 0
+3:0/0/material = SubResource("ShaderMaterial_8w8xe")
+0:1/0 = 0
+0:1/0/material = SubResource("ShaderMaterial_8w8xe")
+1:1/0 = 0
+1:1/0/material = SubResource("ShaderMaterial_8w8xe")
+3:1/0 = 0
+3:1/0/material = SubResource("ShaderMaterial_8w8xe")
+0:2/0 = 0
+0:2/0/material = SubResource("ShaderMaterial_8w8xe")
+1:2/0 = 0
+1:2/0/material = SubResource("ShaderMaterial_8w8xe")
+2:2/0 = 0
+2:2/0/material = SubResource("ShaderMaterial_8w8xe")
+3:2/0 = 0
+3:2/0/material = SubResource("ShaderMaterial_8w8xe")
+0:3/0 = 0
+0:3/0/material = SubResource("ShaderMaterial_8w8xe")
+1:3/0 = 0
+1:3/0/material = SubResource("ShaderMaterial_8w8xe")
+2:3/0 = 0
+2:3/0/material = SubResource("ShaderMaterial_8w8xe")
+3:3/0 = 0
+3:3/0/material = SubResource("ShaderMaterial_8w8xe")
+2:0/0 = 0
+2:0/0/material = SubResource("ShaderMaterial_8w8xe")
+2:1/0 = 0
+
+[resource]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 0
+physics_layer_1/collision_layer = 256
+physics_layer_1/collision_mask = 0
+physics_layer_2/collision_layer = 64
+physics_layer_2/collision_mask = 0
+custom_data_layer_0/name = "type"
+custom_data_layer_0/type = 4
+sources/0 = SubResource("TileSetAtlasSource_goin5")

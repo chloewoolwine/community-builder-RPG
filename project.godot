@@ -122,8 +122,3 @@ dash={
 2d_physics/layer_11="elevation1"
 2d_physics/layer_12="elevation2"
 2d_physics/layer_13="elevation3"
-
-[rendering]
-
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"

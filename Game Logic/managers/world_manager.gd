@@ -6,90 +6,79 @@ class_name WorldManager
 signal crop_placed(crop: Crop)
 #signal plant_placed(crop: Crop)
 
-@export var world_data: WorldData:
-	set(value):
-		world_data = value
-		set_world_data(value)
+@export var _world_data: WorldData
 @export var world_edit_mode: bool = false
 @export var load_chunks: bool = false
 @export var unload_chunks: bool = false
-@onready var terrain_rules_handler: TerrainRulesHandler = $TerrainRulesHandler
+@onready var trh: TerrainRulesHandler = $TerrainRulesHandler
 
 var player: Player
-var loaded_chunks: Dictionary
 
 func _ready() -> void:
-	terrain_rules_handler.chunk_loaded.connect(set_chunk_loaded)
-	terrain_rules_handler.chunk_unloaded.connect(set_chunk_unloaded)
-	
-	if(world_data != null):
-		set_world_data(world_data)
+	if(_world_data != null):
+		set_world_data(_world_data)
 
 func _process(_delta: float) -> void:
-	if world_data:
+	## TODO... do this maybe 1/10 frames or smthn
+	if _world_data:
 		if world_edit_mode:
 			load_and_unload_chunks_surronding_point($"../Camera2D".get_global_position())
+			#load_all_chunks()
 		elif player and load_chunks:
 			load_and_unload_chunks_surronding_point(player.get_global_position())
 	
 func set_world_data(new_world: WorldData) -> void:
-	print("world data recieved, new world seed: ", new_world.world_seed, " \n chunks to unload: ", loaded_chunks.keys(), " \n number of new chunks: ", new_world.chunk_datas.size())
-	terrain_rules_handler.unload_set_of_chunks(loaded_chunks)
-	while(loaded_chunks.size() > 0):
+	#print("world data recieved, new world seed: ", new_world.world_seed, " \n chunks to unload: ", loaded_chunks.keys(), " \n number of new chunks: ", new_world.chunk_datas.size())
+	trh.unload_all_chunks()
+	while(trh.loaded_chunks.size() > 0):
 		pass #this is silly but idk how else to do it and i dont feel like looking it up
-	print("new world chunk datas: ", new_world.chunk_datas)
+	#print("new world chunk datas: ", new_world.chunk_datas)
+	_world_data = new_world
 	
-func set_chunk_unloaded(chunk: ChunkData) -> void:
-	#print("chunk is unloaded: ", chunk.chunk_position)
-	loaded_chunks.erase(chunk.chunk_position)
-	
-func set_chunk_loaded(chunk: ChunkData) -> void:
-	loaded_chunks[chunk.chunk_position] = chunk
-	#print("world data chunks afer loading: ", world_data.chunk_datas[chunk.chunk_position])
-	#print("chunk is loaded: ", chunk.chunk_position)
+func load_all_chunks() -> void:
+	if load_chunks:
+		trh.populate_set_of_chunks(_world_data.chunk_datas)
 	
 func load_and_unload_chunks_surronding_point(point: Vector2) -> void:
-	var surronding_chunks:Array[Vector2i] = get_chunks_surronding_point(point)
-	var chunks_to_load:Dictionary
+	var surronding_chunks:Array[Vector2i] = get_chunks_around_point(point, 2)
 	for chunk:Vector2i in surronding_chunks:
-		if !loaded_chunks.has(chunk) && world_data.chunk_datas.has(chunk):
-			chunks_to_load[chunk] = world_data.chunk_datas[chunk]
+		if load_chunks && !trh.loaded_chunks.has(chunk) && _world_data.chunk_datas.has(chunk) && !trh.chunks_in_loading.has(chunk):
+			#print("load chunk ", chunk)
+			trh.load_chunk(chunk, _world_data.chunk_datas[chunk])
+			return
 			
-	var chunks_to_unload:Dictionary
-	for loaded_chunk:Vector2i in loaded_chunks:
-		if !surronding_chunks.has(loaded_chunk):
-			chunks_to_unload[loaded_chunk] = loaded_chunks[loaded_chunk]
+	for chunk:Vector2i in trh.loaded_chunks:
+		if unload_chunks && !surronding_chunks.has(chunk):
+			#print("unload chunk ", chunk)
+			trh.unload_chunk(chunk, trh.loaded_chunks[chunk])
+			return
 
-	if load_chunks:
-		terrain_rules_handler.populate_set_of_chunks(chunks_to_load)
-	if unload_chunks:
-		terrain_rules_handler.unload_set_of_chunks(chunks_to_unload)
-
-func get_chunks_surronding_point(pos: Vector2) -> Array[Vector2i]:
-	var tileset_pos:Vector2i = terrain_rules_handler.get_tileset_pos_from_global(pos)
-	#print("tileset_pos = ", tileset_pos)
-	var player_chunk:Vector2i = tileset_pos/world_data.chunk_size
-	if tileset_pos.x < 0:
+func get_chunks_around_point(pos: Vector2, dist:int) -> Array[Vector2i]:
+	var tileset_pos:Vector2i = trh.get_tileset_pos_from_global(pos)
+	var player_chunk:Vector2i = tileset_pos/_world_data.chunk_size
+	if tileset_pos.x <= 0:
 		player_chunk.x -= 1
-	if tileset_pos.y < 0:
+	if tileset_pos.y <= 0:
 		player_chunk.y -= 1
 	
+	var arr: Array[Vector2i]
+	for x in range(dist * -1, dist+1):
+		for y in range(dist * -1, dist+1):
+			arr.append(player_chunk + Vector2i(x, y))
 	#print("player chunk = ", player_chunk)
-	
-	return [player_chunk, player_chunk + Vector2i(0, 1), player_chunk + Vector2i(0, -1), player_chunk + Vector2i(1, 0),
-	player_chunk + Vector2i(-1, 0), player_chunk + Vector2i(1, 1), player_chunk + Vector2i(-1, 1),
-	player_chunk + Vector2i(1, -1), player_chunk + Vector2i(-1, -1)]
+	#print("number of chunks: ", arr.size())
+	return arr
 	
 ## Callback function to send layer [int] to the function [callback]
 func give_requested_layer(layer:int, callback: Callable) -> void:
 	#print("requested layer: ", layer)
 	#print("callback func: ", callback.get_method())
 	if layer < 0:
-		callback.call(terrain_rules_handler.elevations[0])
-	elif layer > terrain_rules_handler.elevations.size():
-		callback.call(terrain_rules_handler.elevations[terrain_rules_handler.elevations.size()-1])
+		callback.call(trh.elevations[0])
+	elif layer > trh.elevations.size():
+		callback.call(trh.elevations[trh.elevations.size()-1])
 	else: 
-		callback.call(terrain_rules_handler.elevations[layer])
+		callback.call(trh.elevations[layer])
 
 #TODO: may have to change the name of "crop" component to just "plant"
 #and add crop functionality in another subclass
@@ -111,7 +100,7 @@ func check_placement_validity(ind: Indicator, player_spot:Vector2, player_layer:
 	if ind.global_position.distance_to(player_spot) > 400:
 		valid = false
 	
-	if player_layer != terrain_rules_handler.get_topmost_layer_at_pos(ind.global_position):
+	if player_layer != trh.get_topmost_layer_at_pos(ind.global_position):
 		valid = false
 	
 	#TODO: check tile type
@@ -119,29 +108,31 @@ func check_placement_validity(ind: Indicator, player_spot:Vector2, player_layer:
 	ind.valid_place = valid
 	return valid
 	
+# Shaders can take indicators job: 
+# https://www.youtube.com/watch?v=7nTQA_6CL6M
 func move_indicator(indicator: Indicator, player_spot: Vector2, item: ItemData)-> void:
 	var player_layer: ElevationLayer = player.elevation_handler.current_map_layer
 	indicator.global_position = player_layer.map_to_local(player_layer.local_to_map(get_global_mouse_position()))
 	check_placement_validity(indicator, player_spot, player_layer, item)
 	
 func save_world(path: String) -> void:
-	var save_result:Error = ResourceSaver.save(world_data, path)
+	var save_result:Error = ResourceSaver.save(_world_data, path)
 	if save_result != OK:
 		print(save_result)
 	
 func deep_copy_world_data() -> WorldData:
 	print("new wor;d")
 	var new_world : WorldData = WorldData.new()
-	new_world.world_seed = world_data.world_seed
-	new_world.chunk_size = world_data.chunk_size
-	new_world.world_size = world_data.world_size
+	new_world.world_seed = _world_data.world_seed
+	new_world.chunk_size = _world_data.chunk_size
+	new_world.world_size = _world_data.world_size
 	
 	var chunk_datas: Dictionary
 	## NEED TO CHECK LOADED CHUNKS TOO- this is the same dict as unloaded chnks
-	for chunk_loc:Vector2i in world_data.chunk_datas.keys():
+	for chunk_loc:Vector2i in _world_data.chunk_datas.keys():
 		print("Copying: ", chunk_loc)
-		var new_chunk:ChunkData = ChunkData.new()
-		var old_chunk:ChunkData = world_data.chunk_datas[chunk_loc]
+		var new_chunk:ChunkData = _world_data.new()
+		var old_chunk:ChunkData = _world_data.chunk_datas[chunk_loc]
 		new_chunk.chunk_size = Vector2i(old_chunk.chunk_size.x,old_chunk.chunk_size.y)
 		new_chunk.chunk_position = Vector2i(old_chunk.chunk_position.x,old_chunk.chunk_position.y)
 		new_chunk.biome = old_chunk.biome

@@ -13,7 +13,7 @@ class_name ChunkData
 ## then particle effects/entity spawns/music will be determined
 ## by the aggregate number of tile types. 
 ## like terraria!
-enum Biome{Dead, Forest}
+enum Biome{Dead, Forest, Deepforest, Wasteland, Shrubland, Cityscape, Grassland, EvilWetland, Wetland}
 @export var biome : Biome
 
 ## Entities that are in this chunk

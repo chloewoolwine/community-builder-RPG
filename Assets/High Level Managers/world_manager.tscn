@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Game Logic/managers/world_manager.gd" id="1_xmnj5"]
 [ext_resource type="Script" path="res://Game Logic/world/terrain_rules_handler.gd" id="2_gj8t5"]
 [ext_resource type="PackedScene" uid="uid://1b78ipp0k2t8" path="res://Scenes/world/elevation_layer.tscn" id="3_ksahs"]
-[ext_resource type="TileSet" uid="uid://c8n6wdgsbpml0" path="res://Scenes/world/tilesets/ruined_plains_biome.tres" id="4_e3ya2"]
+[ext_resource type="TileSet" uid="uid://c8n6wdgsbpml0" path="res://Scenes/world/ruined_plains_biome.tres" id="4_e3ya2"]
 [ext_resource type="PackedScene" uid="uid://ho7dtji22ka2" path="res://Scenes/objects/temp_chest.tscn" id="5_g5imk"]
 [ext_resource type="PackedScene" uid="uid://evpjtd4qv6g0" path="res://Scenes/Entities/temp_dialogue_tester.tscn" id="6_e5j4i"]
 [ext_resource type="PackedScene" uid="uid://ce2mxsx5h0vwk" path="res://Scenes/objects/crop/carrot.tscn" id="7_f5ogg"]

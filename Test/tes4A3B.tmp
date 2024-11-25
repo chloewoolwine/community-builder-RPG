@@ -1,28 +1,19 @@
-[gd_scene load_steps=29 format=4 uid="uid://cycrtln7ftflc"]
+[gd_scene load_steps=20 format=3 uid="uid://cycrtln7ftflc"]
 
 [ext_resource type="Script" path="res://Game Logic/managers/world_manager.gd" id="1_d3v3l"]
 [ext_resource type="Script" path="res://Test/temp_camera_script.gd" id="1_pg57c"]
 [ext_resource type="Script" path="res://Game Logic/world/terrain_rules_handler.gd" id="2_hk3wk"]
 [ext_resource type="Texture2D" uid="uid://dj8bni171no41" path="res://Assets/Testy Assets/map edit symbols/Asset 1@0.5x.png" id="2_lwt0r"]
 [ext_resource type="Script" path="res://Test/map_editor_control_menu.gd" id="3_4irie"]
-[ext_resource type="Resource" uid="uid://cvqj2o8tqs48t" path="res://Test/data/world_datas/wet_squares.tres" id="3_ev7jh"]
+[ext_resource type="Resource" uid="uid://cvqj2o8tqs48t" path="res://Test/data/world_datas/world9716.tres" id="3_ev7jh"]
+[ext_resource type="PackedScene" uid="uid://1b78ipp0k2t8" path="res://Scenes/world/elevation_layer.tscn" id="3_jtlpr"]
 [ext_resource type="Texture2D" uid="uid://b71ycp15yowwk" path="res://Assets/Testy Assets/map edit symbols/Asset 25@0.5x.png" id="4_jjck8"]
 [ext_resource type="Texture2D" uid="uid://oulwhnc8mhq5" path="res://Assets/Testy Assets/map edit symbols/Asset 18@0.5x.png" id="5_gjubd"]
-[ext_resource type="TileSet" uid="uid://bgvxhw7wfiv85" path="res://Scenes/world/tilesets/mapper.tres" id="5_pg4n0"]
-[ext_resource type="Script" path="res://Game Logic/world/elevation_layer.gd" id="6_2rclh"]
 [ext_resource type="Texture2D" uid="uid://dhy2mlw2rh1fm" path="res://Assets/Testy Assets/map edit symbols/Asset 17@0.5x.png" id="6_yxhyp"]
-[ext_resource type="TileSet" uid="uid://daplxp32jm5hh" path="res://Scenes/world/tilesets/water_tiles.tres" id="7_gsrjh"]
 [ext_resource type="Texture2D" uid="uid://n1jru5gr22no" path="res://Assets/Testy Assets/map edit symbols/Asset 77@0.5x.png" id="7_jqxbs"]
-[ext_resource type="TileSet" uid="uid://dayemb55av64c" path="res://Scenes/world/tilesets/dirt_tiles.tres" id="8_ecxwo"]
 [ext_resource type="Texture2D" uid="uid://b71wkniwm1shg" path="res://Assets/Testy Assets/map edit symbols/Asset 81@0.5x.png" id="8_tgey8"]
-[ext_resource type="Script" path="res://Plugins/TileMapDual.gd" id="9_wy63e"]
-[ext_resource type="Script" path="res://Plugins/TileMapDualWater.gd" id="10_b56vx"]
-[ext_resource type="TileSet" uid="uid://01d12obxf2xs" path="res://Scenes/world/tilesets/sand_tiles.tres" id="11_1kbcp"]
-[ext_resource type="TileSet" uid="uid://cslmdfuuupgfc" path="res://Scenes/world/tilesets/tilled_tiles.tres" id="12_gtx8w"]
-[ext_resource type="TileSet" uid="uid://dabqwthi0ru5v" path="res://Scenes/world/tilesets/grass_tiles.tres" id="13_7bmln"]
 [ext_resource type="Script" path="res://Test/world_generator_v1.gd" id="13_i6roh"]
 [ext_resource type="Texture2D" uid="uid://bnxf6cstcmjft" path="res://Assets/Testy Assets/map edit symbols/paintbrush.png" id="13_ragj0"]
-[ext_resource type="TileSet" uid="uid://p08d33rgacki" path="res://Scenes/world/tilesets/decor.tres" id="14_3ae6b"]
 [ext_resource type="FastNoiseLite" uid="uid://bbqhvyutia2e2" path="res://Test/data/noise/doesntworkanymorenoise.tres" id="14_16di6"]
 [ext_resource type="Texture2D" uid="uid://codo8ckb42t08" path="res://Assets/Testy Assets/map edit symbols/eraser.png" id="14_dmrar"]
 [ext_resource type="FastNoiseLite" uid="uid://bdmyfboi5v4ci" path="res://Test/data/noise/decent_noise.tres" id="18_we2w1"]
@@ -61,61 +52,21 @@ unload_chunks = true
 script = ExtResource("2_hk3wk")
 debug = true
 
-[node name="Elevation0" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler"]
-use_parent_material = true
-tile_set = ExtResource("5_pg4n0")
-script = ExtResource("6_2rclh")
+[node name="Elevation0" parent="WorldManager/TerrainRulesHandler" instance=ExtResource("3_jtlpr")]
+position = Vector2(-1, 0)
 
-[node name="WaterMapper" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler/Elevation0"]
-tile_map_data = PackedByteArray("AAD8//3/AAACAAEAAAD8//7/AAACAAEAAAD8////AAACAAEAAAD8/wAAAAACAAEAAAD9//3/AAACAAEAAAD9//7/AAACAAEAAAD9////AAACAAEAAAD9/wAAAAACAAEAAAD+//3/AAACAAEAAAD+//7/AAACAAEAAAD+////AAACAAEAAAD+/wAAAAACAAEAAAD///3/AAACAAEAAAD///7/AAACAAEAAAD/////AAACAAEAAAD//wAAAAACAAEAAAAAAP3/AAACAAEAAAAAAP7/AAACAAEAAAAAAP//AAACAAEAAAAAAAAAAAACAAEAAAD8//z/AAACAAEAAAD8/wEAAAACAAEAAAD9//z/AAACAAEAAAD9/wEAAAACAAEAAAD+//z/AAACAAEAAAD+/wEAAAACAAEAAAA=")
-tile_set = ExtResource("7_gsrjh")
-
-[node name="Base" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler/Elevation0" node_paths=PackedStringArray("world_tilemap")]
-texture_filter = 1
-position = Vector2(-32, -32)
-tile_set = ExtResource("8_ecxwo")
-script = ExtResource("9_wy63e")
-world_tilemap = NodePath("..")
-is_base_layer = true
-
-[node name="Pond" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler/Elevation0" node_paths=PackedStringArray("world_tilemap")]
-tile_set = ExtResource("7_gsrjh")
-script = ExtResource("10_b56vx")
-world_tilemap = NodePath("../WaterMapper")
+[node name="Sand" parent="WorldManager/TerrainRulesHandler/Elevation0" index="3"]
 debug = true
 
-[node name="Sand" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler/Elevation0" node_paths=PackedStringArray("world_tilemap")]
-texture_filter = 1
-position = Vector2(-32, -32)
-tile_set = ExtResource("11_1kbcp")
-script = ExtResource("9_wy63e")
-world_tilemap = NodePath("..")
+[node name="Elevation1" parent="WorldManager/TerrainRulesHandler" instance=ExtResource("3_jtlpr")]
+visible = false
+position = Vector2(-1, 0)
+elevation = 1
 
-[node name="Till" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler/Elevation0" node_paths=PackedStringArray("world_tilemap")]
-texture_filter = 1
-position = Vector2(-32, -32)
-tile_set = ExtResource("12_gtx8w")
-script = ExtResource("9_wy63e")
-world_tilemap = NodePath("..")
-
-[node name="Grass" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler/Elevation0" node_paths=PackedStringArray("world_tilemap")]
-texture_filter = 1
-position = Vector2(-32, -32)
-tile_set = ExtResource("13_7bmln")
-script = ExtResource("9_wy63e")
-world_tilemap = NodePath("..")
-
-[node name="Stone" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler/Elevation0" node_paths=PackedStringArray("world_tilemap")]
-texture_filter = 1
-position = Vector2(-32, -32)
-tile_set = ExtResource("13_7bmln")
-script = ExtResource("9_wy63e")
-world_tilemap = NodePath("..")
-freeze = true
-
-[node name="Decor" type="TileMapLayer" parent="WorldManager/TerrainRulesHandler/Elevation0"]
-texture_filter = 1
-tile_set = ExtResource("14_3ae6b")
+[node name="Elevation2" parent="WorldManager/TerrainRulesHandler" instance=ExtResource("3_jtlpr")]
+visible = false
+position = Vector2(-1, 0)
+elevation = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -278,3 +229,7 @@ root_subfolder = "Test/data/world_datas"
 [connection signal="pressed" from="CanvasLayer/Control/PanelContainer/MarginContainer/HBoxContainer/little" to="CanvasLayer/Control" method="_on_little_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/PanelContainer2/VBoxContainer/brush" to="CanvasLayer/Control" method="_on_brush_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/PanelContainer2/VBoxContainer/eraser" to="CanvasLayer/Control" method="_on_eraser_pressed"]
+
+[editable path="WorldManager/TerrainRulesHandler/Elevation0"]
+[editable path="WorldManager/TerrainRulesHandler/Elevation1"]
+[editable path="WorldManager/TerrainRulesHandler/Elevation2"]

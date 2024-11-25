@@ -1,0 +1,139 @@
+[gd_resource type="TileSet" load_steps=12 format=3 uid="uid://dayemb55av64c"]
+
+[ext_resource type="Shader" path="res://Game Logic/shaders/tilemap/red_shader_mod_color.gdshader" id="1_kmlof"]
+[ext_resource type="Texture2D" uid="uid://cvd2cu1dlkyko" path="res://Assets/Testy Assets/gradient_shader_test.png" id="2_mnndr"]
+[ext_resource type="Texture2D" uid="uid://cm8p5qwvem1fv" path="res://Assets/Testy Assets/dirt_texture.png" id="2_tvyx4"]
+[ext_resource type="Texture2D" uid="uid://bljn2kf85bblv" path="res://Assets/tiles/ruined_fields/dirt_hill.png" id="3_jy1hr"]
+[ext_resource type="Shader" path="res://Game Logic/shaders/tilemap/red_green.gdshader" id="4_ebteg"]
+[ext_resource type="Texture2D" uid="uid://dtfba7qcyu2pn" path="res://Assets/tiles/ruined_fields/dirt_shore.png" id="4_tnqrm"]
+[ext_resource type="Texture2D" uid="uid://dbxri2o2co5ub" path="res://Assets/Testy Assets/water_texture.png" id="5_7iiav"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ber7"]
+shader = ExtResource("1_kmlof")
+shader_parameter/img_color = Color(0, 0, 0, 1)
+shader_parameter/scale = 0.002
+shader_parameter/scale2 = 0.001
+shader_parameter/overlay_tex = ExtResource("2_tvyx4")
+shader_parameter/mod_color_tex = ExtResource("2_mnndr")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yrdqn"]
+texture = ExtResource("3_jy1hr")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+0:0/0/material = SubResource("ShaderMaterial_1ber7")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(4, 32, 7.78708, 32, 8.0677, 7.54154, 0, -4, -32, -4, -32, -0.175388, -1.40308, -0.03508, 2.736, 3.96369, 4, 8, 4, 8)
+1:0/0 = 0
+1:0/0/material = SubResource("ShaderMaterial_1ber7")
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -32, 0, -32, 0, 32, -8, 32)
+2:0/0 = 0
+2:0/0/material = SubResource("ShaderMaterial_1ber7")
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(3.75, -32, 8, -32, 7.75, -6, 10.5, -4.25, 32, -3, 32, 0, 7.75, -1.75, 3.75, -7.25)
+3:0/0 = 0
+3:0/0/material = SubResource("ShaderMaterial_1ber7")
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -3, 32, -3.75, 32, -1.25, -32, -1.25)
+0:1/0 = 0
+0:1/0/material = SubResource("ShaderMaterial_1ber7")
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, 4, -8, 4, -4, 8, -3.75, 32, -32, 32, -32, 20)
+0:1/0/physics_layer_0/polygon_1/points = PackedVector2Array(4, -32, 8, -32, 8, -8, 16, -4, 32, -4, 32, 0, 16, 0, 4, -8)
+1:1/0 = 0
+1:1/0/material = SubResource("ShaderMaterial_1ber7")
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 0, 0, -8, -0.5, -32, 0, -32, -8, -32, -8, -4, -32, -4, -32, 0)
+3:1/0 = 0
+3:1/0/material = SubResource("ShaderMaterial_1ber7")
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(32, 0.75, 8.25, 1.75, 4.25, 27.25, 4.75, 32, 32, 32)
+0:2/0 = 0
+0:2/0/material = SubResource("ShaderMaterial_1ber7")
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -32, 0, -32, 0, 0, 12, 4, 32, 4, 32, 32, 2, 32, -8, 24)
+1:2/0 = 0
+1:2/0/material = SubResource("ShaderMaterial_1ber7")
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, 2.5, 32, 1.75, 32, 32, -32, 32)
+2:2/0 = 0
+2:2/0/material = SubResource("ShaderMaterial_1ber7")
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, 2.25, -4, 4, -3, 32, -32, 32)
+3:2/0 = 0
+3:2/0/material = SubResource("ShaderMaterial_1ber7")
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(4.75, -32, 8, -32, 7.5, 32, 3.5, 32)
+1:3/0 = 0
+1:3/0/material = SubResource("ShaderMaterial_1ber7")
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-1, -0.75, 32, -2.75, 32, 0, -2, 2, -5.25, 32, -5.5, 6.5)
+2:3/0 = 0
+2:3/0/material = SubResource("ShaderMaterial_1ber7")
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(4.25, 32, 32, 32, 32, 3, 20, 3.25, 10, 12.25, 2.5, 22)
+2:3/0/physics_layer_0/polygon_1/points = PackedVector2Array(-32, 0.5, -7, -1.75, -2.5, -11.75, -2.25, -32, -6, -32, -6.25, -8.75, -13.75, -2.75, -32, -1.75)
+3:3/0 = 0
+3:3/0/material = SubResource("ShaderMaterial_1ber7")
+3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(7.25, -32, 7.25, 23, -1.75, 32, -32, 32, -32, 2, -8, 1.75, 1.5, -3, 4.75, -16)
+2:1/0 = 0
+2:1/0/material = SubResource("ShaderMaterial_1ber7")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4cpgp"]
+shader = ExtResource("4_ebteg")
+shader_parameter/scale1 = 0.005
+shader_parameter/scale2 = 0.001
+shader_parameter/overlay_tex_red = ExtResource("2_tvyx4")
+shader_parameter/overlay_tex_green = ExtResource("5_7iiav")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ycddu"]
+texture = ExtResource("4_tnqrm")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+0:0/0/material = SubResource("ShaderMaterial_4cpgp")
+0:0/0/physics_layer_2/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, 8.5, 32, 7.5, -0.75, -32, -1.5)
+1:0/0 = 0
+1:0/0/material = SubResource("ShaderMaterial_4cpgp")
+1:0/0/physics_layer_2/polygon_0/points = PackedVector2Array(-6.5, -32, -5.75, 32, -32, 32, -32, -32)
+2:0/0 = 0
+2:0/0/material = SubResource("ShaderMaterial_4cpgp")
+2:0/0/physics_layer_2/polygon_0/points = PackedVector2Array(8.25, -32, 32, -32, 32, -1.75, 8.75, -4)
+3:0/0 = 0
+3:0/0/material = SubResource("ShaderMaterial_4cpgp")
+0:1/0 = 0
+0:1/0/material = SubResource("ShaderMaterial_4cpgp")
+0:1/0/physics_layer_2/polygon_0/points = PackedVector2Array(7, -32, 8.75, -8, 32, 0, 32, -32, 7.5, -32)
+0:1/0/physics_layer_2/polygon_1/points = PackedVector2Array(-32, 12, -13.5, 12.25, -7.25, 20.25, -7.25, 32, -32, 32)
+1:1/0 = 0
+1:1/0/material = SubResource("ShaderMaterial_4cpgp")
+1:1/0/physics_layer_2/polygon_0/points = PackedVector2Array(-32, -32, -6, -32, -7.25, -5, -32, -1.5)
+3:1/0 = 0
+3:1/0/material = SubResource("ShaderMaterial_4cpgp")
+3:1/0/physics_layer_2/polygon_0/points = PackedVector2Array(11, 12, 8.25, 32, 32, 32, 32, 10.75, 13, 10)
+0:2/0 = 0
+0:2/0/material = SubResource("ShaderMaterial_4cpgp")
+0:2/0/physics_layer_2/polygon_0/points = PackedVector2Array(-32, -32, -8.25, -32, -6, 11.5, 32, 12.75, 32, 32, -32, 32)
+1:2/0 = 0
+1:2/0/material = SubResource("ShaderMaterial_4cpgp")
+1:2/0/physics_layer_2/polygon_0/points = PackedVector2Array(-32, 12.5, 32, 11.75, 32, 32, -32, 32)
+2:2/0 = 0
+2:2/0/material = SubResource("ShaderMaterial_4cpgp")
+2:2/0/physics_layer_2/polygon_0/points = PackedVector2Array(-32, 12.25, -6.75, 13.25, -5.5, 32, -32, 32)
+3:2/0 = 0
+3:2/0/material = SubResource("ShaderMaterial_4cpgp")
+3:2/0/physics_layer_2/polygon_0/points = PackedVector2Array(8, -32, 32, -32, 32, 32, 8.25, 32)
+0:3/0 = 0
+0:3/0/material = SubResource("ShaderMaterial_4cpgp")
+0:3/0/physics_layer_2/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+1:3/0 = 0
+1:3/0/material = SubResource("ShaderMaterial_4cpgp")
+1:3/0/physics_layer_2/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, -1.5, -5.25, -1.75, -6, 32, -32, 32)
+2:3/0 = 0
+2:3/0/material = SubResource("ShaderMaterial_4cpgp")
+2:3/0/physics_layer_2/polygon_0/points = PackedVector2Array(-32, -32, -6.5, -32, -6.5, -1.75, -32, -1.75)
+2:3/0/physics_layer_2/polygon_1/points = PackedVector2Array(32, 11, 7.75, 32, 32, 32)
+3:3/0 = 0
+3:3/0/material = SubResource("ShaderMaterial_4cpgp")
+3:3/0/physics_layer_2/polygon_0/points = PackedVector2Array(9, -32, 32, -32, 32, 32, -32, 32, -32, 12.25, 7.25, 12.75)
+2:1/0 = 0
+2:1/0/material = SubResource("ShaderMaterial_4cpgp")
+
+[resource]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 0
+physics_layer_1/collision_layer = 256
+physics_layer_1/collision_mask = 0
+physics_layer_2/collision_layer = 64
+physics_layer_2/collision_mask = 0
+custom_data_layer_0/name = "type"
+custom_data_layer_0/type = 4
+sources/0 = SubResource("TileSetAtlasSource_yrdqn")
+sources/1 = SubResource("TileSetAtlasSource_ycddu")

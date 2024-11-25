@@ -5,8 +5,9 @@ class_name SquareData
 @export var location_in_chunk: Vector2i
 
 @export var elevation: int
+#0 - Dry 1 - Moist 2- Wet 3 - Very Wet 4- WATER TILE 5- DEEP WATER
 @export var water_saturation: int 
 @export var fertility: int 
-enum SquareType{Dirt, Grass, Rock, Water, DeepWater, Sand}
+enum SquareType{Dirt, Grass, Rock, Sand}
 @export var type: SquareType
 @export var object_data: ObjectData
