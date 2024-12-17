@@ -21,11 +21,15 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	## TODO... do this maybe 1/10 frames or smthn
 	if _world_data:
+		var pos: Vector2
 		if world_edit_mode:
-			load_and_unload_chunks_surronding_point($"../Camera2D".get_global_position())
+			pos = $"../Camera2D".get_global_position()
 			#load_all_chunks()
 		elif player and load_chunks:
-			load_and_unload_chunks_surronding_point(player.get_global_position())
+			pos = player.get_global_position()
+		if Engine.get_process_frames() % 60 == 0: # Once a second might *still* be too much
+			trh.run_shader_data_stuff(get_chunks_around_point(pos, 1))
+		load_and_unload_chunks_surronding_point(pos)
 	
 func set_world_data(new_world: WorldData) -> void:
 	#print("world data recieved, new world seed: ", new_world.world_seed, " \n chunks to unload: ", loaded_chunks.keys(), " \n number of new chunks: ", new_world.chunk_datas.size())
@@ -41,16 +45,15 @@ func load_all_chunks() -> void:
 	
 func load_and_unload_chunks_surronding_point(point: Vector2) -> void:
 	var surronding_chunks:Array[Vector2i] = get_chunks_around_point(point, 2)
-	for chunk:Vector2i in surronding_chunks:
-		if load_chunks && !trh.loaded_chunks.has(chunk) && _world_data.chunk_datas.has(chunk) && !trh.chunks_in_loading.has(chunk):
-			#print("load chunk ", chunk)
-			trh.load_chunk(chunk, _world_data.chunk_datas[chunk])
-			return
-			
 	for chunk:Vector2i in trh.loaded_chunks:
 		if unload_chunks && !surronding_chunks.has(chunk):
 			#print("unload chunk ", chunk)
 			trh.unload_chunk(chunk, trh.loaded_chunks[chunk])
+			return
+	for chunk:Vector2i in surronding_chunks:
+		if load_chunks && !trh.loaded_chunks.has(chunk) && _world_data.chunk_datas.has(chunk) && !trh.chunks_in_loading.has(chunk):
+			#print("load chunk ", chunk)
+			trh.load_chunk(chunk, _world_data.chunk_datas[chunk])
 			return
 
 func get_chunks_around_point(pos: Vector2, dist:int) -> Array[Vector2i]:

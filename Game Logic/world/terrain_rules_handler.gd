@@ -131,7 +131,26 @@ func translate_square_data_to_tile(data: SquareData, _actual_pos: Vector2i)-> vo
 		#print("building base in elevation: ", x)
 		elevations[x].build_base_of(data, _actual_pos)
 	elevations[ele].set_square(data, _actual_pos)
- 
+
+func run_shader_data_stuff(chunk_keys: Array[Vector2i]) -> void:
+	var chunks: Dictionary
+	#print("keys : ", chunk_keys)
+	var send: bool = true
+	for key in chunk_keys:
+		if loaded_chunks.has(key):
+			chunks[key] = loaded_chunks[key]
+		else:
+			#TODO: these are a good idea, but if the word is being intially loaded they will freak out
+			#push_warning("Terrain Rules Handler tried to build shader data for an unloaded chunk")
+			if chunks_in_loading.has(key):
+				chunks[key] = chunks_in_loading[key]
+			else:
+				send = false
+				#push_error("Terrain rules handler tried to build shader data for a chunk not even trying to load. troubling news.")
+	if !chunks.is_empty() and send:
+		for ele in elevations:
+			ele.build_gradient_maps(chunks, chunk_keys[0])
+
 func print_if_debug(string: String) -> void:
 	if debug:
 		print(self.name, ":::", string)

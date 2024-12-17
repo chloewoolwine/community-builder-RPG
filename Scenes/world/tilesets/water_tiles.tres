@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dbxri2o2co5ub" path="res://Assets/Testy Assets/water_texture.png" id="5_0jnm5"]
 [ext_resource type="Texture2D" uid="uid://xrkqjde0b3tn" path="res://Assets/tiles/ruined_fields/water_lonesome.png" id="12_lj1t0"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8w8xe"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5bjoi"]
 shader = ExtResource("1_2m0y2")
 shader_parameter/scale = 0.00694444
 shader_parameter/overlay_tex = ExtResource("5_0jnm5")
@@ -13,36 +13,37 @@ shader_parameter/overlay_tex = ExtResource("5_0jnm5")
 texture = ExtResource("12_lj1t0")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
-0:0/0/material = SubResource("ShaderMaterial_8w8xe")
+0:0/0/material = SubResource("ShaderMaterial_5bjoi")
 1:0/0 = 0
-1:0/0/material = SubResource("ShaderMaterial_8w8xe")
+1:0/0/material = SubResource("ShaderMaterial_5bjoi")
 3:0/0 = 0
-3:0/0/material = SubResource("ShaderMaterial_8w8xe")
+3:0/0/material = SubResource("ShaderMaterial_5bjoi")
 0:1/0 = 0
-0:1/0/material = SubResource("ShaderMaterial_8w8xe")
+0:1/0/material = SubResource("ShaderMaterial_5bjoi")
 1:1/0 = 0
-1:1/0/material = SubResource("ShaderMaterial_8w8xe")
+1:1/0/material = SubResource("ShaderMaterial_5bjoi")
 3:1/0 = 0
-3:1/0/material = SubResource("ShaderMaterial_8w8xe")
+3:1/0/material = SubResource("ShaderMaterial_5bjoi")
 0:2/0 = 0
-0:2/0/material = SubResource("ShaderMaterial_8w8xe")
+0:2/0/material = SubResource("ShaderMaterial_5bjoi")
 1:2/0 = 0
-1:2/0/material = SubResource("ShaderMaterial_8w8xe")
+1:2/0/material = SubResource("ShaderMaterial_5bjoi")
 2:2/0 = 0
-2:2/0/material = SubResource("ShaderMaterial_8w8xe")
+2:2/0/material = SubResource("ShaderMaterial_5bjoi")
 3:2/0 = 0
-3:2/0/material = SubResource("ShaderMaterial_8w8xe")
+3:2/0/material = SubResource("ShaderMaterial_5bjoi")
 0:3/0 = 0
-0:3/0/material = SubResource("ShaderMaterial_8w8xe")
+0:3/0/material = SubResource("ShaderMaterial_5bjoi")
 1:3/0 = 0
-1:3/0/material = SubResource("ShaderMaterial_8w8xe")
+1:3/0/material = SubResource("ShaderMaterial_5bjoi")
 2:3/0 = 0
-2:3/0/material = SubResource("ShaderMaterial_8w8xe")
+2:3/0/material = SubResource("ShaderMaterial_5bjoi")
 3:3/0 = 0
-3:3/0/material = SubResource("ShaderMaterial_8w8xe")
+3:3/0/material = SubResource("ShaderMaterial_5bjoi")
 2:0/0 = 0
-2:0/0/material = SubResource("ShaderMaterial_8w8xe")
+2:0/0/material = SubResource("ShaderMaterial_5bjoi")
 2:1/0 = 0
+2:1/0/material = SubResource("ShaderMaterial_5bjoi")
 
 [resource]
 tile_size = Vector2i(64, 64)

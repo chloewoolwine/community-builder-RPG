@@ -4,7 +4,7 @@ class_name ChunkData
 ## Size of chunk x * y
 @export var chunk_size: Vector2i
 ## Position of chunk in terms of other chunks
-## Position of chunk in tile layers = chunk_position * chunk_size
+## Position of chunk in rendered tilemaps = chunk_position * chunk_size
 @export var chunk_position : Vector2i
 
 ## Biome of chunk- 

@@ -74,6 +74,7 @@ func generate_world_based_on_vals() -> WorldData:
 	print('time at end generation + save: ', Time.get_time_string_from_system())
 	return world
 	
+@warning_ignore("unused_parameter")
 func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, temp_grid:Dictionary, debris_grid:Dictionary) ->  Dictionary:
 	var chunk_datas: Dictionary
 	
@@ -119,7 +120,9 @@ func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, temp_grid:D
 			var square_datas: Dictionary
 			for i in chunk_size.x:
 				for j in chunk_size.y:
+					@warning_ignore("unused_variable")
 					var total_x : int = (x * chunk_size.x) + i
+					@warning_ignore("unused_variable")
 					var total_y : int = (y * chunk_size.y) + j
 					#print("total x : ", x, "total y: ",y, "elevation:", big_grid[Vector2i(total_x, total_y)])
 					var square:SquareData = SquareData.new()

@@ -5,6 +5,7 @@ uniform sampler2D mod_color_tex: repeat_enable, filter_nearest;
 uniform vec4 img_color: source_color;
 uniform float scale = 0.006944444; // calculated by 1/texture size e.g. 1/144
 uniform float scale2 = .0010;
+uniform vec2 tint_pos;
 varying vec2 world_position;
 
 void vertex(){
@@ -29,10 +30,10 @@ void fragment() {
 	texture_pixel.rgb = vec3(img_color.rgb);
 	//COLOR = base_pixel * texture_pixel;
 	//texture_pixel.rgb = texture_pixel.rgb * color_weight;
-	vec3 a = mix(base_pixel.rgb, texture_pixel.rgb, color_weight);
-	
+	//vec3 a = mix(base_pixel.rgb, texture_pixel.rgb, color_weight);
+
 	//COLOR.rgb = a;
 	//COLOR.rgb = (base_pixel.rgb * (1.0 - color_weight)) + (a * color_weight);
 	// mod base pixel with colored texture, keeping alpha in mind
-	//COLOR.rgb = mix(base_pixel.rgb, texture_pixel.rgb, texture_pixel.a * img_color.a);
+	COLOR.rgb = mix(base_pixel.rgb, texture_pixel.rgb, texture_pixel.a * img_color.a);
 }

@@ -98,7 +98,7 @@ func _update_displayed_tile(_display_cell: Vector2i) -> void:
 		_tile_key += location.LOW_RIGHT
 	
 	var _coords_atlas: Vector2i = WET_NEIGHBOURS_TO_ATLAS[_tile_key]
-	self.set_cell(_display_cell, biome_source_id, _coords_atlas)
+	self.set_cell(_display_cell, 0, _coords_atlas)
 	if debug:
 		print('    Display tile ' + str(_display_cell) + ' updated with key ' + str(_tile_key))
 
@@ -126,6 +126,8 @@ func fill_tile(world_cell: Vector2i) -> void:
 	if debug:
 		print(' setting cell: ', world_cell)
 	world_tilemap.set_cell(world_cell, world_source_id, full_tile)
+	if debug:
+		print(" empty tile: ", empty_tile, "  full tile: ", full_tile)
 	update_tile(world_cell)
 
 
