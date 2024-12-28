@@ -1,14 +1,15 @@
-[gd_scene load_steps=20 format=3 uid="uid://cycrtln7ftflc"]
+[gd_scene load_steps=22 format=3 uid="uid://cycrtln7ftflc"]
 
 [ext_resource type="Script" path="res://Game Logic/managers/world_manager.gd" id="1_d3v3l"]
 [ext_resource type="Script" path="res://Test/temp_camera_script.gd" id="1_pg57c"]
 [ext_resource type="Script" path="res://Game Logic/world/terrain_rules_handler.gd" id="2_hk3wk"]
 [ext_resource type="Texture2D" uid="uid://dj8bni171no41" path="res://Assets/Testy Assets/map edit symbols/Asset 1@0.5x.png" id="2_lwt0r"]
 [ext_resource type="Script" path="res://Test/map_editor_control_menu.gd" id="3_4irie"]
-[ext_resource type="Resource" uid="uid://b01mer6qkwo4b" path="res://Test/data/world_datas/moist_gradient.tres" id="3_f25xw"]
+[ext_resource type="Resource" uid="uid://d2re3bic05xmr" path="res://Test/data/world_datas/treez.tres" id="3_e53mr"]
 [ext_resource type="Texture2D" uid="uid://b71ycp15yowwk" path="res://Assets/Testy Assets/map edit symbols/Asset 25@0.5x.png" id="4_jjck8"]
 [ext_resource type="Texture2D" uid="uid://oulwhnc8mhq5" path="res://Assets/Testy Assets/map edit symbols/Asset 18@0.5x.png" id="5_gjubd"]
 [ext_resource type="PackedScene" uid="uid://1b78ipp0k2t8" path="res://Scenes/world/elevation_layer.tscn" id="5_twio2"]
+[ext_resource type="Script" path="res://Test/object_atlas.gd" id="6_wou66"]
 [ext_resource type="Texture2D" uid="uid://dhy2mlw2rh1fm" path="res://Assets/Testy Assets/map edit symbols/Asset 17@0.5x.png" id="6_yxhyp"]
 [ext_resource type="Texture2D" uid="uid://n1jru5gr22no" path="res://Assets/Testy Assets/map edit symbols/Asset 77@0.5x.png" id="7_jqxbs"]
 [ext_resource type="Texture2D" uid="uid://b71wkniwm1shg" path="res://Assets/Testy Assets/map edit symbols/Asset 81@0.5x.png" id="8_tgey8"]
@@ -16,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://bnxf6cstcmjft" path="res://Assets/Testy Assets/map edit symbols/paintbrush.png" id="13_ragj0"]
 [ext_resource type="FastNoiseLite" uid="uid://bbqhvyutia2e2" path="res://Test/data/noise/doesntworkanymorenoise.tres" id="14_16di6"]
 [ext_resource type="Texture2D" uid="uid://codo8ckb42t08" path="res://Assets/Testy Assets/map edit symbols/eraser.png" id="14_dmrar"]
+[ext_resource type="Script" path="res://Game Logic/managers/WorldSaver.gd" id="16_neiaj"]
 [ext_resource type="FastNoiseLite" uid="uid://bdmyfboi5v4ci" path="res://Test/data/noise/decent_noise.tres" id="18_we2w1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_imf0b"]
@@ -43,9 +45,10 @@ speed = 150
 [node name="WorldManager" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("1_d3v3l")
-_world_data = ExtResource("3_f25xw")
+_world_data = ExtResource("3_e53mr")
 world_edit_mode = true
 load_chunks = true
+unload_chunks = true
 
 [node name="TerrainRulesHandler" type="Node2D" parent="WorldManager"]
 script = ExtResource("2_hk3wk")
@@ -53,8 +56,8 @@ debug = true
 
 [node name="Elevation0" parent="WorldManager/TerrainRulesHandler" instance=ExtResource("5_twio2")]
 
-[node name="Till" parent="WorldManager/TerrainRulesHandler/Elevation0" index="4"]
-tile_map_data = PackedByteArray()
+[node name="ObjectAtlas" type="Node2D" parent="WorldManager/TerrainRulesHandler"]
+script = ExtResource("6_wou66")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -180,17 +183,6 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="WorldGenerator" type="Node2D" parent="." node_paths=PackedStringArray("world_manager", "terrain_rules_handler")]
-script = ExtResource("13_i6roh")
-world_manager = NodePath("../WorldManager")
-terrain_rules_handler = NodePath("../WorldManager/TerrainRulesHandler")
-chunk_size = Vector2i(32, 32)
-num_chunks = Vector2i(10, 10)
-altitude_noise = ExtResource("14_16di6")
-moisture_noise = ExtResource("18_we2w1")
-temperature_noise = ExtResource("18_we2w1")
-debris_noise = ExtResource("18_we2w1")
-
 [node name="FileDialog" type="FileDialog" parent="."]
 title = "Open a File"
 initial_position = 2
@@ -209,6 +201,20 @@ ok_button_text = "Save"
 dialog_hide_on_ok = true
 access = 2
 root_subfolder = "Test/data/world_datas"
+
+[node name="WorldSaver" type="Node2D" parent="."]
+script = ExtResource("16_neiaj")
+
+[node name="WorldGenerator" type="Node2D" parent="WorldSaver" node_paths=PackedStringArray("world_manager", "terrain_rules_handler")]
+script = ExtResource("13_i6roh")
+world_manager = NodePath("../../WorldManager")
+terrain_rules_handler = NodePath("../../WorldManager/TerrainRulesHandler")
+chunk_size = Vector2i(32, 32)
+num_chunks = Vector2i(10, 10)
+altitude_noise = ExtResource("14_16di6")
+moisture_noise = ExtResource("18_we2w1")
+temperature_noise = ExtResource("18_we2w1")
+debris_noise = ExtResource("18_we2w1")
 
 [connection signal="pressed" from="CanvasLayer/Control/PanelContainer/MarginContainer/HBoxContainer/save" to="CanvasLayer/Control" method="_on_save_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/PanelContainer/MarginContainer/HBoxContainer/load" to="CanvasLayer/Control" method="_on_load_pressed"]

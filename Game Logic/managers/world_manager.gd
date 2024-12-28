@@ -1,11 +1,6 @@
 extends Node2D
 class_name WorldManager
 
-#may need to do a list of chunk datas, in case multiple chunks chage at once?
-							
-signal crop_placed(crop: Crop)
-#signal plant_placed(crop: Crop)
-
 @export var _world_data: WorldData
 @export var world_edit_mode: bool = false
 @export var load_chunks: bool = false
@@ -56,9 +51,12 @@ func load_and_unload_chunks_surronding_point(point: Vector2) -> void:
 			trh.load_chunk(chunk, _world_data.chunk_datas[chunk])
 			return
 
-func get_chunks_around_point(pos: Vector2, dist:int) -> Array[Vector2i]:
+func get_chunks_around_point(pos: Vector2, dist:int, debug: bool = false) -> Array[Vector2i]:
 	var tileset_pos:Vector2i = trh.get_tileset_pos_from_global(pos)
 	var player_chunk:Vector2i = tileset_pos/_world_data.chunk_size
+	if debug:
+		print("tileset_pos ", tileset_pos)
+		print("player_curr_chunk = ", player_chunk)
 	if tileset_pos.x <= 0:
 		player_chunk.x -= 1
 	if tileset_pos.y <= 0:
@@ -68,8 +66,9 @@ func get_chunks_around_point(pos: Vector2, dist:int) -> Array[Vector2i]:
 	for x in range(dist * -1, dist+1):
 		for y in range(dist * -1, dist+1):
 			arr.append(player_chunk + Vector2i(x, y))
-	#print("player chunk = ", player_chunk)
-	#print("number of chunks: ", arr.size())
+	if debug:
+		print("player chunk = ", player_chunk)
+		print("chunks: ", arr)
 	return arr
 	
 ## Callback function to send layer [int] to the function [callback]
@@ -83,9 +82,6 @@ func give_requested_layer(layer:int, callback: Callable) -> void:
 	else: 
 		callback.call(trh.elevations[layer])
 
-#TODO: may have to change the name of "crop" component to just "plant"
-#and add crop functionality in another subclass
-#this may get sticky if i do not do that
 func place_object(pos: Vector2, layer:ElevationLayer, itemdata: ItemData)->void:
 	if itemdata is ItemDataSeed:
 		var object := load(str("res://Scenes/objects/crop/", itemdata.plant_name, ".tscn"))
@@ -94,7 +90,7 @@ func place_object(pos: Vector2, layer:ElevationLayer, itemdata: ItemData)->void:
 		var plant = object.instantiate()
 		plant.global_position = pos
 		layer.add_child(plant)
-		crop_placed.emit(plant)
+		trh.object_atlas.plant_placed.emit(plant)
 		
 func check_placement_validity(ind: Indicator, player_spot:Vector2, player_layer: ElevationLayer, _item: ItemData) -> bool:
 	var valid:bool = true
@@ -103,7 +99,8 @@ func check_placement_validity(ind: Indicator, player_spot:Vector2, player_layer:
 	if ind.global_position.distance_to(player_spot) > 400:
 		valid = false
 	
-	if player_layer != trh.get_topmost_layer_at_pos(ind.global_position):
+	# this might be broken for any layer > 0 ?
+	if player_layer != trh.get_topmost_layer_at_global_pos(ind.global_position):
 		valid = false
 	
 	#TODO: check tile type
@@ -111,12 +108,46 @@ func check_placement_validity(ind: Indicator, player_spot:Vector2, player_layer:
 	ind.valid_place = valid
 	return valid
 	
+# Returns true if the modification is successful
+# this probably isnt the best way to do this
+func modify_tilemap(loc: Vector2, layer: ElevationLayer, action: String) -> bool:
+	#print("global: ", loc)
+	if layer == null:
+		print("modification failed, layer was null at global: ", loc) 
+		return false
+	if layer != trh.get_topmost_layer_at_global_pos(loc):
+		return false
+	# get chunk and square from loc
+	var local: Vector2i = layer.local_to_map(layer.to_local(loc))
+	
+	var chunk_pos: Vector2i = local / _world_data.chunk_size
+	var square_pos: Vector2i = local % _world_data.chunk_size
+	#print("raw square_pos: ", square_pos)
+	if square_pos.x < 0:
+		chunk_pos.x = chunk_pos.x - 1
+		square_pos.x = _world_data.chunk_size.x + square_pos.x
+	if square_pos.y < 0:
+		chunk_pos.y = chunk_pos.y - 1
+		square_pos.y = _world_data.chunk_size.y + square_pos.y
+	#print("chunk position: ", chunk_pos)
+	#print("corrected square: ", square_pos)
+	
+	if action == "water":
+		trh.water_square_at(square_pos, chunk_pos)
+	if action == "till": 
+		trh.apply_floor_at(square_pos, chunk_pos, action)
+	return false
+	
 # Shaders can take indicators job: 
 # https://www.youtube.com/watch?v=7nTQA_6CL6M
 func move_indicator(indicator: Indicator, player_spot: Vector2, item: ItemData)-> void:
 	var player_layer: ElevationLayer = player.elevation_handler.current_map_layer
 	indicator.global_position = player_layer.map_to_local(player_layer.local_to_map(get_global_mouse_position()))
-	check_placement_validity(indicator, player_spot, player_layer, item)
+	if check_placement_validity(indicator, player_spot, player_layer, item):
+		## todo: change color of indicator
+		pass
+	else:
+		pass
 	
 func save_world(path: String) -> void:
 	var save_result:Error = ResourceSaver.save(_world_data, path)

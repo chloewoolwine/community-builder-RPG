@@ -47,13 +47,13 @@ func handle_final_presentation() -> void:
 
 ## Connects events dynamically
 func handle_world_setup() -> void:
-	world_manager.crop_placed.connect(connect_crop_to_sky)
+	world_manager.trh.object_atlas.plant_placed.connect(connect_plant_to_sky)
 	world_manager.player = player
 
-## Connects plants (crops) to the timer so they can grow
-func connect_crop_to_sky(crop: Crop) -> void:
-	crop.spawn_pickups.connect(pickup_manager.generate_pickups_from_list)
-	lighting.time_tick.connect(crop.plant_component.minute_pass)
+## Connects plants with the world so they can grow
+func connect_plant_to_sky(plant: GenericPlant) -> void:
+	plant.spawn_pickups.connect(pickup_manager.generate_pickups_from_list)
+	lighting.time_tick.connect(plant.plant_component.minute_pass)
 
 ## Connects events involving the playe
 func handle_player_setup() -> void:
@@ -69,7 +69,7 @@ func handle_plant_setup() -> void:
 	
 ## Connects entity events (open entity menu and close dialogue)
 ## TODO: all of this needs to be dynamically done whenever an entity
-## loads in to the game -> a lot like "connect crop to sky" for entities
+## loads in to the game -> a lot like "connect plant to sky" for entities
 func handle_entity_setup() -> void:
 	for node in get_tree().get_nodes_in_group("entity_interactable"):
 		node.toggle_menu.connect(toggle_entity_interface)
@@ -153,3 +153,29 @@ func toggle_entity_interface(entity: Entity) -> void:
 	else:
 		gui_state = GuiState.WORLD
 		player.toggle_menu_state()
+		
+# chat gpt generated name ideas lmao 
+#Town of Bloom
+#Rising Horizons
+#Starlight Acres
+#Sunrise Settlement
+#Echoes of Eden
+#Ashen Acres
+#Last Garden
+#Seeds of Tomorrow
+#Hallowed Harvest
+#Phoenix Grove
+#Blooming Wastes
+#Renewal Ridge
+#Echoing Harvest
+#Waking Grove
+#The Last Orchard
+#Twilight Tillage
+#Eternal Springs
+#Hallowed Harvest
+
+#my ideas
+# Twilight Bloom
+# Star/Moonlight Grove
+# Echoes of the Grove
+# Twilight Grove <- WOW location

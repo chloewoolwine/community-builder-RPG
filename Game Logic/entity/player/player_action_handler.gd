@@ -23,7 +23,11 @@ func do_action() -> void:
 	#if player is holding tool, or if player is in front of interactable
 	var cast:Object = ray_cast_2d.get_collider()
 	if cast && cast is InteractionHitbox && cast.accepting_interactions:
-		cast.player_interact()
+		if cast.needs_tool:
+			if equiped_item && equiped_item.item_data:
+				cast.player_interact(equiped_item.item_data)
+		else: 
+			cast.player_interact()
 		if cast.is_chest:
 			player_opened_menu.emit("chest")
 		if cast.is_entity:

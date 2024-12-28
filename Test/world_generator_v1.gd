@@ -1,6 +1,8 @@
 extends Node2D
 class_name WorldGenerator
 
+signal save_world(world: WorldData, path: String)
+
 @export var world_manager: WorldManager
 @export var terrain_rules_handler: TerrainRulesHandler
 
@@ -23,12 +25,14 @@ class_name WorldGenerator
 
 var seed_generator:RandomNumberGenerator
 
+# this is stupid, but until this has access to the Game script the emissions wont work 
+var world_to_save: WorldData
+var path: String
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if worldseed == 0:
 		worldseed = randi_range(1, 10000)
-	if acceptable_objects == null:
-		acceptable_objects = [ObjectData.new(), ObjectData.new("rock", null, {})]
 	# sets the seeds for the noise maps- silly but deterministic :D 
 	seed_generator = RandomNumberGenerator.new()
 	seed_generator.seed = worldseed
@@ -37,8 +41,12 @@ func _ready() -> void:
 	#var world:WorldData = ResourceLoader.load('res://Test/data/world_datas/BIGWORLD.tres')
 	#print("loading coimplete")
 	#world_manager.set_world_data(world)
-	#var world:WorldData = generate_world_based_on_vals()
-	#world_manager.set_world_data(world)
+	var world:WorldData = generate_world_based_on_vals()
+	print('time at end generation + save: ', Time.get_time_string_from_system())
+	world_manager.set_world_data(world)
+	world_to_save = world
+	path = str('res://Test/data/world_datas/treez.tres')
+	#save_world.emit(world, str('res://Test/data/world_datas/treez.tres'))
 
 # a lot of this is from https://www.reddit.com/r/godot/comments/10ho9d5/any_good_tutorials_on_the_new_fastnoiselite_class/
 func generate_world_based_on_vals() -> WorldData:
@@ -66,12 +74,6 @@ func generate_world_based_on_vals() -> WorldData:
 	
 	world.chunk_datas = map_big_grid_to_chunks(height_grid, wet_grid, temp_grid, debris_grid)
 	#print('world_size =', big_grid.values())
-	var save_result:Error = ResourceSaver.save(world, str('res://Test/data/world_datas/moist_gradient.tres'))
-
-	#var save_result:Error = ResourceSaver.save(world, str('res://Test/data/world_datas/world', world.world_seed, '.tres'))
-	if save_result != OK:
-		print(save_result)
-	print('time at end generation + save: ', Time.get_time_string_from_system())
 	return world
 	
 @warning_ignore("unused_parameter")
@@ -117,6 +119,7 @@ func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, temp_grid:D
 						chunk.biome = ChunkData.Biome.Grassland
 				
 			
+			var water : int  = randi_range(0, 2)
 			var square_datas: Dictionary
 			for i in chunk_size.x:
 				for j in chunk_size.y:
@@ -129,8 +132,14 @@ func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, temp_grid:D
 					#square.elevation = big_grid[Vector2i(total_x, total_y)]
 					square.elevation = 0
 					square.location_in_chunk = Vector2i(i,j)
+					square.water_saturation = water
+					if(j == 0):
+						var object: ObjectData = ObjectData.new()
+						object.object_id = "plant_tree_poplar"
+						object.object_tags["age"] = i % 3
+						square.object_datas[1] = object
+						
 					square_datas[Vector2i(i,j)] = square
-					square.water_saturation = i % 5
 					
 			chunk.square_datas = square_datas
 			chunk_datas[chunk.chunk_position] = chunk
