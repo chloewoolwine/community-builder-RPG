@@ -1,0 +1,6 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://cl37rni1dyujc"]
+
+[ext_resource type="Texture2D" uid="uid://da2q4adhil211" path="res://Assets/plants/crops/strawberry_onion.png" id="1_a15tv"]
+
+[resource]
+atlas = ExtResource("1_a15tv")
