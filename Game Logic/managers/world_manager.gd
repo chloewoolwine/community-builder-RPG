@@ -113,7 +113,7 @@ func check_placement_validity(ind: Indicator, player_spot:Vector2, player_layer:
 func modify_tilemap(loc: Vector2, layer: ElevationLayer, action: String) -> bool:
 	#print("global: ", loc)
 	if layer == null:
-		print("modification failed, layer was null at global: ", loc) 
+		#print("modification failed, layer was null at global: ", loc) 
 		return false
 	if layer != trh.get_topmost_layer_at_global_pos(loc):
 		return false

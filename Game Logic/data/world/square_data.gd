@@ -11,6 +11,4 @@ class_name SquareData
 enum SquareType{Dirt, Grass, Rock, Sand}
 @export var type: SquareType
 # instead- list of objects, 0 always being floor, 1 being main, 2 being roof, rest being decor
-# why isn't this an array? https://github.com/godotengine/godot/issues/65393 
-# killing myself brb 
-@export var object_datas: Dictionary
+@export var object_data: Array[ObjectData]

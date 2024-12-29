@@ -78,7 +78,7 @@ func _process(_delta: float) -> void:
 				for ele in elevations:
 					ele.delete_square(chunk_pos + square.location_in_chunk)
 					# removes objects from scene + updates their state if dead
-					square.object_datas = object_atlas.remove_objects(square.object_datas)
+					square.object_data = object_atlas.remove_objects(square.object_data)
 			chunk_row_next[key] = next_row + 1
 		
 	#print("chunks in loading: ", chunks_in_loading.keys())
@@ -146,9 +146,9 @@ func translate_square_data_to_tile(data: SquareData, world_pos: Vector2i)-> void
 		#print("building base in elevation: ", x)
 		elevations[x].build_base_of(data, world_pos)
 	elevations[ele].set_square(data, world_pos)
-	if data.object_datas != null:
+	if data.object_data != null:
 		var actual_pos := world_pos * 64 + Vector2i(data.elevation * -32, data.elevation*-32)
-		object_atlas.translate_object(data.object_datas, actual_pos)
+		object_atlas.translate_object(data.object_data, actual_pos)
 
 func run_shader_data_stuff(chunk_keys: Array[Vector2i]) -> void:
 	#print("chunk_keys: ", chunk_keys)
@@ -177,15 +177,18 @@ func apply_floor_at(square_pos: Vector2i, chunk_pos:Vector2i, floor_type: String
 		return
 	var square: SquareData = chunk_data.square_datas[square_pos]
 	# if this square is null or empty, add some fake data
+	if square.object_data == null || square.object_data.is_empty():
+		# print("was empty, making new array")
+		square.object_data = [null, null]
 	if floor_type == "till": 
 		## no objects, apply immediately 
-		if 0 not in square.object_datas.keys():
+		if square.object_data[0] == null:
 			var overall_pos := (chunk_pos * chunk_data.chunk_size) + square_pos
 			match square.type:
 				SquareData.SquareType.Dirt:
 					var new_floor: FloorData = FloorData.new()
 					new_floor.object_id = "till"
-					square.object_datas[0] = new_floor
+					square.object_data[0] = new_floor
 					elevations[square.elevation].till_square(overall_pos)
 				SquareData.SquareType.Sand:
 					pass # idk what to do here yet

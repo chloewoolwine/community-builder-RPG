@@ -70,8 +70,8 @@ func set_square(_data: SquareData, overall_location: Vector2i)-> void:
 			SquareData.SquareType.Sand:
 				base.fill_tile(overall_location)
 				sand.fill_tile(overall_location)
-	if 0 in _data.object_datas.keys():
-		var floor_type: FloorData= _data.object_datas[0]
+	if _data.object_data && _data.object_data.size() > 0:
+		var floor_type := _data.object_data[0]
 		if floor_type != null:
 			if floor_type.object_id == "till":
 				till.set_cell(overall_location, 0, Vector2i.ZERO)

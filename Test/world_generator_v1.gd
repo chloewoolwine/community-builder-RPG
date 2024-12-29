@@ -137,7 +137,8 @@ func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, temp_grid:D
 						var object: ObjectData = ObjectData.new()
 						object.object_id = "plant_tree_poplar"
 						object.object_tags["age"] = i % 3
-						square.object_datas[1] = object
+						square.object_data = [null, null, null, null]
+						square.object_data[1] = object
 						
 					square_datas[Vector2i(i,j)] = square
 					

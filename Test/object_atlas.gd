@@ -41,12 +41,14 @@ var loaded_objects: Dictionary
 # or... just have them reference their own object datas? 
 var live_objects: Dictionary
 
-func translate_object(object_datas: Dictionary,overall_position: Vector2) -> void: 
+func translate_object(object_datas: Array[ObjectData],overall_position: Vector2) -> void: 
 	if object_datas == null:
 		return
-	for x:int in object_datas.keys():
-		var object_data: ObjectData= object_datas[x]
-		if object_data != null && x != 0:
+	if object_datas.size() < 2: # floors are not really objects. it's a lie.
+		return 
+	for x in range(1, object_datas.size()):
+		var object_data := object_datas[x]
+		if object_data != null:
 			if object_data.object_id != "":
 				var split := object_data.object_id.split("_")
 				var path := object_scene_location + split[0] + "/" + split[1] + "/" + split[2] + ".tscn"
@@ -63,15 +65,18 @@ func translate_object(object_datas: Dictionary,overall_position: Vector2) -> voi
 			else: 
 				print("empty object id?")
 	
-func remove_objects(object_datas: Dictionary) ->Dictionary: 
-	for x in object_datas.keys():
-		var object_data:ObjectData = object_datas[x]
-		if object_data != null && x != 0:
+func remove_objects(object_datas: Array[ObjectData]) -> Array[ObjectData]: 
+	for x in range(1, object_datas.size()):
+		var object_data := object_datas[x]
+		if object_data != null:
+			if object_data not in live_objects.keys():
+				push_warning("Object_id: ", object_data.object_id, " expected to be in live objects, not found")
+				continue 
 			var object: Node2D = live_objects[object_data]
-			if object == null:
+			if object_data == null:
 				# object probably killed itself
 				live_objects.erase(object_data)
-				object_datas.erase(x) # erase the object data because it killed itself
+				object_datas[x] = null # erase the object data because it killed itself
 			object.queue_free() # TODO: specific objects might have some stuff to do? not sure!
 			live_objects.erase(object_data)
 	return object_datas

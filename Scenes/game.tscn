@@ -65,6 +65,7 @@ unload_chunks = true
 
 [node name="TerrainRulesHandler" type="Node2D" parent="WorldManager"]
 script = ExtResource("7_fkv55")
+debug = null
 
 [node name="Elevation0" parent="WorldManager/TerrainRulesHandler" instance=ExtResource("8_of3dw")]
 position = Vector2(-1, 0)
