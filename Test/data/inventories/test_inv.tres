@@ -1,38 +1,26 @@
-[gd_resource type="Resource" script_class="InventoryData" load_steps=13 format=3 uid="uid://cblqgmedaij75"]
+[gd_resource type="Resource" script_class="InventoryData" load_steps=9 format=3 uid="uid://cblqgmedaij75"]
 
 [ext_resource type="Script" path="res://Game Logic/data/inventory/inventory_data.gd" id="1_ybk3g"]
-[ext_resource type="Resource" uid="uid://j4ubp0int25h" path="res://Game Logic/item/items/consumables/health_potion.tres" id="2_8py61"]
+[ext_resource type="Resource" uid="uid://clcehfhlk37mi" path="res://Scenes/items/consumables/fesh.tres" id="3_lnhgj"]
 [ext_resource type="Script" path="res://Game Logic/data/inventory/slot_data.gd" id="3_nmayq"]
-[ext_resource type="Resource" uid="uid://dis5lo35vrtr2" path="res://Game Logic/item/items/seeds/cabbage_seed.tres" id="5_tn0ov"]
-[ext_resource type="Resource" uid="uid://cum0uus22nf72" path="res://Game Logic/item/items/tools/stick.tres" id="6_iy7bd"]
-[ext_resource type="Resource" uid="uid://bm7deaa4jskcr" path="res://Game Logic/item/items/seeds/carrot_seed.tres" id="7_4jrl6"]
-[ext_resource type="Resource" uid="uid://clcehfhlk37mi" path="res://Game Logic/item/items/consumables/fesh.tres" id="7_5y0gu"]
+[ext_resource type="Resource" uid="uid://cum0uus22nf72" path="res://Scenes/items/tools/stick.tres" id="4_al3a7"]
+[ext_resource type="Resource" uid="uid://j4ubp0int25h" path="res://Scenes/items/consumables/health_potion.tres" id="5_0fjhd"]
 
 [sub_resource type="Resource" id="Resource_yddo7"]
 script = ExtResource("3_nmayq")
-item_data = ExtResource("7_5y0gu")
+item_data = ExtResource("3_lnhgj")
 quantity = 1
 
 [sub_resource type="Resource" id="Resource_f3h4m"]
 script = ExtResource("3_nmayq")
-item_data = ExtResource("6_iy7bd")
+item_data = ExtResource("4_al3a7")
 quantity = 1
-
-[sub_resource type="Resource" id="Resource_0mw5q"]
-script = ExtResource("3_nmayq")
-item_data = ExtResource("5_tn0ov")
-quantity = 3
 
 [sub_resource type="Resource" id="Resource_it2nq"]
 script = ExtResource("3_nmayq")
-item_data = ExtResource("2_8py61")
-quantity = 1
-
-[sub_resource type="Resource" id="Resource_1qfm2"]
-script = ExtResource("3_nmayq")
-item_data = ExtResource("7_4jrl6")
+item_data = ExtResource("5_0fjhd")
 quantity = 1
 
 [resource]
 script = ExtResource("1_ybk3g")
-slot_datas = Array[ExtResource("3_nmayq")]([SubResource("Resource_yddo7"), SubResource("Resource_f3h4m"), SubResource("Resource_0mw5q"), SubResource("Resource_it2nq"), SubResource("Resource_1qfm2"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+slot_datas = Array[ExtResource("3_nmayq")]([SubResource("Resource_yddo7"), SubResource("Resource_f3h4m"), null, SubResource("Resource_it2nq"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])

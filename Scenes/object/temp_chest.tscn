@@ -1,0 +1,53 @@
+[gd_scene load_steps=12 format=3 uid="uid://ho7dtji22ka2"]
+
+[ext_resource type="Script" path="res://Game Logic/inventory/chest.gd" id="1_sqvli"]
+[ext_resource type="Script" path="res://Game Logic/data/inventory/inventory_data.gd" id="2_60rdi"]
+[ext_resource type="Script" path="res://Game Logic/data/inventory/slot_data.gd" id="3_mvhni"]
+[ext_resource type="Resource" uid="uid://dis5lo35vrtr2" path="res://Scenes/items/seeds/cabbage_seed.tres" id="4_vwybk"]
+[ext_resource type="Script" path="res://Game Logic/object/interaction_hitbox.gd" id="5_atmvf"]
+[ext_resource type="Texture2D" uid="uid://cjjxdql4dl6j3" path="res://Assets/Testy Assets/#1 - Transparent Icons.png" id="6_p0m47"]
+
+[sub_resource type="Resource" id="Resource_fewj4"]
+script = ExtResource("3_mvhni")
+item_data = ExtResource("4_vwybk")
+quantity = 10
+
+[sub_resource type="Resource" id="Resource_yg6el"]
+script = ExtResource("2_60rdi")
+slot_datas = Array[ExtResource("3_mvhni")]([SubResource("Resource_fewj4"), null, null, null, null, null, null, null])
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l1ew5"]
+size = Vector2(28, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7gia"]
+atlas = ExtResource("6_p0m47")
+region = Rect2(352, 352, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xja2f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d7gia")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Chest" type="Node2D" groups=["external_inventory"]]
+script = ExtResource("1_sqvli")
+inventory_data = SubResource("Resource_yg6el")
+
+[node name="InteractionHitbox" type="StaticBody2D" parent="."]
+collision_layer = 5
+collision_mask = 0
+script = ExtResource("5_atmvf")
+is_chest = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionHitbox"]
+shape = SubResource("RectangleShape2D_l1ew5")
+one_way_collision_margin = 0.0
+
+[node name="TempChest" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_xja2f")
+autoplay = "default"

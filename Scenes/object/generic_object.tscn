@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://d3kov3ehthpy"]
+
+[ext_resource type="Script" path="res://Game Logic/object/interaction_hitbox.gd" id="1_gfcto"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ubcxi"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cdqjf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h2wue"]
+atlas = SubResource("CompressedTexture2D_cdqjf")
+region = Rect2(69.3498, 118.948, 39.2364, 37.6564)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s8677"]
+radius = 29.0689
+
+[node name="GenericObject" type="StaticBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ubcxi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_h2wue")
+
+[node name="ChestComponent" type="Node2D" parent="."]
+
+[node name="CraftingComponent" type="Node2D" parent="."]
+
+[node name="InteractionHitbox" type="StaticBody2D" parent="."]
+script = ExtResource("1_gfcto")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionHitbox"]
+shape = SubResource("CircleShape2D_s8677")

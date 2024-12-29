@@ -1,18 +1,21 @@
-[gd_scene load_steps=27 format=4 uid="uid://bx0i1fqjjvygy"]
+[gd_scene load_steps=30 format=3 uid="uid://bx0i1fqjjvygy"]
 
 [ext_resource type="Script" path="res://Game Logic/managers/game.gd" id="1_lgntb"]
 [ext_resource type="PackedScene" uid="uid://dy236j24tdfmr" path="res://Scenes/Entities/player.tscn" id="1_vlfca"]
 [ext_resource type="Resource" uid="uid://cblqgmedaij75" path="res://Test/data/inventories/test_inv.tres" id="3_xku57"]
 [ext_resource type="PackedScene" uid="uid://dqm8g7yybo0pf" path="res://Scenes/UI/Inventory/inventory.tscn" id="4_kq4io"]
 [ext_resource type="Script" path="res://Game Logic/managers/calendar_manager.gd" id="5_cki0q"]
-[ext_resource type="PackedScene" uid="uid://b7myr5j2rsmdh" path="res://Assets/High Level Managers/world_manager.tscn" id="5_w5a24"]
+[ext_resource type="Script" path="res://Game Logic/managers/world_manager.gd" id="5_wonyh"]
 [ext_resource type="Script" path="res://Game Logic/inventory/inventory_interface.gd" id="6_uons4"]
+[ext_resource type="Resource" uid="uid://b01mer6qkwo4b" path="res://Test/data/world_datas/moist_gradient.tres" id="6_yjo1n"]
+[ext_resource type="Script" path="res://Game Logic/world/terrain_rules_handler.gd" id="7_fkv55"]
 [ext_resource type="Script" path="res://Game Logic/managers/entity_manager.gd" id="8_3dv0o"]
+[ext_resource type="PackedScene" uid="uid://1b78ipp0k2t8" path="res://Scenes/world/elevation_layer.tscn" id="8_of3dw"]
 [ext_resource type="PackedScene" uid="uid://cwyeg4vhep7na" path="res://Scenes/UI/Inventory/slot.tscn" id="8_pioji"]
 [ext_resource type="Script" path="res://Game Logic/managers/pickup_manager.gd" id="10_d5qv3"]
-[ext_resource type="Resource" uid="uid://b1v5a5qu2iw7w" path="res://Game Logic/item/items/test/test_apple.tres" id="11_cwce4"]
+[ext_resource type="Resource" uid="uid://b1v5a5qu2iw7w" path="res://Scenes/items/test/test_apple.tres" id="11_cwce4"]
 [ext_resource type="Script" path="res://Game Logic/data/inventory/slot_data.gd" id="12_iyjdd"]
-[ext_resource type="PackedScene" uid="uid://cdeeqt3ae70lq" path="res://Scenes/objects/pick_up.tscn" id="13_pouw6"]
+[ext_resource type="PackedScene" uid="uid://cdeeqt3ae70lq" path="res://Scenes/object/pick_up.tscn" id="13_pouw6"]
 [ext_resource type="PackedScene" uid="uid://b48eubjn547dd" path="res://Scenes/UI/Inventory/hot_bar_inventory.tscn" id="16_j6efu"]
 [ext_resource type="PackedScene" uid="uid://df2qdt4sw2ptf" path="res://Scenes/Entities/enemies/dust_bunny.tscn" id="17_6hk27"]
 [ext_resource type="Script" path="res://Game Logic/data/saves/saverloader.gd" id="17_d5xvq"]
@@ -46,7 +49,6 @@ script = ExtResource("19_by7u0")
 story_data = ExtResource("21_hwjbe")
 
 [node name="Lighting" type="CanvasModulate" parent="StoryManager"]
-visible = false
 position = Vector2(-1, 0)
 scale = Vector2(0.550946, 4.54629)
 color = Color(0.193862, 0.19257, 0.432045, 1)
@@ -54,25 +56,19 @@ script = ExtResource("5_cki0q")
 proccessTime = true
 light_gradient = SubResource("GradientTexture1D_6o1tu")
 
-[node name="WorldManager" parent="." instance=ExtResource("5_w5a24")]
+[node name="WorldManager" type="Node2D" parent="."]
+y_sort_enabled = true
+script = ExtResource("5_wonyh")
+_world_data = ExtResource("6_yjo1n")
+load_chunks = true
+unload_chunks = true
 
-[node name="Base" parent="WorldManager/TerrainRulesHandler/Elevation0" index="0"]
-tile_map_data = PackedByteArray("AAD2//3/BAABAAMAAAD3//3/BAAAAAAAAAD2//7/BAABAAAAAAD3//7/BAADAAIAAAD2////BAAAAAIAAAD3////BAADAAMAAAD5//v/BAABAAMAAAD5//z/BAABAAAAAAD6//v/BAADAAAAAAD6//z/BAACAAEAAAD7//v/BAADAAAAAAD7//z/BAACAAEAAAD8//v/BAADAAAAAAD8//z/BAACAAEAAAD9//v/BAADAAAAAAD9//z/BAACAAEAAAD+//v/BAADAAAAAAD+//z/BAACAAEAAAD///v/BAADAAAAAAD///z/BAACAAEAAAAAAPv/BAADAAAAAAAAAPz/BAACAAEAAAABAPv/BAADAAAAAAABAPz/BAACAAEAAAACAPv/BAADAAAAAAACAPz/BAACAAEAAAADAPv/BAADAAAAAAADAPz/BAACAAEAAAAEAPv/BAADAAAAAAAEAPz/BAACAAEAAAAEAP3/BAACAAEAAAAFAPv/BAAAAAAAAAAFAPz/BAADAAIAAAAFAP3/BAADAAIAAAD5//3/BAABAAAAAAD6//3/BAACAAEAAAD5//7/BAABAAAAAAD6//7/BAACAAEAAAD5////BAABAAAAAAD6////BAACAAEAAAD7//3/BAACAAEAAAD7//7/BAACAAEAAAD7////BAACAAEAAAD8//3/BAACAAEAAAD8//7/BAACAAEAAAD8////BAACAAEAAAD9//3/BAACAAEAAAD9//7/BAACAAEAAAD9////BAACAAEAAAD+//3/BAACAAEAAAD+//7/BAACAAEAAAD+////BAACAAEAAAD///3/BAACAAEAAAD///7/BAACAAEAAAD/////BAACAAEAAAAAAP3/BAACAAEAAAAAAP7/BAACAAEAAAAAAP//BAACAAEAAAABAP3/BAACAAEAAAABAP7/BAACAAEAAAABAP//BAACAAEAAAACAP3/BAACAAEAAAACAP7/BAACAAEAAAACAP//BAACAAEAAAADAP3/BAACAAEAAAADAP7/BAACAAEAAAADAP//BAACAAEAAAAEAP7/BAACAAEAAAAEAP//BAACAAEAAAAFAP7/BAADAAIAAAAFAP//BAADAAIAAAD6/wAABAACAAEAAAD7/wAABAACAAEAAAD6/wEABAABAAIAAAD7/wEABAABAAIAAAD8/wAABAACAAEAAAD8/wEABAABAAIAAAD9/wAABAACAAEAAAD9/wEABAABAAIAAAD+/wAABAACAAEAAAD+/wEABAABAAIAAAD//wAABAACAAEAAAD//wEABAABAAIAAAAAAAAABAACAAEAAAAAAAEABAABAAIAAAABAAAABAACAAEAAAABAAEABAABAAIAAAACAAAABAACAAEAAAACAAEABAABAAIAAAADAAAABAACAAEAAAADAAEABAABAAIAAAAEAAAABAACAAEAAAAEAAEABAABAAIAAAAFAAAABAADAAIAAAAFAAEABAADAAMAAAD5/wAABAABAAAAAAD5/wEABAAAAAIAAAA=")
+[node name="TerrainRulesHandler" type="Node2D" parent="WorldManager"]
+script = ExtResource("7_fkv55")
+debug = null
 
-[node name="Sand" parent="WorldManager/TerrainRulesHandler/Elevation0" index="2"]
-tile_map_data = PackedByteArray()
-
-[node name="Grass" parent="WorldManager/TerrainRulesHandler/Elevation0" index="4"]
-tile_map_data = PackedByteArray("AAD6//z/AgABAAMAAAD6//3/AgABAAAAAAD7//z/AgADAAAAAAD7//3/AgACAAEAAAD8//z/AgADAAAAAAD8//3/AgACAAEAAAD9//z/AgADAAAAAAD9//3/AgACAAEAAAD+//z/AgADAAAAAAD+//3/AgACAAEAAAD///z/AgADAAAAAAD///3/AgACAAEAAAD6//7/AgABAAAAAAD7//7/AgACAAEAAAD6////AgAAAAIAAAD7////AgABAAIAAAD8//7/AgACAAEAAAD8////AgABAAIAAAD9//7/AgACAAEAAAD9////AgABAAIAAAD+//7/AgACAAEAAAD+////AgABAAIAAAD///7/AgACAAEAAAD/////AgABAAIAAAAAAPz/AgADAAAAAAAAAP3/AgACAAEAAAAAAP7/AgACAAEAAAAAAP//AgABAAIAAAABAPz/AgADAAAAAAABAP3/AgACAAEAAAABAP7/AgACAAEAAAABAP//AgABAAIAAAACAPz/AgADAAAAAAACAP3/AgACAAEAAAACAP7/AgACAAEAAAACAP//AgABAAIAAAADAPz/AgADAAAAAAADAP3/AgACAAEAAAADAP7/AgACAAEAAAADAP//AgABAAIAAAAEAPz/AgAAAAAAAAAEAP3/AgADAAIAAAAEAP7/AgADAAIAAAAEAP//AgADAAMAAAA=")
-
-[node name="Base" parent="WorldManager/TerrainRulesHandler/Elevation1" index="0"]
-tile_map_data = PackedByteArray("AAD+//3/AwACAAEAAAD+//7/AwABAAIAAAD///3/AwADAAEAAAD///7/AwADAAMAAAD6//z/AwABAAMAAAD6//3/AwABAAAAAAD7//z/AwADAAAAAAD7//3/AwACAAEAAAD8//z/AwADAAAAAAD8//3/AwACAAEAAAD9//z/AwADAAAAAAD9//3/AwACAAEAAAD+//z/AwADAAAAAAD///z/AwADAAAAAAAAAPz/AwAAAAAAAAAAAP3/AwADAAMAAAD9//7/AwABAAIAAAD8//7/AwADAAEAAAD7//7/AwACAAEAAAD6//7/AwABAAAAAAD6////AwAAAAIAAAD7////AwABAAIAAAD8////AwADAAMAAAA=")
-
-[node name="Sand" parent="WorldManager/TerrainRulesHandler/Elevation1" index="2"]
-tile_map_data = PackedByteArray("AAD6//z/AgABAAMAAAD6//3/AgABAAAAAAD7//z/AgADAAAAAAD7//3/AgACAAEAAAD8//z/AgADAAAAAAD8//3/AgACAAEAAAD9//z/AgADAAAAAAD9//3/AgACAAEAAAD+//z/AgADAAAAAAD+//3/AgACAAEAAAD///z/AgADAAAAAAD///3/AgADAAEAAAAAAPz/AgAAAAAAAAAAAP3/AgADAAMAAAD+//7/AgABAAIAAAD///7/AgADAAMAAAD9//7/AgABAAIAAAD8//7/AgADAAEAAAD7//7/AgACAAEAAAD6//7/AgABAAAAAAD6////AgAAAAIAAAD7////AgABAAIAAAD8////AgADAAMAAAA=")
-
-[node name="Grass" parent="WorldManager/TerrainRulesHandler/Elevation1" index="4"]
-tile_map_data = PackedByteArray("AAD6//z/AgABAAMAAAD6//3/AgABAAAAAAD7//z/AgADAAAAAAD7//3/AgACAAEAAAD8//z/AgADAAAAAAD8//3/AgACAAEAAAD9//z/AgADAAAAAAD9//3/AgACAAEAAAD+//z/AgADAAAAAAD+//3/AgACAAEAAAD///z/AgADAAAAAAD///3/AgADAAEAAAAAAPz/AgAAAAAAAAAAAP3/AgADAAMAAAD+//7/AgABAAIAAAD///7/AgADAAMAAAD9//7/AgABAAIAAAD8//7/AgADAAEAAAD7//7/AgACAAEAAAD6//7/AgABAAAAAAD6////AgAAAAIAAAD7////AgABAAIAAAD8////AgADAAMAAAA=")
+[node name="Elevation0" parent="WorldManager/TerrainRulesHandler" instance=ExtResource("8_of3dw")]
+position = Vector2(-1, 0)
 
 [node name="EntityManager" type="Node2D" parent="."]
 editor_description = "Holds things with AI- player, npcs, enemies, etc"
@@ -197,8 +193,5 @@ script = ExtResource("17_d5xvq")
 [connection signal="gui_input" from="UI/InventoryInterface" to="UI/InventoryInterface" method="_on_gui_input"]
 [connection signal="visibility_changed" from="UI/InventoryInterface" to="UI/InventoryInterface" method="_on_visibility_changed"]
 
-[editable path="WorldManager"]
 [editable path="WorldManager/TerrainRulesHandler/Elevation0"]
-[editable path="WorldManager/TerrainRulesHandler/Elevation1"]
-[editable path="WorldManager/TerrainRulesHandler/Elevation2"]
 [editable path="UI/InventoryInterface/PlayerInventory"]

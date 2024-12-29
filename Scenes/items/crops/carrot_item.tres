@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://crblodej2lpl5"]
+
+[ext_resource type="Script" path="res://Game Logic/data/inventory/item_data.gd" id="1_r26yh"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_la2wb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7r5w6"]
+atlas = SubResource("CompressedTexture2D_la2wb")
+region = Rect2(373.241, 89.8635, 67.9706, 62.0249)
+
+[resource]
+script = ExtResource("1_r26yh")
+name = "Carrot"
+description = "eyes"
+magical = false
+magicalDescription = ""
+stackable = true
+texture = SubResource("AtlasTexture_7r5w6")
+placeable = false
+value = 1
+rarity = 1

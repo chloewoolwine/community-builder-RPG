@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ItemDataTool" load_steps=4 format=3 uid="uid://bttbsjkake846"]
+
+[ext_resource type="Script" path="res://Game Logic/data/inventory/item_data_tool.gd" id="1_mh6wh"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_pw2b7"]
+load_path = "res://.godot/imported/#1 - Transparent Icons.png-13545c48bffa21483b1102eab61f8d2a.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ecy5"]
+atlas = SubResource("CompressedTexture2D_pw2b7")
+region = Rect2(96, 320, 32, 32)
+
+[resource]
+script = ExtResource("1_mh6wh")
+efficiency = 0
+type = 2
+name = "Hoe"
+description = ""
+magical = false
+magicalDescription = ""
+stackable = false
+texture = SubResource("AtlasTexture_7ecy5")
+placeable = false
+value = 1
+rarity = 1

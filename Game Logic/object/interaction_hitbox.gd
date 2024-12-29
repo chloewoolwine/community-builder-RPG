@@ -10,5 +10,6 @@ signal player_interacted(hitbox:InteractionHitbox)
 
 var accepting_interactions : bool = true
 
+# the player checks if they have the tool 
 func player_interact()-> void:
 	player_interacted.emit(self)

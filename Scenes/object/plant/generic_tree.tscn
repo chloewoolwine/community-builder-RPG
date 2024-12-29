@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://cm3ovhrgjyg1u"]
+
+[ext_resource type="Script" path="res://Game Logic/object/plants/generic_plant.gd" id="1_w2kxl"]
+[ext_resource type="Script" path="res://Game Logic/object/plants/tree_appearance.gd" id="2_fyq2n"]
+[ext_resource type="Script" path="res://Game Logic/object/plants/plant_component.gd" id="3_n11rv"]
+[ext_resource type="Script" path="res://Game Logic/object/interaction_hitbox.gd" id="4_p42v1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_aoqua"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0mxl1"]
+radius = 29.0689
+
+[node name="GenericTree" type="Area2D" groups=["plant_growable", "player_interactable"]]
+y_sort_enabled = true
+script = ExtResource("1_w2kxl")
+
+[node name="StepCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_aoqua")
+
+[node name="TreeAppearance" type="Node2D" parent="."]
+script = ExtResource("2_fyq2n")
+
+[node name="Sprite2D" type="Sprite2D" parent="TreeAppearance"]
+y_sort_enabled = true
+offset = Vector2(0, -135)
+
+[node name="Sprite2D2" type="Sprite2D" parent="TreeAppearance"]
+y_sort_enabled = true
+
+[node name="PlantComponent" type="Node2D" parent="."]
+script = ExtResource("3_n11rv")
+growth_stage_minutes = Array[int]([1000000])
+current_growth_stage = 1
+
+[node name="InteractionHitbox" type="RigidBody2D" parent="."]
+script = ExtResource("4_p42v1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionHitbox"]
+shape = SubResource("CircleShape2D_0mxl1")

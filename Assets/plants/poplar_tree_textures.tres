@@ -1,6 +1,8 @@
 [gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://bkjvfrvehujjc"]
 
-[ext_resource type="Texture2D" uid="uid://m140rxw0ug17" path="res://Assets/plants/poplar_tree.png" id="1_uuxg5"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_rgud5"]
+load_path = "res://.godot/imported/poplar_tree.png-0dbe1866154817b90ae5364e2c312842.ctex"
 
 [resource]
-atlas = ExtResource("1_uuxg5")
+atlas = SubResource("CompressedTexture2D_rgud5")
+region = Rect2(3, 46, 141, 341)

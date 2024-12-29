@@ -1,0 +1,227 @@
+[gd_scene load_steps=21 format=3 uid="uid://cycrtln7ftflc"]
+
+[ext_resource type="Script" path="res://Game Logic/managers/world_manager.gd" id="1_d3v3l"]
+[ext_resource type="Script" path="res://Test/temp_camera_script.gd" id="1_pg57c"]
+[ext_resource type="Script" path="res://Game Logic/world/terrain_rules_handler.gd" id="2_hk3wk"]
+[ext_resource type="Texture2D" uid="uid://dj8bni171no41" path="res://Assets/Testy Assets/map edit symbols/Asset 1@0.5x.png" id="2_lwt0r"]
+[ext_resource type="Script" path="res://Test/map_editor_control_menu.gd" id="3_4irie"]
+[ext_resource type="Texture2D" uid="uid://b71ycp15yowwk" path="res://Assets/Testy Assets/map edit symbols/Asset 25@0.5x.png" id="4_jjck8"]
+[ext_resource type="Texture2D" uid="uid://oulwhnc8mhq5" path="res://Assets/Testy Assets/map edit symbols/Asset 18@0.5x.png" id="5_gjubd"]
+[ext_resource type="PackedScene" uid="uid://1b78ipp0k2t8" path="res://Scenes/world/elevation_layer.tscn" id="5_twio2"]
+[ext_resource type="Script" path="res://Test/object_atlas.gd" id="6_wou66"]
+[ext_resource type="Texture2D" uid="uid://dhy2mlw2rh1fm" path="res://Assets/Testy Assets/map edit symbols/Asset 17@0.5x.png" id="6_yxhyp"]
+[ext_resource type="Texture2D" uid="uid://n1jru5gr22no" path="res://Assets/Testy Assets/map edit symbols/Asset 77@0.5x.png" id="7_jqxbs"]
+[ext_resource type="Texture2D" uid="uid://b71wkniwm1shg" path="res://Assets/Testy Assets/map edit symbols/Asset 81@0.5x.png" id="8_tgey8"]
+[ext_resource type="Script" path="res://Test/world_generator_v1.gd" id="13_i6roh"]
+[ext_resource type="Texture2D" uid="uid://bnxf6cstcmjft" path="res://Assets/Testy Assets/map edit symbols/paintbrush.png" id="13_ragj0"]
+[ext_resource type="FastNoiseLite" uid="uid://bbqhvyutia2e2" path="res://Test/data/noise/doesntworkanymorenoise.tres" id="14_16di6"]
+[ext_resource type="Texture2D" uid="uid://codo8ckb42t08" path="res://Assets/Testy Assets/map edit symbols/eraser.png" id="14_dmrar"]
+[ext_resource type="Script" path="res://Game Logic/managers/WorldSaver.gd" id="16_neiaj"]
+[ext_resource type="FastNoiseLite" uid="uid://bdmyfboi5v4ci" path="res://Test/data/noise/decent_noise.tres" id="18_we2w1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_imf0b"]
+bg_color = Color(0.0352941, 0.0352941, 0.0352941, 0.52549)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfymu"]
+bg_color = Color(0.0352941, 0.0352941, 0.0352941, 0.52549)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="TestTilemapSystem" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+scale = Vector2(0.259594, 0.246314)
+position_smoothing_enabled = true
+script = ExtResource("1_pg57c")
+speed = 150
+
+[node name="WorldManager" type="Node2D" parent="."]
+y_sort_enabled = true
+script = ExtResource("1_d3v3l")
+world_edit_mode = true
+load_chunks = true
+unload_chunks = true
+
+[node name="TerrainRulesHandler" type="Node2D" parent="WorldManager"]
+script = ExtResource("2_hk3wk")
+debug = true
+
+[node name="Elevation0" parent="WorldManager/TerrainRulesHandler" instance=ExtResource("5_twio2")]
+
+[node name="ObjectAtlas" type="Node2D" parent="WorldManager/TerrainRulesHandler"]
+script = ExtResource("6_wou66")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("3_4irie")
+camera_zooms = Array[float]([0.05, 0.2, 0.3, 0.4, 0.5, 0.7, 1.0])
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 11.0
+offset_right = 151.0
+offset_bottom = 81.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_imf0b")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="save" type="Button" parent="CanvasLayer/Control/PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/icon_normal_color = Color(0.580392, 0.384314, 0.803922, 1)
+theme_override_colors/icon_pressed_color = Color(0.400092, 0.227652, 0.582905, 1)
+icon = ExtResource("2_lwt0r")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="load" type="Button" parent="CanvasLayer/Control/PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/icon_normal_color = Color(0.87933, 0.453347, 0.722224, 1)
+theme_override_colors/icon_pressed_color = Color(0.773183, 0.303342, 0.612409, 1)
+icon = ExtResource("4_jjck8")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="zoomin" type="Button" parent="CanvasLayer/Control/PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/icon_normal_color = Color(0.936517, 0.635928, 0.329374, 1)
+theme_override_colors/icon_pressed_color = Color(0.774391, 0.440696, 0, 1)
+icon = ExtResource("5_gjubd")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="zoomout" type="Button" parent="CanvasLayer/Control/PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/icon_normal_color = Color(0.937255, 0.807843, 0.298039, 1)
+theme_override_colors/icon_pressed_color = Color(0.688567, 0.552763, 0.0376712, 1)
+icon = ExtResource("6_yxhyp")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="big" type="Button" parent="CanvasLayer/Control/PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/icon_normal_color = Color(0.626704, 0.985161, 0.325635, 1)
+theme_override_colors/icon_pressed_color = Color(0.379733, 0.631099, 0.151022, 1)
+icon = ExtResource("7_jqxbs")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="little" type="Button" parent="CanvasLayer/Control/PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/icon_normal_color = Color(0.354613, 0.922367, 1, 1)
+theme_override_colors/icon_pressed_color = Color(5.87195e-06, 0.622514, 0.687744, 1)
+icon = ExtResource("8_tgey8")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 107.0
+offset_right = 51.0
+offset_bottom = 147.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_nfymu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/PanelContainer2"]
+layout_mode = 2
+
+[node name="brush" type="Button" parent="CanvasLayer/Control/PanelContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/icon_pressed_color = Color(0.317235, 0.284486, 0.250659, 1)
+icon = ExtResource("13_ragj0")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="eraser" type="Button" parent="CanvasLayer/Control/PanelContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/icon_pressed_color = Color(0.526144, 0.2103, 0.189449, 1)
+icon = ExtResource("14_dmrar")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(520, 720)
+ok_button_text = "Open"
+dialog_hide_on_ok = true
+file_mode = 0
+access = 2
+root_subfolder = "Test/data/world_datas"
+
+[node name="FileDialog2" type="FileDialog" parent="."]
+auto_translate_mode = 1
+initial_position = 2
+size = Vector2i(520, 720)
+ok_button_text = "Save"
+dialog_hide_on_ok = true
+access = 2
+root_subfolder = "Test/data/world_datas"
+
+[node name="WorldSaver" type="Node2D" parent="."]
+script = ExtResource("16_neiaj")
+
+[node name="WorldGenerator" type="Node2D" parent="WorldSaver" node_paths=PackedStringArray("terrain_rules_handler")]
+script = ExtResource("13_i6roh")
+world_manager = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":true,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":ExtResource("1_d3v3l"),"_world_data":Resource("res://Test/data/world_datas/treez.tres"),"world_edit_mode":true,"load_chunks":true,"unload_chunks":true)
+
+terrain_rules_handler = NodePath("../../WorldManager/TerrainRulesHandler")
+chunk_size = Vector2i(32, 32)
+num_chunks = Vector2i(10, 10)
+altitude_noise = ExtResource("14_16di6")
+moisture_noise = ExtResource("18_we2w1")
+temperature_noise = ExtResource("18_we2w1")
+debris_noise = ExtResource("18_we2w1")
+
+[connection signal="pressed" from="CanvasLayer/Control/PanelContainer/MarginContainer/HBoxContainer/save" to="CanvasLayer/Control" method="_on_save_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/PanelContainer/MarginContainer/HBoxContainer/load" to="CanvasLayer/Control" method="_on_load_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/PanelContainer/MarginContainer/HBoxContainer/zoomin" to="CanvasLayer/Control" method="_on_zoomin_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/PanelContainer/MarginContainer/HBoxContainer/zoomout" to="CanvasLayer/Control" method="_on_zoomout_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/PanelContainer/MarginContainer/HBoxContainer/big" to="CanvasLayer/Control" method="_on_big_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/PanelContainer/MarginContainer/HBoxContainer/little" to="CanvasLayer/Control" method="_on_little_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/PanelContainer2/VBoxContainer/brush" to="CanvasLayer/Control" method="_on_brush_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/PanelContainer2/VBoxContainer/eraser" to="CanvasLayer/Control" method="_on_eraser_pressed"]
+
+[editable path="WorldManager/TerrainRulesHandler/Elevation0"]
