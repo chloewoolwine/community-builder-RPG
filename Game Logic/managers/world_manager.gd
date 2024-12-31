@@ -52,7 +52,7 @@ func load_and_unload_chunks_surronding_point(point: Vector2) -> void:
 			return
 
 func get_chunks_around_point(pos: Vector2, dist:int, debug: bool = false) -> Array[Vector2i]:
-	var tileset_pos:Vector2i = trh.get_tileset_pos_from_global(pos)
+	var tileset_pos:Vector2i = trh.get_tileset_pos_from_global(pos, 0)
 	var player_chunk:Vector2i = tileset_pos/_world_data.chunk_size
 	if debug:
 		print("tileset_pos ", tileset_pos)
@@ -83,28 +83,23 @@ func give_requested_layer(layer:int, callback: Callable) -> void:
 		callback.call(trh.elevations[layer])
 
 func place_object(pos: Vector2, layer:ElevationLayer, itemdata: ItemData)->void:
-	if itemdata is ItemDataSeed:
-		var object := load(str("res://Scenes/objects/crop/", itemdata.plant_name, ".tscn"))
-		#TODO: when tilemaplayers come out check to see if an object can be planted before doing it
-		@warning_ignore("untyped_declaration")
-		var plant = object.instantiate()
-		plant.global_position = pos
-		layer.add_child(plant)
-		trh.object_atlas.plant_placed.emit(plant)
+	var arr: Array[Vector2i] = convert_to_chunks_at_world_pos(pos)
+	var actual_pos := ((arr[0] * 64) + (arr[1] * 64 * 32)) + Vector2i(layer.elevation*-32, layer.elevation*-32) + Vector2i(32, 32)
+	itemdata.object_data.position = arr[0]
+	itemdata.object_data.chunk = arr[1]
+	trh.object_atlas.place_object(itemdata.object_data, actual_pos, layer.elevation)
 		
 func check_placement_validity(ind: Indicator, player_spot:Vector2, player_layer: ElevationLayer, _item: ItemData) -> bool:
 	var valid:bool = true
 	
-	#TODO: check if objects are on top of each other here
 	if ind.global_position.distance_to(player_spot) > 400:
 		valid = false
-	
 	# this might be broken for any layer > 0 ?
 	if player_layer != trh.get_topmost_layer_at_global_pos(ind.global_position):
 		valid = false
 	
-	#TODO: check tile type
-	
+	#TODO: check tile type (no water!)
+	#TODO: check overlapping positions
 	ind.valid_place = valid
 	return valid
 	
@@ -117,9 +112,23 @@ func modify_tilemap(loc: Vector2, layer: ElevationLayer, action: String) -> bool
 		return false
 	if layer != trh.get_topmost_layer_at_global_pos(loc):
 		return false
-	# get chunk and square from loc
-	var local: Vector2i = layer.local_to_map(layer.to_local(loc))
+	var positions:Array[Vector2i] = convert_to_chunks_at_world_pos(loc)
 	
+	if action == "water":
+		trh.water_square_at(positions[0], positions[1])
+	if action == "till": 
+		trh.apply_floor_at(positions[0], positions[1], action)
+	if action == "remove_floor":
+		trh.remove_floor_at(positions[0], positions[1])
+	return true
+	
+## Returns [square_pos, chunk_pos]. loc MUST be a global position (like from a transform)
+func convert_to_chunks_at_world_pos(loc: Vector2) -> Array[Vector2i]:
+	var arr :Array[Vector2i] = []
+	var layer := trh.get_topmost_layer_at_global_pos(loc)
+	if layer == null:
+		return arr
+	var local: Vector2i = layer.local_to_map(layer.to_local(loc))
 	var chunk_pos: Vector2i = local / _world_data.chunk_size
 	var square_pos: Vector2i = local % _world_data.chunk_size
 	#print("raw square_pos: ", square_pos)
@@ -131,12 +140,8 @@ func modify_tilemap(loc: Vector2, layer: ElevationLayer, action: String) -> bool
 		square_pos.y = _world_data.chunk_size.y + square_pos.y
 	#print("chunk position: ", chunk_pos)
 	#print("corrected square: ", square_pos)
-	
-	if action == "water":
-		trh.water_square_at(square_pos, chunk_pos)
-	if action == "till": 
-		trh.apply_floor_at(square_pos, chunk_pos, action)
-	return false
+	arr.append_array([square_pos, chunk_pos])
+	return arr
 	
 # Shaders can take indicators job: 
 # https://www.youtube.com/watch?v=7nTQA_6CL6M

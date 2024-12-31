@@ -5,7 +5,8 @@
 [ext_resource type="Script" path="res://Game Logic/object/plants/plant_component.gd" id="3_5i4t3"]
 [ext_resource type="Script" path="res://Game Logic/object/interaction_hitbox.gd" id="4_o0vwl"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_aoqua"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l825y"]
+size = Vector2(40, 40)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5kbd0"]
 
@@ -27,7 +28,7 @@ y_sort_enabled = true
 script = ExtResource("1_fw7b7")
 
 [node name="StepCollision" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_aoqua")
+shape = SubResource("RectangleShape2D_l825y")
 
 [node name="PlantAppearance" type="Node2D" parent="."]
 script = ExtResource("2_3msbc")

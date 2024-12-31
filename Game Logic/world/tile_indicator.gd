@@ -3,6 +3,7 @@ class_name Indicator
 
 signal move_me(me: Indicator, player_spot: Vector2, item: ItemData)
 signal placement(desired_spot: Vector2, elevation:ElevationLayer, item: ItemData)
+signal modify(despired_spot: Vector2, layer: ElevationLayer, action: String)
 
 @onready var elevation_handler: ElevationHandler = $"../ElevationHandler"
 
@@ -16,12 +17,22 @@ func _process(_delta: float) -> void:
 	if self.visible:
 		move_me.emit(self, get_parent().global_position, get_parent().get_equiped_item().item_data)
 	if valid_place:
+		#animation
 		pass 
 	else:
+		#no animation
 		pass
 
+func attempt_modify(_player_loc: Vector2, action: String) -> bool:
+	if self.global_position.distance_to(_player_loc) > 400: 
+		print("too far :C")
+		return false
+	print("modify attempted")
+	modify.emit(self.global_position, elevation_handler.current_map_layer, action)
+	return true
+
 func signal_placement_if_valid(item: ItemData, _player_loc:Vector2) -> bool:
-	if valid_place:
+	if valid_place and self.global_position.distance_to(_player_loc) <= 400:
 		placement.emit(self.global_position, elevation_handler.current_map_layer, item)
 		return true
 	return false
@@ -31,23 +42,25 @@ func set_vis_based_on_item(slot: SlotData)-> void:
 	if slot && slot.item_data:
 		if slot.item_data.placeable:
 			self.visible = true
-		if slot.item_data == ItemDataTool:
+		if slot.item_data is ItemDataTool:
 			set_vis_for_tool(slot.item_data)
 
 func set_vis_for_tool(item_data: ItemDataTool) -> void:
 	match item_data.type:
 		ItemDataTool.WeaponType.SWORD:
-			pass #no indicator
+			self.visible = false
 		ItemDataTool.WeaponType.HOE:
 			self.visible = true
-		ItemDataTool.WeaponType.AXE:
+		ItemDataTool.WeaponType.CAN:
 			self.visible = true
+		ItemDataTool.WeaponType.AXE:
+			self.visible = false
 		ItemDataTool.WeaponType.PICKAXE:
 			self.visible = true
 		ItemDataTool.WeaponType.HAMMER:
 			self.visible = true
 		ItemDataTool.WeaponType.ROD:
-			self.visible = true
+			self.visible = false
 
 func get_elevation() -> int:
 	return elevation_handler.current_elevation

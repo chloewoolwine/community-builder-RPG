@@ -1,7 +1,7 @@
 extends Node
 class_name PickupManager
 
-const PICK_UP = preload("res://Scenes/objects/pick_up.tscn")
+const PICK_UP = preload("res://Scenes/object/pick_up.tscn")
 @onready var player:Player = $"../EntityManager/Player"
 
 func _on_inventory_interface_drop_slot_data_into_world(slot_data:SlotData) -> void:

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://kuqe182eiuf4"]
+
+[ext_resource type="Script" path="res://Game Logic/object/build/generic_building.gd" id="1_4ttdr"]
+
+[node name="GenericBuilding" type="Node2D"]
+script = ExtResource("1_4ttdr")
+
+[connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]

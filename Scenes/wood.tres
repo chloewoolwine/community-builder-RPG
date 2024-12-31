@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BuildData" load_steps=2 format=3 uid="uid://bl0yjcqgmk4ow"]
+
+[ext_resource type="Script" path="res://Game Logic/data/world/object_datas/build_data.gd" id="1_2cbba"]
+
+[resource]
+script = ExtResource("1_2cbba")
+hearthstone_chunk = Vector2i(-1, 0)
+hearthstone_position = Vector2i(0, 0)
+object_id = "build_wall_wood"
+chunk = Vector2i(0, 0)
+position = Vector2i(0, 0)
+object_tags = {}

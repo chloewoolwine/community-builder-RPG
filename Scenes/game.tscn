@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://bx0i1fqjjvygy"]
+[gd_scene load_steps=31 format=3 uid="uid://bx0i1fqjjvygy"]
 
 [ext_resource type="Script" path="res://Game Logic/managers/game.gd" id="1_lgntb"]
 [ext_resource type="PackedScene" uid="uid://dy236j24tdfmr" path="res://Scenes/Entities/player.tscn" id="1_vlfca"]
@@ -6,12 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://dqm8g7yybo0pf" path="res://Scenes/UI/Inventory/inventory.tscn" id="4_kq4io"]
 [ext_resource type="Script" path="res://Game Logic/managers/calendar_manager.gd" id="5_cki0q"]
 [ext_resource type="Script" path="res://Game Logic/managers/world_manager.gd" id="5_wonyh"]
+[ext_resource type="Resource" uid="uid://d2re3bic05xmr" path="res://Test/data/world_datas/treez.tres" id="6_luy8n"]
 [ext_resource type="Script" path="res://Game Logic/inventory/inventory_interface.gd" id="6_uons4"]
-[ext_resource type="Resource" uid="uid://b01mer6qkwo4b" path="res://Test/data/world_datas/moist_gradient.tres" id="6_yjo1n"]
 [ext_resource type="Script" path="res://Game Logic/world/terrain_rules_handler.gd" id="7_fkv55"]
 [ext_resource type="Script" path="res://Game Logic/managers/entity_manager.gd" id="8_3dv0o"]
 [ext_resource type="PackedScene" uid="uid://1b78ipp0k2t8" path="res://Scenes/world/elevation_layer.tscn" id="8_of3dw"]
 [ext_resource type="PackedScene" uid="uid://cwyeg4vhep7na" path="res://Scenes/UI/Inventory/slot.tscn" id="8_pioji"]
+[ext_resource type="Script" path="res://Test/object_atlas.gd" id="9_0s5wb"]
 [ext_resource type="Script" path="res://Game Logic/managers/pickup_manager.gd" id="10_d5qv3"]
 [ext_resource type="Resource" uid="uid://b1v5a5qu2iw7w" path="res://Scenes/items/test/test_apple.tres" id="11_cwce4"]
 [ext_resource type="Script" path="res://Game Logic/data/inventory/slot_data.gd" id="12_iyjdd"]
@@ -59,16 +60,18 @@ light_gradient = SubResource("GradientTexture1D_6o1tu")
 [node name="WorldManager" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("5_wonyh")
-_world_data = ExtResource("6_yjo1n")
+_world_data = ExtResource("6_luy8n")
 load_chunks = true
 unload_chunks = true
 
 [node name="TerrainRulesHandler" type="Node2D" parent="WorldManager"]
 script = ExtResource("7_fkv55")
-debug = null
 
 [node name="Elevation0" parent="WorldManager/TerrainRulesHandler" instance=ExtResource("8_of3dw")]
 position = Vector2(-1, 0)
+
+[node name="ObjectAtlas" type="Node2D" parent="WorldManager/TerrainRulesHandler"]
+script = ExtResource("9_0s5wb")
 
 [node name="EntityManager" type="Node2D" parent="."]
 editor_description = "Holds things with AI- player, npcs, enemies, etc"

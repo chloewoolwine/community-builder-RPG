@@ -1,26 +1,44 @@
-[gd_resource type="Resource" script_class="InventoryData" load_steps=9 format=3 uid="uid://cblqgmedaij75"]
+[gd_resource type="Resource" script_class="InventoryData" load_steps=15 format=3 uid="uid://cblqgmedaij75"]
 
 [ext_resource type="Script" path="res://Game Logic/data/inventory/inventory_data.gd" id="1_ybk3g"]
-[ext_resource type="Resource" uid="uid://clcehfhlk37mi" path="res://Scenes/items/consumables/fesh.tres" id="3_lnhgj"]
 [ext_resource type="Script" path="res://Game Logic/data/inventory/slot_data.gd" id="3_nmayq"]
-[ext_resource type="Resource" uid="uid://cum0uus22nf72" path="res://Scenes/items/tools/stick.tres" id="4_al3a7"]
-[ext_resource type="Resource" uid="uid://j4ubp0int25h" path="res://Scenes/items/consumables/health_potion.tres" id="5_0fjhd"]
+[ext_resource type="Resource" uid="uid://bhhgw66haki3j" path="res://Scenes/items/tools/axe.tres" id="3_o46cf"]
+[ext_resource type="Resource" uid="uid://nqerwfpldacr" path="res://Scenes/items/tools/hammer.tres" id="4_1w0ep"]
+[ext_resource type="Resource" uid="uid://bttbsjkake846" path="res://Scenes/items/tools/hoe.tres" id="5_p1kke"]
+[ext_resource type="Resource" uid="uid://di8fcvn3313vx" path="res://Scenes/items/tools/watering_can.tres" id="6_1bd3f"]
+[ext_resource type="Resource" uid="uid://b7hmhg25msl4x" path="res://Scenes/items/tools/pickaxe.tres" id="7_clvdn"]
+[ext_resource type="Resource" uid="uid://d0wd2vtdrd13o" path="res://Scenes/items/tools/rod.tres" id="8_dxk0i"]
 
 [sub_resource type="Resource" id="Resource_yddo7"]
 script = ExtResource("3_nmayq")
-item_data = ExtResource("3_lnhgj")
+item_data = ExtResource("3_o46cf")
 quantity = 1
 
 [sub_resource type="Resource" id="Resource_f3h4m"]
 script = ExtResource("3_nmayq")
-item_data = ExtResource("4_al3a7")
+item_data = ExtResource("4_1w0ep")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_6tnq2"]
+script = ExtResource("3_nmayq")
+item_data = ExtResource("5_p1kke")
 quantity = 1
 
 [sub_resource type="Resource" id="Resource_it2nq"]
 script = ExtResource("3_nmayq")
-item_data = ExtResource("5_0fjhd")
+item_data = ExtResource("6_1bd3f")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_trn8r"]
+script = ExtResource("3_nmayq")
+item_data = ExtResource("7_clvdn")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_v230u"]
+script = ExtResource("3_nmayq")
+item_data = ExtResource("8_dxk0i")
 quantity = 1
 
 [resource]
 script = ExtResource("1_ybk3g")
-slot_datas = Array[ExtResource("3_nmayq")]([SubResource("Resource_yddo7"), SubResource("Resource_f3h4m"), null, SubResource("Resource_it2nq"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+slot_datas = Array[ExtResource("3_nmayq")]([SubResource("Resource_yddo7"), SubResource("Resource_f3h4m"), SubResource("Resource_6tnq2"), SubResource("Resource_it2nq"), SubResource("Resource_trn8r"), SubResource("Resource_v230u"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])

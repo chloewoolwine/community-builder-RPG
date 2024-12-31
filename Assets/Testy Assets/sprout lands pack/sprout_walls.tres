@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://dktwlx8tydwha"]
+
+[ext_resource type="Texture2D" uid="uid://bb3er404lraju" path="res://Assets/Testy Assets/sprout lands pack/Wooden_House_Walls_Tilset.png" id="1_t24ae"]
+
+[resource]
+atlas = ExtResource("1_t24ae")
+region = Rect2(48, 32, 16, 16)

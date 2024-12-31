@@ -2,13 +2,13 @@ extends Node2D
 class_name PlayerActionHandler
 
 signal player_opened_menu(type:String)
-signal player_using_tool(type:SlotData)
 signal player_wants_to_eat(type:SlotData)
-signal player_wants_to_plant(type:SlotData)
 
 var equiped_item: SlotData
 
 @onready var ray_cast_2d: RayCast2D = $RayCast2D
+@onready var player: Player = $".."
+@onready var tile_indicator: Indicator = $"../TileIndicator"
 
 #cases:
 #1 = nothing is there, player is holding no tool. nothing happens
@@ -18,15 +18,11 @@ var equiped_item: SlotData
 #4 = object is there, interactable, has requirements that player meets. animation plays/menu opens
 #5 = nothing is there, but the player has an item equiped. something happens with the item depending 
 #on it 
-#TODO: clean this up!! ITS SO BADss
 func do_action() -> void:
 	#if player is holding tool, or if player is in front of interactable
 	var cast:Object = ray_cast_2d.get_collider()
 	if cast && cast is InteractionHitbox && cast.accepting_interactions:
-		if cast.needs_tool:
-			if equiped_item && equiped_item.item_data:
-				cast.player_interact(equiped_item.item_data)
-		else: 
+		if cast.needs_tool and equiped_item and equiped_item.item_data is ItemDataTool and equiped_item.item_data.type == cast.tool_required:
 			cast.player_interact()
 		if cast.is_chest:
 			player_opened_menu.emit("chest")
@@ -34,9 +30,28 @@ func do_action() -> void:
 			player_opened_menu.emit("entity")
 	#if we are holding a usuable item...
 	elif equiped_item && equiped_item.item_data:
-		if equiped_item.item_data is ItemDataTool:
-			player_using_tool.emit(equiped_item)
-		elif equiped_item.item_data is ItemDataConsumable: 
+		if equiped_item.item_data is ItemDataConsumable: 
 			player_wants_to_eat.emit(equiped_item)
 		elif equiped_item.item_data is ItemDataSeed:
-			player_wants_to_plant.emit(equiped_item)
+			if tile_indicator.signal_placement_if_valid(equiped_item.item_data, self.global_position): 
+				player.decrease_item_val(equiped_item)
+		elif equiped_item.item_data is ItemDataTool: 
+			use_tool(equiped_item)
+
+func use_tool(item:SlotData)->void:
+	match item.item_data.type:
+		ItemDataTool.WeaponType.SWORD:
+			player.state = player.PlayerStates.STATE_ACTION
+			player.sword_hitbox.disabled = false
+		ItemDataTool.WeaponType.HOE:
+			tile_indicator.attempt_modify(player.global_position, "till")
+		ItemDataTool.WeaponType.AXE:
+			pass # idk what this would look like to be real 
+		ItemDataTool.WeaponType.PICKAXE:
+			tile_indicator.attempt_modify(player.global_position, "remove_floor")
+		ItemDataTool.WeaponType.HAMMER:
+			print("tool not yet implemented")
+		ItemDataTool.WeaponType.ROD:
+			print("tool not yet implemented")
+		ItemDataTool.WeaponType.CAN:
+			tile_indicator.attempt_modify(player.global_position, "water")

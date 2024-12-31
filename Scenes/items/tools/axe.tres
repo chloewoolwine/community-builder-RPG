@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" path="res://Game Logic/data/inventory/item_data_tool.gd" id="1_gxuav"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_pw2b7"]
-load_path = "res://.godot/imported/#1 - Transparent Icons.png-13545c48bffa21483b1102eab61f8d2a.ctex"
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_fvwon"]
+load_path = "res://.godot/imported/#1 - Transparent Icons.png-66e482cdc506437ae5ff6b63757a4b91.ctex"
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7ecy5"]
-atlas = SubResource("CompressedTexture2D_pw2b7")
-region = Rect2(32, 320, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_b263h"]
+atlas = SubResource("CompressedTexture2D_fvwon")
+region = Rect2(35, 323, 26, 26)
 
 [resource]
 script = ExtResource("1_gxuav")
@@ -18,7 +18,7 @@ description = ""
 magical = false
 magicalDescription = ""
 stackable = false
-texture = SubResource("AtlasTexture_7ecy5")
+texture = SubResource("AtlasTexture_b263h")
 placeable = false
 value = 1
 rarity = 1

@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" path="res://Game Logic/data/inventory/item_data_tool.gd" id="1_xq7xt"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hqd6m"]
-load_path = "res://.godot/imported/#1 - Transparent Icons.png-13545c48bffa21483b1102eab61f8d2a.ctex"
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xem7k"]
+load_path = "res://.godot/imported/#1 - Transparent Icons.png-66e482cdc506437ae5ff6b63757a4b91.ctex"
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7gsm5"]
-atlas = SubResource("CompressedTexture2D_hqd6m")
-region = Rect2(3.98616, 515.799, 24.6317, 25.8187)
+[sub_resource type="AtlasTexture" id="AtlasTexture_tht8f"]
+atlas = SubResource("CompressedTexture2D_xem7k")
+region = Rect2(5, 516, 24, 25)
 
 [resource]
 script = ExtResource("1_xq7xt")
@@ -18,7 +18,7 @@ description = "fishin'"
 magical = false
 magicalDescription = ""
 stackable = false
-texture = SubResource("AtlasTexture_7gsm5")
+texture = SubResource("AtlasTexture_tht8f")
 placeable = false
 value = 1
 rarity = 1

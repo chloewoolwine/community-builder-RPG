@@ -1818,13 +1818,11 @@ autoplay = "idle_forward"
 offset = Vector2(0, -151)
 
 [node name="CollisionBox" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, 114.5)
 scale = Vector2(4.238, 14.39)
 shape = SubResource("RectangleShape2D_73skx")
 
 [node name="HealthHandler" parent="." instance=ExtResource("6_o8nbr")]
-visible = false
 collision_mask = 8
 has_iframes = true
 

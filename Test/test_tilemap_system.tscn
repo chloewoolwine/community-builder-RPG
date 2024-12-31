@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cycrtln7ftflc"]
+[gd_scene load_steps=23 format=3 uid="uid://cycrtln7ftflc"]
 
 [ext_resource type="Script" path="res://Game Logic/managers/world_manager.gd" id="1_d3v3l"]
 [ext_resource type="Script" path="res://Test/temp_camera_script.gd" id="1_pg57c"]
@@ -20,6 +20,8 @@
 [ext_resource type="Script" path="res://Game Logic/managers/WorldSaver.gd" id="16_neiaj"]
 [ext_resource type="FastNoiseLite" uid="uid://bdmyfboi5v4ci" path="res://Test/data/noise/decent_noise.tres" id="18_we2w1"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_bglr2"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_imf0b"]
 bg_color = Color(0.0352941, 0.0352941, 0.0352941, 0.52549)
 corner_radius_top_left = 10
@@ -35,12 +37,6 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [node name="TestTilemapSystem" type="Node2D"]
-
-[node name="Camera2D" type="Camera2D" parent="."]
-scale = Vector2(0.259594, 0.246314)
-position_smoothing_enabled = true
-script = ExtResource("1_pg57c")
-speed = 150
 
 [node name="WorldManager" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -58,6 +54,19 @@ debug = true
 
 [node name="ObjectAtlas" type="Node2D" parent="WorldManager/TerrainRulesHandler"]
 script = ExtResource("6_wou66")
+
+[node name="temp_mousecast" type="Area2D" parent="WorldManager"]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldManager/temp_mousecast"]
+shape = SubResource("CircleShape2D_bglr2")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+scale = Vector2(0.259594, 0.246314)
+position_smoothing_enabled = true
+script = ExtResource("1_pg57c")
+speed = 150
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -216,6 +225,7 @@ moisture_noise = ExtResource("18_we2w1")
 temperature_noise = ExtResource("18_we2w1")
 debris_noise = ExtResource("18_we2w1")
 
+[connection signal="body_entered" from="WorldManager/temp_mousecast" to="CanvasLayer/Control" method="_on_temp_mousecast_body_entered"]
 [connection signal="pressed" from="CanvasLayer/Control/PanelContainer/MarginContainer/HBoxContainer/save" to="CanvasLayer/Control" method="_on_save_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/PanelContainer/MarginContainer/HBoxContainer/load" to="CanvasLayer/Control" method="_on_load_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/PanelContainer/MarginContainer/HBoxContainer/zoomin" to="CanvasLayer/Control" method="_on_zoomin_pressed"]

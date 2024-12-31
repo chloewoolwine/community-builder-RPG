@@ -2,8 +2,8 @@ extends Node2D
 class_name TerrainRulesHandler
 
 const ELEVATION_LAYER = preload("res://Scenes/world/elevation_layer.tscn")
-@export var elevations: Array[ElevationLayer]
 @export var debug: bool = false
+@export var elevations: Array[ElevationLayer]
 @onready var object_atlas: ObjectAtlas = $ObjectAtlas
 
 ## TODO: attatch the entity/object loading to this method
@@ -30,6 +30,7 @@ func _ready() -> void:
 	for x in elevations.size():
 		elevations[x].elevation = x
 		elevations[x].position.y = x * -32
+	object_atlas.new_object_placed.connect(add_object)
 
 func _process(_delta: float) -> void:
 	## load chunk proccess
@@ -85,8 +86,8 @@ func _process(_delta: float) -> void:
 	#print("chunks to unload: ", chunks_to_unload.keys())
 	#print("chunks loaded: ", loaded_chunks.keys())
 
-func get_tileset_pos_from_global(pos: Vector2) -> Vector2i: 
-	return elevations[0].local_to_map(pos)
+func get_tileset_pos_from_global(pos: Vector2, layer: int) -> Vector2i: 
+	return elevations[layer].local_to_map(pos)
 	
 ## Gets the highest layer at INGAME COORDINATE [pos]
 func get_topmost_layer_at_ingame_pos(pos: Vector2i) -> ElevationLayer:
@@ -147,8 +148,8 @@ func translate_square_data_to_tile(data: SquareData, world_pos: Vector2i)-> void
 		elevations[x].build_base_of(data, world_pos)
 	elevations[ele].set_square(data, world_pos)
 	if data.object_data != null:
-		var actual_pos := world_pos * 64 + Vector2i(data.elevation * -32, data.elevation*-32)
-		object_atlas.translate_object(data.object_data, actual_pos)
+		var actual_pos := world_pos * 64 + Vector2i(data.elevation * -32, data.elevation*-32) + Vector2i(32, 32)
+		object_atlas.translate_object(data.object_data, actual_pos, data.elevation)
 
 func run_shader_data_stuff(chunk_keys: Array[Vector2i]) -> void:
 	#print("chunk_keys: ", chunk_keys)
@@ -168,6 +169,26 @@ func run_shader_data_stuff(chunk_keys: Array[Vector2i]) -> void:
 	if !chunks.is_empty() and send:
 		for ele in elevations:
 			ele.build_gradient_maps(chunks, chunk_keys[0])
+
+func remove_floor_at(square_pos: Vector2i, chunk_pos:Vector2i) -> void:
+	var chunk_data:ChunkData = loaded_chunks[chunk_pos]
+	if chunk_data == null:
+		print("warning! tried to remove floor at unloaded chunk: ", chunk_pos, " square: ", square_pos)
+		return
+	var square: SquareData = chunk_data.square_datas[square_pos]
+	if square.object_data == null || square.object_data.is_empty():
+		return
+		
+	var overall_pos := (chunk_pos * chunk_data.chunk_size) + square_pos
+	if square.object_data[0]:
+		square.object_data[0] = null
+		# TODO: different floor types will probably have other layers? 
+		elevations[square.elevation].remove_till(overall_pos)
+		return
+	if square.type == SquareData.SquareType.Grass:
+		square.type = SquareData.SquareType.Dirt
+		elevations[square.elevation].remove_grass(overall_pos)
+		return 
 
 ## Runtime method for applying floors 
 func apply_floor_at(square_pos: Vector2i, chunk_pos:Vector2i, floor_type: String) -> void: 
@@ -214,6 +235,13 @@ func water_square_at(square_pos: Vector2i, chunk_pos:Vector2i) -> void:
 		square.water_saturation += 1
 		#print("new water: ", square.water_saturation)
 		elevations[square.elevation].update_specific_pixel(chunk_pos, square_pos)
+		
+func add_object(object_data: ObjectData) -> void: 
+	var chunk: ChunkData = loaded_chunks[object_data.chunk]
+	var square: SquareData = chunk.square_datas[object_data.position]
+	if square.object_data == null or square.object_data.is_empty():
+		square.object_data = [null, null, null, null]
+	square.object_data[1] = object_data
 
 func print_if_debug(string: String) -> void:
 	if debug:

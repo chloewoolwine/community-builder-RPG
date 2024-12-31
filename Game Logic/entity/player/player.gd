@@ -51,9 +51,7 @@ func _ready() -> void:
 	health_handler.health_increased.connect(heal)
 	health_handler.health_decreased.connect(hurt)
 	
-	player_action_handler.player_using_tool.connect(use_tool)
 	player_action_handler.player_wants_to_eat.connect(attempt_eat)
-	player_action_handler.player_wants_to_plant.connect(attempt_plant)
 	player_action_handler.player_opened_menu.connect(toggle_menu_state)
 	
 	## notify that we are ready for collisions
@@ -200,31 +198,11 @@ func hurt(culprit:HitBox, _current_health:int) -> void:
 	
 func heal(_current_health:int) -> void:
 	health_changed.emit(health_handler.current_health, health_handler.max_health)
-	
-func use_tool(item:SlotData)->void:
-	match item.item_data.type:
-		ItemDataTool.WeaponType.SWORD:
-			state = PlayerStates.STATE_ACTION
-			sword_hitbox.disabled = false
-		ItemDataTool.WeaponType.HOE:
-			print("tool not yet implemented")
-		ItemDataTool.WeaponType.AXE:
-			print("tool not yet implemented")
-		ItemDataTool.WeaponType.PICKAXE:
-			print("tool not yet implemented")
-		ItemDataTool.WeaponType.HAMMER:
-			print("tool not yet implemented")
-		ItemDataTool.WeaponType.ROD:
-			print("tool not yet implemented")
 
 func attempt_eat(item:SlotData)->void:
 	#TODO: check if the player is missing health/hunger first
 	health_handler.change_health(item.item_data.heal_value)
 	decrease_item_val(item)
-	
-func attempt_plant(item:SlotData)->void:
-	if tile_indicator.signal_placement_if_valid(item.item_data, self.global_position):
-		decrease_item_val(item)
 
 func toggle_menu_state(_type:String = "") -> void:
 	velocity = Vector2(0,0)
@@ -270,7 +248,6 @@ func get_raycast_target() -> Vector2:
 	var target_position:Vector2 = ray_cast_2d.target_position
 	print_if_debug("raycast target local vector: %v", target_position)
 	return to_global(target_position)
-	
 
 #remove later
 @onready var debug:bool = false

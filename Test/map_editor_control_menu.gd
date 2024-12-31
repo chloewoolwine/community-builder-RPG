@@ -5,6 +5,7 @@ extends Control
 @onready var file_dialog_2: FileDialog = $"../../FileDialog2"
 @onready var camera_2d: Camera2D = $"../../Camera2D"
 @onready var trh: TerrainRulesHandler = $"../../WorldManager/TerrainRulesHandler"
+@onready var temp_mousecast: Area2D = $"../../WorldManager/temp_mousecast"
 
 @export var camera_zooms : Array[float]
 var curr_zoom : int = 1
@@ -48,8 +49,16 @@ func _on_brush_pressed() -> void:
 
 func _on_eraser_pressed() -> void:
 	pass # Replace with function body.
-	
+
+const WOOD_WALL = preload("res://Scenes/items/wood_wall.tres")
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
 		var mouse: Vector2 = world_manager.get_global_mouse_position()
-		world_manager.modify_tilemap(mouse, trh.get_topmost_layer_at_global_pos(mouse), "till")
+		#world_manager.modify_tilemap(mouse, trh.get_topmost_layer_at_global_pos(mouse), "till")
+		#temp_mousecast.global_position = mouse
+		world_manager.place_object(mouse, trh.get_topmost_layer_at_global_pos(mouse), WOOD_WALL)
+
+
+func _on_temp_mousecast_body_entered(body: Node2D) -> void:
+	if body is InteractionHitbox:
+		body.player_interact()

@@ -60,6 +60,7 @@ func handle_player_setup() -> void:
 	player.health_changed.connect(hot_bar_inventory.update_health)
 	player.tile_indicator.move_me.connect(world_manager.move_indicator)
 	player.tile_indicator.placement.connect(world_manager.place_object)
+	player.tile_indicator.modify.connect(world_manager.modify_tilemap)
 
 ## Connects events for already existing plants (growing + spawning pickups)
 func handle_plant_setup() -> void:
