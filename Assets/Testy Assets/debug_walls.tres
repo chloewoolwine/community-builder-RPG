@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://8yhbo7pme6x8"]
+
+[ext_resource type="Texture2D" uid="uid://cxijxkxcqcj6h" path="res://Assets/Testy Assets/debug_walls.png" id="1_fibcc"]
+
+[resource]
+atlas = ExtResource("1_fibcc")
+region = Rect2(0, 0, 64, 64)

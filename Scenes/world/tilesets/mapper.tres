@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://kckk0sstebti" path="res://Assets/tiles/ruined_fields/slopes_n_grass_decor.png" id="1_7j7uk"]
 [ext_resource type="Shader" path="res://Game Logic/shaders/tilemap/red_shader.gdshader" id="1_ut7ru"]
-[ext_resource type="Texture2D" uid="uid://cm8p5qwvem1fv" path="res://Assets/Testy Assets/dirt_texture.png" id="2_2j5wa"]
+[ext_resource type="Texture2D" uid="uid://cm8p5qwvem1fv" path="res://Assets/tiles/dirt_texture.png" id="2_2j5wa"]
 [ext_resource type="Texture2D" uid="uid://c3xohnuktc10h" path="res://Assets/tiles/ruined_fields/grass_overlay.png" id="2_5pxcq"]
 [ext_resource type="Texture2D" uid="uid://bljn2kf85bblv" path="res://Assets/tiles/ruined_fields/dirt_hill.png" id="3_en6w5"]
 [ext_resource type="Texture2D" uid="uid://y15s1ch8n2pk" path="res://Assets/tiles/ruined_fields/rocks.png" id="6_eri8k"]

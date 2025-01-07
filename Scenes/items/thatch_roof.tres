@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3 uid="uid://c1pf800cn6agk"]
+
+[ext_resource type="Script" path="res://Game Logic/data/inventory/item_data.gd" id="1_1rf7k"]
+
+[resource]
+script = ExtResource("1_1rf7k")
+name = "Thatch Roof"
+description = ""
+magical = false
+magicalDescription = ""
+stackable = false
+placeable = false
+object_id = "build_roof_thatchroof"
+value = 1
+rarity = 1

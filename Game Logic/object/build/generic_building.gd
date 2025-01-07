@@ -1,5 +1,5 @@
 extends Node
-class_name GenericBuilding
+class_name GenericBuilding_unusable
 
 var build_data: BuildData
 
@@ -21,7 +21,7 @@ func remove_wall(node: GenericWall) -> void:
 	walls.erase(node)
 	build_data.walls.erase(node.object_data)
 
-func merge_buildings(arr: Array[GenericBuilding]) -> void: 
+func merge_buildings(arr: Array[GenericBuilding_unusable]) -> void: 
 	var object_atlas: ObjectAtlas = get_parent()
 	for other in arr:
 		var o_data := other.build_data

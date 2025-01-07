@@ -12,17 +12,20 @@ size = Vector2(128, 128)
 [node name="GenericWall" type="Node2D"]
 script = ExtResource("1_2n8pw")
 
-[node name="InteractionHitbox" type="StaticBody2D" parent="."]
+[node name="InteractionHitbox" type="StaticBody2D" parent="." node_paths=PackedStringArray("neighbor_searcher")]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("2_o588p")
 needs_tool = true
 tool_required = 4
+neighbor_searcher = NodePath("../NeighborSearcher")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionHitbox"]
 shape = SubResource("RectangleShape2D_gmcib")
 
 [node name="NeighborSearcher" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NeighborSearcher"]
 shape = SubResource("RectangleShape2D_dp5wo")
@@ -30,3 +33,6 @@ shape = SubResource("RectangleShape2D_dp5wo")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
 offset = Vector2(0, -9.965)
+
+[connection signal="body_entered" from="NeighborSearcher" to="." method="_on_neighbor_searcher_body_entered"]
+[connection signal="body_exited" from="NeighborSearcher" to="." method="_on_neighbor_searcher_body_exited"]

@@ -20,5 +20,6 @@ magicalDescription = ""
 stackable = false
 texture = SubResource("AtlasTexture_tht8f")
 placeable = false
+object_id = ""
 value = 1
 rarity = 1

@@ -235,13 +235,48 @@ func water_square_at(square_pos: Vector2i, chunk_pos:Vector2i) -> void:
 		square.water_saturation += 1
 		#print("new water: ", square.water_saturation)
 		elevations[square.elevation].update_specific_pixel(chunk_pos, square_pos)
-		
+
+# world manager parses request -> object atlas (adds it) -- signals to --> trh to keep track of data
 func add_object(object_data: ObjectData) -> void: 
 	var chunk: ChunkData = loaded_chunks[object_data.chunk]
 	var square: SquareData = chunk.square_datas[object_data.position]
 	if square.object_data == null or square.object_data.is_empty():
-		square.object_data = [null, null, null, null]
-	square.object_data[1] = object_data
+		square.object_data = [null, null, null]
+	if object_data.object_id.contains("roof"):
+		square.object_data[2] = object_data
+	elif object_data.additive:
+		square.object_data.append(object_data)
+	else: 
+		square.object_data[1] = object_data
+
+func get_objects_at(square: Vector2i, chunk: Vector2i) -> Array[ObjectData]: 
+	return loaded_chunks[chunk].square_datas[square].object_data
+
+## Returns [square, chunk]
+## don't put val > 32 in dir plz
+func get_neighbor_square(square: Vector2i, chunk: Vector2i, dir: Vector2i) -> Array[Vector2i]: 
+	var pos := square + dir
+	var chu := chunk
+	if pos.x >= 32:
+		var diff := pos.x - 32
+		pos.x = diff
+		chu.x += 1
+	elif pos.x < 0:
+		var diff := 32 + pos.x
+		pos.x = diff
+		chu.x -= 1
+	if pos.y >= 32: 
+		var diff := pos.y - 32
+		pos.y = diff
+		chu.y += 1
+	elif pos.y < 0: 
+		var diff := 32 + pos.y
+		pos.y = diff
+		chu.y -= 1
+	return [pos, chu]
+
+func get_square_at(square: Vector2i, chunk: Vector2i) -> SquareData: 
+	return loaded_chunks[chunk].square_datas[square]
 
 func print_if_debug(string: String) -> void:
 	if debug:

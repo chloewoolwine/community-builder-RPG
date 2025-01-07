@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ItemDataSeed" load_steps=2 format=3 uid="uid://vakf77wj04kc"]
+
+[ext_resource type="Script" path="res://Game Logic/data/inventory/item_data_seed.gd" id="1_clkay"]
+
+[resource]
+script = ExtResource("1_clkay")
+plant_name = "poplar tree"
+spring = true
+summer = false
+autumn = true
+winter = false
+name = "Cabbage Seeds"
+description = "Plant these in spring or autmn to grow some cabbag. "
+magical = false
+magicalDescription = ""
+stackable = true
+placeable = true
+object_id = "plant_tree_poplar"
+value = 1
+rarity = 1

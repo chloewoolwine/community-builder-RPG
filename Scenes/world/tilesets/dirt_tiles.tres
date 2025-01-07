@@ -1,16 +1,18 @@
 [gd_resource type="TileSet" load_steps=11 format=3 uid="uid://dayemb55av64c"]
 
-[ext_resource type="Shader" path="res://Game Logic/shaders/tilemap/red_shader.gdshader" id="1_pbf1e"]
-[ext_resource type="Texture2D" uid="uid://cm8p5qwvem1fv" path="res://Assets/Testy Assets/dirt_texture.png" id="2_tvyx4"]
+[ext_resource type="Texture2D" uid="uid://cq4dvxb21o346" path="res://Assets/tiles/cliff_texture.png" id="2_hf6sj"]
 [ext_resource type="Texture2D" uid="uid://bljn2kf85bblv" path="res://Assets/tiles/ruined_fields/dirt_hill.png" id="3_jy1hr"]
+[ext_resource type="Texture2D" uid="uid://cm8p5qwvem1fv" path="res://Assets/tiles/dirt_texture.png" id="3_qn06d"]
 [ext_resource type="Shader" path="res://Game Logic/shaders/tilemap/red_green.gdshader" id="4_ebteg"]
 [ext_resource type="Texture2D" uid="uid://dtfba7qcyu2pn" path="res://Assets/tiles/ruined_fields/dirt_shore.png" id="4_tnqrm"]
 [ext_resource type="Texture2D" uid="uid://dbxri2o2co5ub" path="res://Assets/Testy Assets/water_texture.png" id="5_7iiav"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1ber7"]
-shader = ExtResource("1_pbf1e")
-shader_parameter/scale = 0.002
-shader_parameter/overlay_tex = ExtResource("2_tvyx4")
+shader = ExtResource("4_ebteg")
+shader_parameter/scale1 = 0.001
+shader_parameter/scale2 = 0.001
+shader_parameter/overlay_tex_red = ExtResource("3_qn06d")
+shader_parameter/overlay_tex_green = ExtResource("2_hf6sj")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yrdqn"]
 texture = ExtResource("3_jy1hr")
@@ -81,7 +83,7 @@ texture_region_size = Vector2i(64, 64)
 shader = ExtResource("4_ebteg")
 shader_parameter/scale1 = 0.005
 shader_parameter/scale2 = 0.001
-shader_parameter/overlay_tex_red = ExtResource("2_tvyx4")
+shader_parameter/overlay_tex_red = ExtResource("3_qn06d")
 shader_parameter/overlay_tex_green = ExtResource("5_7iiav")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ycddu"]

@@ -7,6 +7,11 @@ signal modify(despired_spot: Vector2, layer: ElevationLayer, action: String)
 
 @onready var elevation_handler: ElevationHandler = $"../ElevationHandler"
 
+var temp: ElevationLayer
+
+# Indicator calls "move_me" when in play
+# "move_me" is picked up my the WorldManager who retrieves tilemap info for it
+# and then sets valid_place
 var valid_place: bool = false
 
 func _ready() -> void:
@@ -28,11 +33,17 @@ func attempt_modify(_player_loc: Vector2, action: String) -> bool:
 		print("too far :C")
 		return false
 	print("modify attempted")
+	if elevation_handler == null:
+		modify.emit(self.global_position, temp, action)
+		return true
 	modify.emit(self.global_position, elevation_handler.current_map_layer, action)
 	return true
 
 func signal_placement_if_valid(item: ItemData, _player_loc:Vector2) -> bool:
 	if valid_place and self.global_position.distance_to(_player_loc) <= 400:
+		if elevation_handler == null:
+			placement.emit(self.global_position, temp, item)
+			return true
 		placement.emit(self.global_position, elevation_handler.current_map_layer, item)
 		return true
 	return false

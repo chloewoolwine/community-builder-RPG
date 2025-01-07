@@ -45,7 +45,7 @@ func _ready() -> void:
 	#print('time at end generation: ', Time.get_time_string_from_system())
 	#world_manager.set_world_data(world)
 	#world_to_save = world
-	#path = str('res://Test/data/world_datas/treez.tres')
+	#path = str('res://Test/data/world_datas/walls.tres')
 	#save_world.emit(world, str('res://Test/data/world_datas/treez.tres'))
 
 # a lot of this is from https://www.reddit.com/r/godot/comments/10ho9d5/any_good_tutorials_on_the_new_fastnoiselite_class/
@@ -133,12 +133,12 @@ func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, temp_grid:D
 					square.elevation = 0
 					square.location_in_chunk = Vector2i(i,j)
 					square.water_saturation = water
-					if(j == 0):
-						var object: ObjectData = ObjectData.new()
-						object.object_id = "plant_tree_poplar"
-						object.object_tags["age"] =  15000
-						square.object_data = [null, null, null, null]
-						square.object_data[1] = object
+					#if(j == 0):
+						#var object: ObjectData = ObjectData.new()
+						#object.object_id = "plant_tree_poplar"
+						#object.object_tags["age"] =  15000
+						#square.object_data = [null, null, null]
+						#square.object_data[1] = object
 						
 					square_datas[Vector2i(i,j)] = square
 					

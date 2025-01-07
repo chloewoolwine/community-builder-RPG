@@ -1,8 +1,91 @@
-[gd_scene load_steps=6 format=3 uid="uid://dmgtcev0m6n5b"]
+[gd_scene load_steps=29 format=3 uid="uid://dmgtcev0m6n5b"]
 
 [ext_resource type="Script" path="res://Game Logic/object/build/generic_wall.gd" id="1_5v8vj"]
-[ext_resource type="Texture2D" uid="uid://dktwlx8tydwha" path="res://Assets/Testy Assets/sprout lands pack/sprout_walls.tres" id="2_hmene"]
 [ext_resource type="Script" path="res://Game Logic/object/interaction_hitbox.gd" id="3_amp3a"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jotit"]
+load_path = "res://.godot/imported/wood_walls.png-a281811508f74fc369d6f20e9465799e.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lq30x"]
+atlas = SubResource("CompressedTexture2D_jotit")
+region = Rect2(192, 320, 64, 160)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_s6s0r"]
+load_path = "res://.godot/imported/wood_walls.png-a281811508f74fc369d6f20e9465799e.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4dvut"]
+atlas = SubResource("CompressedTexture2D_s6s0r")
+region = Rect2(256, 320, 64, 160)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bf0ul"]
+load_path = "res://.godot/imported/wood_walls.png-a281811508f74fc369d6f20e9465799e.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2l8m1"]
+atlas = SubResource("CompressedTexture2D_bf0ul")
+region = Rect2(128, 0, 64, 160)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5862d"]
+load_path = "res://.godot/imported/wood_walls.png-a281811508f74fc369d6f20e9465799e.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yd7as"]
+atlas = SubResource("CompressedTexture2D_5862d")
+region = Rect2(128, 160, 64, 160)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_o0642"]
+load_path = "res://.godot/imported/wood_walls.png-a281811508f74fc369d6f20e9465799e.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yyomc"]
+atlas = SubResource("CompressedTexture2D_o0642")
+region = Rect2(192, 0, 64, 160)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_084xs"]
+load_path = "res://.godot/imported/wood_walls.png-a281811508f74fc369d6f20e9465799e.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lnkdx"]
+atlas = SubResource("CompressedTexture2D_084xs")
+region = Rect2(64, 160, 64, 160)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_rx2q5"]
+load_path = "res://.godot/imported/wood_walls.png-a281811508f74fc369d6f20e9465799e.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5gmsp"]
+atlas = SubResource("CompressedTexture2D_rx2q5")
+region = Rect2(256, 0, 64, 160)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1rvo2"]
+load_path = "res://.godot/imported/wood_walls.png-a281811508f74fc369d6f20e9465799e.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pggom"]
+atlas = SubResource("CompressedTexture2D_1rvo2")
+region = Rect2(0, 0, 64, 160)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_q8gug"]
+load_path = "res://.godot/imported/wood_walls.png-a281811508f74fc369d6f20e9465799e.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_15wfu"]
+atlas = SubResource("CompressedTexture2D_q8gug")
+region = Rect2(320, 0, 64, 160)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6oea4"]
+load_path = "res://.godot/imported/wood_walls.png-a281811508f74fc369d6f20e9465799e.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kd22n"]
+atlas = SubResource("CompressedTexture2D_6oea4")
+region = Rect2(320, 160, 64, 160)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cya3n"]
+load_path = "res://.godot/imported/wood_walls.png-a281811508f74fc369d6f20e9465799e.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3tmkr"]
+atlas = SubResource("CompressedTexture2D_cya3n")
+region = Rect2(64, 0, 64, 160)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_a5h0i"]
+load_path = "res://.godot/imported/wood_walls.png-a281811508f74fc369d6f20e9465799e.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_31fev"]
+atlas = SubResource("CompressedTexture2D_a5h0i")
+region = Rect2(0, 160, 64, 160)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gmcib"]
 size = Vector2(50, 50)
@@ -11,21 +94,25 @@ size = Vector2(50, 50)
 size = Vector2(128, 128)
 
 [node name="WoodWall" type="Node2D"]
+texture_filter = 1
 script = ExtResource("1_5v8vj")
 object_id = "build_wall_woodwall"
-sprite_bases = Array[Texture2D]([ExtResource("2_hmene")])
+sprite_bases = Array[Texture2D]([SubResource("AtlasTexture_lq30x"), SubResource("AtlasTexture_4dvut"), SubResource("AtlasTexture_2l8m1"), SubResource("AtlasTexture_yd7as"), SubResource("AtlasTexture_yyomc"), SubResource("AtlasTexture_lnkdx"), SubResource("AtlasTexture_5gmsp"), SubResource("AtlasTexture_pggom"), SubResource("AtlasTexture_15wfu"), SubResource("AtlasTexture_kd22n"), SubResource("AtlasTexture_3tmkr"), SubResource("AtlasTexture_31fev")])
 
-[node name="InteractionHitbox" type="StaticBody2D" parent="."]
+[node name="InteractionHitbox" type="StaticBody2D" parent="." node_paths=PackedStringArray("neighbor_searcher")]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("3_amp3a")
 needs_tool = true
 tool_required = 4
+neighbor_searcher = NodePath("../NeighborSearcher")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionHitbox"]
 shape = SubResource("RectangleShape2D_gmcib")
 
 [node name="NeighborSearcher" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NeighborSearcher"]
 shape = SubResource("RectangleShape2D_dp5wo")

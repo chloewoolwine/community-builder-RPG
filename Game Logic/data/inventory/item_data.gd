@@ -13,7 +13,7 @@ class_name ItemData
 @export var texture: AtlasTexture
 @export var placeable: bool = false
 ## Object_Data to place, if placeable 
-@export var object_data: ObjectData
+@export var object_id: String
 
 #unsure about these
 @export var value: int = 1

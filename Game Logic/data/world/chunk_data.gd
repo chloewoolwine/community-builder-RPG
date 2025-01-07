@@ -24,6 +24,4 @@ enum Biome{Dead, Forest, Deepforest, Wasteland, Shrubland, Cityscape, Grassland,
 
 ## Granular info for tiles in the chunk
 @export var square_datas : Dictionary
-
-## Buildings with pieces in this chunk- also exists in other chunks !
-@export var buildings: Array[BuildData] # buildings will load if any part of them are in a loaded chunk. maybe change that later? 
+#

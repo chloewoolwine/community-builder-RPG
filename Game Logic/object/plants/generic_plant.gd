@@ -13,6 +13,8 @@ signal killing_myself(me: GenericPlant)
 @export var axe_hits: int ## These aren't saved- when trees are unloaded/reloaded this will reset. this is intended
 
 var object_data: ObjectData
+# WHEN i do water/fertility mechanics, just pass the square_data into here
+# upon instantiation- the plant will take care of the rest
 
 var is_tree: bool = false
 

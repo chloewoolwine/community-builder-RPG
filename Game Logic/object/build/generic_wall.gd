@@ -1,6 +1,8 @@
 extends Node2D
 class_name GenericWall
-const GENERIC_BUILDING = preload("res://Scenes/object/build/generic_building.tscn")
+
+signal remove_my_decor(wall: GenericWall)
+signal wall_destroyed(wall_destroyed: GenericWall)
 
 @onready var interaction_hitbox: InteractionHitbox = $InteractionHitbox
 @onready var neighbor_searcher: Area2D = $NeighborSearcher
@@ -13,6 +15,7 @@ const GENERIC_BUILDING = preload("res://Scenes/object/build/generic_building.tsc
 var object_data: ObjectData
 var is_door: bool
 var is_window: bool
+var has_decor: bool
 #TODO: colors and stuff
 
 var neighbors: Array[GenericWall] #0 = up, 1 = right, 2 = down, 3 = left
@@ -20,99 +23,118 @@ var neighbors: Array[GenericWall] #0 = up, 1 = right, 2 = down, 3 = left
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	interaction_hitbox.set_to_wall(true)
-	neighbor_searcher.set_collision_mask_value(interaction_hitbox.current_elevation + 10, true)
 	neighbors = [null,null,null,null]
+	interaction_hitbox.player_interacted.connect(check_for_destroy)
+	for tag:String in object_data.object_tags.keys(): 
+		if tag == "door":
+			is_door = true
+			interaction_hitbox.set_to_wall(false, true)
+		if tag == "window":
+			is_window = true
+	#print("wall placed, chunk: ", object_data.chunk, " position: ", object_data.position)
+	
+func _physics_process(_delta: float) -> void:
 	var overlaps := neighbor_searcher.get_overlapping_bodies()
 	for overlap in overlaps: 
 		var wall:Node2D = overlap.get_parent()
-		if wall is GenericWall && overlap:
-			if wall.global_position.x == global_position.x:
-				if wall.global_position.y < global_position.y:
-					#up 
-					neighbors[0] = wall as GenericWall
-				else: 
-					#down 
-					neighbors[2] = wall as GenericWall
-			elif wall.global_position.y == global_position.y:
-				if wall.global_position.x < global_position.x: 
-					#left 
-					neighbors[3] = wall as GenericWall
-				else: 
-					neighbors[1] = wall as GenericWall
-	if get_parent() is not GenericBuilding:
-		determine_building()
+		if wall != self and wall is GenericWall and wall not in neighbors:
+			#print("wall at= ", object_data.position, "found new neighbor= ", wall.object_data.position)
+			check_wall_position(wall)
 	determine_sprite()
-	if get_parent() is GenericBuilding:
-		check_neighbor_homogeny()
-	interaction_hitbox.player_interacted.connect(destroy)
-	for tag in object_data.object_tags.keys(): 
-		if tag == "door":
-			is_door = true
-		if tag == "window":
-			is_window = true
-	
-func check_neighbor_homogeny() -> void:
-	# checking to make sure all neighbors have the same building
-	var buildings:Array[GenericBuilding] = []
-	var my_building: GenericBuilding = get_parent()
+
+func check_wall_position(wall: GenericWall) -> void: 
+	var other_chunk := wall.object_data.chunk
+	var other_pos := wall.object_data.position
+	var self_combined := object_data.position + (object_data.chunk * 32)
+	var other_combined := other_pos + (other_chunk * 32)
+	#print(" chunk: ", object_data.chunk, " position: ", object_data.position)
+	#print(" chunk: ", other_chunk, " position: ", other_pos)
+	if other_combined.x == self_combined.x:
+		if other_combined.y < self_combined.y:
+			#up 
+			#print("wall is up")
+			neighbors[0] = wall
+			wall.neighbors[2] = self
+		else: 
+			#down 
+			#print("wall is down")
+			neighbors[2] = wall
+			wall.neighbors[0] = self
+	elif other_combined.y == self_combined.y:
+		if other_combined.x < self_combined.x: 
+			#left 
+			#print("wall is left")
+			neighbors[3] = wall
+			wall.neighbors[1] = self
+		else: 
+			#print("wall is right")
+			neighbors[1] = wall
+			wall.neighbors[3] = self
+
+func check_for_destroy() -> bool: 
+	if is_door or is_window or has_decor:
+		remove_my_decor.emit()
+		return false
 	for neighbor in neighbors:
-		if neighbor != null:
-			var n_parent := neighbor.get_parent()
-			if n_parent is ObjectAtlas:
-				neighbor.reparent(my_building)
-			elif n_parent is GenericBuilding and n_parent != my_building:
-				#other building located
-				buildings.append(n_parent)
-	if buildings.size() > 0: 
-		my_building.merge_buildings(buildings)
-
-func determine_building() -> void: 
-	#ask neighbors for parent
-	if neighbors[0] != null: 
-		var building := neighbors[0].get_building()
-		reparent(building)
-		return
-	if neighbors[3] != null:
-		var building := neighbors[0].get_building()
-		reparent(building)
-		return
-	if neighbors[1] != null:
-		var building := neighbors[0].get_building()
-		reparent(building)
-		return
-	if neighbors[2] != null:
-		var building := neighbors[0].get_building()
-		reparent(building)
-		return
-	# if we're back here, we are alone and there is no building
-
-func determine_sprite() -> void:
-	#TODO: this logic
-	sprite_2d.texture = sprite_bases[0] 
-
-func get_building() -> GenericBuilding:
-	var parent := get_parent()
-	if parent is GenericBuilding:
-		return parent
-	var new_building := GENERIC_BUILDING.instantiate()
-	var build_data := BuildData.new()
-	# tell the object atlas about our new friend
-	parent.new_building(build_data, new_building)
-	#add new friend to the scene tree
-	new_building.reparent(parent)
-	#make self a part of new friend
-	self.reparent(new_building)
-	return new_building
+		if neighbor.is_door:
+			return false
+	destroy()
+	return true
 
 func destroy() -> void: 
-	if neighbors[0] != null: 
-		neighbors[0].neighbors[2] = null 
-	if neighbors[2] != null:
-		neighbors[2].neighbors[0] = null
-	if neighbors[1] != null:
-		neighbors[1].neighbors[3] = null
-	if neighbors[3] != null:
-		neighbors[3].neighbors[1] = null
-	if get_parent() is GenericBuilding:
-		get_parent().remove_wall(self)
+	wall_destroyed.emit(self)
+	if neighbors[0]:
+		neighbors[0].remove_neighbor(2)
+	if neighbors[2]:
+		neighbors[2].remove_neighbor(0)
+	if neighbors[1]:
+		neighbors[1].remove_neighbor(3)
+	if neighbors[3]:
+		neighbors[1].remove_neighbor(3)
 	self.queue_free()
+
+func remove_neighbor(neighbor: int) -> void: 
+	neighbors[neighbor] = null
+
+const texture_dict: Dictionary = {
+	0b0000 : 0, # middle
+	0b1111 : 1, # up right down left
+	0b0111 : 2, # right down left 
+	0b1110 : 3, # up right down
+	0b1101 : 4, # up right left
+	0b1011 : 5, # up down left
+	0b0011 : 6, # down left 
+	0b1100 : 7, # up right 
+	0b1001 : 8, # up left 
+	0b0110 : 9, # right down 
+	0b0100 : 10, # right
+	0b0101 : 10, # right left 
+	0b0001 : 10, # left 
+	0b1000 : 11, # up 
+	0b1010 : 11, # up down
+	0b0010 : 11, # down
+}
+
+func determine_sprite() -> void:
+	 #0 = up, 1 = right, 2 = down, 3 = left
+	# there IS a better way to do this, im just an idiot C: 
+	var mask := 0b0000
+	if neighbors[0]:
+		mask = mask | 0b1000
+	if neighbors[1]:
+		mask = mask | 0b0100
+	if neighbors[2]:
+		mask = mask | 0b0010
+	if neighbors[3]:
+		mask = mask | 0b0001
+	sprite_2d.texture = sprite_bases[texture_dict[mask]]
+
+
+# NPCs might be able to slam the door in your face. maybe not a bad idea. 
+func _on_neighbor_searcher_body_entered(body: Node2D) -> void:
+	if body is Player and is_door:
+		interaction_hitbox.set_to_wall(false)
+		 # Replace with function body.
+
+func _on_neighbor_searcher_body_exited(_body: Node2D) -> void:
+	interaction_hitbox.set_to_wall(true)
