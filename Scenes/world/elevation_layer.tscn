@@ -1,23 +1,24 @@
-[gd_scene load_steps=16 format=4 uid="uid://1b78ipp0k2t8"]
+[gd_scene load_steps=17 format=4 uid="uid://1b78ipp0k2t8"]
 
 [ext_resource type="TileSet" uid="uid://bgvxhw7wfiv85" path="res://Scenes/world/tilesets/mapper.tres" id="1_to6hq"]
-[ext_resource type="Script" path="res://Game Logic/world/elevation_layer.gd" id="2_xeqao"]
+[ext_resource type="Script" uid="uid://danvvilca6aui" path="res://Game Logic/world/elevation_layer.gd" id="2_xeqao"]
 [ext_resource type="TileSet" uid="uid://dayemb55av64c" path="res://Scenes/world/tilesets/dirt_tiles.tres" id="3_bynie"]
-[ext_resource type="Script" path="res://Plugins/TileMapDual.gd" id="3_sc88q"]
+[ext_resource type="Script" uid="uid://db7a5vewyhna4" path="res://Plugins/TileMapDual.gd" id="3_sc88q"]
 [ext_resource type="TileSet" uid="uid://01d12obxf2xs" path="res://Scenes/world/tilesets/sand_tiles.tres" id="5_6c57v"]
 [ext_resource type="TileSet" uid="uid://daplxp32jm5hh" path="res://Scenes/world/tilesets/water_tiles.tres" id="5_hkcog"]
-[ext_resource type="Script" path="res://Plugins/TileMapDualWater.gd" id="5_qi5cv"]
+[ext_resource type="Script" uid="uid://dkqao5pny83l" path="res://Plugins/TileMapDualWater.gd" id="5_qi5cv"]
 [ext_resource type="TileSet" uid="uid://dabqwthi0ru5v" path="res://Scenes/world/tilesets/grass_tiles.tres" id="7_75y3v"]
-[ext_resource type="Shader" path="res://Game Logic/shaders/tilemap/wet_gradient.gdshader" id="8_jrs31"]
+[ext_resource type="Shader" uid="uid://sx4rpjxvdtcn" path="res://Game Logic/shaders/tilemap/wet_gradient.gdshader" id="8_jrs31"]
 [ext_resource type="TileSet" uid="uid://p08d33rgacki" path="res://Scenes/world/tilesets/decor.tres" id="8_pj17r"]
 [ext_resource type="Texture2D" uid="uid://cvd2cu1dlkyko" path="res://Assets/Testy Assets/gradient_shader_test.png" id="9_grwxp"]
 [ext_resource type="Texture2D" uid="uid://dndc4iegm2omf" path="res://Assets/Testy Assets/till_spot.png" id="10_1dcxp"]
+[ext_resource type="TileSet" uid="uid://dsixtjjsc88sg" path="res://Scenes/world/tilesets/stone_tiles.tres" id="12_2adka"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_be3gh"]
 shader = ExtResource("8_jrs31")
-shader_parameter/tint_color = null
-shader_parameter/global_corner_pos = null
 shader_parameter/mod_color_tex = ExtResource("9_grwxp")
+shader_parameter/tint_color = Color(0, 0, 0, 1)
+shader_parameter/global_corner_pos = Vector2(0, 0)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yiurd"]
 texture = ExtResource("10_1dcxp")
@@ -29,15 +30,18 @@ tile_size = Vector2i(64, 64)
 sources/0 = SubResource("TileSetAtlasSource_yiurd")
 
 [node name="Elevation0" type="TileMapLayer"]
+z_index = -100
 use_parent_material = true
 tile_set = ExtResource("1_to6hq")
 script = ExtResource("2_xeqao")
 
 [node name="WaterMapper" type="TileMapLayer" parent="."]
+z_index = -100
 tile_map_data = PackedByteArray("AAD8//3/AAACAAEAAAD8//7/AAACAAEAAAD8////AAACAAEAAAD8/wAAAAACAAEAAAD9//3/AAACAAEAAAD9//7/AAACAAEAAAD9////AAACAAEAAAD9/wAAAAACAAEAAAD+//3/AAACAAEAAAD+//7/AAACAAEAAAD+////AAACAAEAAAD+/wAAAAACAAEAAAD///3/AAACAAEAAAD///7/AAACAAEAAAD/////AAACAAEAAAD//wAAAAACAAEAAAAAAP3/AAACAAEAAAAAAP7/AAACAAEAAAAAAP//AAACAAEAAAAAAAAAAAACAAEAAAD8//z/AAACAAEAAAD8/wEAAAACAAEAAAD9//z/AAACAAEAAAD9/wEAAAACAAEAAAD+//z/AAACAAEAAAD+/wEAAAACAAEAAAA=")
 tile_set = ExtResource("5_hkcog")
 
 [node name="Base" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
+y_sort_enabled = true
 texture_filter = 1
 position = Vector2(-32, -32)
 tile_set = ExtResource("3_bynie")
@@ -45,34 +49,37 @@ script = ExtResource("3_sc88q")
 world_tilemap = NodePath("..")
 is_base_layer = true
 
-[node name="Pond" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
-texture_filter = 1
-position = Vector2(-32, -32)
-tile_set = ExtResource("5_hkcog")
-script = ExtResource("5_qi5cv")
-world_tilemap = NodePath("../WaterMapper")
-
 [node name="Sand" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
+y_sort_enabled = true
 texture_filter = 1
 position = Vector2(-32, -32)
 tile_set = ExtResource("5_6c57v")
 script = ExtResource("3_sc88q")
 world_tilemap = NodePath("..")
 
+[node name="Pond" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
+y_sort_enabled = true
+texture_filter = 1
+position = Vector2(-32, -32)
+tile_set = ExtResource("5_hkcog")
+script = ExtResource("5_qi5cv")
+world_tilemap = NodePath("../WaterMapper")
+
 [node name="Till" type="TileMapLayer" parent="."]
+y_sort_enabled = true
 material = SubResource("ShaderMaterial_be3gh")
 tile_set = SubResource("TileSet_8pwus")
 
-[node name="Grass" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
+[node name="Stone" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
+y_sort_enabled = true
 texture_filter = 1
 position = Vector2(-32, -32)
-tile_set = ExtResource("7_75y3v")
+tile_set = ExtResource("12_2adka")
 script = ExtResource("3_sc88q")
 world_tilemap = NodePath("..")
 
-[node name="Stone" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
-modulate = Color(1, 0, 1, 1)
-self_modulate = Color(0.216697, 0.43574, 1, 1)
+[node name="Grass" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
+y_sort_enabled = true
 texture_filter = 1
 position = Vector2(-32, -32)
 tile_set = ExtResource("7_75y3v")
@@ -80,5 +87,6 @@ script = ExtResource("3_sc88q")
 world_tilemap = NodePath("..")
 
 [node name="Decor" type="TileMapLayer" parent="."]
+y_sort_enabled = true
 texture_filter = 1
 tile_set = ExtResource("8_pj17r")

@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=4 uid="uid://bp74tb8u2t8fs"]
 
 [ext_resource type="TileSet" uid="uid://daplxp32jm5hh" path="res://Scenes/world/tilesets/water_tiles.tres" id="1_fkvux"]
-[ext_resource type="Script" path="res://Plugins/TileMapDualWater.gd" id="2_tpurl"]
+[ext_resource type="Script" uid="uid://dkqao5pny83l" path="res://Plugins/TileMapDualWater.gd" id="2_tpurl"]
 [ext_resource type="TileSet" uid="uid://dayemb55av64c" path="res://Scenes/world/tilesets/dirt_tiles.tres" id="3_sium3"]
-[ext_resource type="Script" path="res://Plugins/TileMapDual.gd" id="4_ydyjh"]
+[ext_resource type="Script" uid="uid://db7a5vewyhna4" path="res://Plugins/TileMapDual.gd" id="4_ydyjh"]
 
 [node name="Node2D" type="Node2D"]
 

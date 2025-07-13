@@ -44,7 +44,7 @@ func load_and_unload_chunks_surronding_point(point: Vector2) -> void:
 		if unload_chunks && !surronding_chunks.has(chunk):
 			#print("unload chunk ", chunk)
 			trh.unload_chunk(chunk, trh.loaded_chunks[chunk])
-			return
+			continue
 	for chunk:Vector2i in surronding_chunks:
 		if load_chunks && !trh.loaded_chunks.has(chunk) && _world_data.chunk_datas.has(chunk) && !trh.chunks_in_loading.has(chunk):
 			#print("load chunk ", chunk)
@@ -82,10 +82,40 @@ func give_requested_layer(layer:int, callback: Callable) -> void:
 	else: 
 		callback.call(trh.elevations[layer])
 
+func manage_propagation_success(pos: Location, object_id: String) -> void: 
+	#print("checking for propagation of ", object_id, " at ", pos.position)
+	var _split := object_id.split("_")
+	if pos.chunk in trh.loaded_chunks.keys():
+		var square := trh.get_square_at(pos.position, pos.chunk)
+		match square.type:
+			SquareData.SquareType.Rock:
+				return
+			SquareData.SquareType.Sand:
+				# no plants for sand. Yet
+				return
+			SquareData.SquareType.Grass:
+				pass
+			SquareData.SquareType.Dirt:
+				pass
+		var objects := trh.get_objects_at(pos.position, pos.chunk)
+		if !trh.has_objects(square) || (objects.size() > 1 && objects[0] == null and objects[1] == null):
+			_assign_object_data(object_id, pos.position, pos.chunk, trh.elevations[square.elevation])
+		#TODO: check for closeby trees
+	else:
+		#plants could technically try to propagate to an unloaded chunk- 
+		#this should be theoretically fine, but im not doing that rn fuck that honestly
+		pass
+
 func place_object(pos: Vector2, layer:ElevationLayer, itemdata: ItemData)->void:
 	var arr: Array[Vector2i] = convert_to_chunks_at_world_pos(pos)
 	var split := itemdata.object_id.split("_")
-	if split[0] == "build" and split[1] == "roof":
+	if split[0] == "build":
+		_place_build_object(arr, split, layer, itemdata)
+	else:
+		_assign_object_data(itemdata.object_id, arr[0], arr[1], layer)
+
+func _place_build_object(arr: Array[Vector2i], split: Array[String], layer: ElevationLayer, itemdata:ItemData) -> void: 
+	if split[1] == "roof":
 		if !roof_cache.is_empty():
 			for square in roof_cache:
 				_assign_object_data(itemdata.object_id, square.position, square.chunk, layer)
@@ -98,7 +128,14 @@ func place_object(pos: Vector2, layer:ElevationLayer, itemdata: ItemData)->void:
 				if objects[2] == null:
 					_assign_object_data(itemdata.object_id, wall.object_data.position, wall.object_data.chunk, layer)
 		return
-	else:
+	elif split[1] == "door":
+		var wall_data := trh.get_objects_at(arr[0], arr[1])[1]
+		var live_wall:GenericWall = trh.object_atlas.live_objects[wall_data]
+		live_wall.is_door = true
+		live_wall.remove_my_decor.connect(peel_wall)
+		wall_data.object_tags["door"] = split[2]
+		_assign_object_data(itemdata.object_id, wall_data.position, wall_data.chunk, layer)
+	elif split[1] == "wall":
 		_assign_object_data(itemdata.object_id, arr[0], arr[1], layer)
 
 func _assign_object_data(id: String, pos: Vector2i, chunk: Vector2i, layer:ElevationLayer) -> void:
@@ -107,10 +144,9 @@ func _assign_object_data(id: String, pos: Vector2i, chunk: Vector2i, layer:Eleva
 	object_data.object_id = id
 	object_data.position = pos
 	object_data.chunk = chunk
-	# remove later lol: 
-	if id.contains("poplar"):
-		object_data.object_tags["age"] = 1440000
-	trh.object_atlas.place_object(object_data, actual_pos, layer.elevation)
+	if id.contains("door"):
+		object_data.additive = true
+	trh.object_atlas.place_object(object_data, actual_pos, trh.get_square_at(pos, chunk))
 
 func check_placement_validity(ind: Indicator, player_spot:Vector2, player_layer: ElevationLayer, item: ItemData) -> bool:
 	if ind.global_position.distance_to(player_spot) > 400:
@@ -125,6 +161,9 @@ func check_placement_validity(ind: Indicator, player_spot:Vector2, player_layer:
 	if split[0] == "build":
 		ind.valid_place = _build_object_placement_validity(item, split[1], arr[0], arr[1])
 		return ind.valid_place 
+	if split[0] == "plant":
+		ind.valid_place = _plant_object_placement_validity(item, split[1], arr[0], arr[1])
+		return ind.valid_place
 	# TODO: other item types (plants, nature, crafted)
 	
 	#TODO: check tile type (no water!)
@@ -132,26 +171,60 @@ func check_placement_validity(ind: Indicator, player_spot:Vector2, player_layer:
 	ind.valid_place = true
 	return ind.valid_place
 	
+func _plant_object_placement_validity(_item: ItemData, _cat: String, pos: Vector2i, chunk:Vector2i) -> bool:
+	var square := trh.get_square_at(pos, chunk)
+	var _objects := trh.get_objects_at(pos, chunk)
+	#TODO: this is where beans, squash, and corn would cuddle
+	# and where vines would crawl on walls n stuff
+	if trh.has_objects(square):
+		return false
+	match square.type:
+		SquareData.SquareType.Rock:
+			return false
+		SquareData.SquareType.Sand:
+			# no plants for sand. Yet
+			return false
+		SquareData.SquareType.Grass:
+			pass
+		SquareData.SquareType.Dirt:
+			pass
+	
+	return true
+	
 func _build_object_placement_validity(_item: ItemData, cat: String, pos: Vector2i, chunk:Vector2i) -> bool:
 	match cat:
 		"wall":
 			var objects := trh.get_objects_at(pos, chunk)
-			if objects == [] || objects == [null, null, null, null]:
+			if objects == [] || objects == [null, null, null]:
 				return true
-			if objects[1] == null && objects[2] == null && objects[3] == null:
+			if objects[1] == null && objects[2] == null:
 				return true
 		"roof":
 			var objects := trh.get_objects_at(pos, chunk)
-			if objects == [] || objects == [null, null, null, null]:
+			if !trh.has_objects(trh.get_square_at(pos, chunk)):
 				return false
 			if objects[1] != null:
-				var split := objects[1].object_id.split("_")
-				if split[0] == "build" && split[1] == "wall":
-					var to_roof := _find_roofs(trh.object_atlas.live_objects[objects[1]])
+				@warning_ignore("untyped_declaration")
+				var object = trh.object_atlas.live_objects[objects[1]]
+				if object is GenericWall:
+					var to_roof := _find_roofs(object)
 					#TODO! ROOF _find_roof() has an array called all_found. put roofs on those squares !
 					if to_roof.size() > 0:
 						roof_cache = to_roof
 						return true
+		"door": 
+			print("door")
+			var objects := trh.get_objects_at(pos, chunk)
+			if objects == [] || objects.size() < 2: 
+				return false
+			if objects[1] != null:
+				@warning_ignore("untyped_declaration")
+				var object = trh.object_atlas.live_objects[objects[1]]
+				if object is GenericWall:
+					print(object.neighbors)
+					if object.neighbors[1] != null and object.neighbors[3] != null and object.neighbors[0] == null and object.neighbors[2] == null:
+						print("has the right friends")
+						return !object.neighbors[1].is_door and !object.neighbors[3].is_door and !object.has_decor and !object.is_window and !object.is_door
 	return false
 
 var roof_cache: Array[Location]
@@ -232,6 +305,10 @@ func _dfs(curr: GenericWall, path: Array[GenericWall]) -> Array[GenericWall]:
 	
 	return biggest
 
+func peel_wall(_wall: GenericWall) -> void:
+	#TODO: PEEL THE WALL OF IT'S DECOR!
+	pass
+
 # Returns true if the modification is successful
 # this probably isnt the best way to do this
 func modify_tilemap(loc: Vector2, layer: ElevationLayer, action: String) -> bool:
@@ -250,7 +327,14 @@ func modify_tilemap(loc: Vector2, layer: ElevationLayer, action: String) -> bool
 	if action == "remove_floor":
 		trh.remove_floor_at(positions[0], positions[1])
 	return true
-	
+
+func get_objects_at_world_pos(loc: Vector2) -> Array[ObjectData]:
+	var layer := trh.get_topmost_layer_at_global_pos(loc)
+	if layer == null:
+		return []
+	var local := convert_to_chunks_at_world_pos(loc)
+	return trh.get_objects_at(local[0], local[1])
+
 ## Returns [square_pos, chunk_pos]. loc MUST be a global position (like from a transform)
 func convert_to_chunks_at_world_pos(loc: Vector2) -> Array[Vector2i]:
 	var arr :Array[Vector2i] = []
@@ -281,7 +365,7 @@ func move_indicator(indicator: Indicator, player_spot: Vector2, item: ItemData)-
 	if indicator.global_position != old: 
 		roof_cache.clear()
 		check_placement_validity(indicator, player_spot, player_layer, item)
-
+		
 	#var left: GenericWall = walls[0]
 	#var right: GenericWall = walls[0]
 	#var down: GenericWall = walls[0]

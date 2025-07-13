@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://b48eubjn547dd"]
 
 [ext_resource type="Texture2D" uid="uid://ble0mvej0lqio" path="res://Assets/GUI/hotbar_background.png" id="1_7vess"]
-[ext_resource type="Script" path="res://Game Logic/inventory/hot_bar_inventory.gd" id="1_kl8tc"]
+[ext_resource type="Script" uid="uid://cdj73ngkfnugh" path="res://Game Logic/inventory/hot_bar_inventory.gd" id="1_kl8tc"]
 [ext_resource type="Texture2D" uid="uid://cw23ogwcfk3ij" path="res://Assets/GUI/daylight_wheel.png" id="2_t4ctg"]
 [ext_resource type="PackedScene" uid="uid://cwyeg4vhep7na" path="res://Scenes/UI/Inventory/slot.tscn" id="3_0m4ld"]
 [ext_resource type="Texture2D" uid="uid://bjjtjghe08jfa" path="res://Assets/GUI/health_empty.png" id="3_dllb1"]
@@ -20,6 +20,7 @@ scale = Vector2(1, 0.997904)
 script = ExtResource("1_kl8tc")
 
 [node name="CircleyThingy" type="TextureRect" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 57.0
 offset_top = -247.519
@@ -30,6 +31,7 @@ pivot_offset = Vector2(238.5, 238.5)
 texture = ExtResource("2_t4ctg")
 
 [node name="Background" type="TextureRect" parent="."]
+visible = false
 layout_mode = 0
 offset_left = -223.195
 offset_top = -59.124
@@ -39,6 +41,7 @@ scale = Vector2(0.41, 0.41)
 texture = ExtResource("1_7vess")
 
 [node name="TimeDial" type="TextureRect" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 198.0
 offset_top = -107.225
@@ -85,6 +88,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
+visible = false
 layout_mode = 2
 offset_left = -68.0
 offset_top = -40.084
@@ -96,6 +100,7 @@ texture_under = ExtResource("3_dllb1")
 texture_progress = ExtResource("4_tb36w")
 
 [node name="HungerBar" type="TextureProgressBar" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 388.0
 offset_top = -40.084

@@ -53,7 +53,7 @@ func _process(_delta: float) -> void:
 			var chunk_pos:Vector2i = chunk_data.chunk_position * chunk_data.chunk_size
 			for y in range(chunk_data.chunk_size.y):
 				var square:SquareData = chunk_data.square_datas[Vector2i(next_row,y)]
-				translate_square_data_to_tile(square, chunk_pos + square.location_in_chunk)
+				translate_square_data_to_tile(square, chunk_pos + square.location_in_chunk, chunk_data.chunk_position)
 			chunk_row_next[key] = next_row + 1
 	## unload chunks proccess 
 	if chunks_to_unload.keys().size() > 0:
@@ -128,7 +128,7 @@ func unload_set_of_chunks(chunks: Dictionary) -> void:
 func populate_set_of_chunks(chunks: Dictionary) -> void:
 	chunks_in_loading.merge(chunks)
 	
-func translate_square_data_to_tile(data: SquareData, world_pos: Vector2i)-> void:
+func translate_square_data_to_tile(data: SquareData, world_pos: Vector2i, _chunk_overall: Vector2i)-> void:
 	var ele:int = data.elevation
 	#print("loading tile: ", world_pos, " elevation: ", ele)
 	if (ele >= elevations.size()):
@@ -149,7 +149,13 @@ func translate_square_data_to_tile(data: SquareData, world_pos: Vector2i)-> void
 	elevations[ele].set_square(data, world_pos)
 	if data.object_data != null:
 		var actual_pos := world_pos * 64 + Vector2i(data.elevation * -32, data.elevation*-32) + Vector2i(32, 32)
-		object_atlas.translate_object(data.object_data, actual_pos, data.elevation)
+		#this is broken for some old saves- probably generated this wrong
+		#anyhow, the world data should be the ultimate authority for an objects position
+		for object in data.object_data:
+			if object != null:
+				object.position = data.location_in_chunk
+				object.chunk = _chunk_overall
+		object_atlas.translate_object(data.object_data, actual_pos, data)
 
 func run_shader_data_stuff(chunk_keys: Array[Vector2i]) -> void:
 	#print("chunk_keys: ", chunk_keys)
@@ -197,18 +203,16 @@ func apply_floor_at(square_pos: Vector2i, chunk_pos:Vector2i, floor_type: String
 		print("warning! tried to aplly floor at unloaded chunk: ", chunk_pos, " square: ", square_pos)
 		return
 	var square: SquareData = chunk_data.square_datas[square_pos]
-	# if this square is null or empty, add some fake data
-	if square.object_data == null || square.object_data.is_empty():
-		# print("was empty, making new array")
-		square.object_data = [null, null]
 	if floor_type == "till": 
 		## no objects, apply immediately 
-		if square.object_data[0] == null:
+		if square_has_no_objects(square):
 			var overall_pos := (chunk_pos * chunk_data.chunk_size) + square_pos
 			match square.type:
 				SquareData.SquareType.Dirt:
 					var new_floor: FloorData = FloorData.new()
 					new_floor.object_id = "till"
+					if square.object_data == null || square.object_data.is_empty():
+						square.object_data = [null, null, null]
 					square.object_data[0] = new_floor
 					elevations[square.elevation].till_square(overall_pos)
 				SquareData.SquareType.Sand:
@@ -221,6 +225,16 @@ func apply_floor_at(square_pos: Vector2i, chunk_pos:Vector2i, floor_type: String
 		else: 
 			# TODO: pop the object off 
 			pass
+			
+func square_has_no_objects(square: SquareData) -> bool:
+	print("square object data: ", square.object_data)
+	print("square: ", square.location_in_chunk)
+	if square.object_data == null || square.object_data.is_empty(): 
+		return true
+	for x in square.object_data:
+		if x != null:
+			return false
+	return true
 
 ## Runtime method for watering
 func water_square_at(square_pos: Vector2i, chunk_pos:Vector2i) -> void:
@@ -240,8 +254,11 @@ func water_square_at(square_pos: Vector2i, chunk_pos:Vector2i) -> void:
 func add_object(object_data: ObjectData) -> void: 
 	var chunk: ChunkData = loaded_chunks[object_data.chunk]
 	var square: SquareData = chunk.square_datas[object_data.position]
-	if square.object_data == null or square.object_data.is_empty():
-		square.object_data = [null, null, null]
+	if !has_objects(square):
+		if !has_floor(square):
+			square.object_data = [null, null, null]
+		else: 
+			square.object_data = [square.object_data[0], null, null]
 	if object_data.object_id.contains("roof"):
 		square.object_data[2] = object_data
 	elif object_data.additive:
@@ -250,7 +267,9 @@ func add_object(object_data: ObjectData) -> void:
 		square.object_data[1] = object_data
 
 func get_objects_at(square: Vector2i, chunk: Vector2i) -> Array[ObjectData]: 
-	return loaded_chunks[chunk].square_datas[square].object_data
+	if chunk in loaded_chunks:
+		return loaded_chunks[chunk].square_datas[square].object_data
+	return []
 
 ## Returns [square, chunk]
 ## don't put val > 32 in dir plz
@@ -277,6 +296,24 @@ func get_neighbor_square(square: Vector2i, chunk: Vector2i, dir: Vector2i) -> Ar
 
 func get_square_at(square: Vector2i, chunk: Vector2i) -> SquareData: 
 	return loaded_chunks[chunk].square_datas[square]
+
+func has_objects(square: SquareData) -> bool: 
+	var objects := square.object_data
+	if objects.size() < 1: 
+		return false
+	if objects.size() > 2: 
+		for x in range(1, objects.size()): 
+			if objects[x] != null:
+				return true
+	return false
+
+func has_floor(square: SquareData) -> bool: 
+	var objects := square.object_data
+	if objects.size() < 1: 
+		return false
+	if objects[0] == null:
+		return false
+	return true
 
 func print_if_debug(string: String) -> void:
 	if debug:

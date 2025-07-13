@@ -1,6 +1,48 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://01d12obxf2xs"]
+[gd_resource type="TileSet" load_steps=8 format=3 uid="uid://01d12obxf2xs"]
 
+[ext_resource type="Shader" uid="uid://du8qthb573nbd" path="res://Game Logic/shaders/tilemap/red_shader.gdshader" id="1_ktc7m"]
+[ext_resource type="Texture2D" uid="uid://h5n3e508mwm" path="res://Assets/tiles/sand_temp.png" id="1_xp7yl"]
+[ext_resource type="Texture2D" uid="uid://dbxri2o2co5ub" path="res://Assets/Testy Assets/water_texture.png" id="2_4p5m3"]
 [ext_resource type="Texture2D" uid="uid://d4aql4p3rbamc" path="res://Assets/tiles/ruined_fields/sand.png" id="7_84dwg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5bjoi"]
+shader = ExtResource("1_ktc7m")
+shader_parameter/overlay_tex = ExtResource("2_4p5m3")
+shader_parameter/scale = 0.00694444
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_thhwl"]
+texture = ExtResource("1_xp7yl")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+0:0/0/material = SubResource("ShaderMaterial_5bjoi")
+1:0/0 = 0
+1:0/0/material = SubResource("ShaderMaterial_5bjoi")
+2:0/0 = 0
+2:0/0/material = SubResource("ShaderMaterial_5bjoi")
+3:0/0 = 0
+3:0/0/material = SubResource("ShaderMaterial_5bjoi")
+0:1/0 = 0
+0:1/0/material = SubResource("ShaderMaterial_5bjoi")
+1:1/0 = 0
+1:1/0/material = SubResource("ShaderMaterial_5bjoi")
+2:1/0 = 0
+2:1/0/material = SubResource("ShaderMaterial_5bjoi")
+3:1/0 = 0
+3:1/0/material = SubResource("ShaderMaterial_5bjoi")
+0:2/0 = 0
+0:2/0/material = SubResource("ShaderMaterial_5bjoi")
+1:2/0 = 0
+1:2/0/material = SubResource("ShaderMaterial_5bjoi")
+2:2/0 = 0
+2:2/0/material = SubResource("ShaderMaterial_5bjoi")
+3:2/0 = 0
+3:2/0/material = SubResource("ShaderMaterial_5bjoi")
+1:3/0 = 0
+1:3/0/material = SubResource("ShaderMaterial_5bjoi")
+2:3/0 = 0
+2:3/0/material = SubResource("ShaderMaterial_5bjoi")
+3:3/0 = 0
+3:3/0/material = SubResource("ShaderMaterial_5bjoi")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4e0jw"]
 texture = ExtResource("7_84dwg")
@@ -31,4 +73,5 @@ physics_layer_2/collision_layer = 64
 physics_layer_2/collision_mask = 0
 custom_data_layer_0/name = "type"
 custom_data_layer_0/type = 4
-sources/0 = SubResource("TileSetAtlasSource_4e0jw")
+sources/2 = SubResource("TileSetAtlasSource_4e0jw")
+sources/0 = SubResource("TileSetAtlasSource_thhwl")

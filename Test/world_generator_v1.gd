@@ -45,7 +45,7 @@ func _ready() -> void:
 	#print('time at end generation: ', Time.get_time_string_from_system())
 	#world_manager.set_world_data(world)
 	#world_to_save = world
-	#path = str('res://Test/data/world_datas/walls.tres')
+	#path = str('res://Test/data/world_datas/generation_test.tres')
 	#save_world.emit(world, str('res://Test/data/world_datas/treez.tres'))
 
 # a lot of this is from https://www.reddit.com/r/godot/comments/10ho9d5/any_good_tutorials_on_the_new_fastnoiselite_class/
@@ -57,7 +57,6 @@ func generate_world_based_on_vals() -> WorldData:
 	print('seed = ', worldseed)
 	print('chunk_size =', chunk_size)
 	print('world_size =', num_chunks)
-	
 	print('time at start generation: ', Time.get_time_string_from_system())
 	
 	var f1:int = seed_generator.randi_range(0, 10000)
@@ -117,9 +116,10 @@ func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, temp_grid:D
 						chunk.biome = ChunkData.Biome.Cityscape
 					else:
 						chunk.biome = ChunkData.Biome.Grassland
-				
+			#if chunk.biome != ChunkData.Biome.Wetland:
+			# everything is a forest, for now 
+			chunk.biome = chunk.Biome.Forest
 			
-			var water : int  = randi_range(0, 2)
 			var square_datas: Dictionary
 			for i in chunk_size.x:
 				for j in chunk_size.y:
@@ -129,10 +129,11 @@ func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, temp_grid:D
 					var total_y : int = (y * chunk_size.y) + j
 					#print("total x : ", x, "total y: ",y, "elevation:", big_grid[Vector2i(total_x, total_y)])
 					var square:SquareData = SquareData.new()
-					#square.elevation = big_grid[Vector2i(total_x, total_y)]
-					square.elevation = 0
+					square.elevation = big_grid[Vector2i(total_x, total_y)]
 					square.location_in_chunk = Vector2i(i,j)
-					square.water_saturation = water
+					square.water_saturation = 0
+					square_datas[Vector2i(i,j)] = square
+					square.type = SquareData.SquareType.Grass
 					#if(j == 0):
 						#var object: ObjectData = ObjectData.new()
 						#object.object_id = "plant_tree_poplar"
@@ -140,10 +141,44 @@ func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, temp_grid:D
 						#square.object_data = [null, null, null]
 						#square.object_data[1] = object
 						
-					square_datas[Vector2i(i,j)] = square
 					
 			chunk.square_datas = square_datas
 			chunk_datas[chunk.chunk_position] = chunk
+	
+	print("picking random chunk as quarry")
+	#TODO: blobular shape
+	var q_x := randi_range(1, num_chunks.x-2)
+	var q_y := randi_range(1, num_chunks.y-2)
+	var quarry_chunk: ChunkData = chunk_datas[Vector2i(q_x-modx,q_y - mody)]
+	for i in chunk_size.x:
+		for j in chunk_size.y:
+			var square: SquareData = quarry_chunk.square_datas[Vector2i(i,j)]
+			square.type = SquareData.SquareType.Rock
+			square.elevation = square.elevation + 1
+	
+	print("water pass")
+	for x in num_chunks.x:
+		for y in num_chunks.y:
+			var chunk:ChunkData = chunk_datas[Vector2i(x - modx, y - mody)]
+			if x == q_x and y == q_y:
+				continue
+			for i in chunk_size.x:
+				for j in chunk_size.y:
+					var square : SquareData= chunk.square_datas[Vector2i(i,j)]
+					var val: float= abs(moisture_noise.get_noise_2d((x*32)+i, (y*32)+j))
+					#print(val)
+					if val > .7: 
+						square.water_saturation = 4
+						if randf() > .5 and i > 0:
+							var new_i := i - 1
+							var prev_square: SquareData= chunk.square_datas[Vector2i(new_i, j)]
+							prev_square.type = SquareData.SquareType.Sand
+						if randf() > .5 and i < 31: 
+							var new_i := i + 1
+							var next_square: SquareData= chunk.square_datas[Vector2i(new_i, j)]
+							next_square.type = SquareData.SquareType.Sand
+					if val > .9: 
+						square.water_saturation = 5
 	
 	return chunk_datas 
 	
@@ -173,22 +208,23 @@ func generate_heights(seed: int) -> Dictionary:
 ## find the True Moisture Value of each square during runtime
 @warning_ignore("shadowed_global_identifier")
 func generate_moisture(seed: int) -> Dictionary:
-	if !moisture_noise:
-		moisture_noise = FastNoiseLite.new()
-		moisture_noise.noise_type = FastNoiseLite.TYPE_PERLIN
-		moisture_noise.frequency = alt_freq
-		moisture_noise.fractal_octaves = oct
-		moisture_noise.fractal_lacunarity = lac
-		moisture_noise.fractal_gain = gain
+	#if !moisture_noise:
+		#moisture_noise = FastNoiseLite.new()
+		#moisture_noise.noise_type = FastNoiseLite.TYPE_PERLIN
+		#moisture_noise.frequency = alt_freq
+		#moisture_noise.fractal_octaves = oct
+		#moisture_noise.fractal_lacunarity = lac
+		#moisture_noise.fractal_gain = gain
 
-	moisture_noise.set_seed(seed)
+	var other_noise := get_new_noise(123)
+	other_noise.set_seed(seed)
 	var total_chunks:Vector2 = num_chunks
 	var grid :Dictionary = {}
 	for x in total_chunks.x:
 		for y in total_chunks.y:
 			#this could, theoretically, be 4. which is out of range. ah well
 			@warning_ignore("narrowing_conversion")
-			grid[Vector2i(x,y)] = moisture_noise.get_noise_2d(x,y)
+			grid[Vector2i(x,y)] = other_noise.get_noise_2d(x,y)
 	
 	return grid
 
@@ -232,6 +268,18 @@ func generate_debris(seed: int) -> Dictionary:
 		for y in total_chunks.y:
 			#this could, theoretically, be 4. which is out of range. ah well
 			@warning_ignore("narrowing_conversion")
-			grid[Vector2i(x,y)] =  debris_noise.get_noise_2d(x,y)
+			#grid[Vector2i(x,y)] =  debris_noise.get_noise_2d(x,y)
+			grid[Vector2i(x,y)] =  0
 	
 	return grid
+
+@warning_ignore("shadowed_global_identifier")
+func get_new_noise(seed: int) -> FastNoiseLite:
+	var new_noise := FastNoiseLite.new()
+	new_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
+	new_noise.frequency = alt_freq
+	new_noise.fractal_octaves = oct
+	new_noise.fractal_lacunarity = lac
+	new_noise.fractal_gain = gain
+	new_noise.seed = seed 
+	return new_noise

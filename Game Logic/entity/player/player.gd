@@ -1,8 +1,11 @@
 extends CharacterBody2D
 class_name Player
 
+## TODO: when i get back to this game, i want to refractor ALL of this. 
+## input is weird, wtf is "facing", just generally organize and make normal
+
 enum PlayerStates{STATE_MENU, STATE_IDLE, STATE_ACTION, STATE_TOOL, STATE_WALK, STATE_SPELL, STATE_DASH, 
-		STATE_KNOCKBACK}
+		STATE_KNOCKBACK, STATE_DEAD}
 
 signal health_changed(new_health:int, total_health:int)
 signal toggle_menu()
@@ -60,7 +63,7 @@ func _ready() -> void:
 	#set hair and outfit... eventually 
 	#animation_player.add_animation_library()
 	await get_tree().create_timer(.3).timeout
-	state = PlayerStates.STATE_IDLE
+	state = PlayerStates.STATE_MENU
 
 func _physics_process(_delta: float) -> void: 
 	match state:

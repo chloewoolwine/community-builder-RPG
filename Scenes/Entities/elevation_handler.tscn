@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bx67biud0kdck"]
 
-[ext_resource type="Script" path="res://Game Logic/entity/entity components/elevation_handler_component.gd" id="1_y2k7c"]
+[ext_resource type="Script" uid="uid://cwsfeq7fhostm" path="res://Game Logic/entity/entity components/elevation_handler_component.gd" id="1_y2k7c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ot3nc"]
 size = Vector2(1, 2.53289)

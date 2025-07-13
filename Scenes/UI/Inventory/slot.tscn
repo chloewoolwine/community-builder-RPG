@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cwyeg4vhep7na"]
 
-[ext_resource type="Script" path="res://Game Logic/inventory/slot.gd" id="1_v83v1"]
+[ext_resource type="Script" uid="uid://cy0wvi4qn7yq6" path="res://Game Logic/inventory/slot.gd" id="1_v83v1"]
 [ext_resource type="Texture2D" uid="uid://ngmor0mydbno" path="res://Assets/GUI/slot_complete.png" id="1_vrin4"]
 [ext_resource type="Texture2D" uid="uid://c032gq53k54f6" path="res://icon.svg" id="2_drxbf"]
 

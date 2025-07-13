@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://d3kov3ehthpy"]
 
-[ext_resource type="Script" path="res://Game Logic/object/interaction_hitbox.gd" id="1_gfcto"]
+[ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="1_gfcto"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ubcxi"]
 

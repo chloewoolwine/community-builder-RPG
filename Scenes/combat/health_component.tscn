@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://erdkvldy5ggp"]
 
-[ext_resource type="Script" path="res://Game Logic/entity/entity components/health_component.gd" id="1_lgmp0"]
+[ext_resource type="Script" uid="uid://chml4epiti6x7" path="res://Game Logic/entity/entity components/health_component.gd" id="1_lgmp0"]
 
 [node name="HealthComponent" type="Area2D"]
 collision_layer = 0

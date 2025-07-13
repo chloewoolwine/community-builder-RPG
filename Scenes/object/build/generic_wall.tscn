@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c47ignhpqx7ue"]
 
-[ext_resource type="Script" path="res://Game Logic/object/build/generic_wall.gd" id="1_2n8pw"]
-[ext_resource type="Script" path="res://Game Logic/object/interaction_hitbox.gd" id="2_o588p"]
+[ext_resource type="Script" uid="uid://nkogovoc7bye" path="res://Game Logic/object/build/generic_wall.gd" id="1_2n8pw"]
+[ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="2_o588p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gmcib"]
 size = Vector2(50, 50)

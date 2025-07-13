@@ -1,8 +1,17 @@
 extends Node2D
 class_name ObjectAtlas
 
+@onready var entity_manager: EntityManager = $EntityManager
+
 signal plant_placed(plant: GenericPlant)
 signal new_object_placed(object: ObjectData)
+
+# GODOT SORT HEIRARCHY 
+#  CanvasLayer > overrules > z_index > overrules > Ysort > overrules > scene tree hierarchy 
+#  Ysort on the other hand affects only affects the direct children of a Ysort node, 
+#  not it's grand children. You can therefore use the scene tree hierarchy to sort 
+#  the Sprites of your character how you like. 
+
 
 # every object type: 
 # plant
@@ -40,14 +49,14 @@ var loaded_objects: Dictionary
 var live_objects: Dictionary
 
 
-func translate_object(object_datas: Array[ObjectData],overall_position: Vector2, elevation: int) -> void: 
+func translate_object(object_datas: Array[ObjectData],overall_position: Vector2, square: SquareData) -> void: 
 	if object_datas == null:
 		return
 	if object_datas.size() < 2: # floors are not really objects. it's a lie.
 		return 
 	for x in range(1, object_datas.size()):
 		var object_data := object_datas[x]
-		_parse_and_place(object_data, overall_position, elevation)
+		_parse_and_place(object_data, overall_position, square)
 
 func remove_objects(object_datas: Array[ObjectData]) -> Array[ObjectData]: 
 	for x in range(1, object_datas.size()):
@@ -65,15 +74,15 @@ func remove_objects(object_datas: Array[ObjectData]) -> Array[ObjectData]:
 			live_objects.erase(object_data)
 	return object_datas
 	
-func place_object(object_data: ObjectData, overall_position: Vector2, elevation: int)-> void:
+func place_object(object_data: ObjectData, overall_position: Vector2, square: SquareData)-> void:
 	if object_data.object_id != "":
-		_parse_and_place(object_data, overall_position, elevation)
+		_parse_and_place(object_data, overall_position, square)
 		new_object_placed.emit(object_data)
 
-func _parse_and_place(object_data: ObjectData, overall_position: Vector2, elevation: int) -> Node2D: 
+func _parse_and_place(object_data: ObjectData, overall_position: Vector2, square: SquareData) -> Node2D: 
 	if object_data != null:
 		if object_data.object_id != "":
-			print("new object, location: ", overall_position, "   ", object_data.chunk, " ", object_data.position)
+			#print("new object, location: ", overall_position, "   ", object_data.chunk, " ", object_data.position)
 			var split := object_data.object_id.split("_")
 			var path := object_scene_location + split[0] + "/" + split[1] + "/" + split[2] + ".tscn"
 			if path not in loaded_objects.keys():
@@ -84,10 +93,11 @@ func _parse_and_place(object_data: ObjectData, overall_position: Vector2, elevat
 			object.object_data = object_data
 			var hitbox: Node2D = find_child("InteractionHitbox", false)
 			if hitbox: 
-				hitbox.current_elevation = elevation
+				hitbox.current_elevation = square.elevation
 			live_objects[object_data] = object
 			add_child(object)
 			if split[0] == "plant":
+				object.square_data = square
 				plant_placed.emit(object)
 			return object
 		else: 

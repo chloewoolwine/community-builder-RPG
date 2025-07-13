@@ -14,8 +14,8 @@ var gametime_to_minute : float = (2 * PI) / minutes_per_day
 var previous_minute: float = -1
 var time: float = 0
 
-var total_year : int
-var total_day : int
+var curr_year : int
+var curr_date : int #these are meant to keep track of Total days from a savegame state
 
 func _ready() -> void:
 	change_time_of_day(initial_hour)
@@ -51,3 +51,13 @@ func change_time_of_day(target: int) -> void:
 func update_lighting() -> void:
 	self.color = light_gradient.gradient.sample(
 		(sin(time - PI / 2) + 1.0) / 2.0)
+
+func formatted_datetime() -> String:
+	var total_minutes := int(time/gametime_to_minute)
+	@warning_ignore("integer_division")
+	var day := int(total_minutes/minutes_per_day)
+	var minutes_of_today := total_minutes % minutes_per_day
+	@warning_ignore("integer_division")
+	var hour := int(minutes_of_today/minutes_per_hour)
+	var minute := int(minutes_of_today % minutes_per_hour)
+	return str(curr_year, "  ", day, ":", hour, ":", minute)

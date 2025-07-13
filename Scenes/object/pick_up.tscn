@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cdeeqt3ae70lq"]
 
-[ext_resource type="Script" path="res://Game Logic/item/pickup/pick_up.gd" id="1_ndlrn"]
+[ext_resource type="Script" uid="uid://bapb15xf31g78" path="res://Game Logic/item/pickup/pick_up.gd" id="1_ndlrn"]
 [ext_resource type="Texture2D" uid="uid://bcqi5msyx878f" path="res://Game Logic/item/item_atlas.tres" id="2_mmb6i"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_raqn7"]

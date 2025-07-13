@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://crblodej2lpl5"]
 
-[ext_resource type="Script" path="res://Game Logic/data/inventory/item_data.gd" id="1_r26yh"]
+[ext_resource type="Script" uid="uid://n78f88xryx5x" path="res://Game Logic/data/inventory/item_data.gd" id="1_r26yh"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_la2wb"]
 
@@ -17,5 +17,6 @@ magicalDescription = ""
 stackable = true
 texture = SubResource("AtlasTexture_7r5w6")
 placeable = false
+object_id = ""
 value = 1
 rarity = 1

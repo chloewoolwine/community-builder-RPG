@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="InventoryData" load_steps=15 format=3 uid="uid://b8xs2ofig05hq"]
 
-[ext_resource type="Script" path="res://Game Logic/data/inventory/inventory_data.gd" id="1_r08uo"]
-[ext_resource type="Script" path="res://Game Logic/data/inventory/slot_data.gd" id="2_n1jth"]
+[ext_resource type="Script" uid="uid://j0kc2xvefmhi" path="res://Game Logic/data/inventory/inventory_data.gd" id="1_r08uo"]
+[ext_resource type="Script" uid="uid://ff7axvflmy38" path="res://Game Logic/data/inventory/slot_data.gd" id="2_n1jth"]
 [ext_resource type="Resource" uid="uid://bhhgw66haki3j" path="res://Scenes/items/tools/axe.tres" id="3_6gdja"]
 [ext_resource type="Resource" uid="uid://nqerwfpldacr" path="res://Scenes/items/tools/hammer.tres" id="4_36bw6"]
 [ext_resource type="Resource" uid="uid://bttbsjkake846" path="res://Scenes/items/tools/hoe.tres" id="4_i8yrb"]

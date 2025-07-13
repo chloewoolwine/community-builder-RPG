@@ -1,19 +1,83 @@
-[gd_scene load_steps=4 format=3 uid="uid://w31twt7vhfmj"]
+[gd_scene load_steps=20 format=3 uid="uid://w31twt7vhfmj"]
 
-[ext_resource type="Script" path="res://Game Logic/object/build/generic_roof.gd" id="1_f8bmi"]
+[ext_resource type="Script" uid="uid://kt10khw06cc2" path="res://Game Logic/object/build/generic_roof.gd" id="1_f8bmi"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4fcsr"]
-load_path = "res://.godot/imported/Wooden_House_Roof_Tilset.png-0094af18267ca7f4520dcbf481dd57c0.ctex"
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nafbp"]
+load_path = "res://.godot/imported/roof_temp.png-9023d4dcfe6b24b5f234c2e5e6a4890b.ctex"
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ft8pa"]
-atlas = SubResource("CompressedTexture2D_4fcsr")
-region = Rect2(48, 16, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_1x4ya"]
+atlas = SubResource("CompressedTexture2D_nafbp")
+region = Rect2(128, 128, 64, 64)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_770qn"]
+load_path = "res://.godot/imported/roof_temp.png-9023d4dcfe6b24b5f234c2e5e6a4890b.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yh60w"]
+atlas = SubResource("CompressedTexture2D_770qn")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_440jm"]
+atlas = SubResource("CompressedTexture2D_nafbp")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bb7g3"]
+load_path = "res://.godot/imported/roof_temp.png-9023d4dcfe6b24b5f234c2e5e6a4890b.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xtfon"]
+atlas = SubResource("CompressedTexture2D_bb7g3")
+region = Rect2(0, 256, 64, 64)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_v423q"]
+load_path = "res://.godot/imported/roof_temp.png-9023d4dcfe6b24b5f234c2e5e6a4890b.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y61yu"]
+atlas = SubResource("CompressedTexture2D_v423q")
+region = Rect2(64, 256, 64, 64)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3lelw"]
+load_path = "res://.godot/imported/roof_temp.png-9023d4dcfe6b24b5f234c2e5e6a4890b.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0skif"]
+atlas = SubResource("CompressedTexture2D_3lelw")
+region = Rect2(320, 256, 64, 64)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_o7bl2"]
+load_path = "res://.godot/imported/roof_temp.png-9023d4dcfe6b24b5f234c2e5e6a4890b.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2gk46"]
+atlas = SubResource("CompressedTexture2D_o7bl2")
+region = Rect2(320, 128, 64, 64)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_h8gbl"]
+load_path = "res://.godot/imported/roof_temp.png-9023d4dcfe6b24b5f234c2e5e6a4890b.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3kyno"]
+atlas = SubResource("CompressedTexture2D_h8gbl")
+region = Rect2(320, 64, 64, 64)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2wsd2"]
+load_path = "res://.godot/imported/roof_temp.png-9023d4dcfe6b24b5f234c2e5e6a4890b.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_54wed"]
+atlas = SubResource("CompressedTexture2D_2wsd2")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j3gvg"]
+size = Vector2(128, 128)
 
 [node name="GenericRoof" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_f8bmi")
 object_id = "build_roof_thatchroof"
-sprites = Array[Texture2D]([SubResource("AtlasTexture_ft8pa")])
+sprites = Array[Texture2D]([SubResource("AtlasTexture_1x4ya"), SubResource("AtlasTexture_yh60w"), SubResource("AtlasTexture_440jm"), SubResource("AtlasTexture_xtfon"), SubResource("AtlasTexture_y61yu"), SubResource("AtlasTexture_0skif"), SubResource("AtlasTexture_2gk46"), SubResource("AtlasTexture_3kyno"), SubResource("AtlasTexture_54wed")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
-offset = Vector2(0, -9.965)
+offset = Vector2(0, -64)
+
+[node name="NeighborSearcher" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NeighborSearcher"]
+shape = SubResource("RectangleShape2D_j3gvg")
+
+[connection signal="area_entered" from="NeighborSearcher" to="." method="_on_neighbor_searcher_area_entered"]

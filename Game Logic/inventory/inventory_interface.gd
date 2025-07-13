@@ -31,6 +31,7 @@ func set_player_inventory_data(inventory_data: InventoryData, player: Player) ->
 func set_external_inventory(new_external_inventory_owner) -> void:
 	#print("set external inventory, inventory_interface.gd")
 	external_inventory_owner = new_external_inventory_owner
+	@warning_ignore("untyped_declaration")
 	var inventory_data = external_inventory_owner.inventory_data
 	
 	inventory_data.inventory_interact.connect(on_inventory_interact)

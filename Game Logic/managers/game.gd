@@ -12,12 +12,15 @@ var gui_state: GuiState
 # ONREADY VARS
 #System Managers
 @onready var world_manager:WorldManager = $WorldManager
-@onready var entity_manager:EntityManager = $EntityManager
+# entity manager moved down the scene tree for proper y-sorting :c
+@onready var entity_manager: EntityManager = $WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager
 @onready var pickup_manager:PickupManager = $PickupManager
 @onready var story_manager:StoryManager = $StoryManager
 #@onready var saver_loader:SaverLoader = $SaverLoader
-@onready var player:Player = $EntityManager/Player
+# player moved down the scene tree, also for y-aasorting :C
+#@onready var player:Player = $EntityManager/Player
 @onready var lighting:CalendarManager= $StoryManager/Lighting
+@onready var player: Player = $WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player
 
 #UI
 @onready var inventory_interface:InventoryInterface = $UI/InventoryInterface
@@ -34,7 +37,6 @@ func _ready() -> void:
 	#this should work OK as long as i do it after the world is fully loaded
 	handle_inventory_setup()
 	handle_entity_setup()
-	handle_plant_setup()
 	handle_player_setup()
 	handle_world_setup()
 	
@@ -44,6 +46,8 @@ func _ready() -> void:
 func handle_final_presentation() -> void: 
 	## TODO: make some juice here, like a fade in from black :D 
 	lighting.proccessTime = true
+	await get_tree().create_timer(5).timeout
+	player.state = Player.PlayerStates.STATE_IDLE
 
 ## Connects events dynamically
 func handle_world_setup() -> void:
@@ -53,15 +57,23 @@ func handle_world_setup() -> void:
 ## Connects plants with the world so they can grow
 func connect_plant_to_sky(plant: GenericPlant) -> void:
 	plant.spawn_pickups.connect(pickup_manager.generate_pickups_from_list)
+	plant.plant_component.propagate_plant.connect(world_manager.manage_propagation_success)
 	lighting.time_tick.connect(plant.plant_component.minute_pass)
+
+#for when I have Hungry Hungry entities spawning, they need to know when we are paused
+func connect_entity_to_player() -> void:
+	pass
 
 ## Connects events involving the playe
 func handle_player_setup() -> void:
 	player.health_changed.connect(hot_bar_inventory.update_health)
+	player.health_handler.health_zero.connect(player_died)
 	player.tile_indicator.move_me.connect(world_manager.move_indicator)
 	player.tile_indicator.placement.connect(world_manager.place_object)
 	player.tile_indicator.modify.connect(world_manager.modify_tilemap)
+	lighting.time_tick.connect(player.health_handler.hunger_tick)
 
+## TODO: remove
 ## Connects events for already existing plants (growing + spawning pickups)
 func handle_plant_setup() -> void:
 	for node in get_tree().get_nodes_in_group("plant_growable"):
@@ -76,6 +88,8 @@ func handle_entity_setup() -> void:
 		node.toggle_menu.connect(toggle_entity_interface)
 	for node in get_tree().get_nodes_in_group("elevation_handler"): 
 		node.give_me_layer_please.connect(world_manager.give_requested_layer)
+	for node in get_tree().get_nodes_in_group("hungerhealth"):
+		node.player = player
 	
 	entity_interface.close_dialogue.connect(toggle_entity_interface)
 	
@@ -154,6 +168,18 @@ func toggle_entity_interface(entity: Entity) -> void:
 	else:
 		gui_state = GuiState.WORLD
 		player.toggle_menu_state()
+
+func player_died() -> void:
+	#do cool stuff here 
+	player.state = Player.PlayerStates.STATE_DEAD
+	await get_tree().create_timer(3).timeout
+	## TERRIBLE IDEA need better spawn point Stat
+	player.global_position = Vector2.ZERO
+	player.elevation_handler.current_elevation = 1 
+	player.health_handler.change_health(50)
+	player.health_handler.current_hunger = player.health_handler.max_hunger/2
+	player.state = Player.PlayerStates.STATE_IDLE
+	pass
 		
 # chat gpt generated name ideas lmao 
 #Town of Bloom

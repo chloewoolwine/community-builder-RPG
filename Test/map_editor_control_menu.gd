@@ -53,18 +53,20 @@ func _on_eraser_pressed() -> void:
 	pass # Replace with function body.
 
 const POPLAR_POD = preload("res://Scenes/items/seeds/poplar_pod.tres")
-const THATCH_ROOF = preload("res://Scenes/items/thatch_roof.tres")
-const WOOD_WALL = preload("res://Scenes/items/wood_wall.tres")
+const THATCH_ROOF = preload("res://Scenes/items/build/thatch_roof.tres")
+const WOOD_WALL = preload("res://Scenes/items/build/wood_wall.tres")
+const WOOD_DOOR = preload("res://Scenes/items/build/wood_door.tres")
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.is_pressed():
+	if event is InputEventMouseButton and event.is_pressed() and false:
 		var mouse: Vector2 = world_manager.get_global_mouse_position()
 		#world_manager.modify_tilemap(mouse, trh.get_topmost_layer_at_global_pos(mouse), "till")
 		#temp_mousecast.global_position = mouse
 		tile_indicator.global_position = mouse
 		var layer := trh.get_topmost_layer_at_global_pos(mouse)
 		tile_indicator.temp = layer
-		if world_manager.check_placement_validity(tile_indicator, mouse, trh.get_topmost_layer_at_global_pos(mouse), POPLAR_POD):
-			world_manager.place_object(mouse, trh.get_topmost_layer_at_global_pos(mouse), POPLAR_POD)
+		if world_manager.check_placement_validity(tile_indicator, mouse, trh.get_topmost_layer_at_global_pos(mouse), THATCH_ROOF):
+			world_manager.modify_tilemap(mouse, trh.get_topmost_layer_at_global_pos(mouse), "till")
+			world_manager.place_object(mouse, trh.get_topmost_layer_at_global_pos(mouse), THATCH_ROOF)
 
 
 func _on_temp_mousecast_body_entered(body: Node2D) -> void:

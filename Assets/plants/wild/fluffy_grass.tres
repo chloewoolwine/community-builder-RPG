@@ -1,0 +1,8 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://bva3d2p1oo4px"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_r167e"]
+load_path = "res://.godot/imported/fluffy_grass.png-c3bdc94dee8d9c27755885444c1db974.ctex"
+
+[resource]
+atlas = SubResource("CompressedTexture2D_r167e")
+region = Rect2(189, 200, 84, 66)

@@ -1,25 +1,25 @@
-[gd_scene load_steps=25 format=3 uid="uid://cycrtln7ftflc"]
+[gd_scene load_steps=26 format=3 uid="uid://cycrtln7ftflc"]
 
-[ext_resource type="Script" path="res://Game Logic/world/world_manager.gd" id="1_d3v3l"]
-[ext_resource type="Script" path="res://Test/temp_camera_script.gd" id="1_pg57c"]
-[ext_resource type="Resource" uid="uid://b01mer6qkwo4b" path="res://Test/data/world_datas/moist_gradient.tres" id="2_7r28i"]
-[ext_resource type="Script" path="res://Game Logic/world/terrain_rules_handler.gd" id="2_hk3wk"]
+[ext_resource type="Script" uid="uid://diuxqukbk35hy" path="res://Game Logic/world/world_manager.gd" id="1_d3v3l"]
+[ext_resource type="Script" uid="uid://dyamhmg7lwxjc" path="res://Test/temp_camera_script.gd" id="1_pg57c"]
+[ext_resource type="Script" uid="uid://vjmm4ct83rqu" path="res://Game Logic/world/terrain_rules_handler.gd" id="2_hk3wk"]
+[ext_resource type="Resource" uid="uid://cq1kt0n57jwfw" path="res://Test/data/world_datas/generation_test.tres" id="2_ladqw"]
 [ext_resource type="Texture2D" uid="uid://dj8bni171no41" path="res://Assets/Testy Assets/map edit symbols/Asset 1@0.5x.png" id="2_lwt0r"]
-[ext_resource type="Script" path="res://Test/map_editor_control_menu.gd" id="3_4irie"]
+[ext_resource type="Script" uid="uid://btkipgqft1s0h" path="res://Test/map_editor_control_menu.gd" id="3_4irie"]
 [ext_resource type="Texture2D" uid="uid://b71ycp15yowwk" path="res://Assets/Testy Assets/map edit symbols/Asset 25@0.5x.png" id="4_jjck8"]
 [ext_resource type="Texture2D" uid="uid://oulwhnc8mhq5" path="res://Assets/Testy Assets/map edit symbols/Asset 18@0.5x.png" id="5_gjubd"]
 [ext_resource type="PackedScene" uid="uid://1b78ipp0k2t8" path="res://Scenes/world/elevation_layer.tscn" id="5_twio2"]
-[ext_resource type="Script" path="res://Game Logic/world/object_atlas.gd" id="6_wou66"]
+[ext_resource type="Script" uid="uid://bsm4ra22m810k" path="res://Game Logic/world/object_atlas.gd" id="6_wou66"]
 [ext_resource type="Texture2D" uid="uid://dhy2mlw2rh1fm" path="res://Assets/Testy Assets/map edit symbols/Asset 17@0.5x.png" id="6_yxhyp"]
 [ext_resource type="Texture2D" uid="uid://da0bxkbsh1hjv" path="res://Assets/misc/tile_indicator.png" id="7_bdrhd"]
 [ext_resource type="Texture2D" uid="uid://n1jru5gr22no" path="res://Assets/Testy Assets/map edit symbols/Asset 77@0.5x.png" id="7_jqxbs"]
-[ext_resource type="Script" path="res://Game Logic/world/tile_indicator.gd" id="8_g71xc"]
+[ext_resource type="Script" uid="uid://b1dg7b6hoqvmm" path="res://Game Logic/world/tile_indicator.gd" id="8_g71xc"]
 [ext_resource type="Texture2D" uid="uid://b71wkniwm1shg" path="res://Assets/Testy Assets/map edit symbols/Asset 81@0.5x.png" id="8_tgey8"]
-[ext_resource type="Script" path="res://Test/world_generator_v1.gd" id="13_i6roh"]
+[ext_resource type="Script" uid="uid://dqyo70qnqpuvd" path="res://Test/world_generator_v1.gd" id="13_i6roh"]
 [ext_resource type="Texture2D" uid="uid://bnxf6cstcmjft" path="res://Assets/Testy Assets/map edit symbols/paintbrush.png" id="13_ragj0"]
 [ext_resource type="FastNoiseLite" uid="uid://bbqhvyutia2e2" path="res://Test/data/noise/doesntworkanymorenoise.tres" id="14_16di6"]
 [ext_resource type="Texture2D" uid="uid://codo8ckb42t08" path="res://Assets/Testy Assets/map edit symbols/eraser.png" id="14_dmrar"]
-[ext_resource type="Script" path="res://Game Logic/world/WorldSaver.gd" id="16_neiaj"]
+[ext_resource type="Script" uid="uid://b18kgtmd54e0v" path="res://Game Logic/world/WorldSaver.gd" id="16_neiaj"]
 [ext_resource type="FastNoiseLite" uid="uid://bdmyfboi5v4ci" path="res://Test/data/noise/decent_noise.tres" id="18_we2w1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bglr2"]
@@ -38,12 +38,18 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_extud"]
+noise_type = 3
+frequency = 0.0176
+fractal_type = 2
+
 [node name="TestTilemapSystem" type="Node2D"]
+y_sort_enabled = true
 
 [node name="WorldManager" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("1_d3v3l")
-_world_data = ExtResource("2_7r28i")
+_world_data = ExtResource("2_ladqw")
 world_edit_mode = true
 load_chunks = true
 unload_chunks = true
@@ -55,6 +61,7 @@ debug = true
 [node name="Elevation0" parent="WorldManager/TerrainRulesHandler" instance=ExtResource("5_twio2")]
 
 [node name="ObjectAtlas" type="Node2D" parent="WorldManager/TerrainRulesHandler"]
+y_sort_enabled = true
 script = ExtResource("6_wou66")
 
 [node name="temp_mousecast" type="Area2D" parent="WorldManager"]
@@ -107,8 +114,8 @@ theme_override_constants/separation = 3
 custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 focus_mode = 0
-theme_override_colors/icon_normal_color = Color(0.580392, 0.384314, 0.803922, 1)
 theme_override_colors/icon_pressed_color = Color(0.400092, 0.227652, 0.582905, 1)
+theme_override_colors/icon_normal_color = Color(0.580392, 0.384314, 0.803922, 1)
 icon = ExtResource("2_lwt0r")
 flat = true
 icon_alignment = 1
@@ -118,8 +125,8 @@ expand_icon = true
 custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 focus_mode = 0
-theme_override_colors/icon_normal_color = Color(0.87933, 0.453347, 0.722224, 1)
 theme_override_colors/icon_pressed_color = Color(0.773183, 0.303342, 0.612409, 1)
+theme_override_colors/icon_normal_color = Color(0.87933, 0.453347, 0.722224, 1)
 icon = ExtResource("4_jjck8")
 flat = true
 icon_alignment = 1
@@ -129,8 +136,8 @@ expand_icon = true
 custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 focus_mode = 0
-theme_override_colors/icon_normal_color = Color(0.936517, 0.635928, 0.329374, 1)
 theme_override_colors/icon_pressed_color = Color(0.774391, 0.440696, 0, 1)
+theme_override_colors/icon_normal_color = Color(0.936517, 0.635928, 0.329374, 1)
 icon = ExtResource("5_gjubd")
 flat = true
 icon_alignment = 1
@@ -140,8 +147,8 @@ expand_icon = true
 custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 focus_mode = 0
-theme_override_colors/icon_normal_color = Color(0.937255, 0.807843, 0.298039, 1)
 theme_override_colors/icon_pressed_color = Color(0.688567, 0.552763, 0.0376712, 1)
+theme_override_colors/icon_normal_color = Color(0.937255, 0.807843, 0.298039, 1)
 icon = ExtResource("6_yxhyp")
 flat = true
 icon_alignment = 1
@@ -151,8 +158,8 @@ expand_icon = true
 custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 focus_mode = 0
-theme_override_colors/icon_normal_color = Color(0.626704, 0.985161, 0.325635, 1)
 theme_override_colors/icon_pressed_color = Color(0.379733, 0.631099, 0.151022, 1)
+theme_override_colors/icon_normal_color = Color(0.626704, 0.985161, 0.325635, 1)
 icon = ExtResource("7_jqxbs")
 flat = true
 icon_alignment = 1
@@ -162,8 +169,8 @@ expand_icon = true
 custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 focus_mode = 0
-theme_override_colors/icon_normal_color = Color(0.354613, 0.922367, 1, 1)
 theme_override_colors/icon_pressed_color = Color(5.87195e-06, 0.622514, 0.687744, 1)
+theme_override_colors/icon_normal_color = Color(0.354613, 0.922367, 1, 1)
 icon = ExtResource("8_tgey8")
 flat = true
 icon_alignment = 1
@@ -214,7 +221,6 @@ root_subfolder = "Test/data/world_datas"
 auto_translate_mode = 1
 initial_position = 2
 size = Vector2i(520, 720)
-ok_button_text = "Save"
 dialog_hide_on_ok = true
 access = 2
 root_subfolder = "Test/data/world_datas"
@@ -226,10 +232,11 @@ script = ExtResource("16_neiaj")
 script = ExtResource("13_i6roh")
 world_manager = NodePath("../../WorldManager")
 terrain_rules_handler = NodePath("../../WorldManager/TerrainRulesHandler")
+worldseed = 3033
 chunk_size = Vector2i(32, 32)
 num_chunks = Vector2i(5, 5)
 altitude_noise = ExtResource("14_16di6")
-moisture_noise = ExtResource("18_we2w1")
+moisture_noise = SubResource("FastNoiseLite_extud")
 temperature_noise = ExtResource("18_we2w1")
 debris_noise = ExtResource("18_we2w1")
 

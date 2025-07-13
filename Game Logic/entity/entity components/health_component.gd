@@ -8,6 +8,10 @@ signal health_increased(current_healh : int)
 signal health_decreased(culprit:HitBox, current_healh : int)
 signal health_zero()
 
+@export var max_hunger: float = 100
+@export var current_hunger: float = 100
+@export var hunger_base_fall_rate: float = 1
+
 @export var max_health : int = 100
 @export var current_health : int = 100
 
@@ -15,15 +19,8 @@ signal health_zero()
 @export var iframe_secs: float = .3
 
 var in_iframe: bool = false
-#enemy layer does not NECCESARILY mean a combatant, just anything a player can hit
-var enemy_layer : bool = false
-var player_layer : bool = false
-var npc_layer : bool = false
-
-func _ready()->void:
-	enemy_layer = get_collision_layer_value(2)
-	player_layer = get_collision_layer_value(4)
-	npc_layer = get_collision_layer_value(5)
+var starving: bool = false
+var player: Player
 
 func change_health(amount: int, _culprit:HitBox = null)->void:
 	current_health = current_health + amount
@@ -59,3 +56,16 @@ func time_iframe() -> void:
 	await get_tree().create_timer(iframe_secs).timeout
 	in_iframe = false
 	#print("iframe over")
+
+func hunger_tick(_day:int, _hour:int, _minute:int) -> void:
+	print("player hunger tick")
+	## TODO: these items
+	# var environment_rate
+	# var action_rate ## probably handled by Big Player
+	current_hunger = current_hunger - hunger_base_fall_rate
+	if current_hunger <= 0:
+		current_hunger = 0
+		change_health(-1)
+		starving = true
+	else:
+		starving = false

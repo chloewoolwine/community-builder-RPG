@@ -1,26 +1,49 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://dabqwthi0ru5v"]
+[gd_resource type="TileSet" load_steps=6 format=3 uid="uid://dabqwthi0ru5v"]
 
+[ext_resource type="Shader" uid="uid://du8qthb573nbd" path="res://Game Logic/shaders/tilemap/red_shader.gdshader" id="1_ssnbu"]
+[ext_resource type="Texture2D" uid="uid://dormsiws0rjc7" path="res://Assets/tiles/grass_texture.png" id="2_an15i"]
 [ext_resource type="Texture2D" uid="uid://c3xohnuktc10h" path="res://Assets/tiles/ruined_fields/grass_overlay.png" id="2_icm4r"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6u7qo"]
+shader = ExtResource("1_ssnbu")
+shader_parameter/overlay_tex = ExtResource("2_an15i")
+shader_parameter/scale = 0.003
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4rn1c"]
 texture = ExtResource("2_icm4r")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
+0:0/0/material = SubResource("ShaderMaterial_6u7qo")
 1:0/0 = 0
+1:0/0/material = SubResource("ShaderMaterial_6u7qo")
 2:0/0 = 0
+2:0/0/material = SubResource("ShaderMaterial_6u7qo")
 3:0/0 = 0
+3:0/0/material = SubResource("ShaderMaterial_6u7qo")
 0:1/0 = 0
+0:1/0/material = SubResource("ShaderMaterial_6u7qo")
 1:1/0 = 0
+1:1/0/material = SubResource("ShaderMaterial_6u7qo")
 3:1/0 = 0
+3:1/0/material = SubResource("ShaderMaterial_6u7qo")
 0:2/0 = 0
+0:2/0/material = SubResource("ShaderMaterial_6u7qo")
 1:2/0 = 0
+1:2/0/material = SubResource("ShaderMaterial_6u7qo")
 2:2/0 = 0
+2:2/0/material = SubResource("ShaderMaterial_6u7qo")
 3:2/0 = 0
+3:2/0/material = SubResource("ShaderMaterial_6u7qo")
 1:3/0 = 0
+1:3/0/material = SubResource("ShaderMaterial_6u7qo")
 2:3/0 = 0
+2:3/0/material = SubResource("ShaderMaterial_6u7qo")
 3:3/0 = 0
+3:3/0/material = SubResource("ShaderMaterial_6u7qo")
 2:1/0 = 0
+2:1/0/material = SubResource("ShaderMaterial_6u7qo")
 0:3/0 = 0
+0:3/0/material = SubResource("ShaderMaterial_6u7qo")
 
 [resource]
 tile_size = Vector2i(64, 64)

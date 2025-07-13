@@ -1,10 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://h331rcgrw3xy"]
+[gd_scene load_steps=3 format=3 uid="uid://h331rcgrw3xy"]
 
-[ext_resource type="Script" path="res://Game Logic/object/build/generic_roof.gd" id="1_ivoft"]
+[ext_resource type="Script" uid="uid://kt10khw06cc2" path="res://Game Logic/object/build/generic_roof.gd" id="1_ivoft"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_llnjj"]
+size = Vector2(128, 128)
 
 [node name="GenericRoof" type="Node2D"]
 script = ExtResource("1_ivoft")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
-offset = Vector2(0, -9.965)
+offset = Vector2(0, -64)
+
+[node name="NeighborSearcher" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NeighborSearcher"]
+shape = SubResource("RectangleShape2D_llnjj")
+
+[connection signal="area_entered" from="NeighborSearcher" to="." method="_on_neighbor_searcher_area_entered"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://baaos5jpdlom3"]
 
-[ext_resource type="Script" path="res://Game Logic/entity/entity components/animation_handler.gd" id="1_b2rry"]
+[ext_resource type="Script" uid="uid://chjmba08njdmv" path="res://Game Logic/entity/entity components/animation_handler.gd" id="1_b2rry"]
 
 [node name="AnimationHandler" type="Node2D" node_paths=PackedStringArray("sprites", "animation_player", "animation_tree")]
 script = ExtResource("1_b2rry")

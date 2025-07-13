@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="StoryData" load_steps=2 format=3 uid="uid://b33haxa1ag8tc"]
 
-[ext_resource type="Script" path="res://Game Logic/data/world/story_data.gd" id="1_tqhb5"]
+[ext_resource type="Script" uid="uid://bca5dnyifdp" path="res://Game Logic/data/world/story_data.gd" id="1_tqhb5"]
 
 [resource]
 script = ExtResource("1_tqhb5")

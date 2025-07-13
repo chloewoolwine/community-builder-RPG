@@ -1,32 +1,34 @@
-[gd_scene load_steps=31 format=3 uid="uid://bx0i1fqjjvygy"]
+[gd_scene load_steps=33 format=3 uid="uid://bx0i1fqjjvygy"]
 
-[ext_resource type="Script" path="res://Game Logic/managers/game.gd" id="1_lgntb"]
+[ext_resource type="Script" uid="uid://ypbxt4lu3dxr" path="res://Game Logic/managers/game.gd" id="1_lgntb"]
 [ext_resource type="PackedScene" uid="uid://dy236j24tdfmr" path="res://Scenes/Entities/player.tscn" id="1_vlfca"]
 [ext_resource type="Resource" uid="uid://cblqgmedaij75" path="res://Test/data/inventories/test_inv.tres" id="3_xku57"]
 [ext_resource type="PackedScene" uid="uid://dqm8g7yybo0pf" path="res://Scenes/UI/Inventory/inventory.tscn" id="4_kq4io"]
-[ext_resource type="Script" path="res://Game Logic/managers/calendar_manager.gd" id="5_cki0q"]
-[ext_resource type="Script" path="res://Game Logic/world/world_manager.gd" id="5_wonyh"]
-[ext_resource type="Resource" uid="uid://cvqj2o8tqs48t" path="res://Test/data/world_datas/wet_squares.tres" id="6_ou7x3"]
-[ext_resource type="Script" path="res://Game Logic/inventory/inventory_interface.gd" id="6_uons4"]
-[ext_resource type="Script" path="res://Game Logic/world/terrain_rules_handler.gd" id="7_fkv55"]
-[ext_resource type="Script" path="res://Game Logic/managers/entity_manager.gd" id="8_3dv0o"]
+[ext_resource type="Script" uid="uid://bwjidfdugtnfu" path="res://Game Logic/managers/calendar_manager.gd" id="5_cki0q"]
+[ext_resource type="Script" uid="uid://diuxqukbk35hy" path="res://Game Logic/world/world_manager.gd" id="5_wonyh"]
+[ext_resource type="Resource" uid="uid://cab6wh4x4dgnu" path="res://Test/data/world_datas/walls.tres" id="6_fwf6m"]
+[ext_resource type="Script" uid="uid://bgmqoj67px6a3" path="res://Game Logic/inventory/inventory_interface.gd" id="6_uons4"]
+[ext_resource type="Script" uid="uid://vjmm4ct83rqu" path="res://Game Logic/world/terrain_rules_handler.gd" id="7_fkv55"]
+[ext_resource type="Script" uid="uid://dxha2h40ws5cy" path="res://Game Logic/managers/entity_manager.gd" id="8_3dv0o"]
 [ext_resource type="PackedScene" uid="uid://1b78ipp0k2t8" path="res://Scenes/world/elevation_layer.tscn" id="8_of3dw"]
 [ext_resource type="PackedScene" uid="uid://cwyeg4vhep7na" path="res://Scenes/UI/Inventory/slot.tscn" id="8_pioji"]
-[ext_resource type="Script" path="res://Game Logic/world/object_atlas.gd" id="9_0s5wb"]
-[ext_resource type="Script" path="res://Game Logic/managers/pickup_manager.gd" id="10_d5qv3"]
+[ext_resource type="Script" uid="uid://bsm4ra22m810k" path="res://Game Logic/world/object_atlas.gd" id="9_0s5wb"]
+[ext_resource type="Script" uid="uid://8m7bl77x4xw6" path="res://Game Logic/managers/pickup_manager.gd" id="10_d5qv3"]
 [ext_resource type="Resource" uid="uid://b1v5a5qu2iw7w" path="res://Scenes/items/test/test_apple.tres" id="11_cwce4"]
-[ext_resource type="Script" path="res://Game Logic/data/inventory/slot_data.gd" id="12_iyjdd"]
+[ext_resource type="Script" uid="uid://ff7axvflmy38" path="res://Game Logic/data/inventory/slot_data.gd" id="12_iyjdd"]
 [ext_resource type="PackedScene" uid="uid://cdeeqt3ae70lq" path="res://Scenes/object/pick_up.tscn" id="13_pouw6"]
 [ext_resource type="PackedScene" uid="uid://b48eubjn547dd" path="res://Scenes/UI/Inventory/hot_bar_inventory.tscn" id="16_j6efu"]
 [ext_resource type="PackedScene" uid="uid://df2qdt4sw2ptf" path="res://Scenes/Entities/enemies/dust_bunny.tscn" id="17_6hk27"]
-[ext_resource type="Script" path="res://Game Logic/data/saves/saverloader.gd" id="17_d5xvq"]
-[ext_resource type="Script" path="res://Game Logic/managers/story_manager.gd" id="19_by7u0"]
+[ext_resource type="Script" uid="uid://bam1itjhokose" path="res://Game Logic/data/saves/saverloader.gd" id="17_d5xvq"]
+[ext_resource type="Script" uid="uid://bmlp6lphyod7g" path="res://Game Logic/managers/story_manager.gd" id="19_by7u0"]
 [ext_resource type="PackedScene" uid="uid://cdrtf2c53anpa" path="res://Scenes/UI/player_interface.tscn" id="19_l4305"]
 [ext_resource type="PackedScene" uid="uid://dtu5t8l4754r1" path="res://Scenes/UI/data_tabs.tscn" id="20_eexrm"]
 [ext_resource type="PackedScene" uid="uid://ci7frj803w55q" path="res://Scenes/UI/options.tscn" id="20_fjp20"]
 [ext_resource type="PackedScene" uid="uid://b2sgcn3ke8bos" path="res://Scenes/UI/entity_interface.tscn" id="20_vmo70"]
 [ext_resource type="Resource" uid="uid://b33haxa1ag8tc" path="res://Test/data/test_story_data.tres" id="21_hwjbe"]
-[ext_resource type="Script" path="res://Game Logic/UI/options_menu.gd" id="28_uohxa"]
+[ext_resource type="Script" uid="uid://c5wpksgdt3fdn" path="res://Game Logic/UI/debug_display.gd" id="27_1wgsj"]
+[ext_resource type="Theme" uid="uid://c5pjopti0rq5n" path="res://Scenes/UI/debug_menu.tres" id="28_ti2iv"]
+[ext_resource type="Script" uid="uid://tq23mgtitkjv" path="res://Game Logic/UI/options_menu.gd" id="28_uohxa"]
 
 [sub_resource type="Gradient" id="Gradient_yfqml"]
 offsets = PackedFloat32Array(0, 0.235931, 0.325444, 0.431953, 0.545858, 0.703402, 1)
@@ -50,6 +52,7 @@ script = ExtResource("19_by7u0")
 story_data = ExtResource("21_hwjbe")
 
 [node name="Lighting" type="CanvasModulate" parent="StoryManager"]
+visible = false
 position = Vector2(-1, 0)
 scale = Vector2(0.550946, 4.54629)
 color = Color(0.193862, 0.19257, 0.432045, 1)
@@ -60,7 +63,7 @@ light_gradient = SubResource("GradientTexture1D_6o1tu")
 [node name="WorldManager" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("5_wonyh")
-_world_data = ExtResource("6_ou7x3")
+_world_data = ExtResource("6_fwf6m")
 load_chunks = true
 unload_chunks = true
 
@@ -71,27 +74,26 @@ script = ExtResource("7_fkv55")
 position = Vector2(-1, 0)
 
 [node name="ObjectAtlas" type="Node2D" parent="WorldManager/TerrainRulesHandler"]
+y_sort_enabled = true
 script = ExtResource("9_0s5wb")
 
-[node name="EntityManager" type="Node2D" parent="."]
+[node name="EntityManager" type="Node2D" parent="WorldManager/TerrainRulesHandler/ObjectAtlas"]
 editor_description = "Holds things with AI- player, npcs, enemies, etc"
 y_sort_enabled = true
 script = ExtResource("8_3dv0o")
 
-[node name="Player" parent="EntityManager" groups=["enemy_target"] instance=ExtResource("1_vlfca")]
-z_index = 1
-position = Vector2(3, 1)
+[node name="Player" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager" groups=["enemy_target"] instance=ExtResource("1_vlfca")]
 scale = Vector2(0.305, 0.305)
 inventory_data = ExtResource("3_xku57")
 speed = 210
 dash_length = 0.4
 
-[node name="Camera2D" type="Camera2D" parent="EntityManager/Player"]
+[node name="Camera2D" type="Camera2D" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player"]
 position = Vector2(1.49012e-08, -10.25)
 scale = Vector2(0.259594, 0.246314)
 position_smoothing_enabled = true
 
-[node name="DustBunny" parent="EntityManager" instance=ExtResource("17_6hk27")]
+[node name="DustBunny" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager" instance=ExtResource("17_6hk27")]
 position = Vector2(-254, -264)
 scale = Vector2(0.335, 0.335)
 
@@ -189,6 +191,58 @@ size_flags_vertical = 8
 visible = false
 script = ExtResource("28_uohxa")
 
+[node name="DebugDisplay" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1388.0
+offset_top = 755.0
+offset_right = -4.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("27_1wgsj")
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/DebugDisplay"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 0
+offset_right = 525.0
+offset_bottom = 323.0
+theme = ExtResource("28_ti2iv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/DebugDisplay/PanelContainer"]
+layout_mode = 2
+theme = ExtResource("28_ti2iv")
+
+[node name="Label" type="Label" parent="UI/DebugDisplay/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("28_ti2iv")
+
+[node name="Label2" type="Label" parent="UI/DebugDisplay/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("28_ti2iv")
+
+[node name="Label3" type="Label" parent="UI/DebugDisplay/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("28_ti2iv")
+
+[node name="Label4" type="Label" parent="UI/DebugDisplay/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("28_ti2iv")
+
+[node name="Label5" type="Label" parent="UI/DebugDisplay/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("28_ti2iv")
+
+[node name="Label6" type="Label" parent="UI/DebugDisplay/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("28_ti2iv")
+
+[node name="Label7" type="Label" parent="UI/DebugDisplay/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("28_ti2iv")
+
 [node name="SaverLoader" type="Node2D" parent="."]
 script = ExtResource("17_d5xvq")
 
@@ -197,4 +251,6 @@ script = ExtResource("17_d5xvq")
 [connection signal="visibility_changed" from="UI/InventoryInterface" to="UI/InventoryInterface" method="_on_visibility_changed"]
 
 [editable path="WorldManager/TerrainRulesHandler/Elevation0"]
+[editable path="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player"]
+[editable path="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player/ElevationHandler"]
 [editable path="UI/InventoryInterface/PlayerInventory"]

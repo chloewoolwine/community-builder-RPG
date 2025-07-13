@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="WorldData" load_steps=9231 format=3 uid="uid://cvqj2o8tqs48t"]
 
-[ext_resource type="Script" path="res://Game Logic/data/entity/entity_data.gd" id="1_ahv8d"]
-[ext_resource type="Script" path="res://Game Logic/data/world/chunk_data.gd" id="2_j7dt0"]
-[ext_resource type="Script" path="res://Game Logic/data/world/object_data.gd" id="3_6utub"]
-[ext_resource type="Script" path="res://Game Logic/data/world/square_data.gd" id="3_wnw2k"]
-[ext_resource type="Script" path="res://Game Logic/data/world/world_data.gd" id="4_pbwd6"]
+[ext_resource type="Script" uid="uid://da4itxddxsvo5" path="res://Game Logic/data/entity/entity_data.gd" id="1_ahv8d"]
+[ext_resource type="Script" uid="uid://c3fb5emvjtxy3" path="res://Game Logic/data/world/chunk_data.gd" id="2_j7dt0"]
+[ext_resource type="Script" uid="uid://c40j31y4fl1i7" path="res://Game Logic/data/world/object_data.gd" id="3_6utub"]
+[ext_resource type="Script" uid="uid://d3w63uygsigcq" path="res://Game Logic/data/world/square_data.gd" id="3_wnw2k"]
+[ext_resource type="Script" uid="uid://cmyq2qv3j3in3" path="res://Game Logic/data/world/world_data.gd" id="4_pbwd6"]
 
 [sub_resource type="Resource" id="Resource_nxtm1"]
 script = ExtResource("3_wnw2k")

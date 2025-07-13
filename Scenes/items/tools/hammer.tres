@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemDataTool" load_steps=4 format=3 uid="uid://nqerwfpldacr"]
 
-[ext_resource type="Script" path="res://Game Logic/data/inventory/item_data_tool.gd" id="1_cmqab"]
+[ext_resource type="Script" uid="uid://cmusmcngq68cl" path="res://Game Logic/data/inventory/item_data_tool.gd" id="1_cmqab"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bikp8"]
 load_path = "res://.godot/imported/#1 - Transparent Icons.png-66e482cdc506437ae5ff6b63757a4b91.ctex"

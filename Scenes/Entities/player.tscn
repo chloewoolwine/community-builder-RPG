@@ -1,8 +1,8 @@
 [gd_scene load_steps=157 format=3 uid="uid://dy236j24tdfmr"]
 
-[ext_resource type="Script" path="res://Game Logic/entity/player/player.gd" id="1_pwtpg"]
-[ext_resource type="Script" path="res://Game Logic/entity/player/player_action_handler.gd" id="2_c3tp2"]
-[ext_resource type="Script" path="res://Game Logic/entity/player/player_outfit_handler.gd" id="2_pghmh"]
+[ext_resource type="Script" uid="uid://bjjblaytsdioe" path="res://Game Logic/entity/player/player.gd" id="1_pwtpg"]
+[ext_resource type="Script" uid="uid://24l8lsvok70c" path="res://Game Logic/entity/player/player_action_handler.gd" id="2_c3tp2"]
+[ext_resource type="Script" uid="uid://ctrai2p5xo5rp" path="res://Game Logic/entity/player/player_outfit_handler.gd" id="2_pghmh"]
 [ext_resource type="Texture2D" uid="uid://da768tqgkql4q" path="res://Assets/Testy Assets/Player/pinkhair_walk_idle.png" id="3_cvocj"]
 [ext_resource type="Texture2D" uid="uid://b0kmh31cmueie" path="res://Assets/Testy Assets/Player/player_body.png" id="3_rss0s"]
 [ext_resource type="Texture2D" uid="uid://du6k2r3ewu6mw" path="res://Assets/Testy Assets/Player/slash_test.png" id="3_yt4w2"]
@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://baaos5jpdlom3" path="res://Scenes/Entities/animation_handler.tscn" id="8_tfck8"]
 [ext_resource type="PackedScene" uid="uid://f418q6xspp1w" path="res://Scenes/combat/hit_box.tscn" id="9_ict53"]
 [ext_resource type="Texture2D" uid="uid://da0bxkbsh1hjv" path="res://Assets/misc/tile_indicator.png" id="10_ypkgf"]
-[ext_resource type="Script" path="res://Game Logic/world/tile_indicator.gd" id="11_msv3g"]
+[ext_resource type="Script" uid="uid://b1dg7b6hoqvmm" path="res://Game Logic/world/tile_indicator.gd" id="11_msv3g"]
 [ext_resource type="PackedScene" uid="uid://bx67biud0kdck" path="res://Scenes/Entities/elevation_handler.tscn" id="14_1tqe3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ejf0w"]
@@ -1634,17 +1634,17 @@ tracks/5/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_seylt"]
 _data = {
-"RESET": SubResource("Animation_vrpjf"),
-"dash_side": SubResource("Animation_cvsr1"),
-"idle_back": SubResource("Animation_g35m5"),
-"idle_forward": SubResource("Animation_r4vjv"),
-"idle_side": SubResource("Animation_x7qog"),
-"slash_back": SubResource("Animation_ncbpx"),
-"slash_forward": SubResource("Animation_vcgoy"),
-"slash_side": SubResource("Animation_42w8f"),
-"walk_back": SubResource("Animation_aknuy"),
-"walk_forward": SubResource("Animation_n0s3f"),
-"walk_side": SubResource("Animation_cqlsh")
+&"RESET": SubResource("Animation_vrpjf"),
+&"dash_side": SubResource("Animation_cvsr1"),
+&"idle_back": SubResource("Animation_g35m5"),
+&"idle_forward": SubResource("Animation_r4vjv"),
+&"idle_side": SubResource("Animation_x7qog"),
+&"slash_back": SubResource("Animation_ncbpx"),
+&"slash_forward": SubResource("Animation_vcgoy"),
+&"slash_side": SubResource("Animation_42w8f"),
+&"walk_back": SubResource("Animation_aknuy"),
+&"walk_forward": SubResource("Animation_n0s3f"),
+&"walk_side": SubResource("Animation_cqlsh")
 }
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_6aqi6"]
@@ -1769,7 +1769,7 @@ states/Start/position = Vector2(50, -90.3711)
 states/Walk/node = SubResource("AnimationNodeBlendTree_qhnvw")
 states/Walk/position = Vector2(285.813, 58)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_1whsk"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_hev2m"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_pr5v2"), "Idle", "Slash", SubResource("AnimationNodeStateMachineTransition_iugcj"), "Walk", "Slash", SubResource("AnimationNodeStateMachineTransition_8dnn7"), "Slash", "Walk", SubResource("AnimationNodeStateMachineTransition_xugf5"), "Slash", "Idle", SubResource("AnimationNodeStateMachineTransition_k03ts")]
-graph_offset = Vector2(-145, -143)
+graph_offset = Vector2(-184, -142)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1vrl1"]
 size = Vector2(20, 168)
@@ -1785,18 +1785,19 @@ speed = 325
 script = ExtResource("2_c3tp2")
 
 [node name="RayCast2D" type="RayCast2D" parent="PlayerActionHandler"]
-visible = false
-position = Vector2(0, 72)
 scale = Vector2(20, 1)
 target_position = Vector2(0, 177.03)
 collision_mask = 4
 
 [node name="PlayerOutfitHandler" type="Node2D" parent="."]
+z_as_relative = false
+y_sort_enabled = true
 script = ExtResource("2_pghmh")
 
 [node name="Body" type="AnimatedSprite2D" parent="PlayerOutfitHandler"]
 modulate = Color(0.968193, 0.803596, 0.700107, 1)
-position = Vector2(0, 141)
+z_as_relative = false
+y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_oxra1")
 animation = &""
 autoplay = "idle_forward"
@@ -1804,25 +1805,27 @@ frame = 1
 offset = Vector2(0, -141)
 
 [node name="Hair" type="AnimatedSprite2D" parent="PlayerOutfitHandler"]
-position = Vector2(0, 153)
+z_as_relative = false
+y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_olv46")
 animation = &"idle_side"
 autoplay = "idle_forward"
-offset = Vector2(0, -153)
+offset = Vector2(0, -141)
 
 [node name="Outfit" type="AnimatedSprite2D" parent="PlayerOutfitHandler"]
-position = Vector2(0, 151)
+z_as_relative = false
+y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_i46n4")
 animation = &"idle_side"
 autoplay = "idle_forward"
-offset = Vector2(0, -151)
+offset = Vector2(0, -141)
 
 [node name="CollisionBox" type="CollisionShape2D" parent="."]
-position = Vector2(0, 114.5)
 scale = Vector2(4.238, 14.39)
 shape = SubResource("RectangleShape2D_73skx")
 
-[node name="HealthHandler" parent="." instance=ExtResource("6_o8nbr")]
+[node name="HealthHandler" parent="." groups=["hungerhealth"] instance=ExtResource("6_o8nbr")]
+position = Vector2(0, -141)
 collision_mask = 8
 has_iframes = true
 
@@ -1836,6 +1839,7 @@ shape = SubResource("CapsuleShape2D_ujgxj")
 elevationhandler = NodePath("../ElevationHandler")
 
 [node name="AnimationHandler" parent="." node_paths=PackedStringArray("sprites", "animation_player", "animation_tree") instance=ExtResource("8_tfck8")]
+y_sort_enabled = true
 sprites = [NodePath("../PlayerOutfitHandler/Body"), NodePath("../PlayerOutfitHandler/Hair"), NodePath("../PlayerOutfitHandler/Outfit")]
 animation_player = NodePath("AnimationPlayer")
 animation_tree = NodePath("AnimationTree")
@@ -1843,7 +1847,7 @@ animation_tree = NodePath("AnimationTree")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationHandler"]
 root_node = NodePath("../..")
 libraries = {
-"": SubResource("AnimationLibrary_seylt")
+&"": SubResource("AnimationLibrary_seylt")
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="AnimationHandler"]
@@ -1856,13 +1860,12 @@ parameters/Slash/TimeScale/scale = 1.5
 parameters/Walk/BlendSpace2D/blend_position = Vector2(0.00271845, 0.152542)
 
 [node name="HitBox" parent="." instance=ExtResource("9_ict53")]
-visible = false
 scale = Vector2(1, 1.2)
 collision_layer = 2
 touch_damage = 50
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(0, 127)
+position = Vector2(0, 30.985)
 scale = Vector2(14.28, 1)
 shape = SubResource("RectangleShape2D_1vrl1")
 disabled = true

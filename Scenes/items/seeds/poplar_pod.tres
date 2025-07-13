@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemDataSeed" load_steps=2 format=3 uid="uid://vakf77wj04kc"]
 
-[ext_resource type="Script" path="res://Game Logic/data/inventory/item_data_seed.gd" id="1_clkay"]
+[ext_resource type="Script" uid="uid://puad1pr1ooms" path="res://Game Logic/data/inventory/item_data_seed.gd" id="1_clkay"]
 
 [resource]
 script = ExtResource("1_clkay")

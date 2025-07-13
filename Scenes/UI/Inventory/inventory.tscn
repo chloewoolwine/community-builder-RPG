@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://dqm8g7yybo0pf"]
+[gd_scene load_steps=3 format=3 uid="uid://dqm8g7yybo0pf"]
 
-[ext_resource type="Script" path="res://Game Logic/inventory/inventory.gd" id="1_kckvy"]
-[ext_resource type="Texture2D" uid="uid://bw0qgv05w5uhj" path="res://Assets/GUI/blank_panel.png" id="1_qxkyu"]
+[ext_resource type="Script" uid="uid://bgsq22qo40hk2" path="res://Game Logic/inventory/inventory.gd" id="1_kckvy"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_c1l6r"]
 
@@ -15,7 +14,6 @@ script = ExtResource("1_kckvy")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 layout_mode = 2
-texture = ExtResource("1_qxkyu")
 patch_margin_left = 100
 patch_margin_top = 100
 patch_margin_right = 100
