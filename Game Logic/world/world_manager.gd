@@ -6,6 +6,7 @@ class_name WorldManager
 @export var load_chunks: bool = false
 @export var unload_chunks: bool = false
 @onready var trh: TerrainRulesHandler = $TerrainRulesHandler
+@onready var environment_runtime_handler: EnvironmentRuntime = $EnvironmentRuntimeHandler
 
 var player: Player
 
@@ -109,11 +110,14 @@ func manage_propagation_success(pos: Location, object_id: String) -> void:
 func place_object(pos: Vector2, layer:ElevationLayer, itemdata: ItemData)->void:
 	var arr: Array[Vector2i] = convert_to_chunks_at_world_pos(pos)
 	var split := itemdata.object_id.split("_")
+	#_place_build_object calls _assign_object_data - it just needs a lot of extra 
+	# in case of wall or roof 
 	if split[0] == "build":
 		_place_build_object(arr, split, layer, itemdata)
 	else:
 		_assign_object_data(itemdata.object_id, arr[0], arr[1], layer)
 
+#spagethhi extrodinare. TODO: clean this up please
 func _place_build_object(arr: Array[Vector2i], split: Array[String], layer: ElevationLayer, itemdata:ItemData) -> void: 
 	if split[1] == "roof":
 		if !roof_cache.is_empty():
@@ -158,6 +162,10 @@ func check_placement_validity(ind: Indicator, player_spot:Vector2, player_layer:
 		
 	var split := item.object_id.split("_")
 	var arr: Array[Vector2i] = convert_to_chunks_at_world_pos(ind.global_position)
+	if arr.size() < 2:
+		push_error("world manager: ", item.object_id, " cannot be placed due to bad array. stuff: ", arr)
+		ind.valid_place = false
+		return false
 	if split[0] == "build":
 		ind.valid_place = _build_object_placement_validity(item, split[1], arr[0], arr[1])
 		return ind.valid_place 
@@ -306,8 +314,32 @@ func _dfs(curr: GenericWall, path: Array[GenericWall]) -> Array[GenericWall]:
 	return biggest
 
 func peel_wall(_wall: GenericWall) -> void:
-	#TODO: PEEL THE WALL OF IT'S DECOR!
+	var wall_data := _wall.object_data
+	trh.remove_decor_at(wall_data.position, wall_data.chunk)
+
+func destroy_object(object: ObjectData) -> void:
+	trh.remove_object_at(object.position, object.chunk)
+	
+func destroy_roof(object: ObjectData) -> void: 
+	#TODO: this
+	trh.remove_roof_at(object.position, object.chunk)
 	pass
+
+func modify_terrain(loc: Vector2, to_tile: SquareData.SquareType) -> void:
+	#this should only be used for the map editor - terrain modification will prolly be different
+	var pos := convert_to_chunks_at_world_pos(loc)
+	if pos.size() > 1:
+		trh.change_type_to(pos[0], pos[1], to_tile)
+
+func change_water(loc: Vector2, new_water: int) -> void:
+	if new_water < 0:
+		new_water = 0
+	if new_water > 5: 
+		new_water = 5
+	var pos := convert_to_chunks_at_world_pos(loc)
+	print(pos)
+	if pos.size() > 1:
+		trh.change_water(pos[0], pos[1], new_water)
 
 # Returns true if the modification is successful
 # this probably isnt the best way to do this

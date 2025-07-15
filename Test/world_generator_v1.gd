@@ -1,6 +1,7 @@
 extends Node2D
 class_name WorldGenerator
 
+@warning_ignore("unused_signal")
 signal save_world(world: WorldData, path: String)
 
 @export var world_manager: WorldManager
@@ -40,7 +41,7 @@ func _ready() -> void:
 	#print("loading")
 	#var world:WorldData = ResourceLoader.load('res://Test/data/world_datas/BIGWORLD.tres')
 	#print("loading coimplete")
-	#world_manager.set_world_data(world)
+	##world_manager.set_world_data(world)
 	#var world:WorldData = generate_world_based_on_vals()
 	#print('time at end generation: ', Time.get_time_string_from_system())
 	#world_manager.set_world_data(world)
@@ -145,23 +146,23 @@ func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, temp_grid:D
 			chunk.square_datas = square_datas
 			chunk_datas[chunk.chunk_position] = chunk
 	
-	print("picking random chunk as quarry")
-	#TODO: blobular shape
-	var q_x := randi_range(1, num_chunks.x-2)
-	var q_y := randi_range(1, num_chunks.y-2)
-	var quarry_chunk: ChunkData = chunk_datas[Vector2i(q_x-modx,q_y - mody)]
-	for i in chunk_size.x:
-		for j in chunk_size.y:
-			var square: SquareData = quarry_chunk.square_datas[Vector2i(i,j)]
-			square.type = SquareData.SquareType.Rock
-			square.elevation = square.elevation + 1
+	#print("picking random chunk as quarry")
+	##TODO: blobular shape
+	#var q_x := randi_range(1, num_chunks.x-2)
+	#var q_y := randi_range(1, num_chunks.y-2)
+	#var quarry_chunk: ChunkData = chunk_datas[Vector2i(q_x-modx,q_y - mody)]
+	#for i in chunk_size.x:
+		#for j in chunk_size.y:
+			#var square: SquareData = quarry_chunk.square_datas[Vector2i(i,j)]
+			#square.type = SquareData.SquareType.Rock
+			#square.elevation = square.elevation + 1
 	
 	print("water pass")
 	for x in num_chunks.x:
 		for y in num_chunks.y:
 			var chunk:ChunkData = chunk_datas[Vector2i(x - modx, y - mody)]
-			if x == q_x and y == q_y:
-				continue
+			#if x == q_x and y == q_y:
+				#continue
 			for i in chunk_size.x:
 				for j in chunk_size.y:
 					var square : SquareData= chunk.square_datas[Vector2i(i,j)]

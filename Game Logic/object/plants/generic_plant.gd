@@ -2,7 +2,7 @@ extends Area2D
 class_name GenericPlant
 
 signal spawn_pickups(spawnpoint: Vector2, datas: Array[ItemData])
-signal killing_myself(me: GenericPlant)
+signal object_removed(me: ObjectData)
 
 @export var object_id: String
 
@@ -21,6 +21,7 @@ var is_tree: bool = false
 var debug: bool = false
 
 func _ready() -> void:
+	print("last loaded:", object_data.last_loaded_minute)
 	for child in get_children():
 		if child is PlantAppearance: 
 			plant_appearance = child
@@ -64,16 +65,23 @@ func harvest() -> void:
 		if axe_hits <= 0: 
 			plant_appearance.playharvestanim()
 			generate_pickups_and_signal()
-			killing_myself.emit(self)
+			object_removed.emit(object_data)
 			plant_component.set_age(-1)
-	else: 
-		plant_appearance.playharvestanim()
-		generate_pickups_and_signal()
+	else:
 		if plant_component.destroy_on_harvest:
-			killing_myself.emit(self)
-			self.queue_free()
+			destroy() 
+		else:
+			plant_appearance.playharvestanim()
+			generate_pickups_and_signal()
 		
 func generate_pickups_and_signal() -> void:
 	if loot_table:
 		var pickups: Array[ItemData] = loot_table.roll(RandomNumberGenerator.new())
 		spawn_pickups.emit(self.global_position, pickups)
+
+func destroy() -> void: 
+	plant_appearance.playharvestanim()
+	generate_pickups_and_signal()
+	if plant_component.destroy_on_harvest:
+		object_removed.emit(object_data)
+		self.queue_free()

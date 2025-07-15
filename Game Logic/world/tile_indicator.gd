@@ -19,7 +19,7 @@ func _ready() -> void:
 
 #get_parent is bad practice, but im not sure how else to do this w/out hackyness
 func _process(_delta: float) -> void:
-	if self.visible:
+	if self.visible && elevation_handler != null:
 		move_me.emit(self, get_parent().global_position, get_parent().get_equiped_item().item_data)
 	if valid_place:
 		#animation

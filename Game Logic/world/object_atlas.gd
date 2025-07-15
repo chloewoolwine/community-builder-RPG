@@ -2,6 +2,7 @@ extends Node2D
 class_name ObjectAtlas
 
 @onready var entity_manager: EntityManager = $EntityManager
+@onready var world_manager: WorldManager = $"../.."
 
 signal plant_placed(plant: GenericPlant)
 signal new_object_placed(object: ObjectData)
@@ -36,10 +37,7 @@ signal new_object_placed(object: ObjectData)
 # right spots? then i wouldn't have to refracro this that much 
 const object_scene_location: String = "res://Scenes/object/"
 
-## WARNING! WARNING! Probably need to make some kind of cleanup script that 
-## runs periodically in order to unload what's loaded in this dictionary- 
-## or else long play sessions will have memoryleak esque problems 
-## Contains object_data -> packed scenes
+#this is unloaded when the chunks are unloaded
 var loaded_objects: Dictionary
 
 # object id: plant_tree_poplar, tags: "age": "100" 
@@ -47,7 +45,6 @@ var loaded_objects: Dictionary
 # all objects live in the scene Individually- key is the object data
 # they keep track of their own object datas
 var live_objects: Dictionary
-
 
 func translate_object(object_datas: Array[ObjectData],overall_position: Vector2, square: SquareData) -> void: 
 	if object_datas == null:
@@ -70,7 +67,8 @@ func remove_objects(object_datas: Array[ObjectData]) -> Array[ObjectData]:
 				# object probably killed itself
 				live_objects.erase(object_data)
 				object_datas[x] = null # erase the object data because it killed itself
-			object.queue_free() # TODO: specific objects might have some stuff to do? not sure!
+			else:
+				object.queue_free() # TODO: specific objects might have some stuff to do? not sure!
 			live_objects.erase(object_data)
 	return object_datas
 	
@@ -91,6 +89,8 @@ func _parse_and_place(object_data: ObjectData, overall_position: Vector2, square
 			var object:Node2D = loaded_objects[path].instantiate()
 			object.position = overall_position
 			object.object_data = object_data
+			if object is GenericPlant or object is GenericWall:
+				object.object_removed.connect(world_manager.destroy_object)
 			var hitbox: Node2D = find_child("InteractionHitbox", false)
 			if hitbox: 
 				hitbox.current_elevation = square.elevation
@@ -110,3 +110,6 @@ func pop_away_object(object_data: ObjectData) -> void:
 	if object == null:
 		print("Warning! tried to pop away object that was not live, doing nothing about it")
 		return
+	#TODO: object needs to go into the players inventory or spawn new
+	object.queue_free()
+	live_objects.erase(object_data)

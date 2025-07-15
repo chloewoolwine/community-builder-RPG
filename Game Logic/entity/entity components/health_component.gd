@@ -58,14 +58,15 @@ func time_iframe() -> void:
 	#print("iframe over")
 
 func hunger_tick(_day:int, _hour:int, _minute:int) -> void:
-	print("player hunger tick")
+	#print("player hunger tick")
 	## TODO: these items
 	# var environment_rate
 	# var action_rate ## probably handled by Big Player
-	current_hunger = current_hunger - hunger_base_fall_rate
-	if current_hunger <= 0:
-		current_hunger = 0
-		change_health(-1)
-		starving = true
-	else:
-		starving = false
+	if player.state != Player.PlayerStates.STATE_MENU:
+		current_hunger = current_hunger - hunger_base_fall_rate
+		if current_hunger <= 0:
+			current_hunger = 0
+			change_health(-1)
+			starving = true
+		else:
+			starving = false

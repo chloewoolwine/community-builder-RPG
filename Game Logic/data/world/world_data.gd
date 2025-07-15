@@ -14,7 +14,3 @@ class_name WorldData
 # GOTTA CAHNGE THIS IN SAVER LOADER YOU HAVENT DONE THAT YET!
 # Key- Vector2i, place of chunk, value- chunk data
 @export var chunk_datas: Dictionary
-#to load chunks:
-#i will STORE the current chunk that the player is standing in
-#when the player moves in a cardinal direction, i should be able 
-#to calculate the proper chunk to load

@@ -47,6 +47,15 @@ func set_physics_data() -> void:
 		x = x + 1
 	## World source id doesn't matter for pond because it reads from its own map
 	pond.world_source_id = 0 
+
+func change_square(_data: SquareData, overall_location: Vector2i) -> void:
+	#print("modifying loaded square at runtime")
+	grass.erase_tile(overall_location)
+	stone.erase_tile(overall_location)
+	base.erase_tile(overall_location)
+	sand.erase_tile(overall_location)
+	pond.just_erase_tile(overall_location)
+	set_square(_data, overall_location)
 		
 func set_square(_data: SquareData, overall_location: Vector2i)-> void:
 	#print("Setting top layer of ", _data.elevation, " loc: ", _data.location_in_chunk, " as type ", _data.type)
@@ -57,17 +66,21 @@ func set_square(_data: SquareData, overall_location: Vector2i)-> void:
 		#print("making water tile")
 		pond.fill_tile(overall_location)
 	else:
+		#print("filling stuff")
 		match _data.type:
 			SquareData.SquareType.Dirt:
 				#print("filled base")
 				base.fill_tile(overall_location)
 			SquareData.SquareType.Grass:
+				#print("filled grass")
 				base.fill_tile(overall_location)
 				grass.fill_tile(overall_location)
 			SquareData.SquareType.Rock:
+				#print("filled rocj")
 				base.fill_tile(overall_location)
 				stone.fill_tile(overall_location)
 			SquareData.SquareType.Sand:
+				#print("filled sand")
 				base.fill_tile(overall_location)
 				sand.fill_tile(overall_location)
 	#grass.fill_tile(overall_location)

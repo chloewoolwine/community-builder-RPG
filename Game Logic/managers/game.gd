@@ -45,8 +45,8 @@ func _ready() -> void:
 ## TURNS ON THE SPICE! After everything else has finished loading. 
 func handle_final_presentation() -> void: 
 	## TODO: make some juice here, like a fade in from black :D 
-	lighting.proccessTime = true
 	await get_tree().create_timer(5).timeout
+	lighting.proccessTime = true
 	player.state = Player.PlayerStates.STATE_IDLE
 
 ## Connects events dynamically
@@ -174,7 +174,7 @@ func player_died() -> void:
 	player.state = Player.PlayerStates.STATE_DEAD
 	await get_tree().create_timer(3).timeout
 	## TERRIBLE IDEA need better spawn point Stat
-	player.global_position = Vector2.ZERO
+	player.global_position = Vector2.ZERO - Vector2(100,100)
 	player.elevation_handler.current_elevation = 1 
 	player.health_handler.change_health(50)
 	player.health_handler.current_hunger = player.health_handler.max_hunger/2

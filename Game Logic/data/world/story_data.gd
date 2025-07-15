@@ -1,8 +1,7 @@
 extends Resource
 class_name StoryData
 
-@export var year : int
-@export var day : int
+@export var game_minute: int
 enum Weather{SUNNY, RAINING}
 @export var current_weather : Weather
 @export var wind_direction : int

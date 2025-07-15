@@ -1,8 +1,10 @@
 extends Node2D
 class_name GenericWall
 
+#object_removed and @object_data are both REQUIRED for objects to Work
+
 signal remove_my_decor(wall: GenericWall)
-signal wall_destroyed(wall_destroyed: GenericWall)
+signal object_removed(wall_destroyed: ObjectData)
 
 @onready var interaction_hitbox: InteractionHitbox = $InteractionHitbox
 @onready var neighbor_searcher: Area2D = $NeighborSearcher
@@ -82,7 +84,7 @@ func check_for_destroy() -> bool:
 	return true
 
 func destroy() -> void: 
-	wall_destroyed.emit(self)
+	object_removed.emit(object_data)
 	if neighbors[0]:
 		neighbors[0].remove_neighbor(2)
 	if neighbors[2]:

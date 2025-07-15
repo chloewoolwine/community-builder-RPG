@@ -8,6 +8,9 @@ signal time_tick(day:int, hour:int, minute:int)
 @export var initial_hour: int = 12 
 @export var light_gradient: GradientTexture1D
 
+#the value "minute" was in story data when we loaded up the game 
+var last_loaded_minute: int
+
 var minutes_per_day : int = 1440
 var minutes_per_hour : int  = 60
 var gametime_to_minute : float = (2 * PI) / minutes_per_day
@@ -18,8 +21,11 @@ var curr_year : int
 var curr_date : int #these are meant to keep track of Total days from a savegame state
 
 func _ready() -> void:
-	change_time_of_day(initial_hour)
 	self.visible = true
+	last_loaded_minute = get_parent().story_data.game_minute
+	previous_minute = last_loaded_minute
+	change_time_of_day(last_loaded_minute)
+	# TODO: year and date calculations from last_loaded_minutes
 
 func _process(delta: float) -> void:
 	if proccessTime:
@@ -28,7 +34,7 @@ func _process(delta: float) -> void:
 		calculate_gametime()
 	
 func calculate_gametime() -> void: 
-	var total_minutes := int(time/gametime_to_minute)
+	var total_minutes := last_loaded_minute + int(time/gametime_to_minute)
 	
 	@warning_ignore("integer_division")
 	var day := int(total_minutes/minutes_per_day)
@@ -43,7 +49,8 @@ func calculate_gametime() -> void:
 		#print(str("day: ", day, " time: ", hour, ":", minute))
 
 func change_time_of_day(target: int) -> void:
-	time = target * gametime_to_minute * minutes_per_hour
+	time = target * gametime_to_minute
+	print(time)
 	update_lighting()
 	calculate_gametime()
 	#print(str("time of day changed to: ", target))

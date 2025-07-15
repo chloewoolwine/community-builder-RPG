@@ -1,9 +1,10 @@
 extends Resource
 class_name ObjectData
 
+#enum OBJECT_TYPE{FLOOR, BASE, ROOF, DECOR}
+
 #WARNING!
-#objects are not set up to be saved in SaverLoader
-#TODO: That
+#objects are not tested enough in saver loader
 @export var object_id : String # the path to which the corresponding scene exists
 @export var chunk: Vector2i
 @export var position: Vector2i # - elevation nonwithstanding
@@ -18,3 +19,9 @@ class_name ObjectData
 # 2x2 = top left
 # 3x3 = middle
 @export var additive: bool # meaning it can be appended onto the array. 
+#@export var slot: OBJECT_TYPE # where it goes in the enum list
+# floors - will be applied like "till", can go under all objects, only one
+# base - immovable. walls, furniture, tree trunk, crop- the "Centerpiece"
+# roof - above slot. can go above all objects, only one, usually other requirements exist
+# decor - TODO: this will be objects that can be put on walls, rugs, other cutsie stuff
+@export var last_loaded_minute: int 

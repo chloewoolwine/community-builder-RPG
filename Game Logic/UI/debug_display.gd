@@ -12,6 +12,8 @@ extends Control
 @onready var label_6: Label = $PanelContainer/VBoxContainer/Label6
 @onready var label_7: Label = $PanelContainer/VBoxContainer/Label7
 
+@export var is_test: bool = false
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if visible:
@@ -29,17 +31,19 @@ func _process(delta: float) -> void:
 				other += 1
 		label_2.text = str("plants:", plant_count, " builds:", build_count, " other:", other)
 		do_mouse_stuff()
-		do_player_stuff()
-		do_time_stuff()
+		if !is_test:
+			do_player_stuff()
+			do_time_stuff()
 
 func do_mouse_stuff() -> void: 
 	if world_manager != null:
 		var mouse: Vector2 = world_manager.get_global_mouse_position()
-		#world_manager.modify_tilemap(mouse, trh.get_topmost_layer_at_global_pos(mouse), "till")
-		#temp_mousecast.global_position = mouse
 		var layer := world_manager.trh.get_topmost_layer_at_global_pos(mouse)
 		if layer != null:
-			label_3.text = str("layer:", layer.elevation, " loc:", world_manager.convert_to_chunks_at_world_pos(mouse))
+			var loc := world_manager.convert_to_chunks_at_world_pos(mouse)
+			var square_data:SquareData = world_manager.trh.request_square_at(loc[0], loc[1])
+			if square_data:
+				label_3.text = str("layer:", layer.elevation, " loc:", loc, " type: ", square_data.type, " wettness: ", square_data.water_saturation, " fertility: ", square_data.fertility)
 			label_4.text = str("objects:", world_manager.get_objects_at_world_pos(mouse))
 	else: 
 		if get_parent().get_parent().ready:

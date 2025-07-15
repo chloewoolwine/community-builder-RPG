@@ -1,7 +1,7 @@
 extends Node2D
 class_name GenericRoof
 #will have one generic roof node for each tile in a building, they all live in slot 2 
-signal kill_all_connected_roofs(roof: GenericRoof)
+signal object_destroyed(roof: ObjectData)
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var neighbor_searcher: Area2D = $NeighborSearcher
@@ -17,7 +17,7 @@ func _ready() -> void:
 	neighbors = [null, null, null, null]
 
 func destroy() -> void:
-	kill_all_connected_roofs.emit()
+	object_destroyed.emit()
 	self.queue_free()
 
 const texture_dict: Dictionary = {

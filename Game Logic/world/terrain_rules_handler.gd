@@ -104,8 +104,11 @@ func get_topmost_layer_at_global_pos(pos: Vector2) -> ElevationLayer:
 	elevations.reverse()
 	for layer:ElevationLayer in elevations:
 		var local: Vector2i = layer.local_to_map(layer.to_local(pos))
-		#print("local position: ", local)
+		#this isnt working for water because its checking the fucking TILES? NOT THE DATA ??
 		if layer.get_cell_source_id(local) != -1:
+			elevations.reverse()
+			return layer
+		if layer.water_mapper.get_cell_source_id(local) != -1:
 			elevations.reverse()
 			return layer
 	elevations.reverse()
@@ -156,9 +159,11 @@ func translate_square_data_to_tile(data: SquareData, world_pos: Vector2i, _chunk
 				object.position = data.location_in_chunk
 				object.chunk = _chunk_overall
 		object_atlas.translate_object(data.object_data, actual_pos, data)
+		_settle_objects_at_square(data)
 
 func run_shader_data_stuff(chunk_keys: Array[Vector2i]) -> void:
 	#print("chunk_keys: ", chunk_keys)
+	#doesnt work for very small map sizes as im always excepting a "buffer chunk" barrier of 1
 	var chunks: Dictionary
 	var send: bool = true
 	for key in chunk_keys:
@@ -173,6 +178,7 @@ func run_shader_data_stuff(chunk_keys: Array[Vector2i]) -> void:
 				send = false
 				#push_error("Terrain rules handler tried to build shader data for a chunk not even trying to load. troubling news.")
 	if !chunks.is_empty() and send:
+		#print("chunks sent to gradient maps: ", chunks)
 		for ele in elevations:
 			ele.build_gradient_maps(chunks, chunk_keys[0])
 
@@ -250,6 +256,30 @@ func water_square_at(square_pos: Vector2i, chunk_pos:Vector2i) -> void:
 		#print("new water: ", square.water_saturation)
 		elevations[square.elevation].update_specific_pixel(chunk_pos, square_pos)
 
+func remove_roof_at(square_pos: Vector2i, chunk_pos: Vector2i) -> void:
+	var chunk: ChunkData = loaded_chunks[chunk_pos]
+	var square: SquareData = chunk.square_datas[square_pos]
+	if square.object_data.size() > 2:
+		object_atlas.pop_away_object(square.object_data[2])
+		square.object_data[2] = null
+	_settle_objects_at_square(square)
+
+func remove_object_at(square_pos: Vector2i, chunk_pos: Vector2i) -> void:
+	var chunk: ChunkData = loaded_chunks[chunk_pos]
+	var square: SquareData = chunk.square_datas[square_pos]
+	if square.object_data.size() > 1:
+		object_atlas.pop_away_object(square.object_data[1])
+		square.object_data[1] = null
+	_settle_objects_at_square(square)
+		
+func remove_decor_at(square_pos: Vector2i, chunk_pos: Vector2i) -> void:
+	var chunk: ChunkData = loaded_chunks[chunk_pos]
+	var square: SquareData = chunk.square_datas[square_pos]
+	for x in range(3, square.object_data.size()):
+		object_atlas.pop_away_object(square.object_data[x])
+		square.object_data[x] = null
+	_settle_objects_at_square(square)
+
 # world manager parses request -> object atlas (adds it) -- signals to --> trh to keep track of data
 func add_object(object_data: ObjectData) -> void: 
 	var chunk: ChunkData = loaded_chunks[object_data.chunk]
@@ -265,11 +295,57 @@ func add_object(object_data: ObjectData) -> void:
 		square.object_data.append(object_data)
 	else: 
 		square.object_data[1] = object_data
+	_settle_objects_at_square(square)
+
+func _settle_objects_at_square(square: SquareData) -> void: 
+	if square.object_data == null: # i dont think this is possible, but you never know
+		square.object_data = []
+		return
+	if square.object_data.is_empty():
+		return
+	var all_null: bool = true
+	for x in square.object_data:
+		if x != null:
+			all_null = false
+	if all_null:
+		square.object_data = []
+		return
+	
+	#objects are not empty: settle the decor correctly
+	#first grab roof, base, and floor
+	var size := square.object_data.size()
+	var new_objects : Array[ObjectData]
+	# this feels stupid, but i programmed it kind of stupid so 
+	for i in range(0, 3):
+		if size > i:
+			new_objects.append(square.object_data[i])
+		else:
+			new_objects.append(null)
+	if size > 3:
+		for i in range(3, square.object_data.size()):
+			#clear any nulls in the decor
+			if square.object_data[i] != null:
+				new_objects.append(square.object_data[i])
+	square.object_data = new_objects
 
 func get_objects_at(square: Vector2i, chunk: Vector2i) -> Array[ObjectData]: 
 	if chunk in loaded_chunks:
 		return loaded_chunks[chunk].square_datas[square].object_data
 	return []
+
+func change_type_to(square: Vector2i, chunk: Vector2i, to: SquareData.SquareType) -> void:
+	var chunk_data:ChunkData = loaded_chunks[chunk]
+	var square_data: SquareData = chunk_data.square_datas[square]
+	square_data.type = to
+	var chunk_pos:Vector2i = chunk * chunk_data.chunk_size
+	elevations[square_data.elevation].change_square(square_data, chunk_pos + square)
+
+func change_water(square: Vector2i, chunk: Vector2i, new_water: int) -> void: 
+	var chunk_data:ChunkData = loaded_chunks[chunk]
+	var square_data: SquareData = chunk_data.square_datas[square]
+	square_data.water_saturation = new_water
+	var chunk_pos:Vector2i = chunk * chunk_data.chunk_size
+	elevations[square_data.elevation].change_square(square_data, chunk_pos + square)
 
 ## Returns [square, chunk]
 ## don't put val > 32 in dir plz
@@ -318,3 +394,8 @@ func has_floor(square: SquareData) -> bool:
 func print_if_debug(string: String) -> void:
 	if debug:
 		print(self.name, ":::", string)
+
+func request_square_at(square: Vector2i, chunk: Vector2i) -> SquareData:
+	if chunk in loaded_chunks:
+		return loaded_chunks[chunk].square_datas[square]
+	return null
