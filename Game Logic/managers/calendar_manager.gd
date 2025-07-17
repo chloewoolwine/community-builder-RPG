@@ -19,12 +19,13 @@ var time: float = 0
 
 var curr_year : int
 var curr_date : int #these are meant to keep track of Total days from a savegame state
+var curr_hour: int
+var curr_minute: int
 
 func _ready() -> void:
 	self.visible = true
-	last_loaded_minute = get_parent().story_data.game_minute
-	previous_minute = last_loaded_minute
-	change_time_of_day(last_loaded_minute)
+	previous_minute = get_parent().story_data.game_minute
+	change_time_of_day(previous_minute)
 	# TODO: year and date calculations from last_loaded_minutes
 
 func _process(delta: float) -> void:
@@ -34,7 +35,7 @@ func _process(delta: float) -> void:
 		calculate_gametime()
 	
 func calculate_gametime() -> void: 
-	var total_minutes := last_loaded_minute + int(time/gametime_to_minute)
+	var total_minutes := int(time/gametime_to_minute)
 	
 	@warning_ignore("integer_division")
 	var day := int(total_minutes/minutes_per_day)
@@ -46,7 +47,10 @@ func calculate_gametime() -> void:
 	if previous_minute != minute: 
 		previous_minute = minute
 		time_tick.emit(day, hour, minute)
-		#print(str("day: ", day, " time: ", hour, ":", minute))
+		curr_date = day
+		curr_hour = hour
+		curr_minute = minute
+		print(str("day: ", day, " time: ", hour, ":", minute))
 
 func change_time_of_day(target: int) -> void:
 	time = target * gametime_to_minute
@@ -60,11 +64,4 @@ func update_lighting() -> void:
 		(sin(time - PI / 2) + 1.0) / 2.0)
 
 func formatted_datetime() -> String:
-	var total_minutes := int(time/gametime_to_minute)
-	@warning_ignore("integer_division")
-	var day := int(total_minutes/minutes_per_day)
-	var minutes_of_today := total_minutes % minutes_per_day
-	@warning_ignore("integer_division")
-	var hour := int(minutes_of_today/minutes_per_hour)
-	var minute := int(minutes_of_today % minutes_per_hour)
-	return str(curr_year, "  ", day, ":", hour, ":", minute)
+	return str(curr_year, "  ", curr_date, ":", curr_hour, ":", curr_minute)

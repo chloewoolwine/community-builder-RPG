@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_tqhb5")
-game_minute = 600
+game_minute = 170
 current_weather = 0
 wind_direction = 2
 tutorial_completed = false

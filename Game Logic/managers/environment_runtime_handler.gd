@@ -16,7 +16,7 @@ func run_daily(day:int, hour:int, minute:int) -> void:
 		var chunk_data:ChunkData = all_chunks[chunk_loc]
 		for square_loc:Vector2i in chunk_data.square_datas.keys():
 			var square_data:SquareData = chunk_data.square_datas[square_loc]
-			if square_data.water_saturation > 0:
+			if square_data.water_saturation > 0 && square_data.water_saturation < 4:
 				check_plant_growth(square_data, day, hour, minute)
 				square_data.water_saturation -= 1 #dry everything by 1
 	run_water_calc(all_chunks.keys()) #rewet 
@@ -25,11 +25,11 @@ func check_plant_growth(square: SquareData, day:int, hour:int, minute:int) -> vo
 	var current_minute := (day*1440) + (hour*60) + minute # i really need to make a constants file
 	for object in square.object_data:
 		# the plant was not loaded
-		if object.object_id.contains("plant") && object.last_loaded_minute < current_minute -1:
+		if object != null && object.object_id.contains("plant") && object.last_loaded_minute < current_minute -1:
 			#TODO: plants need to propagate and grow while unloaded
 			pass
 
-func run_water_calc(chunks_around:Array[Vector2i]) -> void:
+func run_water_calc(chunks_around:Array) -> void:
 	# water rules! (for base biome)
 	# - water nearby sources radiate out from tile
 	# - closest - 3 
@@ -49,7 +49,7 @@ func run_water_calc(chunks_around:Array[Vector2i]) -> void:
 	var all_chunks := world_manager._world_data.chunk_datas
 	var all_water : Array[Location]
 	#print(world_manager._world_data.chunk_datas.keys())
-	for chunk_loc in chunks_around:
+	for chunk_loc:Vector2i in chunks_around:
 		var chunk_data:ChunkData 
 		if chunk_loc in all_chunks.keys():
 			chunk_data = all_chunks[chunk_loc]

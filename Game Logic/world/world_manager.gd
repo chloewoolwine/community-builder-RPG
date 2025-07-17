@@ -421,5 +421,5 @@ func move_indicator(indicator: Indicator, player_spot: Vector2, item: ItemData)-
 func water_timer(day:int, hour:int, minute:int) -> void:
 	if hour == 3 && minute == 0:
 		erh.run_daily(day, hour, minute)
-	if erh && minute == 30:
+	if minute == 30:
 		erh.run_water_calc(get_chunks_around_point(player.get_global_position(), 2))
