@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="WorldData" load_steps=1055 format=3 uid="uid://t7aiut0arxch"]
+[gd_resource type="Resource" script_class="WorldData" load_steps=1055 format=3 uid="uid://vwibpy76kuxw"]
 
 [ext_resource type="Script" uid="uid://da4itxddxsvo5" path="res://Game Logic/data/entity/entity_data.gd" id="1_fkt8r"]
 [ext_resource type="Script" uid="uid://c3fb5emvjtxy3" path="res://Game Logic/data/world/chunk_data.gd" id="2_0ahy6"]
@@ -2171,9 +2171,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(7, 16)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_kp3ll"]
 script = ExtResource("4_cerjq")
@@ -2189,9 +2190,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(7, 17)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_q0w4v"]
 script = ExtResource("4_cerjq")
@@ -2207,9 +2209,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(7, 18)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_b0b5a"]
 script = ExtResource("4_cerjq")
@@ -2225,9 +2228,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(7, 19)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_62tda"]
 script = ExtResource("4_cerjq")
@@ -2243,9 +2247,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(7, 20)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_f4csm"]
 script = ExtResource("4_cerjq")
@@ -2261,9 +2266,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(7, 21)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_7gja7"]
 script = ExtResource("4_cerjq")
@@ -2513,9 +2519,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(8, 16)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_1obsy"]
 script = ExtResource("4_cerjq")
@@ -2567,9 +2574,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(8, 21)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_i8c16"]
 script = ExtResource("4_cerjq")
@@ -2819,9 +2827,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(9, 16)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_xm7u5"]
 script = ExtResource("4_cerjq")
@@ -2873,9 +2882,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(9, 21)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_8n4i6"]
 script = ExtResource("4_cerjq")
@@ -3125,9 +3135,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(10, 16)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_2a4gl"]
 script = ExtResource("4_cerjq")
@@ -3179,9 +3190,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(10, 21)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_td75a"]
 script = ExtResource("4_cerjq")
@@ -3431,9 +3443,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(11, 16)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_hjs6f"]
 script = ExtResource("4_cerjq")
@@ -3485,9 +3498,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(11, 21)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_tnfo7"]
 script = ExtResource("4_cerjq")
@@ -3693,7 +3707,7 @@ location_in_chunk = Vector2i(12, 11)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_c5jhn"]
@@ -3702,7 +3716,7 @@ location_in_chunk = Vector2i(12, 12)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_w6s5l"]
@@ -3737,9 +3751,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(12, 16)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_xv3ia"]
 script = ExtResource("4_cerjq")
@@ -3791,9 +3806,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(12, 21)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_n1g6f"]
 script = ExtResource("4_cerjq")
@@ -4008,7 +4024,7 @@ location_in_chunk = Vector2i(13, 12)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_qgv7p"]
@@ -4017,7 +4033,7 @@ location_in_chunk = Vector2i(13, 13)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_5a8f1"]
@@ -4043,9 +4059,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(13, 16)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_v18t3"]
 script = ExtResource("4_cerjq")
@@ -4097,9 +4114,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(13, 21)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_5gt0b"]
 script = ExtResource("4_cerjq")
@@ -4323,7 +4341,7 @@ location_in_chunk = Vector2i(14, 13)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_oph6m"]
@@ -4349,9 +4367,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(14, 16)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_cuwkh"]
 script = ExtResource("4_cerjq")
@@ -4367,9 +4386,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(14, 17)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_120iq"]
 script = ExtResource("4_cerjq")
@@ -4385,9 +4405,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(14, 18)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_htyqs"]
 script = ExtResource("4_cerjq")
@@ -4403,9 +4424,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(14, 19)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_irfow"]
 script = ExtResource("4_cerjq")
@@ -4421,9 +4443,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(14, 20)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_5hw1m"]
 script = ExtResource("4_cerjq")
@@ -4439,9 +4462,10 @@ script = ExtResource("3_ekjkf")
 object_id = "build_wall_woodwall"
 chunk = Vector2i(-1, -1)
 position = Vector2i(14, 21)
-object_tags = null
-size = null
-additive = null
+object_tags = {}
+size = Vector2i(0, 0)
+additive = false
+last_loaded_minute = 0
 
 [sub_resource type="Resource" id="Resource_67wfg"]
 script = ExtResource("4_cerjq")
@@ -4602,7 +4626,7 @@ location_in_chunk = Vector2i(15, 6)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_lnpqm"]
@@ -4611,7 +4635,7 @@ location_in_chunk = Vector2i(15, 7)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_jkww2"]
@@ -4620,7 +4644,7 @@ location_in_chunk = Vector2i(15, 8)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 0
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_fypoj"]
@@ -4636,18 +4660,18 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(15, 10)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 1
+type = 0
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_htlme"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(15, 11)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 1
+type = 0
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_nmblh"]
@@ -4890,7 +4914,7 @@ location_in_chunk = Vector2i(16, 6)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_7ru77"]
@@ -4899,25 +4923,25 @@ location_in_chunk = Vector2i(16, 7)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_rh6s0"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(16, 8)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 3
+type = 0
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_4c63k"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(16, 9)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 1
+type = 0
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_gog2r"]
@@ -4942,9 +4966,9 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(16, 12)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 1
+type = 0
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_rw5og"]
@@ -4989,7 +5013,7 @@ location_in_chunk = Vector2i(16, 17)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_xptsc"]
@@ -4998,7 +5022,7 @@ location_in_chunk = Vector2i(16, 18)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_wwyvm"]
@@ -5169,7 +5193,7 @@ location_in_chunk = Vector2i(17, 5)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_jtswe"]
@@ -5178,25 +5202,25 @@ location_in_chunk = Vector2i(17, 6)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_xb34w"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(17, 7)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_4s2o5"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(17, 8)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 1
+type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_g7xgy"]
@@ -5239,9 +5263,9 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(17, 13)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 1
+type = 0
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_vrp0x"]
@@ -5268,7 +5292,7 @@ location_in_chunk = Vector2i(17, 16)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_ltcpf"]
@@ -5277,7 +5301,7 @@ location_in_chunk = Vector2i(17, 17)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_13cxt"]
@@ -5457,7 +5481,7 @@ location_in_chunk = Vector2i(18, 5)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_hi152"]
@@ -5466,23 +5490,23 @@ location_in_chunk = Vector2i(18, 6)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_pwd84"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(18, 7)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 1
+type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_16wt7"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(18, 8)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -5527,9 +5551,9 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(18, 13)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 1
+type = 0
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_4bu8l"]
@@ -5556,7 +5580,7 @@ location_in_chunk = Vector2i(18, 16)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_50u4t"]
@@ -5736,7 +5760,7 @@ location_in_chunk = Vector2i(19, 4)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_p0cec"]
@@ -5745,14 +5769,14 @@ location_in_chunk = Vector2i(19, 5)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_nsw5f"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(19, 6)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -5761,7 +5785,7 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(19, 7)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -5770,9 +5794,9 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(19, 8)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 1
+type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_lij8x"]
@@ -5815,9 +5839,9 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(19, 13)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 1
+type = 0
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_tsm7f"]
@@ -5835,7 +5859,7 @@ location_in_chunk = Vector2i(19, 15)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_ijk8f"]
@@ -5844,7 +5868,7 @@ location_in_chunk = Vector2i(19, 16)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_tfl1j"]
@@ -5853,7 +5877,7 @@ location_in_chunk = Vector2i(19, 17)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_xq2im"]
@@ -6024,7 +6048,7 @@ location_in_chunk = Vector2i(20, 4)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_hx3ik"]
@@ -6033,14 +6057,14 @@ location_in_chunk = Vector2i(20, 5)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_vovuu"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(20, 6)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -6049,16 +6073,16 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(20, 7)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 1
+type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_bjdo1"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(20, 8)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -6103,7 +6127,7 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(20, 13)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 0
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -6123,7 +6147,7 @@ location_in_chunk = Vector2i(20, 15)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_difu7"]
@@ -6132,7 +6156,7 @@ location_in_chunk = Vector2i(20, 16)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_2pjgf"]
@@ -6150,7 +6174,7 @@ location_in_chunk = Vector2i(20, 18)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_3inhc"]
@@ -6159,7 +6183,7 @@ location_in_chunk = Vector2i(20, 19)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 1
+type = 0
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_tbx4t"]
@@ -6303,7 +6327,7 @@ location_in_chunk = Vector2i(21, 3)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_fa7y8"]
@@ -6312,7 +6336,7 @@ location_in_chunk = Vector2i(21, 4)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_e0adm"]
@@ -6321,14 +6345,14 @@ location_in_chunk = Vector2i(21, 5)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_d1arh"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(21, 6)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -6337,16 +6361,16 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(21, 7)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 1
+type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_3mskm"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(21, 8)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -6355,7 +6379,7 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(21, 9)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -6382,9 +6406,9 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(21, 12)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 3
+type = 0
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_kctmf"]
@@ -6411,7 +6435,7 @@ location_in_chunk = Vector2i(21, 15)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_7c6h1"]
@@ -6420,7 +6444,7 @@ location_in_chunk = Vector2i(21, 16)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_wu8g8"]
@@ -6447,7 +6471,7 @@ location_in_chunk = Vector2i(21, 19)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 1
+type = 0
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_vht46"]
@@ -6591,7 +6615,7 @@ location_in_chunk = Vector2i(22, 3)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_721ts"]
@@ -6600,14 +6624,14 @@ location_in_chunk = Vector2i(22, 4)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_w3dn1"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(22, 5)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -6616,16 +6640,16 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(22, 6)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 1
+type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_yv2ho"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(22, 7)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -6634,7 +6658,7 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(22, 8)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -6643,7 +6667,7 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(22, 9)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -6670,9 +6694,9 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(22, 12)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 1
+type = 0
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_w6up5"]
@@ -6690,7 +6714,7 @@ location_in_chunk = Vector2i(22, 14)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_x6d6s"]
@@ -6699,7 +6723,7 @@ location_in_chunk = Vector2i(22, 15)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_u46px"]
@@ -6879,7 +6903,7 @@ location_in_chunk = Vector2i(23, 3)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_6pdy8"]
@@ -6888,14 +6912,14 @@ location_in_chunk = Vector2i(23, 4)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_4wd05"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(23, 5)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -6904,16 +6928,16 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(23, 6)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_5ejah"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(23, 7)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -6922,7 +6946,7 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(23, 8)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -6931,7 +6955,7 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(23, 9)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -6949,7 +6973,7 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(23, 11)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -6978,7 +7002,7 @@ location_in_chunk = Vector2i(23, 14)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_eorep"]
@@ -7158,7 +7182,7 @@ location_in_chunk = Vector2i(24, 2)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_etain"]
@@ -7167,14 +7191,14 @@ location_in_chunk = Vector2i(24, 3)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_7kddn"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(24, 4)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -7183,7 +7207,7 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(24, 5)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -7192,34 +7216,34 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(24, 6)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_epuh1"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(24, 7)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_is03w"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(24, 8)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_aq3he"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(24, 9)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -7228,7 +7252,7 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(24, 10)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -7237,9 +7261,9 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(24, 11)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 1
+type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_dwo1k"]
@@ -7257,7 +7281,7 @@ location_in_chunk = Vector2i(24, 13)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_mtfg2"]
@@ -7446,14 +7470,14 @@ location_in_chunk = Vector2i(25, 2)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_65q1p"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(25, 3)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -7462,7 +7486,7 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(25, 4)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -7471,7 +7495,7 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(25, 5)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -7480,7 +7504,7 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(25, 6)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -7489,25 +7513,25 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(25, 7)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_yoodp"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(25, 8)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_pd8kk"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(25, 9)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -7516,7 +7540,7 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(25, 10)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -7525,7 +7549,7 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(25, 11)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 3
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -7536,7 +7560,7 @@ location_in_chunk = Vector2i(25, 12)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_5c4e3"]
@@ -7734,7 +7758,7 @@ location_in_chunk = Vector2i(26, 2)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_3ctam"]
@@ -7743,7 +7767,7 @@ location_in_chunk = Vector2i(26, 3)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 2
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_tl75f"]
@@ -7752,7 +7776,7 @@ location_in_chunk = Vector2i(26, 4)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_jw87w"]
@@ -7761,23 +7785,23 @@ location_in_chunk = Vector2i(26, 5)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_uce0l"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(26, 6)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_xw1wy"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(26, 7)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -7786,16 +7810,16 @@ object_data = Array[ExtResource("3_ekjkf")]([])
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(26, 8)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_tekgx"]
 script = ExtResource("4_cerjq")
 location_in_chunk = Vector2i(26, 9)
 elevation = 0
-water_saturation = 4
+water_saturation = 0
 fertility = 0
 type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
@@ -7806,7 +7830,7 @@ location_in_chunk = Vector2i(26, 10)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_jmygx"]
@@ -7815,7 +7839,7 @@ location_in_chunk = Vector2i(26, 11)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_cjpxo"]
@@ -7824,7 +7848,7 @@ location_in_chunk = Vector2i(26, 12)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 0
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_tmu4g"]
@@ -8013,7 +8037,7 @@ location_in_chunk = Vector2i(27, 1)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 1
+type = 2
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_g35mj"]
@@ -8022,7 +8046,7 @@ location_in_chunk = Vector2i(27, 2)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 1
+type = 2
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_bo63o"]
@@ -8049,7 +8073,7 @@ location_in_chunk = Vector2i(27, 5)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_8dciq"]
@@ -8058,7 +8082,7 @@ location_in_chunk = Vector2i(27, 6)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_8rpug"]
@@ -8067,7 +8091,7 @@ location_in_chunk = Vector2i(27, 7)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_bjst1"]
@@ -8076,7 +8100,7 @@ location_in_chunk = Vector2i(27, 8)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_24n6a"]
@@ -8085,7 +8109,7 @@ location_in_chunk = Vector2i(27, 9)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_p081i"]
@@ -8094,7 +8118,7 @@ location_in_chunk = Vector2i(27, 10)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_48ns7"]
@@ -8292,7 +8316,7 @@ location_in_chunk = Vector2i(28, 0)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 1
+type = 2
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_0dh7r"]
@@ -8301,7 +8325,7 @@ location_in_chunk = Vector2i(28, 1)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 1
+type = 2
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_klf4m"]
@@ -8310,7 +8334,7 @@ location_in_chunk = Vector2i(28, 2)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 1
+type = 2
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_ie6fo"]
@@ -8319,7 +8343,7 @@ location_in_chunk = Vector2i(28, 3)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 1
+type = 2
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_xqa4b"]
@@ -8346,7 +8370,7 @@ location_in_chunk = Vector2i(28, 6)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_ajacj"]
@@ -8355,7 +8379,7 @@ location_in_chunk = Vector2i(28, 7)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_xo4io"]
@@ -8364,7 +8388,7 @@ location_in_chunk = Vector2i(28, 8)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_6hwdw"]
@@ -8373,7 +8397,7 @@ location_in_chunk = Vector2i(28, 9)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 3
+type = 1
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_arebm"]
@@ -8589,7 +8613,7 @@ location_in_chunk = Vector2i(29, 1)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 1
+type = 2
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_jdxb0"]
@@ -8598,7 +8622,7 @@ location_in_chunk = Vector2i(29, 2)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 1
+type = 2
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_cdprk"]
@@ -8607,7 +8631,7 @@ location_in_chunk = Vector2i(29, 3)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 1
+type = 2
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_3obxv"]
@@ -8616,7 +8640,7 @@ location_in_chunk = Vector2i(29, 4)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 1
+type = 2
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_p8c0k"]
@@ -8886,7 +8910,7 @@ location_in_chunk = Vector2i(30, 2)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 1
+type = 2
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_0lim1"]
@@ -8895,7 +8919,7 @@ location_in_chunk = Vector2i(30, 3)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 1
+type = 2
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_4rhys"]
@@ -8904,7 +8928,7 @@ location_in_chunk = Vector2i(30, 4)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 1
+type = 2
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_anim3"]
@@ -9183,7 +9207,7 @@ location_in_chunk = Vector2i(31, 3)
 elevation = 0
 water_saturation = 0
 fertility = 0
-type = 1
+type = 2
 object_data = Array[ExtResource("3_ekjkf")]([])
 
 [sub_resource type="Resource" id="Resource_giw3p"]

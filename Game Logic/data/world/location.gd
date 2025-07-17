@@ -32,3 +32,21 @@ func get_location(dir:Vector2i) -> Location:
 		pos.y = diff
 		chu.y -= 1
 	return Location.new(pos, chu)
+
+func get_world_coordinates(chunk_size: int) -> Vector2i:
+	return (chunk * chunk_size) + position
+
+static func get_location_from_world(world_loc: Vector2i, chunk_size:int) -> Location:
+	var chunk_pos: Vector2i = world_loc / chunk_size
+	var square_pos: Vector2i = world_loc % chunk_size
+	#print("raw square_pos: ", square_pos)
+	if square_pos.x < 0:
+		chunk_pos.x = chunk_pos.x - 1
+		square_pos.x = chunk_size + square_pos.x
+	if square_pos.y < 0:
+		chunk_pos.y = chunk_pos.y - 1
+		square_pos.y = chunk_size + square_pos.y
+	return Location.new(square_pos, chunk_pos)
+
+func _to_string() -> String:
+	return str("Location(", position, ",", chunk, ")")

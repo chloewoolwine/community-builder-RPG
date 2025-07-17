@@ -105,7 +105,9 @@ func build_base_of(_data: SquareData, overall_location:Vector2i) -> void:
 	
 func delete_square(overall_location: Vector2i) -> void:
 	for layer in arr:
-		layer.just_erase_tile(overall_location)
+		layer.erase_tile(overall_location)
+	pond.set_cell(overall_location)
+		#layer.just_erase_tile(overall_location)
 	till.set_cell(overall_location)
 ## we can have a layer for elevation changes (base) and then a layer for ponds
 ## dont' have to worry about it until terrain edits can happen

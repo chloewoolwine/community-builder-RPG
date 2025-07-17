@@ -25,7 +25,8 @@ func minute_pass(day:int, hour:int, minute:int) -> void:
 	#TODO: bonuses from stuff
 	var current_minute := (day*1440) + (hour*60) + minute # i really need to make a constants file
 	if generic_plant.object_data.last_loaded_minute < current_minute - 1:
-		print("last loaded minute: ", generic_plant.object_data.last_loaded_minute, " curr:", current_minute)
+		#print("last loaded minute: ", generic_plant.object_data.last_loaded_minute, " curr:", current_minute)
+		#technically, this makes it so if it wakes up watered, it will act as if it was always watered
 		age_multiplier += age_multiplier * (current_minute - generic_plant.object_data.last_loaded_minute)
 		pass
 	generic_plant.object_data.last_loaded_minute = current_minute
@@ -74,3 +75,6 @@ func set_age(value: int) -> void:
 			change_stage.emit(current_growth_stage, collision[current_growth_stage])
 		if current_growth_stage == growth_stage_minutes.size()-1:
 			mature = true
+
+static func propagate_me() -> void:
+	pass

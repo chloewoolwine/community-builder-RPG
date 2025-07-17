@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dqm8g7yybo0pf" path="res://Scenes/UI/Inventory/inventory.tscn" id="4_kq4io"]
 [ext_resource type="Script" uid="uid://bwjidfdugtnfu" path="res://Game Logic/managers/calendar_manager.gd" id="5_cki0q"]
 [ext_resource type="Script" uid="uid://diuxqukbk35hy" path="res://Game Logic/world/world_manager.gd" id="5_wonyh"]
-[ext_resource type="Resource" uid="uid://cab6wh4x4dgnu" path="res://Test/data/world_datas/walls.tres" id="6_fwf6m"]
+[ext_resource type="Resource" uid="uid://c8yept27hkqjo" path="res://Test/data/world_datas/generation_test.tres" id="6_mucmn"]
 [ext_resource type="Script" uid="uid://bgmqoj67px6a3" path="res://Game Logic/inventory/inventory_interface.gd" id="6_uons4"]
 [ext_resource type="Script" uid="uid://vjmm4ct83rqu" path="res://Game Logic/world/terrain_rules_handler.gd" id="7_fkv55"]
 [ext_resource type="Script" uid="uid://dxha2h40ws5cy" path="res://Game Logic/managers/entity_manager.gd" id="8_3dv0o"]
@@ -63,7 +63,7 @@ light_gradient = SubResource("GradientTexture1D_6o1tu")
 [node name="WorldManager" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("5_wonyh")
-_world_data = ExtResource("6_fwf6m")
+_world_data = ExtResource("6_mucmn")
 load_chunks = true
 unload_chunks = true
 
@@ -86,20 +86,12 @@ script = ExtResource("8_3dv0o")
 position = Vector2(1, 1)
 scale = Vector2(0.305, 0.305)
 inventory_data = ExtResource("3_xku57")
-speed = 2125
+speed = 340
 dash_length = 0.4
 
-[node name="Body" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player/PlayerOutfitHandler" index="0"]
-animation = &"walk_forward"
-
-[node name="HealthHandler" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player" index="3"]
-max_hunger = 1e+08
-current_hunger = 1e+08
-
 [node name="Camera2D" type="Camera2D" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player"]
-position = Vector2(-203.279, 5252.46)
+position = Vector2(1.49012e-08, -10.25)
 scale = Vector2(0.259594, 0.246314)
-zoom = Vector2(0.07, 0.07)
 position_smoothing_enabled = true
 
 [node name="DustBunny" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager" instance=ExtResource("17_6hk27")]

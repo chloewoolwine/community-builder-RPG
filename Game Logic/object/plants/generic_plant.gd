@@ -21,7 +21,7 @@ var is_tree: bool = false
 var debug: bool = false
 
 func _ready() -> void:
-	print("last loaded:", object_data.last_loaded_minute)
+	#print("last loaded:", object_data.last_loaded_minute)
 	for child in get_children():
 		if child is PlantAppearance: 
 			plant_appearance = child
@@ -39,7 +39,7 @@ func _ready() -> void:
 		push_error(object_id + " moved into game with null object data. Killing self.")
 		self.queue_free()
 		return
-	print("plant location: ", object_data.position, " ", object_data.chunk)
+	#print("plant location: ", object_data.position, " ", object_data.chunk)
 	plant_component.change_stage.connect(onChangeStage)
 	interaction_hitbox.player_interacted.connect(checkForHarvest)
 	if "age" in object_data.object_tags.keys():

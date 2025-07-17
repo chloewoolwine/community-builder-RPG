@@ -24,7 +24,7 @@ func change_growth_stage(stage: int) -> void:
 		current_texture = growth_stage_textures.size()-1
 		change_sprite_offset(sprite_2d, growth_stage_textures, current_texture)
 	if current_texture > 0: 
-		print("changing other sprites")
+		#print("changing other sprites")
 		change_sprite_offset(sprite_2d_1, growth_stage_textures_1, current_texture-1)
 		change_sprite_offset(sprite_2d_2, growth_stage_textures_2, current_texture-1)
 		change_sprite_offset(sprite_2d_3, growth_stage_textures_3,current_texture-1)

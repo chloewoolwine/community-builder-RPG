@@ -53,6 +53,8 @@ func handle_final_presentation() -> void:
 func handle_world_setup() -> void:
 	world_manager.trh.object_atlas.plant_placed.connect(connect_plant_to_sky)
 	world_manager.player = player
+	lighting.time_tick.connect(world_manager.water_timer)
+	world_manager.do_setup()
 
 ## Connects plants with the world so they can grow
 func connect_plant_to_sky(plant: GenericPlant) -> void:

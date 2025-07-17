@@ -6,13 +6,17 @@ class_name WorldManager
 @export var load_chunks: bool = false
 @export var unload_chunks: bool = false
 @onready var trh: TerrainRulesHandler = $TerrainRulesHandler
-@onready var environment_runtime_handler: EnvironmentRuntime = $EnvironmentRuntimeHandler
+@onready var erh: EnvironmentRuntime = $EnvironmentRuntimeHandler
 
 var player: Player
 
 func _ready() -> void:
 	if(_world_data != null):
 		set_world_data(_world_data)
+
+#called in game to initiate most set up actions
+func do_setup() -> void: 
+	erh.run_water_calc(get_chunks_around_point(player.get_global_position(), 2))
 
 func _process(_delta: float) -> void:
 	## TODO... do this maybe 1/10 frames or smthn
@@ -105,6 +109,7 @@ func manage_propagation_success(pos: Location, object_id: String) -> void:
 	else:
 		#plants could technically try to propagate to an unloaded chunk- 
 		#this should be theoretically fine, but im not doing that rn fuck that honestly
+		#TODO: plants should propagate in unloaded chunks
 		pass
 
 func place_object(pos: Vector2, layer:ElevationLayer, itemdata: ItemData)->void:
@@ -412,3 +417,9 @@ func move_indicator(indicator: Indicator, player_spot: Vector2, item: ItemData)-
 		#elif wall.global_position.y > down.global_position.y: 
 			#down = wall
 	#return [left, right, down, up]
+
+func water_timer(day:int, hour:int, minute:int) -> void:
+	if hour == 3 && minute == 0:
+		erh.run_daily(day, hour, minute)
+	if erh && minute == 30:
+		erh.run_water_calc(get_chunks_around_point(player.get_global_position(), 2))

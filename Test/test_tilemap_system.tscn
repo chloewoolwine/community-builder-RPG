@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://diuxqukbk35hy" path="res://Game Logic/world/world_manager.gd" id="1_d3v3l"]
 [ext_resource type="Script" uid="uid://dyamhmg7lwxjc" path="res://Test/temp_camera_script.gd" id="1_pg57c"]
 [ext_resource type="Script" uid="uid://vjmm4ct83rqu" path="res://Game Logic/world/terrain_rules_handler.gd" id="2_hk3wk"]
-[ext_resource type="Resource" uid="uid://t7aiut0arxch" path="res://Test/data/world_datas/spawn_chunk.tres" id="2_ladqw"]
 [ext_resource type="Texture2D" uid="uid://dj8bni171no41" path="res://Assets/Testy Assets/map edit symbols/Asset 1@0.5x.png" id="2_lwt0r"]
+[ext_resource type="Resource" uid="uid://c8yept27hkqjo" path="res://Test/data/world_datas/generation_test.tres" id="2_y6nff"]
 [ext_resource type="Script" uid="uid://btkipgqft1s0h" path="res://Test/map_editor_control_menu.gd" id="3_4irie"]
 [ext_resource type="Texture2D" uid="uid://b71ycp15yowwk" path="res://Assets/Testy Assets/map edit symbols/Asset 25@0.5x.png" id="4_jjck8"]
 [ext_resource type="Texture2D" uid="uid://oulwhnc8mhq5" path="res://Assets/Testy Assets/map edit symbols/Asset 18@0.5x.png" id="5_gjubd"]
@@ -51,7 +51,7 @@ y_sort_enabled = true
 [node name="WorldManager" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("1_d3v3l")
-_world_data = ExtResource("2_ladqw")
+_world_data = ExtResource("2_y6nff")
 world_edit_mode = true
 load_chunks = true
 unload_chunks = true
@@ -359,7 +359,7 @@ world_manager = NodePath("../../WorldManager")
 terrain_rules_handler = NodePath("../../WorldManager/TerrainRulesHandler")
 worldseed = 3033
 chunk_size = Vector2i(32, 32)
-num_chunks = Vector2i(2, 2)
+num_chunks = Vector2i(10, 10)
 altitude_noise = ExtResource("14_16di6")
 moisture_noise = SubResource("FastNoiseLite_extud")
 temperature_noise = ExtResource("18_we2w1")
