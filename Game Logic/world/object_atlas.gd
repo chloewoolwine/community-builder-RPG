@@ -55,12 +55,12 @@ func translate_object(object_datas: Array[ObjectData],overall_position: Vector2,
 		var object_data := object_datas[x]
 		_parse_and_place(object_data, overall_position, square)
 
-func remove_objects(object_datas: Array[ObjectData]) -> Array[ObjectData]: 
+func remove_objects(object_datas: Array[ObjectData], pos: Location) -> Array[ObjectData]: 
 	for x in range(1, object_datas.size()):
 		var object_data := object_datas[x]
 		if object_data != null:
 			if object_data not in live_objects.keys():
-				push_warning("Object_id: ", object_data.object_id, " expected to be in live objects, not found")
+				push_warning("Object_id: ", object_data.object_id, " expected to be in live objects, not found at loc ", pos)
 				continue 
 			var object: Node2D = live_objects[object_data]
 			if object_data == null:

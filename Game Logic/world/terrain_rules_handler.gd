@@ -79,7 +79,7 @@ func _process(_delta: float) -> void:
 				for ele in elevations:
 					ele.delete_square(chunk_pos + square.location_in_chunk)
 					# removes objects from scene + updates their state if dead
-					square.object_data = object_atlas.remove_objects(square.object_data)
+				square.object_data = object_atlas.remove_objects(square.object_data, Location.new(square.location_in_chunk, chunk_data.chunk_position))
 			chunk_row_next[key] = next_row + 1
 		
 	#print("chunks in loading: ", chunks_in_loading.keys())
@@ -211,7 +211,7 @@ func apply_floor_at(square_pos: Vector2i, chunk_pos:Vector2i, floor_type: String
 	var square: SquareData = chunk_data.square_datas[square_pos]
 	if floor_type == "till": 
 		## no objects, apply immediately 
-		if square_has_no_objects(square):
+		if square_has_no_objects(square) && square.water_saturation < 4:
 			var overall_pos := (chunk_pos * chunk_data.chunk_size) + square_pos
 			match square.type:
 				SquareData.SquareType.Dirt:

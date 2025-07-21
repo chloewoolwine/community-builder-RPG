@@ -132,7 +132,7 @@ script = ExtResource("3_yj8a3")
 growth_stage_minutes = Array[int]([0, 5, 10])
 collision = Array[bool]([false, false, false])
 destroy_on_harvest = true
-prop_days = 0.5
+prop_days = 1.5
 propagation_type = "close"
 
 [node name="InteractionHitbox" type="StaticBody2D" parent="."]
@@ -144,3 +144,5 @@ script = ExtResource("4_ocqlm")
 shape = SubResource("CircleShape2D_0mxl1")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]

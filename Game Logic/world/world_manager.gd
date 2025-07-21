@@ -6,7 +6,6 @@ class_name WorldManager
 @export var load_chunks: bool = false
 @export var unload_chunks: bool = false
 @onready var trh: TerrainRulesHandler = $TerrainRulesHandler
-@onready var erh: EnvironmentRuntime = $EnvironmentRuntimeHandler
 
 var player: Player
 
@@ -16,7 +15,7 @@ func _ready() -> void:
 
 #called in game to initiate most set up actions
 func do_setup() -> void: 
-	erh.run_water_calc(get_chunks_around_point(player.get_global_position(), 2))
+	EnvironmentLogic.run_water_calc(_world_data, get_chunks_around_point(player.get_global_position(), 2))
 
 func _process(_delta: float) -> void:
 	## TODO... do this maybe 1/10 frames or smthn
@@ -44,7 +43,7 @@ func load_all_chunks() -> void:
 		trh.populate_set_of_chunks(_world_data.chunk_datas)
 	
 func load_and_unload_chunks_surronding_point(point: Vector2) -> void:
-	var surronding_chunks:Array[Vector2i] = get_chunks_around_point(point, 2)
+	var surronding_chunks:Array[Vector2i] = get_chunks_around_point(point, 1)
 	for chunk:Vector2i in trh.loaded_chunks:
 		if unload_chunks && !surronding_chunks.has(chunk):
 			#print("unload chunk ", chunk)
@@ -420,6 +419,6 @@ func move_indicator(indicator: Indicator, player_spot: Vector2, item: ItemData)-
 
 func water_timer(day:int, hour:int, minute:int) -> void:
 	if hour == 3 && minute == 0:
-		erh.run_daily(day, hour, minute)
+		EnvironmentLogic.run_daily(_world_data, day, hour, minute)
 	if minute == 30:
-		erh.run_water_calc(get_chunks_around_point(player.get_global_position(), 2))
+		EnvironmentLogic.run_water_calc(_world_data, get_chunks_around_point(player.get_global_position(), 2))

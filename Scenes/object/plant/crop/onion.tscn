@@ -1,0 +1,83 @@
+[gd_scene load_steps=19 format=3 uid="uid://b7chruygvbxaq"]
+
+[ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_6mdcm"]
+[ext_resource type="Script" uid="uid://c3cgrr073uht8" path="res://Game Logic/object/plants/plant_appearance.gd" id="2_jo8fr"]
+[ext_resource type="Texture2D" uid="uid://da2q4adhil211" path="res://Assets/plants/crops/strawberry_onion.png" id="3_2xlul"]
+[ext_resource type="Script" uid="uid://bndjcrkta02c4" path="res://Game Logic/object/plants/plant_component.gd" id="4_ur4c4"]
+[ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="5_a28q3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l825y"]
+size = Vector2(40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vltbs"]
+atlas = ExtResource("3_2xlul")
+region = Rect2(5, 55, 50, 50)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ovbpl"]
+load_path = "res://.godot/imported/strawberry_onion.png-b4a809cfdd444c03b92ff5c903bee763.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t8uwq"]
+atlas = SubResource("CompressedTexture2D_ovbpl")
+region = Rect2(62, 49, 47, 42)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_kjrs5"]
+load_path = "res://.godot/imported/strawberry_onion.png-b4a809cfdd444c03b92ff5c903bee763.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g1u4c"]
+atlas = SubResource("CompressedTexture2D_kjrs5")
+region = Rect2(137, 18, 41, 69)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3tgyg"]
+load_path = "res://.godot/imported/strawberry_onion.png-b4a809cfdd444c03b92ff5c903bee763.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ovbpl"]
+atlas = SubResource("CompressedTexture2D_3tgyg")
+region = Rect2(195, 16, 50, 75)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_t8uwq"]
+load_path = "res://.godot/imported/strawberry_onion.png-b4a809cfdd444c03b92ff5c903bee763.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kjrs5"]
+atlas = SubResource("CompressedTexture2D_t8uwq")
+region = Rect2(324, 10, 48, 81)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_g1u4c"]
+load_path = "res://.godot/imported/strawberry_onion.png-b4a809cfdd444c03b92ff5c903bee763.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nbsn6"]
+atlas = SubResource("CompressedTexture2D_g1u4c")
+region = Rect2(391, 0, 45, 91)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0mxl1"]
+radius = 29.0689
+
+[node name="GenericPlant" type="Area2D" groups=["plant_growable", "player_interactable"]]
+y_sort_enabled = true
+script = ExtResource("1_6mdcm")
+object_id = "plant_crop_onion"
+
+[node name="StepCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_l825y")
+disabled = true
+
+[node name="PlantAppearance" type="Node2D" parent="."]
+script = ExtResource("2_jo8fr")
+growth_stage_textures = Array[Texture2D]([SubResource("AtlasTexture_vltbs"), SubResource("AtlasTexture_t8uwq"), SubResource("AtlasTexture_g1u4c"), SubResource("AtlasTexture_ovbpl"), SubResource("AtlasTexture_kjrs5"), SubResource("AtlasTexture_nbsn6")])
+growth_stage_texture_offset = Array[Vector2]([Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)])
+
+[node name="Sprite2D" type="Sprite2D" parent="PlantAppearance"]
+y_sort_enabled = true
+texture = SubResource("AtlasTexture_vltbs")
+
+[node name="PlantComponent" type="Node2D" parent="."]
+script = ExtResource("4_ur4c4")
+growth_stage_minutes = Array[int]([0, 100, 200, 300, 400, 500])
+collision = Array[bool]([false, false, false, false, false])
+
+[node name="InteractionHitbox" type="StaticBody2D" parent="."]
+script = ExtResource("5_a28q3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionHitbox"]
+shape = SubResource("CircleShape2D_0mxl1")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]

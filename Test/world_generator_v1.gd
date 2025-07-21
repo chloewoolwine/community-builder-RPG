@@ -4,6 +4,8 @@ class_name WorldGenerator
 @warning_ignore("unused_signal")
 signal save_world(world: WorldData, path: String)
 
+const SPAWN_CHUNK:WorldData = preload("res://Test/data/world_datas/spawn_chunk.tres")
+
 @export var world_manager: WorldManager
 @export var terrain_rules_handler: TerrainRulesHandler
 
@@ -24,6 +26,12 @@ signal save_world(world: WorldData, path: String)
 @export var gain : float = 0.5
 @export var amplitude : float = 1.0 
 
+@export_group("Plant Population Properties")
+@export var zero_moist: Array[String]
+@export var one_moist: Array[String]
+@export var two_moist: Array[String]
+@export var three_moist: Array[String]
+
 var seed_generator:RandomNumberGenerator
 
 # this is stupid, but until this has access to the Game script the emissions wont work 
@@ -42,9 +50,9 @@ func _ready() -> void:
 	#var world:WorldData = ResourceLoader.load('res://Test/data/world_datas/BIGWORLD.tres')
 	#print("loading coimplete")
 	##world_manager.set_world_data(world)
-	#var world:WorldData = generate_world_based_on_vals()
-	#print('time at end generation: ', Time.get_time_string_from_system())
-	#world_manager.set_world_data(world)
+	var world:WorldData = generate_world_based_on_vals()
+	print('time at end generation: ', Time.get_time_string_from_system())
+	world_manager.set_world_data(world)
 	#world_to_save = world
 	#path = str('res://Test/data/world_datas/generation_test.tres')
 	#save_world.emit(world, str('res://Test/data/world_datas/treez.tres'))
@@ -74,7 +82,60 @@ func generate_world_based_on_vals() -> WorldData:
 	
 	world.chunk_datas = map_big_grid_to_chunks(height_grid, wet_grid, temp_grid, debris_grid)
 	#print('world_size =', big_grid.values())
+	world.chunk_datas[Vector2i(-1, -1)] = SPAWN_CHUNK.chunk_datas[Vector2i(-1,-1)]
+	#run a single natural water pass
+	print("running water calc")
+	EnvironmentLogic.run_water_calc(world, world.chunk_datas.keys())
+	
+	print("putting down plants")
+	#run plant pass
+	put_down_plants(world)
+	
 	return world
+	
+func put_down_plants(world_data: WorldData) -> void:
+	var plant_rate:float = .25
+	
+	@warning_ignore("integer_division")
+	var modx:int = num_chunks.x/2
+	@warning_ignore("integer_division")
+	var mody:int = num_chunks.y/2
+	
+	for x in num_chunks.x:
+		for y in num_chunks.y:
+			var chunk:ChunkData = world_data.chunk_datas[Vector2i(x-modx, y-mody)]
+			
+			for i in chunk_size.x:
+				for j in chunk_size.y:
+					var square_data:SquareData = chunk.square_datas[Vector2i(i,j)]
+					var object_datas := square_data.object_data
+					if square_data.water_saturation >= 4: # we dont have water plants... yet
+						continue
+					if object_datas.is_empty():
+						if randf() < plant_rate:
+							#generate plant
+							var object := ObjectData.new()
+							object.chunk = Vector2i(x-modx, y-mody)
+							object.position = Vector2i(i,j)
+							object.object_tags["age"] = 100000 #TODO: each plant needs its own age randomizer...
+							object.size = Vector2i(1,1) #TODO: i still dont have different sized objects done...
+							
+							var plant_pool: Array[String]
+							if square_data.water_saturation >= 0:
+								plant_pool.append_array(zero_moist)
+							if square_data.water_saturation >= 1:
+								plant_pool.append_array(one_moist)
+							if square_data.water_saturation >= 2:
+								plant_pool.append_array(two_moist)
+							if square_data.water_saturation >= 3: 
+								plant_pool.append_array(three_moist)
+							if plant_pool.size() == 0:
+								continue
+							object.object_id = plant_pool[randi_range(0, plant_pool.size()-1)]
+							square_data.object_data = [null, object, null]
+						pass
+	
+	pass
 	
 @warning_ignore("unused_parameter")
 func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, temp_grid:Dictionary, debris_grid:Dictionary) ->  Dictionary:
@@ -130,9 +191,10 @@ func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, temp_grid:D
 					var total_y : int = (y * chunk_size.y) + j
 					#print("total x : ", x, "total y: ",y, "elevation:", big_grid[Vector2i(total_x, total_y)])
 					var square:SquareData = SquareData.new()
-					square.elevation = big_grid[Vector2i(total_x, total_y)]
+					#square.elevation = big_grid[Vector2i(total_x, total_y)]
+					square.elevation = 0
 					square.location_in_chunk = Vector2i(i,j)
-					square.water_saturation = 0
+					square.water_saturation = 1
 					square_datas[Vector2i(i,j)] = square
 					square.type = SquareData.SquareType.Grass
 					#if(j == 0):

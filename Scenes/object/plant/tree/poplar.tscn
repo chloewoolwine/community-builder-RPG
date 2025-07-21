@@ -98,7 +98,7 @@ offset = Vector2(0, -284.145)
 script = ExtResource("3_kg4d2")
 growth_stage_minutes = Array[int]([0, 7200, 14400])
 collision = Array[bool]([false, true, true])
-prop_days = 1.0
+prop_days = 10.0
 propagation_type = "close"
 
 [node name="InteractionHitbox" type="StaticBody2D" parent="."]
@@ -110,3 +110,5 @@ needs_tool = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionHitbox"]
 position = Vector2(0, -22.27)
 shape = SubResource("RectangleShape2D_k4rme")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]

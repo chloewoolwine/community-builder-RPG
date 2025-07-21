@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://cscjf83p2disu"]
+
+[ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_7wsvk"]
+[ext_resource type="Script" uid="uid://c3cgrr073uht8" path="res://Game Logic/object/plants/plant_appearance.gd" id="2_ovf4w"]
+[ext_resource type="Script" uid="uid://bndjcrkta02c4" path="res://Game Logic/object/plants/plant_component.gd" id="3_7qapg"]
+[ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="4_hdsru"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l825y"]
+size = Vector2(40, 40)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7wsvk"]
+load_path = "res://.godot/imported/rocks_flowers_hole.png-2d5e7b0b7c58a8e4099b00ddc008f6ae.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ovf4w"]
+atlas = SubResource("CompressedTexture2D_7wsvk")
+region = Rect2(62, 133, 67, 56)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0mxl1"]
+radius = 29.0689
+
+[node name="Bush" type="Area2D" groups=["plant_growable", "player_interactable"]]
+y_sort_enabled = true
+script = ExtResource("1_7wsvk")
+object_id = "plant_wild_bush"
+
+[node name="StepCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_l825y")
+disabled = true
+
+[node name="PlantAppearance" type="Node2D" parent="."]
+script = ExtResource("2_ovf4w")
+growth_stage_textures = Array[Texture2D]([SubResource("AtlasTexture_ovf4w")])
+growth_stage_texture_offset = Array[Vector2]([Vector2(0, 0)])
+
+[node name="Sprite2D" type="Sprite2D" parent="PlantAppearance"]
+y_sort_enabled = true
+texture = SubResource("AtlasTexture_ovf4w")
+
+[node name="PlantComponent" type="Node2D" parent="."]
+script = ExtResource("3_7qapg")
+growth_stage_minutes = Array[int]([1000000])
+collision = Array[bool]([false])
+
+[node name="InteractionHitbox" type="StaticBody2D" parent="."]
+script = ExtResource("4_hdsru")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionHitbox"]
+shape = SubResource("CircleShape2D_0mxl1")

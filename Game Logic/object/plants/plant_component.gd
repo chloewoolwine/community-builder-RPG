@@ -68,11 +68,17 @@ func set_age(value: int) -> void:
 		change_stage.emit(current_growth_stage, true)
 		return
 	elif !mature:
+		if current_growth_stage == growth_stage_minutes.size()-1:
+			mature = true
+			return
 		if age >= growth_stage_minutes[current_growth_stage + 1]:
 			current_growth_stage = current_growth_stage + 1
 			while current_growth_stage + 1 < growth_stage_minutes.size()-1 and age >= growth_stage_minutes[current_growth_stage + 1]:
 				current_growth_stage = current_growth_stage + 1
-			change_stage.emit(current_growth_stage, collision[current_growth_stage])
+			if current_growth_stage < collision.size():
+				change_stage.emit(current_growth_stage, collision[current_growth_stage])
+			else:
+				change_stage.emit(current_growth_stage, false)
 		if current_growth_stage == growth_stage_minutes.size()-1:
 			mature = true
 

@@ -11,6 +11,8 @@ extends Control
 @onready var label_5: Label = $PanelContainer/VBoxContainer/Label5
 @onready var label_6: Label = $PanelContainer/VBoxContainer/Label6
 @onready var label_7: Label = $PanelContainer/VBoxContainer/Label7
+@onready var label_8: Label = $PanelContainer/VBoxContainer/Label8
+@onready var label_9: Label = $PanelContainer/VBoxContainer/Label9
 
 @export var is_test: bool = false
 
@@ -34,6 +36,7 @@ func _process(delta: float) -> void:
 		if !is_test:
 			do_player_stuff()
 			do_time_stuff()
+		do_chunk_stuff()
 
 func do_mouse_stuff() -> void: 
 	if world_manager != null:
@@ -63,3 +66,8 @@ func do_time_stuff() -> void:
 	else: 
 		if get_parent().get_parent().ready:
 			player = get_parent().get_parent().lighting
+
+func do_chunk_stuff() -> void:
+	if world_manager != null:
+		label_8.text = str("chunks in loading: ", world_manager.trh.chunks_in_loading, ", chunks to unload: ", world_manager.trh.chunks_to_unload)
+		label_9.text = str("loaded chunks: ", world_manager.trh.loaded_chunks)

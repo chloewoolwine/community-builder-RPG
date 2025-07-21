@@ -14,7 +14,7 @@ var last_loaded_minute: int
 var minutes_per_day : int = 1440
 var minutes_per_hour : int  = 60
 var gametime_to_minute : float = (2 * PI) / minutes_per_day
-var previous_minute: float = -1
+var previous_minute: int = -1
 var time: float = 0
 
 var curr_year : int
@@ -57,7 +57,7 @@ func change_time_of_day(target: int) -> void:
 	print(time)
 	update_lighting()
 	calculate_gametime()
-	#print(str("time of day changed to: ", target))
+	print(str("time of day changed to: ", target))
 
 func update_lighting() -> void:
 	self.color = light_gradient.gradient.sample(
