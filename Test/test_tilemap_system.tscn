@@ -1,10 +1,10 @@
-[gd_scene load_steps=28 format=3 uid="uid://cycrtln7ftflc"]
+[gd_scene load_steps=29 format=3 uid="uid://cycrtln7ftflc"]
 
 [ext_resource type="Script" uid="uid://diuxqukbk35hy" path="res://Game Logic/world/world_manager.gd" id="1_d3v3l"]
 [ext_resource type="Script" uid="uid://dyamhmg7lwxjc" path="res://Test/temp_camera_script.gd" id="1_pg57c"]
 [ext_resource type="Script" uid="uid://vjmm4ct83rqu" path="res://Game Logic/world/terrain_rules_handler.gd" id="2_hk3wk"]
 [ext_resource type="Texture2D" uid="uid://dj8bni171no41" path="res://Assets/Testy Assets/map edit symbols/Asset 1@0.5x.png" id="2_lwt0r"]
-[ext_resource type="Resource" uid="uid://cncivb0emg6rd" path="res://Test/data/world_datas/generation_test.tres" id="2_y6nff"]
+[ext_resource type="Resource" uid="uid://dbysuxh3bbb8x" path="res://Test/data/world_datas/generation_test.tres" id="2_y6nff"]
 [ext_resource type="Script" uid="uid://btkipgqft1s0h" path="res://Test/map_editor_control_menu.gd" id="3_4irie"]
 [ext_resource type="Texture2D" uid="uid://b71ycp15yowwk" path="res://Assets/Testy Assets/map edit symbols/Asset 25@0.5x.png" id="4_jjck8"]
 [ext_resource type="Texture2D" uid="uid://oulwhnc8mhq5" path="res://Assets/Testy Assets/map edit symbols/Asset 18@0.5x.png" id="5_gjubd"]
@@ -39,6 +39,15 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_y6nff"]
+noise_type = 3
+frequency = 0.0055
+fractal_type = 3
+fractal_octaves = 2
+fractal_lacunarity = 1.7
+fractal_gain = 0.1
+fractal_weighted_strength = 1.0
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_extud"]
 noise_type = 3
@@ -369,13 +378,18 @@ worldseed = 3033
 chunk_size = Vector2i(32, 32)
 num_chunks = Vector2i(10, 10)
 altitude_noise = ExtResource("14_16di6")
-moisture_noise = SubResource("FastNoiseLite_extud")
+moisture_noise = SubResource("FastNoiseLite_y6nff")
 temperature_noise = ExtResource("18_we2w1")
-debris_noise = ExtResource("18_we2w1")
+debris_noise = SubResource("FastNoiseLite_extud")
 zero_moist = Array[String](["plant_wild_grass", "plant_wild_yarrow", "plant_wild_bush"])
-one_moist = Array[String](["plant_tree_poplar", "plant_wild_bigbush"])
-two_moist = Array[String](["plant_crop_onion"])
+one_moist = Array[String](["plant_tree_poplar", "plant_wild_bigbush", "plant_tree_oak"])
+two_moist = Array[String](["plant_crop_onion", "plant_wild_reed"])
 three_moist = Array[String](["plant_crop_strawberry"])
+common_grasses = Array[String](["plant_wild_reed", "plant_wild_grass"])
+rare_grasses = Array[String](["plant_wild_yarrow"])
+common_trees = Array[String](["plant_tree_poplar", "plant_tree_oak"])
+rare_trees = Array[String](["plant_tree_poplar"])
+wild_crops = Array[String](["plant_crop_onion", "plant_crop_strawberry"])
 
 [connection signal="body_entered" from="WorldManager/temp_mousecast" to="CanvasLayer/Control" method="_on_temp_mousecast_body_entered"]
 [connection signal="pressed" from="CanvasLayer/Control/PanelContainer/MarginContainer/HBoxContainer/save" to="CanvasLayer/Control" method="_on_save_pressed"]

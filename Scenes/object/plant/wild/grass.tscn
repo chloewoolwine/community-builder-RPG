@@ -110,7 +110,7 @@ growth_stage_texture_offset = Array[Vector2]([Vector2(0, 0), Vector2(0, 0), Vect
 [node name="Sprite2D" type="Sprite2D" parent="GrassAppearance"]
 y_sort_enabled = true
 texture_filter = 1
-texture = SubResource("AtlasTexture_q5ieh")
+texture = SubResource("AtlasTexture_p6mc7")
 
 [node name="Sprite2D2" type="Sprite2D" parent="GrassAppearance"]
 y_sort_enabled = true

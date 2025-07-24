@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_vga7j")
 name = "Wood Wall"
-description = ""
+description = "Place down to keep the world away."
 magical = false
 magicalDescription = ""
 stackable = false

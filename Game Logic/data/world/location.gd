@@ -33,6 +33,15 @@ func get_location(dir:Vector2i) -> Location:
 		chu.y -= 1
 	return Location.new(pos, chu)
 
+# NOT NECCESARILY ORDERED
+func get_neighbor_matrix() -> Array[Location]:
+	var arr : Array[Location]
+	for x in range(-1, 2):
+		for y in range(-1, 2):
+			if !(x == 0 && y == 0):
+				arr.append(get_location(Vector2i(x,y)))
+	return arr
+
 func get_world_coordinates(chunk_size: int) -> Vector2i:
 	return (chunk * chunk_size) + position
 

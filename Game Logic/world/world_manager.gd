@@ -421,4 +421,5 @@ func water_timer(day:int, hour:int, minute:int) -> void:
 	if hour == 3 && minute == 0:
 		EnvironmentLogic.run_daily(_world_data, day, hour, minute)
 	if minute == 30:
+		#TODO: make this async some how 
 		EnvironmentLogic.run_water_calc(_world_data, get_chunks_around_point(player.get_global_position(), 2))

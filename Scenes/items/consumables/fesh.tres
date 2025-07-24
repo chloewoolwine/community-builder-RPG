@@ -11,8 +11,7 @@ script = ExtResource("1_2jtqy")
 heal_value = 1
 hunger_value = 0
 name = "fish"
-description = "this is a fish
-"
+description = "this is a generic fish. sorry we cant be more specific :c"
 magical = false
 magicalDescription = ""
 stackable = true

@@ -49,7 +49,7 @@ func _ready() -> void:
 	
 func onChangeStage(new_stage: int, collision: bool) -> void: 
 	plant_appearance.change_growth_stage(new_stage)
-	print("collision: ", collision)
+	#print("collision: ", collision)
 	#print("new_stage: ", new_stage)
 	interaction_hitbox.set_to_wall(collision)
 	

@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_1rf7k")
 name = "Thatch Roof"
-description = ""
+description = "Place on an enclosed room to make a roof."
 magical = false
 magicalDescription = ""
 stackable = false

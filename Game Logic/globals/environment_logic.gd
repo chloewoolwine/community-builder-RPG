@@ -1,6 +1,6 @@
 class_name EnvironmentLogic
 
-static func run_daily(world: WorldData, day:int, hour:int, minute:int, _is_raining: bool = false) -> void:
+static func run_daily(world: WorldData, day:int, hour:int, minute:int, _is_raining: bool = false, do_plants:bool = true) -> void:
 	var all_chunks := world.chunk_datas
 	@warning_ignore("untyped_declaration")
 	for chunk_loc in all_chunks:
@@ -9,7 +9,7 @@ static func run_daily(world: WorldData, day:int, hour:int, minute:int, _is_raini
 			var square_data:SquareData = chunk_data.square_datas[square_loc]
 			#1 is just supposed to be the ambient moisture for the forest/farm, not everywhere
 			#that is for way later tho
-			if square_data.water_saturation > 1 && square_data.water_saturation < 4:
+			if square_data.water_saturation > 1 && square_data.water_saturation < 4 && do_plants:
 				check_plant_growth(square_data, day, hour, minute)
 				square_data.water_saturation -= 1 #dry everything by 1
 	run_water_calc(world, all_chunks.keys()) #rewet 
