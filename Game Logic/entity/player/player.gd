@@ -58,7 +58,7 @@ func _ready() -> void:
 	player_action_handler.player_opened_menu.connect(toggle_menu_state)
 	
 	## notify that we are ready for collisions
-	elevation_handler.set_parents_collision_mask(elevation_handler.current_elevation, true)
+	#elevation_handler.set_parents_collision_mask(elevation_handler.current_elevation, true)
 	
 	#set hair and outfit... eventually 
 	#animation_player.add_animation_library()

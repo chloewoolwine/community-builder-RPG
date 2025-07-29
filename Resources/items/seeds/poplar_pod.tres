@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemDataSeed" load_steps=4 format=3 uid="uid://vakf77wj04kc"]
+
+[ext_resource type="Script" uid="uid://puad1pr1ooms" path="res://Game Logic/data/inventory/item_data_seed.gd" id="1_clkay"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qvstf"]
+load_path = "res://.godot/imported/export202408152110229190.png-053e99f4c3e38f985e06c9e31fd1bafc.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ikxdp"]
+atlas = SubResource("CompressedTexture2D_qvstf")
+
+[resource]
+script = ExtResource("1_clkay")
+plant_name = "poplar tree"
+spring = true
+summer = true
+autumn = true
+winter = true
+quality = 0
+name = "Poplar Pod"
+description = "These pods pop open into fluffy seeds."
+magical = false
+magicalDescription = ""
+stackable = true
+texture = SubResource("AtlasTexture_ikxdp")
+placeable = true
+object_id = "plant_tree_poplar"
+value = 1
+rarity = 1

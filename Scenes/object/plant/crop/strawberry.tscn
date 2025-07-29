@@ -1,9 +1,33 @@
-[gd_scene load_steps=21 format=3 uid="uid://c4fsgf5tactjp"]
+[gd_scene load_steps=26 format=3 uid="uid://c4fsgf5tactjp"]
 
 [ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_q3gg6"]
 [ext_resource type="Script" uid="uid://c3cgrr073uht8" path="res://Game Logic/object/plants/plant_appearance.gd" id="2_27dju"]
+[ext_resource type="Script" uid="uid://c72fhodjm4b2c" path="res://Game Logic/data/inventory/loot/loot_table_entry.gd" id="2_oim8e"]
+[ext_resource type="Resource" uid="uid://byba6hhfwv0i3" path="res://Resources/items/consumables/wild_strawberry.tres" id="3_75800"]
+[ext_resource type="Script" uid="uid://dq4ap3sv81447" path="res://Game Logic/data/inventory/loot/loot_table.gd" id="3_g21qu"]
 [ext_resource type="Script" uid="uid://bndjcrkta02c4" path="res://Game Logic/object/plants/plant_component.gd" id="3_oim8e"]
+[ext_resource type="Resource" uid="uid://cjftm0sbao7xa" path="res://Resources/items/seeds/strawberry_seed.tres" id="4_75800"]
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="4_g21qu"]
+
+[sub_resource type="Resource" id="Resource_75800"]
+script = ExtResource("2_oim8e")
+chance = 1.0
+item_data = ExtResource("3_75800")
+amount = 3
+metadata/_custom_type_script = "uid://c72fhodjm4b2c"
+
+[sub_resource type="Resource" id="Resource_4nhya"]
+script = ExtResource("2_oim8e")
+chance = 0.205
+item_data = ExtResource("4_75800")
+amount = 0
+metadata/_custom_type_script = "uid://c72fhodjm4b2c"
+
+[sub_resource type="Resource" id="Resource_astqg"]
+script = ExtResource("3_g21qu")
+loot_table_entries = Array[ExtResource("2_oim8e")]([SubResource("Resource_75800"), SubResource("Resource_4nhya")])
+num_rolls = 1
+metadata/_custom_type_script = "uid://dq4ap3sv81447"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l825y"]
 size = Vector2(40, 40)
@@ -50,19 +74,14 @@ load_path = "res://.godot/imported/strawberry_onion.png-b4a809cfdd444c03b92ff5c9
 atlas = SubResource("CompressedTexture2D_f2v41")
 region = Rect2(347, 150, 79, 63)
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5h8sg"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6m0np"]
-atlas = SubResource("CompressedTexture2D_5h8sg")
-region = Rect2(67.2142, 120.71, 43.4497, 36.8664)
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_0mxl1"]
 radius = 29.0689
 
-[node name="GenericPlant" type="Area2D" groups=["plant_growable", "player_interactable"]]
+[node name="Strawberry" type="Area2D" groups=["plant_growable", "player_interactable"]]
 y_sort_enabled = true
 script = ExtResource("1_q3gg6")
 object_id = "plant_crop_strawberry"
+loot_table = SubResource("Resource_astqg")
 
 [node name="StepCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_l825y")
@@ -71,21 +90,25 @@ disabled = true
 [node name="PlantAppearance" type="Node2D" parent="."]
 script = ExtResource("2_27dju")
 growth_stage_textures = Array[Texture2D]([SubResource("AtlasTexture_3vc1p"), SubResource("AtlasTexture_l2pmv"), SubResource("AtlasTexture_h6dq1"), SubResource("AtlasTexture_djgab"), SubResource("AtlasTexture_ejck1"), SubResource("AtlasTexture_fjwgo")])
-growth_stage_texture_offset = Array[Vector2]([Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)])
+growth_stage_texture_offset = Array[Vector2]([Vector2(0, 0), Vector2(0, -10), Vector2(0, -28), Vector2(0, -28), Vector2(0, -28), Vector2(0, -28)])
 
 [node name="Sprite2D" type="Sprite2D" parent="PlantAppearance"]
 y_sort_enabled = true
-texture = SubResource("AtlasTexture_6m0np")
+texture = SubResource("AtlasTexture_3vc1p")
 
 [node name="PlantComponent" type="Node2D" parent="."]
 script = ExtResource("3_oim8e")
-growth_stage_minutes = Array[int]([10, 20, 30, 40, 50, 60])
+growth_stage_minutes = Array[int]([0, 1440, 2880, 4320, 7200, 11520])
 collision = Array[bool]([false, false, false, false, false])
+prop_days = 1.0
+propagation_type = "close"
+target_moisture = 3
 
 [node name="InteractionHitbox" type="StaticBody2D" parent="."]
 script = ExtResource("4_g21qu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionHitbox"]
 shape = SubResource("CircleShape2D_0mxl1")
+disabled = true
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]

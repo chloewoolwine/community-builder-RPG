@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dqm8g7yybo0pf" path="res://Scenes/UI/Inventory/inventory.tscn" id="4_kq4io"]
 [ext_resource type="Script" uid="uid://bwjidfdugtnfu" path="res://Game Logic/managers/calendar_manager.gd" id="5_cki0q"]
 [ext_resource type="Script" uid="uid://diuxqukbk35hy" path="res://Game Logic/world/world_manager.gd" id="5_wonyh"]
-[ext_resource type="Resource" uid="uid://dbysuxh3bbb8x" path="res://Test/data/world_datas/generation_test.tres" id="6_mucmn"]
+[ext_resource type="Resource" uid="uid://d220f54sbgmnx" path="res://Test/data/world_datas/generation_test.tres" id="6_mucmn"]
 [ext_resource type="Script" uid="uid://bgmqoj67px6a3" path="res://Game Logic/inventory/inventory_interface.gd" id="6_uons4"]
 [ext_resource type="Script" uid="uid://vjmm4ct83rqu" path="res://Game Logic/world/terrain_rules_handler.gd" id="7_fkv55"]
 [ext_resource type="Script" uid="uid://dxha2h40ws5cy" path="res://Game Logic/managers/entity_manager.gd" id="8_3dv0o"]
@@ -14,9 +14,9 @@
 [ext_resource type="PackedScene" uid="uid://cwyeg4vhep7na" path="res://Scenes/UI/Inventory/slot.tscn" id="8_pioji"]
 [ext_resource type="Script" uid="uid://bsm4ra22m810k" path="res://Game Logic/world/object_atlas.gd" id="9_0s5wb"]
 [ext_resource type="Script" uid="uid://8m7bl77x4xw6" path="res://Game Logic/managers/pickup_manager.gd" id="10_d5qv3"]
-[ext_resource type="Resource" uid="uid://b1v5a5qu2iw7w" path="res://Scenes/items/test/test_apple.tres" id="11_cwce4"]
 [ext_resource type="Script" uid="uid://ff7axvflmy38" path="res://Game Logic/data/inventory/slot_data.gd" id="12_iyjdd"]
 [ext_resource type="PackedScene" uid="uid://cdeeqt3ae70lq" path="res://Scenes/object/pick_up.tscn" id="13_pouw6"]
+[ext_resource type="Resource" uid="uid://coc8478dbgool" path="res://Resources/items/stuff/timber.tres" id="16_cwurv"]
 [ext_resource type="PackedScene" uid="uid://b48eubjn547dd" path="res://Scenes/UI/Inventory/hot_bar_inventory.tscn" id="16_j6efu"]
 [ext_resource type="PackedScene" uid="uid://df2qdt4sw2ptf" path="res://Scenes/Entities/enemies/dust_bunny.tscn" id="17_6hk27"]
 [ext_resource type="Script" uid="uid://bam1itjhokose" path="res://Game Logic/data/saves/saverloader.gd" id="17_d5xvq"]
@@ -39,7 +39,7 @@ gradient = SubResource("Gradient_yfqml")
 
 [sub_resource type="Resource" id="Resource_qmoje"]
 script = ExtResource("12_iyjdd")
-item_data = ExtResource("11_cwce4")
+item_data = ExtResource("16_cwurv")
 quantity = 1
 
 [node name="Game" type="Node2D"]
@@ -102,7 +102,7 @@ editor_description = "Holds pickups"
 script = ExtResource("10_d5qv3")
 
 [node name="PickUp" parent="PickupManager" instance=ExtResource("13_pouw6")]
-position = Vector2(104, -177)
+position = Vector2(512, -382)
 slot_data = SubResource("Resource_qmoje")
 
 [node name="UI" type="CanvasLayer" parent="."]
@@ -260,5 +260,4 @@ script = ExtResource("17_d5xvq")
 
 [editable path="WorldManager/TerrainRulesHandler/Elevation0"]
 [editable path="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player"]
-[editable path="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player/ElevationHandler"]
 [editable path="UI/InventoryInterface/PlayerInventory"]

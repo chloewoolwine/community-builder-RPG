@@ -1,23 +1,42 @@
-[gd_scene load_steps=22 format=3 uid="uid://ddp26hlnsmw5r"]
+[gd_scene load_steps=24 format=3 uid="uid://ddp26hlnsmw5r"]
 
 [ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_8ph1v"]
 [ext_resource type="Script" uid="uid://c72fhodjm4b2c" path="res://Game Logic/data/inventory/loot/loot_table_entry.gd" id="2_uks68"]
-[ext_resource type="Resource" uid="uid://b1v5a5qu2iw7w" path="res://Scenes/items/test/test_apple.tres" id="3_vsbtn"]
+[ext_resource type="Resource" uid="uid://coc8478dbgool" path="res://Resources/items/stuff/timber.tres" id="3_8ph1v"]
 [ext_resource type="Script" uid="uid://dq4ap3sv81447" path="res://Game Logic/data/inventory/loot/loot_table.gd" id="4_mptq2"]
+[ext_resource type="Resource" uid="uid://2e81mj4x8ahl" path="res://Resources/items/stuff/foliage.tres" id="4_uks68"]
 [ext_resource type="Script" uid="uid://dd411rr7uquwy" path="res://Game Logic/object/plants/tree_appearance.gd" id="5_r54r7"]
 [ext_resource type="Script" uid="uid://bndjcrkta02c4" path="res://Game Logic/object/plants/plant_component.gd" id="6_1dyr6"]
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="7_vbg4f"]
 
 [sub_resource type="Resource" id="Resource_0qwql"]
 script = ExtResource("2_uks68")
-weight = 100
-item_data = ExtResource("3_vsbtn")
+chance = 1.0
+item_data = ExtResource("3_8ph1v")
+amount = 3
+
+[sub_resource type="Resource" id="Resource_uks68"]
+script = ExtResource("2_uks68")
+chance = 0.524
+item_data = ExtResource("3_8ph1v")
+amount = 2
+
+[sub_resource type="Resource" id="Resource_vsbtn"]
+script = ExtResource("2_uks68")
+chance = 0.164
+item_data = ExtResource("3_8ph1v")
 amount = 1
+
+[sub_resource type="Resource" id="Resource_mptq2"]
+script = ExtResource("2_uks68")
+chance = 1.0
+item_data = ExtResource("4_uks68")
+amount = 1
+metadata/_custom_type_script = "uid://c72fhodjm4b2c"
 
 [sub_resource type="Resource" id="Resource_ht84m"]
 script = ExtResource("4_mptq2")
-guaranteed_drops = Array[ExtResource("2_uks68")]([])
-loot_table_entries = Array[ExtResource("2_uks68")]([SubResource("Resource_0qwql")])
+loot_table_entries = Array[ExtResource("2_uks68")]([SubResource("Resource_0qwql"), SubResource("Resource_uks68"), SubResource("Resource_vsbtn"), SubResource("Resource_mptq2")])
 num_rolls = 1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ivn77"]
@@ -51,21 +70,14 @@ load_path = "res://.godot/imported/sketch_crap_1.png-bea57c075dc9a87edb56ffe3da1
 atlas = SubResource("CompressedTexture2D_vbg4f")
 region = Rect2(21, 528, 504, 543)
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8ph1v"]
-load_path = "res://.godot/imported/sketch_crap_1.png-bea57c075dc9a87edb56ffe3da19b943.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_uks68"]
-atlas = SubResource("CompressedTexture2D_8ph1v")
-region = Rect2(24, 532, 507, 541)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k4rme"]
-size = Vector2(50, 50)
+size = Vector2(115, 50)
 
-[node name="Poplar" type="Area2D" groups=["plant_growable", "player_interactable"]]
+[node name="Oak" type="Area2D" groups=["plant_growable", "player_interactable"]]
 script = ExtResource("1_8ph1v")
-object_id = "plant_tree_poplar"
+object_id = "plant_tree_oak"
 loot_table = SubResource("Resource_ht84m")
-axe_hits = 4
+axe_hits = 20
 
 [node name="StepCollision" type="CollisionShape2D" parent="."]
 position = Vector2(0, -22.27)
@@ -74,33 +86,33 @@ shape = SubResource("RectangleShape2D_ivn77")
 [node name="TreeAppearance" type="Node2D" parent="."]
 script = ExtResource("5_r54r7")
 leaf_growth_textures = Array[Texture2D]([null, null])
-leaf_growth_texture_offset = Array[Vector2]([Vector2(0, -95), Vector2(0, -284.145), Vector2(-12, -25.665)])
+leaf_growth_texture_offset = Array[Vector2]([Vector2(0, -95), Vector2(0, -284.145), Vector2(0, 0)])
 stump_texture = SubResource("AtlasTexture_vsbtn")
 growth_stage_textures = Array[Texture2D]([SubResource("AtlasTexture_mptq2"), SubResource("AtlasTexture_1dyr6"), SubResource("AtlasTexture_qmuma")])
-growth_stage_texture_offset = Array[Vector2]([Vector2(-5.815, -20.4), Vector2(0, -58.22), Vector2(0, -150)])
+growth_stage_texture_offset = Array[Vector2]([Vector2(0, -15), Vector2(0, -150), Vector2(0, -215)])
 
 [node name="Sprite2D" type="Sprite2D" parent="TreeAppearance"]
-texture = SubResource("AtlasTexture_uks68")
-offset = Vector2(0, -150)
+texture = SubResource("AtlasTexture_qmuma")
+offset = Vector2(0, -215.785)
 
 [node name="Sprite2D2" type="Sprite2D" parent="TreeAppearance"]
 offset = Vector2(0, -284.145)
 
 [node name="PlantComponent" type="Node2D" parent="."]
 script = ExtResource("6_1dyr6")
-growth_stage_minutes = Array[int]([0, 7200, 14400])
+growth_stage_minutes = Array[int]([0, 14400, 28800])
 collision = Array[bool]([false, true, true])
-prop_days = 10.0
-propagation_type = "close"
+prop_days = 30.0
+propagation_type = "far"
 
 [node name="InteractionHitbox" type="StaticBody2D" parent="."]
-collision_layer = 4
+collision_layer = 5
 collision_mask = 0
 script = ExtResource("7_vbg4f")
 needs_tool = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionHitbox"]
-position = Vector2(0, -22.27)
+position = Vector2(13, -17)
 shape = SubResource("RectangleShape2D_k4rme")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]

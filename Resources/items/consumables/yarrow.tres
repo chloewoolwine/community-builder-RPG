@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ItemDataConsumable" load_steps=4 format=3 uid="uid://cfchi36k3dhi5"]
+
+[ext_resource type="Script" uid="uid://tejfnnfnstvt" path="res://Game Logic/data/inventory/item_data_consumable.gd" id="1_kaqds"]
+[ext_resource type="Texture2D" uid="uid://co6qs4tw0kcbu" path="res://Assets/sketch/sketch_crap_1.png" id="2_kaqds"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3v1o"]
+atlas = ExtResource("2_kaqds")
+region = Rect2(694, 93, 91, 93)
+
+[resource]
+script = ExtResource("1_kaqds")
+heal_value = 10
+hunger_value = 0
+name = "Yarrow"
+description = "Brew into a nice tea for some health, or eat right away if you're crazy."
+magical = false
+magicalDescription = ""
+stackable = true
+texture = SubResource("AtlasTexture_i3v1o")
+placeable = true
+object_id = ""
+value = 1
+rarity = 1

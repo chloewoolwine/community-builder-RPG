@@ -47,7 +47,7 @@ func use_tool(item:SlotData)->void:
 			tile_indicator.attempt_modify(player.global_position, "till")
 		ItemDataTool.WeaponType.AXE:
 			pass # idk what this would look like to be real 
-		ItemDataTool.WeaponType.PICKAXE:
+		ItemDataTool.WeaponType.SHOVEL:
 			tile_indicator.attempt_modify(player.global_position, "remove_floor")
 		ItemDataTool.WeaponType.HAMMER:
 			print("tool not yet implemented")

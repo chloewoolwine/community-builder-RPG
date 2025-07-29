@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3 uid="uid://c8gmd24psuv7d"]
+
+[ext_resource type="Script" uid="uid://n78f88xryx5x" path="res://Game Logic/data/inventory/item_data.gd" id="1_ysrik"]
+
+[resource]
+script = ExtResource("1_ysrik")
+name = "Door"
+description = "Place on a wall."
+magical = false
+magicalDescription = ""
+stackable = true
+placeable = true
+object_id = "build_door_wooddoor"
+value = 1
+rarity = 1

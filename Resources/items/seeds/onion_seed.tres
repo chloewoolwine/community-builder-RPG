@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="ItemDataSeed" load_steps=4 format=3 uid="uid://b2i5vku4i331t"]
+
+[ext_resource type="Script" uid="uid://puad1pr1ooms" path="res://Game Logic/data/inventory/item_data_seed.gd" id="1_1dxf4"]
+[ext_resource type="Texture2D" uid="uid://bjchhme7ttdnh" path="res://Assets/items/export202408152110229190.png" id="2_v7w5e"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5c21o"]
+atlas = ExtResource("2_v7w5e")
+
+[resource]
+script = ExtResource("1_1dxf4")
+plant_name = "onion"
+spring = true
+summer = true
+autumn = false
+winter = false
+quality = 0
+name = "Onion Seeds"
+description = "Plant these in spring or summer to grow onions."
+magical = false
+magicalDescription = ""
+stackable = true
+texture = SubResource("AtlasTexture_5c21o")
+placeable = true
+object_id = "plant_crop_strawberry"
+value = 1
+rarity = 1

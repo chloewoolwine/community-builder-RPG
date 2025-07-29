@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" uid="uid://j0kc2xvefmhi" path="res://Game Logic/data/inventory/inventory_data.gd" id="1_r08uo"]
 [ext_resource type="Script" uid="uid://ff7axvflmy38" path="res://Game Logic/data/inventory/slot_data.gd" id="2_n1jth"]
-[ext_resource type="Resource" uid="uid://bhhgw66haki3j" path="res://Scenes/items/tools/axe.tres" id="3_6gdja"]
-[ext_resource type="Resource" uid="uid://nqerwfpldacr" path="res://Scenes/items/tools/hammer.tres" id="4_36bw6"]
-[ext_resource type="Resource" uid="uid://bttbsjkake846" path="res://Scenes/items/tools/hoe.tres" id="4_i8yrb"]
-[ext_resource type="Resource" uid="uid://cum0uus22nf72" path="res://Scenes/items/tools/stick.tres" id="4_u5dmx"]
-[ext_resource type="Resource" uid="uid://b7hmhg25msl4x" path="res://Scenes/items/tools/pickaxe.tres" id="5_6t5mw"]
-[ext_resource type="Resource" uid="uid://d0wd2vtdrd13o" path="res://Scenes/items/tools/rod.tres" id="7_cqwjf"]
+[ext_resource type="Resource" uid="uid://bhhgw66haki3j" path="res://Resources/items/tools/axe.tres" id="3_6gdja"]
+[ext_resource type="Resource" uid="uid://nqerwfpldacr" path="res://Resources/items/tools/hammer.tres" id="4_36bw6"]
+[ext_resource type="Resource" uid="uid://bttbsjkake846" path="res://Resources/items/tools/hoe.tres" id="4_i8yrb"]
+[ext_resource type="Resource" uid="uid://cum0uus22nf72" path="res://Resources/items/tools/stick.tres" id="4_u5dmx"]
+[ext_resource type="Resource" path="res://Scenes/items/tools/pickaxe.tres" id="5_6t5mw"]
+[ext_resource type="Resource" uid="uid://d0wd2vtdrd13o" path="res://Resources/items/tools/rod.tres" id="7_cqwjf"]
 
 [sub_resource type="Resource" id="Resource_yddo7"]
 script = ExtResource("2_n1jth")

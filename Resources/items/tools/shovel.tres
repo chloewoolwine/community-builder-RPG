@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="ItemDataTool" load_steps=4 format=3 uid="uid://dospt1grrjq6w"]
+
+[ext_resource type="Script" uid="uid://cmusmcngq68cl" path="res://Game Logic/data/inventory/item_data_tool.gd" id="1_lipl6"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_i0d32"]
+load_path = "res://.godot/imported/#1 - Transparent Icons.png-66e482cdc506437ae5ff6b63757a4b91.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pxmst"]
+atlas = SubResource("CompressedTexture2D_i0d32")
+region = Rect2(96, 321, 30, 28)
+
+[resource]
+script = ExtResource("1_lipl6")
+efficiency = 1
+type = 3
+name = "Shovel"
+description = "Great for digging holes"
+magical = false
+magicalDescription = ""
+stackable = false
+texture = SubResource("AtlasTexture_pxmst")
+placeable = false
+required_space = Vector2i(1, 1)
+object_id = ""
+sellable = false
+value = 1
+rarity = 1

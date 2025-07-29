@@ -66,7 +66,7 @@ func set_vis_for_tool(item_data: ItemDataTool) -> void:
 			self.visible = true
 		ItemDataTool.WeaponType.AXE:
 			self.visible = false
-		ItemDataTool.WeaponType.PICKAXE:
+		ItemDataTool.WeaponType.SHOVEL:
 			self.visible = true
 		ItemDataTool.WeaponType.HAMMER:
 			self.visible = true

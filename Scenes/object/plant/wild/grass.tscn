@@ -1,23 +1,47 @@
-[gd_scene load_steps=30 format=3 uid="uid://dsa3wrfrtbwrb"]
+[gd_scene load_steps=35 format=3 uid="uid://dsa3wrfrtbwrb"]
 
 [ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_jnmuw"]
 [ext_resource type="Script" uid="uid://c72fhodjm4b2c" path="res://Game Logic/data/inventory/loot/loot_table_entry.gd" id="2_l5d4k"]
-[ext_resource type="Resource" uid="uid://cum0uus22nf72" path="res://Scenes/items/tools/stick.tres" id="3_idunb"]
+[ext_resource type="Resource" uid="uid://2e81mj4x8ahl" path="res://Resources/items/stuff/foliage.tres" id="3_bx0rv"]
+[ext_resource type="Resource" uid="uid://cum0uus22nf72" path="res://Resources/items/tools/stick.tres" id="3_idunb"]
 [ext_resource type="Script" uid="uid://bndjcrkta02c4" path="res://Game Logic/object/plants/plant_component.gd" id="3_yj8a3"]
 [ext_resource type="Script" uid="uid://dq4ap3sv81447" path="res://Game Logic/data/inventory/loot/loot_table.gd" id="4_lhvs6"]
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="4_ocqlm"]
 [ext_resource type="Script" uid="uid://c86dq5bxucb0f" path="res://Game Logic/object/plants/grass_appearance.gd" id="5_j7b3c"]
 
-[sub_resource type="Resource" id="Resource_psnft"]
+[sub_resource type="Resource" id="Resource_oq85o"]
 script = ExtResource("2_l5d4k")
-weight = 100
+chance = 1.0
+item_data = ExtResource("3_bx0rv")
+amount = 3
+
+[sub_resource type="Resource" id="Resource_2oma8"]
+script = ExtResource("2_l5d4k")
+chance = 0.505
+item_data = ExtResource("3_bx0rv")
+amount = 2
+
+[sub_resource type="Resource" id="Resource_lhq4j"]
+script = ExtResource("2_l5d4k")
+chance = 0.45
+item_data = ExtResource("3_bx0rv")
+amount = 1
+
+[sub_resource type="Resource" id="Resource_ps71e"]
+script = ExtResource("2_l5d4k")
+chance = 0.21
+item_data = ExtResource("3_idunb")
+amount = 1
+
+[sub_resource type="Resource" id="Resource_5exnj"]
+script = ExtResource("2_l5d4k")
+chance = 0.21
 item_data = ExtResource("3_idunb")
 amount = 1
 
 [sub_resource type="Resource" id="Resource_5uwr3"]
 script = ExtResource("4_lhvs6")
-guaranteed_drops = Array[ExtResource("2_l5d4k")]([SubResource("Resource_psnft")])
-loot_table_entries = Array[ExtResource("2_l5d4k")]([])
+loot_table_entries = Array[ExtResource("2_l5d4k")]([SubResource("Resource_oq85o"), SubResource("Resource_2oma8"), SubResource("Resource_lhq4j"), SubResource("Resource_ps71e"), SubResource("Resource_5exnj")])
 num_rolls = 1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l825y"]
@@ -129,11 +153,12 @@ position = Vector2(0, -48)
 
 [node name="PlantComponent" type="Node2D" parent="."]
 script = ExtResource("3_yj8a3")
-growth_stage_minutes = Array[int]([0, 5, 10])
+growth_stage_minutes = Array[int]([0, 1440, 2880])
 collision = Array[bool]([false, false, false])
 destroy_on_harvest = true
 prop_days = 1.5
 propagation_type = "close"
+target_moisture = 1
 
 [node name="InteractionHitbox" type="StaticBody2D" parent="."]
 collision_layer = 0

@@ -139,7 +139,7 @@ func put_down_plants(world_data: WorldData) -> void:
 									m = 3
 								else:
 									m = 0
-								poof_grass(Location.new(Vector2i(i,j), Vector2i(x-modx, y-mody)), object.object_id, m, world_data.chunk_datas)
+								#poof_grass(Location.new(Vector2i(i,j), Vector2i(x-modx, y-mody)), object.object_id, m, world_data.chunk_datas)
 							else:
 								square_data.object_data = [null, object, null]
 							
@@ -169,7 +169,7 @@ func poof_grass(loc: Location, object_id: String, required_moist: int, chunks: D
 	pass
 
 func poof_grass_recursion_helper(loc: Location, chunks: Dictionary, depth: int) -> Array[Location]:
-	if depth == 0:
+	if depth <= 0:
 		return []
 	var matrix := loc.get_neighbor_matrix()
 	var neighbors:Array[Location]

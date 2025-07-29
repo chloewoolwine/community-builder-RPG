@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ItemDataConsumable" load_steps=4 format=3 uid="uid://byba6hhfwv0i3"]
+
+[ext_resource type="Script" uid="uid://tejfnnfnstvt" path="res://Game Logic/data/inventory/item_data_consumable.gd" id="1_s814w"]
+[ext_resource type="Texture2D" uid="uid://cs8q567qlpjuh" path="res://Assets/items/Untitled_Artwork(6).png" id="2_6af2e"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a2gmd"]
+atlas = ExtResource("2_6af2e")
+region = Rect2(407, 44, 214, 250)
+
+[resource]
+script = ExtResource("1_s814w")
+heal_value = 1
+hunger_value = 10
+name = "Wild Strawberry"
+description = "Hard and full of seeds, they're still very sweet"
+magical = false
+magicalDescription = ""
+stackable = true
+texture = SubResource("AtlasTexture_a2gmd")
+placeable = false
+object_id = ""
+value = 1
+rarity = 1

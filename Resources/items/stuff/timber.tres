@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://coc8478dbgool"]
+
+[ext_resource type="Script" uid="uid://n78f88xryx5x" path="res://Game Logic/data/inventory/item_data.gd" id="1_42uh2"]
+[ext_resource type="Texture2D" uid="uid://b35cnifkxm6ny" path="res://Assets/items/wood.png" id="2_abj4u"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gxtji"]
+atlas = ExtResource("2_abj4u")
+
+[resource]
+script = ExtResource("1_42uh2")
+name = "Timber"
+description = "Logs from a fallen tree"
+magical = false
+magicalDescription = ""
+stackable = true
+texture = SubResource("AtlasTexture_gxtji")
+placeable = false
+object_id = ""
+value = 1
+rarity = 1
+metadata/_custom_type_script = "uid://n78f88xryx5x"

@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="ItemDataTool" load_steps=4 format=3 uid="uid://bttbsjkake846"]
+
+[ext_resource type="Script" uid="uid://cmusmcngq68cl" path="res://Game Logic/data/inventory/item_data_tool.gd" id="1_5h83j"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_oukvp"]
+load_path = "res://.godot/imported/#1 - Transparent Icons.png-66e482cdc506437ae5ff6b63757a4b91.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2574a"]
+atlas = SubResource("CompressedTexture2D_oukvp")
+region = Rect2(100, 324, 24, 24)
+
+[resource]
+script = ExtResource("1_5h83j")
+efficiency = 0
+type = 2
+name = "Hoe"
+description = "Disturbs the ground for planting."
+magical = false
+magicalDescription = ""
+stackable = false
+texture = SubResource("AtlasTexture_2574a")
+placeable = false
+required_space = Vector2i(1, 1)
+object_id = ""
+sellable = false
+value = 1
+rarity = 1

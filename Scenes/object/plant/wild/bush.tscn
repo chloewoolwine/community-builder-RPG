@@ -1,9 +1,25 @@
-[gd_scene load_steps=9 format=3 uid="uid://cscjf83p2disu"]
+[gd_scene load_steps=14 format=3 uid="uid://cscjf83p2disu"]
 
 [ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_7wsvk"]
+[ext_resource type="Script" uid="uid://c72fhodjm4b2c" path="res://Game Logic/data/inventory/loot/loot_table_entry.gd" id="2_hdsru"]
 [ext_resource type="Script" uid="uid://c3cgrr073uht8" path="res://Game Logic/object/plants/plant_appearance.gd" id="2_ovf4w"]
 [ext_resource type="Script" uid="uid://bndjcrkta02c4" path="res://Game Logic/object/plants/plant_component.gd" id="3_7qapg"]
+[ext_resource type="Resource" uid="uid://2e81mj4x8ahl" path="res://Resources/items/stuff/foliage.tres" id="3_oj7hg"]
+[ext_resource type="Script" uid="uid://dq4ap3sv81447" path="res://Game Logic/data/inventory/loot/loot_table.gd" id="4_boweu"]
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="4_hdsru"]
+
+[sub_resource type="Resource" id="Resource_kkt0v"]
+script = ExtResource("2_hdsru")
+chance = 1.0
+item_data = ExtResource("3_oj7hg")
+amount = 3
+metadata/_custom_type_script = "uid://c72fhodjm4b2c"
+
+[sub_resource type="Resource" id="Resource_esv50"]
+script = ExtResource("4_boweu")
+loot_table_entries = Array[ExtResource("2_hdsru")]([SubResource("Resource_kkt0v")])
+num_rolls = 1
+metadata/_custom_type_script = "uid://dq4ap3sv81447"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l825y"]
 size = Vector2(40, 40)
@@ -22,6 +38,7 @@ radius = 29.0689
 y_sort_enabled = true
 script = ExtResource("1_7wsvk")
 object_id = "plant_wild_bush"
+loot_table = SubResource("Resource_esv50")
 
 [node name="StepCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_l825y")

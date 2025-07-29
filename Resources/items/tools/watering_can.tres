@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ItemDataTool" load_steps=4 format=3 uid="uid://di8fcvn3313vx"]
+
+[ext_resource type="Script" uid="uid://cmusmcngq68cl" path="res://Game Logic/data/inventory/item_data_tool.gd" id="1_cqxq1"]
+[ext_resource type="Texture2D" uid="uid://cjjxdql4dl6j3" path="res://Assets/Testy Assets/#1 - Transparent Icons.png" id="2_5hvff"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4hbf3"]
+atlas = ExtResource("2_5hvff")
+region = Rect2(166, 609, 21, 30)
+
+[resource]
+script = ExtResource("1_cqxq1")
+efficiency = 1
+type = 6
+name = "Watering Can"
+description = "Water floors."
+magical = false
+magicalDescription = ""
+stackable = false
+texture = SubResource("AtlasTexture_4hbf3")
+placeable = false
+required_space = Vector2i(1, 1)
+object_id = ""
+sellable = false
+value = 1
+rarity = 1

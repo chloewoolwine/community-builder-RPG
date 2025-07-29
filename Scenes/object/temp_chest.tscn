@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c082efkkkwiy7" path="res://Game Logic/inventory/chest.gd" id="1_sqvli"]
 [ext_resource type="Script" uid="uid://j0kc2xvefmhi" path="res://Game Logic/data/inventory/inventory_data.gd" id="2_60rdi"]
 [ext_resource type="Script" uid="uid://ff7axvflmy38" path="res://Game Logic/data/inventory/slot_data.gd" id="3_mvhni"]
-[ext_resource type="Resource" uid="uid://dis5lo35vrtr2" path="res://Scenes/items/seeds/cabbage_seed.tres" id="4_vwybk"]
+[ext_resource type="Resource" uid="uid://dis5lo35vrtr2" path="res://Resources/items/seeds/cabbage_seed.tres" id="4_vwybk"]
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="5_atmvf"]
 [ext_resource type="Texture2D" uid="uid://cjjxdql4dl6j3" path="res://Assets/Testy Assets/#1 - Transparent Icons.png" id="6_p0m47"]
 

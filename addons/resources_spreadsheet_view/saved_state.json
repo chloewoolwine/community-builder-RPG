@@ -1,5 +1,16 @@
 {
   "column_properties": {
+    "res://Resources/items/": {
+      "metadata/_custom_type_script": {
+        "visibility": 0
+      },
+      "resource_local_to_scene": {
+        "visibility": 0
+      },
+      "resource_name": {
+        "visibility": 0
+      }
+    },
     "res://Scenes/items/": {
       "metadata/_custom_type_script": {
         "visibility": 0
@@ -12,6 +23,17 @@
       }
     },
     "res://Scenes/items/build/": {
+      "metadata/_custom_type_script": {
+        "visibility": 0
+      },
+      "resource_local_to_scene": {
+        "visibility": 0
+      },
+      "resource_name": {
+        "visibility": 0
+      }
+    },
+    "res://Scenes/items/seeds/": {
       "metadata/_custom_type_script": {
         "visibility": 0
       },
@@ -48,7 +70,9 @@
   "recent_paths": [
     "res://Scenes/object/plant/crop/",
     "res://Scenes/items/build/",
-    "res://Scenes/items/"
+    "res://Scenes/items/",
+    "res://Scenes/items/seeds/",
+    "res://Resources/items/"
   ],
   "table_functions": {
 

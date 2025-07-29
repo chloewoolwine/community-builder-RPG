@@ -13,7 +13,7 @@ signal propagate_plant(location: Vector2i, object_id: String)
 @export var destroy_on_harvest: bool
 @export var prop_days: float = 0 ## how many days in between propagation attempts
 @export_enum("close", "medium", "far", "custom") var propagation_type : String
-@export_range(1, 5) var target_moisture: int
+@export_range(0, 5) var target_moisture: int
 
 var mature : bool
 # this is seperate from last_loaded_minute- age could be changed with bonuses, while last_loaded_minute is exact
@@ -34,9 +34,11 @@ func minute_pass(day:int, hour:int, minute:int) -> void:
 	if age != -1:  #-1 is dead
 		# if the moisture is wrong, will literally grow slower 
 		# but, not trees
-		if moisture != target_moisture and !generic_plant.is_tree:
-			if day % 2 == 0:
-				set_age(age+age_multiplier)
+		if moisture < target_moisture and !generic_plant.is_tree:
+			pass
+			#TODO: balance, maybe change moisture rules later
+			#if current_minute % 2 == 0:
+				#set_age(age+age_multiplier)
 		else:
 			set_age(age+age_multiplier)
 			
@@ -78,7 +80,7 @@ func set_age(value: int) -> void:
 			if current_growth_stage < collision.size():
 				change_stage.emit(current_growth_stage, collision[current_growth_stage])
 			else:
-				change_stage.emit(current_growth_stage, false)
+				change_stage.emit(current_growth_stage, collision[collision.size()-1])
 		if current_growth_stage == growth_stage_minutes.size()-1:
 			mature = true
 

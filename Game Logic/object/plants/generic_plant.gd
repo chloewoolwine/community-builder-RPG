@@ -61,27 +61,32 @@ func harvest() -> void:
 	if is_tree:
 		axe_hits -= 1
 		print("harvest axe hits: ", axe_hits)
-		spawn_pickups.emit(self.global_position, loot_table.roll(RandomNumberGenerator.new(), 1, false))
-		if axe_hits <= 0: 
+		generate_pickups_and_signal(1)
+		if axe_hits == 0:
 			plant_appearance.playharvestanim()
-			generate_pickups_and_signal()
-			object_removed.emit(object_data)
+			generate_pickups_and_signal(5)
 			plant_component.set_age(-1)
+		if axe_hits < 0 && axe_hits > -5:
+			generate_pickups_and_signal(1)
+		if axe_hits <= -5: 
+			generate_pickups_and_signal(2)
+			object_removed.emit(object_data)
 	else:
 		if plant_component.destroy_on_harvest:
 			destroy() 
 		else:
 			plant_appearance.playharvestanim()
-			generate_pickups_and_signal()
+			generate_pickups_and_signal(1)
 		
-func generate_pickups_and_signal() -> void:
+func generate_pickups_and_signal(num_rolls: int) -> void:
 	if loot_table:
-		var pickups: Array[ItemData] = loot_table.roll(RandomNumberGenerator.new())
+		var pickups: Array[ItemData] ##TODO: this needs to be assined to the seed jfc
+		pickups.append_array(loot_table.roll(RandomNumberGenerator.new(),num_rolls))
 		spawn_pickups.emit(self.global_position, pickups)
 
 func destroy() -> void: 
 	plant_appearance.playharvestanim()
-	generate_pickups_and_signal()
+	generate_pickups_and_signal(1)
 	if plant_component.destroy_on_harvest:
 		object_removed.emit(object_data)
 		self.queue_free()

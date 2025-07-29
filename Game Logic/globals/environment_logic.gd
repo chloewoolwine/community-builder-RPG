@@ -53,6 +53,10 @@ static func run_water_calc(world: WorldData, chunks_around:Array, _is_raining: b
 			if square_data.water_saturation > 3:
 				all_water.append(Location.new(square_loc, chunk_loc))
 				#print("water at: ", square_loc, chunk_loc)
+			
+			#temp-probably remove later
+			if square_data.water_saturation == 0:
+				square_data.water_saturation = 1
 	
 	var tier3: Array[Location]
 	var tier2: Array[Location]

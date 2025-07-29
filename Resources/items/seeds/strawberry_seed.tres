@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="ItemDataSeed" load_steps=4 format=3 uid="uid://cjftm0sbao7xa"]
+
+[ext_resource type="Script" uid="uid://puad1pr1ooms" path="res://Game Logic/data/inventory/item_data_seed.gd" id="1_o6n46"]
+[ext_resource type="Texture2D" uid="uid://bjchhme7ttdnh" path="res://Assets/items/export202408152110229190.png" id="2_3uyto"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5c21o"]
+atlas = ExtResource("2_3uyto")
+
+[resource]
+script = ExtResource("1_o6n46")
+plant_name = "strawberry"
+spring = true
+summer = true
+autumn = false
+winter = false
+quality = 0
+name = "Strawberry Seeds"
+description = "Getting a single strawberry seed usually isn't worth it- if you leave the fruit on, they propagate on their own. "
+magical = false
+magicalDescription = ""
+stackable = true
+texture = SubResource("AtlasTexture_5c21o")
+placeable = true
+object_id = "plant_crop_strawberry"
+value = 1
+rarity = 1

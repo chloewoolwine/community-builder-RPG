@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemDataSeed" load_steps=4 format=3 uid="uid://cban76oen1nkj"]
+
+[ext_resource type="Script" uid="uid://puad1pr1ooms" path="res://Game Logic/data/inventory/item_data_seed.gd" id="1_syfoa"]
+[ext_resource type="Texture2D" uid="uid://bjchhme7ttdnh" path="res://Assets/items/export202408152110229190.png" id="2_3pvvh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5c21o"]
+atlas = ExtResource("2_3pvvh")
+
+[resource]
+script = ExtResource("1_syfoa")
+plant_name = "oak tree"
+spring = true
+summer = true
+autumn = true
+winter = true
+quality = 0
+name = "Acorn"
+description = "You can grind these into flour, if you have a lot of time on your hands."
+magical = false
+magicalDescription = ""
+stackable = true
+texture = SubResource("AtlasTexture_5c21o")
+placeable = true
+required_space = Vector2i(3, 3)
+object_id = "plant_tree_oak"
+sellable = true
+value = 1
+rarity = 1

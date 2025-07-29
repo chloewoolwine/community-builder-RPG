@@ -10,7 +10,10 @@ const MAX_STACK_SIZE: int = 99
 @export_range(1, MAX_STACK_SIZE) var quantity: int = 1: set = set_quantity
 
 func can_merge(other_slot_data: SlotData) -> bool:
-	return item_data == other_slot_data.item_data && item_data.stackable && quantity < MAX_STACK_SIZE
+	var same_item:bool = item_data == other_slot_data.item_data && item_data.stackable
+	var enough_spots:bool = quantity < MAX_STACK_SIZE
+	var same_rarity:bool = item_data.rarity == other_slot_data.item_data.rarity
+	return same_item && enough_spots && same_rarity
 
 #true if merged without overflow. false if overflowed
 func merge(other_slot_data: SlotData) -> bool:

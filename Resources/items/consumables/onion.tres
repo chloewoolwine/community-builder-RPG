@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ItemDataConsumable" load_steps=4 format=3 uid="uid://d3rrut6m70olb"]
+
+[ext_resource type="Script" uid="uid://tejfnnfnstvt" path="res://Game Logic/data/inventory/item_data_consumable.gd" id="1_5uvid"]
+[ext_resource type="Texture2D" uid="uid://cs8q567qlpjuh" path="res://Assets/items/Untitled_Artwork(6).png" id="2_yqp8p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5uvid"]
+atlas = ExtResource("2_yqp8p")
+region = Rect2(181, 37, 212, 284)
+margin = Rect2(83.805, 3.555, 141.86, 0)
+
+[resource]
+script = ExtResource("1_5uvid")
+heal_value = 1
+hunger_value = 20
+name = "Onion"
+description = "Fat, round, and best after it's cooked."
+magical = false
+magicalDescription = ""
+stackable = true
+texture = SubResource("AtlasTexture_5uvid")
+placeable = false
+object_id = ""
+value = 1
+rarity = 1

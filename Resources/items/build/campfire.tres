@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3 uid="uid://cxa6ratsixfje"]
+
+[ext_resource type="Script" uid="uid://n78f88xryx5x" path="res://Game Logic/data/inventory/item_data.gd" id="1_wbb4v"]
+
+[resource]
+script = ExtResource("1_wbb4v")
+name = "Campfire"
+description = "Great for cooking, lighting, and warmth in the winter."
+magical = false
+magicalDescription = ""
+stackable = false
+placeable = true
+required_space = Vector2i(1, 1)
+object_id = "build_object_campfire"
+value = 1
+rarity = 1

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ItemDataConsumable" load_steps=4 format=3 uid="uid://83wyukdl5xd7"]
+
+[ext_resource type="Script" uid="uid://tejfnnfnstvt" path="res://Game Logic/data/inventory/item_data_consumable.gd" id="1_kjxif"]
+[ext_resource type="Texture2D" uid="uid://cs8q567qlpjuh" path="res://Assets/items/Untitled_Artwork(6).png" id="2_kjxif"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kjxif"]
+atlas = ExtResource("2_kjxif")
+region = Rect2(609, 47, 224, 229)
+
+[resource]
+script = ExtResource("1_kjxif")
+heal_value = 1
+hunger_value = 20
+name = "Strawberry"
+description = "A sweet, red little fruit."
+magical = false
+magicalDescription = ""
+stackable = true
+texture = SubResource("AtlasTexture_kjxif")
+placeable = false
+object_id = ""
+value = 1
+rarity = 1

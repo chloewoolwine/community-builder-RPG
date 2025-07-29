@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ItemDataConsumable" load_steps=4 format=3 uid="uid://clcehfhlk37mi"]
+
+[ext_resource type="Script" uid="uid://tejfnnfnstvt" path="res://Game Logic/data/inventory/item_data_consumable.gd" id="1_2jtqy"]
+[ext_resource type="Texture2D" uid="uid://bnle6rbfrfhjh" path="res://Assets/items/export202408152248318310.png" id="2_ttmhi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h736r"]
+atlas = ExtResource("2_ttmhi")
+
+[resource]
+script = ExtResource("1_2jtqy")
+heal_value = 1
+hunger_value = 10
+name = "fish"
+description = "this is some kind of fish. he's so sorry he can't be more specific"
+magical = false
+magicalDescription = ""
+stackable = true
+texture = SubResource("AtlasTexture_h736r")
+placeable = false
+object_id = ""
+value = 1
+rarity = 1

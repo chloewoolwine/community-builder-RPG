@@ -1,4 +1,4 @@
-[gd_scene load_steps=157 format=3 uid="uid://dy236j24tdfmr"]
+[gd_scene load_steps=156 format=3 uid="uid://dy236j24tdfmr"]
 
 [ext_resource type="Script" uid="uid://bjjblaytsdioe" path="res://Game Logic/entity/player/player.gd" id="1_pwtpg"]
 [ext_resource type="Script" uid="uid://24l8lsvok70c" path="res://Game Logic/entity/player/player_action_handler.gd" id="2_c3tp2"]
@@ -13,7 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://f418q6xspp1w" path="res://Scenes/combat/hit_box.tscn" id="9_ict53"]
 [ext_resource type="Texture2D" uid="uid://da0bxkbsh1hjv" path="res://Assets/misc/tile_indicator.png" id="10_ypkgf"]
 [ext_resource type="Script" uid="uid://b1dg7b6hoqvmm" path="res://Game Logic/world/tile_indicator.gd" id="11_msv3g"]
-[ext_resource type="PackedScene" uid="uid://bx67biud0kdck" path="res://Scenes/Entities/elevation_handler.tscn" id="14_1tqe3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ejf0w"]
 atlas = ExtResource("3_rss0s")
@@ -1836,7 +1835,7 @@ scale = Vector2(15.6813, -31.4585)
 shape = SubResource("CapsuleShape2D_ujgxj")
 
 [node name="VelocityHandler" parent="." node_paths=PackedStringArray("elevationhandler") instance=ExtResource("7_djeui")]
-elevationhandler = NodePath("../ElevationHandler")
+elevationhandler = NodePath("")
 
 [node name="AnimationHandler" parent="." node_paths=PackedStringArray("sprites", "animation_player", "animation_tree") instance=ExtResource("8_tfck8")]
 y_sort_enabled = true
@@ -1875,8 +1874,4 @@ visible = false
 texture = ExtResource("10_ypkgf")
 script = ExtResource("11_msv3g")
 
-[node name="ElevationHandler" parent="." instance=ExtResource("14_1tqe3")]
-
 [connection signal="animation_finished" from="AnimationHandler/AnimationTree" to="." method="_on_animation_tree_animation_finished"]
-
-[editable path="ElevationHandler"]
