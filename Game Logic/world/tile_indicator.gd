@@ -1,13 +1,9 @@
 extends Sprite2D
 class_name Indicator
 
-signal move_me(me: Indicator, player_spot: Vector2, item: ItemData)
-signal placement(desired_spot: Vector2, elevation:ElevationLayer, item: ItemData)
-signal modify(despired_spot: Vector2, layer: ElevationLayer, action: String)
-
-@onready var elevation_handler: ElevationHandler = $"../ElevationHandler"
-
-var temp: ElevationLayer
+signal move_me(me: Indicator, player_pos: Vector2, item: ItemData)
+signal placement(desired_spot: Vector2, player_pos: Vector2, item: ItemData)
+signal modify(despired_spot: Vector2, player_pos: Vector2, action: String)
 
 # Indicator calls "move_me" when in play
 # "move_me" is picked up my the WorldManager who retrieves tilemap info for it
@@ -19,7 +15,7 @@ func _ready() -> void:
 
 #get_parent is bad practice, but im not sure how else to do this w/out hackyness
 func _process(_delta: float) -> void:
-	if self.visible && elevation_handler != null:
+	if self.visible:
 		move_me.emit(self, get_parent().global_position, get_parent().get_equiped_item().item_data)
 	if valid_place:
 		#animation
@@ -33,18 +29,12 @@ func attempt_modify(_player_loc: Vector2, action: String) -> bool:
 		print("too far :C")
 		return false
 	print("modify attempted")
-	if elevation_handler == null:
-		modify.emit(self.global_position, temp, action)
-		return true
-	modify.emit(self.global_position, elevation_handler.current_map_layer, action)
+	modify.emit(self.global_position, get_parent().global_position, action)
 	return true
 
 func signal_placement_if_valid(item: ItemData, _player_loc:Vector2) -> bool:
 	if valid_place and self.global_position.distance_to(_player_loc) <= 400:
-		if elevation_handler == null:
-			placement.emit(self.global_position, temp, item)
-			return true
-		placement.emit(self.global_position, elevation_handler.current_map_layer, item)
+		placement.emit(self.global_position, get_parent().global_position, item)
 		return true
 	return false
 
@@ -72,6 +62,3 @@ func set_vis_for_tool(item_data: ItemDataTool) -> void:
 			self.visible = true
 		ItemDataTool.WeaponType.ROD:
 			self.visible = false
-
-func get_elevation() -> int:
-	return elevation_handler.current_elevation

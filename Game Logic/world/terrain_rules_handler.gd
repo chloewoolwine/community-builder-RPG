@@ -399,3 +399,6 @@ func request_square_at(square: Vector2i, chunk: Vector2i) -> SquareData:
 	if chunk in loaded_chunks:
 		return loaded_chunks[chunk].square_datas[square]
 	return null
+
+func get_elevation_at(num: int) -> ElevationLayer:
+	return elevations[num]

@@ -347,7 +347,9 @@ func change_water(loc: Vector2, new_water: int) -> void:
 
 # Returns true if the modification is successful
 # this probably isnt the best way to do this
-func modify_tilemap(loc: Vector2, layer: ElevationLayer, action: String) -> bool:
+func modify_tilemap(loc: Vector2, origin_pos: Vector2, action: String) -> bool:
+	var location := convert_to_chunks_at_world_pos(loc)
+	var layer: ElevationLayer = trh.get_elevation_at(_world_data.chunk_datas[location[1]].square_datas[location[0]].elevation)
 	#print("global: ", loc)
 	if layer == null:
 		#print("modification failed, layer was null at global: ", loc) 
@@ -392,10 +394,9 @@ func convert_to_chunks_at_world_pos(loc: Vector2) -> Array[Vector2i]:
 	arr.append_array([square_pos, chunk_pos])
 	return arr
 	
-# Shaders can take indicators job: 
-# https://www.youtube.com/watch?v=7nTQA_6CL6M
 func move_indicator(indicator: Indicator, player_spot: Vector2, item: ItemData)-> void:
-	var player_layer: ElevationLayer = player.elevation_handler.current_map_layer
+	var location := convert_to_chunks_at_world_pos(player_spot)
+	var player_layer: ElevationLayer = trh.get_elevation_at(_world_data.chunk_datas[location[1]].square_datas[location[0]].elevation)
 	var old := indicator.global_position
 	indicator.global_position = player_layer.map_to_local(player_layer.local_to_map(get_global_mouse_position()))
 	if indicator.global_position != old: 

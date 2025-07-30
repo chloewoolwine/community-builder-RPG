@@ -19,6 +19,7 @@ magical = false
 magicalDescription = ""
 stackable = false
 texture = SubResource("AtlasTexture_bmfqi")
+quality = 0
 placeable = false
 required_space = Vector2i(1, 1)
 object_id = ""

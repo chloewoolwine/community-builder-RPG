@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="PlantGenData" load_steps=2 format=3 uid="uid://j7hmump1w3ht"]
+
+[ext_resource type="Script" uid="uid://cw3bscpglfbb7" path="res://Game Logic/world/generation/plant_gen_data.gd" id="1_nnfyy"]
+
+[resource]
+script = ExtResource("1_nnfyy")
+object_id = ""
+type = 0
+stage_num = 0
+stage_mature = 0
+target_moisture = 0
+target_tile = 0
+target_elevation = 0
+target_nutrition = 0
+pollution_tolerance = 0
+spread_distance = 0
+density = 0
+rarity = 0
+metadata/_custom_type_script = "uid://cw3bscpglfbb7"

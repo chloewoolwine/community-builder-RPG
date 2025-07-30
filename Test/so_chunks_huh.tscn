@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=4 uid="uid://bj6lndqpmd2as"]
 
-[ext_resource type="Script" uid="uid://dqyo70qnqpuvd" path="res://Test/world_generator_v1.gd" id="1_xkwe4"]
+[ext_resource type="Script" uid="uid://dqyo70qnqpuvd" path="res://Game Logic/world/generation/world_generator.gd" id="1_xkwe4"]
 [ext_resource type="PackedScene" uid="uid://1b78ipp0k2t8" path="res://Scenes/world/elevation_layer.tscn" id="4_jf5x0"]
 [ext_resource type="Script" uid="uid://diuxqukbk35hy" path="res://Game Logic/world/world_manager.gd" id="5_vvugq"]
 [ext_resource type="Script" uid="uid://vjmm4ct83rqu" path="res://Game Logic/world/terrain_rules_handler.gd" id="6_od1mn"]

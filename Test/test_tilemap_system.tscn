@@ -15,7 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://n1jru5gr22no" path="res://Assets/Testy Assets/map edit symbols/Asset 77@0.5x.png" id="7_jqxbs"]
 [ext_resource type="Script" uid="uid://b1dg7b6hoqvmm" path="res://Game Logic/world/tile_indicator.gd" id="8_g71xc"]
 [ext_resource type="Texture2D" uid="uid://b71wkniwm1shg" path="res://Assets/Testy Assets/map edit symbols/Asset 81@0.5x.png" id="8_tgey8"]
-[ext_resource type="Script" uid="uid://dqyo70qnqpuvd" path="res://Test/world_generator_v1.gd" id="13_i6roh"]
+[ext_resource type="Script" uid="uid://dqyo70qnqpuvd" path="res://Game Logic/world/generation/world_generator.gd" id="13_i6roh"]
 [ext_resource type="Texture2D" uid="uid://bnxf6cstcmjft" path="res://Assets/Testy Assets/map edit symbols/paintbrush.png" id="13_ragj0"]
 [ext_resource type="FastNoiseLite" uid="uid://bbqhvyutia2e2" path="res://Test/data/noise/doesntworkanymorenoise.tres" id="14_16di6"]
 [ext_resource type="Texture2D" uid="uid://codo8ckb42t08" path="res://Assets/Testy Assets/map edit symbols/eraser.png" id="14_dmrar"]

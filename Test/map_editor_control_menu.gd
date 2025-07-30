@@ -54,11 +54,11 @@ func _on_brush_pressed() -> void:
 
 func _on_eraser_pressed() -> void:
 	paint = false
-
-const POPLAR_POD = preload("res://Scenes/items/seeds/poplar_pod.tres")
-const THATCH_ROOF = preload("res://Scenes/items/build/thatch_roof.tres")
-const WOOD_WALL = preload("res://Scenes/items/build/wood_wall.tres")
-const WOOD_DOOR = preload("res://Scenes/items/build/wood_door.tres")
+#
+#const POPLAR_POD = preload("res://Scenes/items/seeds/poplar_pod.tres")
+#const THATCH_ROOF = preload("res://Scenes/items/build/thatch_roof.tres")
+#const WOOD_WALL = preload("res://Scenes/items/build/wood_wall.tres")
+#const WOOD_DOOR = preload("res://Scenes/items/build/wood_door.tres")
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
 		var mouse: Vector2 = world_manager.get_global_mouse_position()
