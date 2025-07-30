@@ -1,8 +1,12 @@
-[gd_scene load_steps=39 format=3 uid="uid://df2qdt4sw2ptf"]
+[gd_scene load_steps=41 format=3 uid="uid://df2qdt4sw2ptf"]
 
 [ext_resource type="Texture2D" uid="uid://b6fvpx48holfe" path="res://Assets/entity/enemy/dust_bunny.png" id="1_rc5oa"]
 [ext_resource type="PackedScene" uid="uid://f418q6xspp1w" path="res://Scenes/combat/hit_box.tscn" id="2_4ng2g"]
 [ext_resource type="PackedScene" uid="uid://erdkvldy5ggp" path="res://Scenes/combat/health_component.tscn" id="3_rt1ng"]
+[ext_resource type="PackedScene" uid="uid://ecqwapkpsdor" path="res://Assets/Testy Assets/glb/knightpr.tscn" id="4_tgdti"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_tgdti"]
+viewport_path = NodePath("SubViewport")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f5b05"]
 atlas = ExtResource("1_rc5oa")
@@ -265,6 +269,14 @@ collision_layer = 0
 collision_mask = 0
 motion_mode = 1
 
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -470.0
+offset_top = -467.0
+offset_right = 42.0
+offset_bottom = 45.0
+texture = SubResource("ViewportTexture_tgdti")
+stretch_mode = 4
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 1
 y_sort_enabled = true
@@ -288,3 +300,15 @@ collision_mask = 2
 [node name="Hurtbox" type="CollisionShape2D" parent="HealthHandler"]
 scale = Vector2(6.2, 6.84)
 shape = SubResource("CircleShape2D_ufgsa")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+
+[node name="knightpr2" parent="SubViewport" instance=ExtResource("4_tgdti")]
+transform = Transform3D(1, 0, 0, 0, 0.970418, 0.241431, 0, -0.241431, 0.970418, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.961021, 0.276476, 0, -0.276476, 0.961021, 0, 2.118, 1.8417)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.054358, 2.79298, 0)
