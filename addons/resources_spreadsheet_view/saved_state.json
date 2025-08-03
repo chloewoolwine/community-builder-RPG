@@ -11,6 +11,17 @@
         "visibility": 0.0
       }
     },
+    "res://Resources/plants/": {
+      "metadata/_custom_type_script": {
+        "visibility": 0
+      },
+      "resource_local_to_scene": {
+        "visibility": 0
+      },
+      "resource_name": {
+        "visibility": 0
+      }
+    },
     "res://Scenes/items/": {
       "metadata/_custom_type_script": {
         "visibility": 0.0
@@ -72,7 +83,8 @@
     "res://Scenes/items/build/",
     "res://Scenes/items/",
     "res://Scenes/items/seeds/",
-    "res://Resources/items/"
+    "res://Resources/items/",
+    "res://Resources/plants/"
   ],
   "table_functions": {
     "filter": [

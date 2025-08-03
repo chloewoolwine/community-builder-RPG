@@ -12,8 +12,8 @@ signal propagate_plant(location: Vector2i, object_id: String)
 @export var collision: Array[bool] ## if the growth stage makes the tileimmovable
 @export var destroy_on_harvest: bool
 @export var prop_days: float = 0 ## how many days in between propagation attempts
-@export_enum("close", "medium", "far", "custom") var propagation_type : String
-@export_range(0, 5) var target_moisture: int
+
+@export var plant_gen_data: PlantGenData
 
 var mature : bool
 # this is seperate from last_loaded_minute- age could be changed with bonuses, while last_loaded_minute is exact
@@ -34,7 +34,7 @@ func minute_pass(day:int, hour:int, minute:int) -> void:
 	if age != -1:  #-1 is dead
 		# if the moisture is wrong, will literally grow slower 
 		# but, not trees
-		if moisture < target_moisture and !generic_plant.is_tree:
+		if moisture < plant_gen_data.target_moisture and !generic_plant.is_tree:
 			pass
 			#TODO: balance, maybe change moisture rules later
 			#if current_minute % 2 == 0:
@@ -45,18 +45,9 @@ func minute_pass(day:int, hour:int, minute:int) -> void:
 	if mature and prop_days > 0:
 		var prop_chance: float = 1.0 / float(1440*prop_days) # magic number- minutes per day
 		if randf() < prop_chance:
-			print("tree at ", generic_plant.object_data.position, " propagating")
+			#print("tree at ", generic_plant.object_data.position, " propagating")
 			var my_loc := Location.new(generic_plant.object_data.position, generic_plant.object_data.chunk)
-			var new_loc : Location
-			if propagation_type == "close":
-				new_loc = my_loc.get_location(Vector2i(randi_range(-2, 2), randi_range(-2, 2)))
-			elif propagation_type == "medium":
-				new_loc = my_loc.get_location(Vector2i(randi_range(-10, 10), randi_range(-10, 10)))
-			elif propagation_type == "far":
-				new_loc = my_loc.get_location(Vector2i(randi_range(-20, 20), randi_range(-20, 20)))
-			else:
-				#custom is not implemented yet!
-				new_loc = my_loc.get_location(Vector2i(-1, 1))
+			var new_loc := my_loc.get_location(Vector2i(randi_range(-plant_gen_data.spread_distance, plant_gen_data.spread_distance), randi_range(-plant_gen_data.spread_distance, plant_gen_data.spread_distance)))
 			propagate_plant.emit(new_loc, generic_plant.object_id)
 
 func set_age(value: int) -> void:

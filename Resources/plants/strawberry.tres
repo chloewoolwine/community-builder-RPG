@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="PlantGenData" load_steps=2 format=3 uid="uid://donhulmr2y23l"]
+
+[ext_resource type="Script" uid="uid://cw3bscpglfbb7" path="res://Game Logic/world/generation/plant_gen_data.gd" id="1_dsfod"]
+
+[resource]
+script = ExtResource("1_dsfod")
+object_id = "plant_crop_onion"
+type = 4
+size = Vector2i(1, 1)
+target_moisture = 3
+target_tiles = Array[int]([0, 1])
+target_elevation = 0
+target_nutrition = 0
+pollution_tolerance = 0
+shallow_water = false
+deep_water = false
+spread_distance = 1
+spread_chance = 0.2
+density = 0
+rarity = 4
+metadata/_custom_type_script = "uid://cw3bscpglfbb7"

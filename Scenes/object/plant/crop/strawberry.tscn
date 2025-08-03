@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://c4fsgf5tactjp"]
+[gd_scene load_steps=27 format=3 uid="uid://c4fsgf5tactjp"]
 
 [ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_q3gg6"]
 [ext_resource type="Script" uid="uid://c3cgrr073uht8" path="res://Game Logic/object/plants/plant_appearance.gd" id="2_27dju"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://bndjcrkta02c4" path="res://Game Logic/object/plants/plant_component.gd" id="3_oim8e"]
 [ext_resource type="Resource" uid="uid://cjftm0sbao7xa" path="res://Resources/items/seeds/strawberry_seed.tres" id="4_75800"]
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="4_g21qu"]
+[ext_resource type="Resource" uid="uid://donhulmr2y23l" path="res://Resources/plants/strawberry.tres" id="8_astqg"]
 
 [sub_resource type="Resource" id="Resource_75800"]
 script = ExtResource("2_oim8e")
@@ -101,8 +102,7 @@ script = ExtResource("3_oim8e")
 growth_stage_minutes = Array[int]([0, 1440, 2880, 4320, 7200, 11520])
 collision = Array[bool]([false, false, false, false, false])
 prop_days = 1.0
-propagation_type = "close"
-target_moisture = 3
+plant_gen_data = ExtResource("8_astqg")
 
 [node name="InteractionHitbox" type="StaticBody2D" parent="."]
 script = ExtResource("4_g21qu")

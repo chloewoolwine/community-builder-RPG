@@ -3,12 +3,13 @@ class_name Indicator
 
 signal move_me(me: Indicator, player_pos: Vector2, item: ItemData)
 signal placement(desired_spot: Vector2, player_pos: Vector2, item: ItemData)
-signal modify(despired_spot: Vector2, player_pos: Vector2, action: String)
+signal modify(despired_spot: Location, player_pos: Vector2, action: String)
 
 # Indicator calls "move_me" when in play
 # "move_me" is picked up my the WorldManager who retrieves tilemap info for it
 # and then sets valid_place
 var valid_place: bool = false
+var current_spot:Location
 
 func _ready() -> void:
 	self.scale = Vector2.ONE/self.get_parent().global_transform.get_scale()
@@ -17,6 +18,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if self.visible:
 		move_me.emit(self, get_parent().global_position, get_parent().get_equiped_item().item_data)
+	
 	if valid_place:
 		#animation
 		pass 
@@ -28,8 +30,10 @@ func attempt_modify(_player_loc: Vector2, action: String) -> bool:
 	if self.global_position.distance_to(_player_loc) > 400: 
 		print("too far :C")
 		return false
+	if current_spot == null:
+		return false
 	print("modify attempted")
-	modify.emit(self.global_position, get_parent().global_position, action)
+	modify.emit(current_spot, get_parent().global_position, action)
 	return true
 
 func signal_placement_if_valid(item: ItemData, _player_loc:Vector2) -> bool:

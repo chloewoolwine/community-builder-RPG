@@ -160,21 +160,17 @@ func check_placement_validity(ind: Indicator, player_spot:Vector2, player_layer:
 	if ind.global_position.distance_to(player_spot) > 400:
 		ind.valid_place = false
 		return false
-	if player_layer != trh.get_topmost_layer_at_global_pos(ind.global_position):
+	if player_layer.elevation != trh.request_square_at_loc(ind.current_spot).elevation:
 		ind.valid_place = false
 		return false
 		
 	var split := item.object_id.split("_")
-	var arr: Array[Vector2i] = convert_to_chunks_at_world_pos(ind.global_position)
-	if arr.size() < 2:
-		push_error("world manager: ", item.object_id, " cannot be placed due to bad array. stuff: ", arr)
-		ind.valid_place = false
-		return false
+	print("indicator current spot: ", ind.current_spot)
 	if split[0] == "build":
-		ind.valid_place = _build_object_placement_validity(item, split[1], arr[0], arr[1])
+		ind.valid_place = _build_object_placement_validity(item, split[1], ind.current_spot.position,ind.current_spot.chunk)
 		return ind.valid_place 
 	if split[0] == "plant":
-		ind.valid_place = _plant_object_placement_validity(item, split[1], arr[0], arr[1])
+		ind.valid_place = _plant_object_placement_validity(item, split[1], ind.current_spot.position, ind.current_spot.chunk)
 		return ind.valid_place
 	# TODO: other item types (plants, nature, crafted)
 	
@@ -347,23 +343,18 @@ func change_water(loc: Vector2, new_water: int) -> void:
 
 # Returns true if the modification is successful
 # this probably isnt the best way to do this
-func modify_tilemap(loc: Vector2, origin_pos: Vector2, action: String) -> bool:
-	var location := convert_to_chunks_at_world_pos(loc)
-	var layer: ElevationLayer = trh.get_elevation_at(_world_data.chunk_datas[location[1]].square_datas[location[0]].elevation)
-	#print("global: ", loc)
+func modify_tilemap(loc: Location, _origin_pos: Vector2, action: String) -> bool:
+	var layer: ElevationLayer = trh.get_elevation_at(_world_data.chunk_datas[loc.chunk].square_datas[loc.position].elevation)
+	print("global: ", loc)
 	if layer == null:
-		#print("modification failed, layer was null at global: ", loc) 
-		return false
-	if layer != trh.get_topmost_layer_at_global_pos(loc):
-		return false
-	var positions:Array[Vector2i] = convert_to_chunks_at_world_pos(loc)
+		print("modification failed, layer was null at global: ", loc) 
 	
 	if action == "water":
-		trh.water_square_at(positions[0], positions[1])
+		trh.water_square_at(loc)
 	if action == "till": 
-		trh.apply_floor_at(positions[0], positions[1], action)
+		trh.apply_floor_at(loc, action)
 	if action == "remove_floor":
-		trh.remove_floor_at(positions[0], positions[1])
+		trh.remove_floor_at(loc)
 	return true
 
 func get_objects_at_world_pos(loc: Vector2) -> Array[ObjectData]:
@@ -380,6 +371,7 @@ func convert_to_chunks_at_world_pos(loc: Vector2) -> Array[Vector2i]:
 	if layer == null:
 		return arr
 	var local: Vector2i = layer.local_to_map(layer.to_local(loc))
+	#print("raw local: ", local)
 	var chunk_pos: Vector2i = local / _world_data.chunk_size
 	var square_pos: Vector2i = local % _world_data.chunk_size
 	#print("raw square_pos: ", square_pos)
@@ -395,28 +387,16 @@ func convert_to_chunks_at_world_pos(loc: Vector2) -> Array[Vector2i]:
 	return arr
 	
 func move_indicator(indicator: Indicator, player_spot: Vector2, item: ItemData)-> void:
-	var location := convert_to_chunks_at_world_pos(player_spot)
-	var player_layer: ElevationLayer = trh.get_elevation_at(_world_data.chunk_datas[location[1]].square_datas[location[0]].elevation)
+	var mouse := get_global_mouse_position()
+	var loc := convert_to_chunks_at_world_pos(mouse)
+	var square_data:SquareData = trh.request_square_at(loc[0], loc[1])
+	var mouse_layer := trh.elevations[square_data.elevation]
 	var old := indicator.global_position
-	indicator.global_position = player_layer.map_to_local(player_layer.local_to_map(get_global_mouse_position()))
+	indicator.current_spot = Location.new(loc[0], loc[1])
+	indicator.global_position = mouse_layer.to_global(mouse_layer.map_to_local(mouse_layer.local_to_map(mouse_layer.to_local(mouse))))
 	if indicator.global_position != old: 
 		roof_cache.clear()
-		check_placement_validity(indicator, player_spot, player_layer, item)
-		
-	#var left: GenericWall = walls[0]
-	#var right: GenericWall = walls[0]
-	#var down: GenericWall = walls[0]
-	#var up: GenericWall = walls[0]
-	#for wall in walls: 
-		#if wall.global_position.x < left.global_position.x:
-			#left = wall
-		#elif wall.global_position.x > right.global_position.x:
-			#right = wall
-		#if wall.global_position.y < up.global_position.y: 
-			#up = wall
-		#elif wall.global_position.y > down.global_position.y: 
-			#down = wall
-	#return [left, right, down, up]
+		check_placement_validity(indicator, player_spot, mouse_layer, item)
 
 func water_timer(day:int, hour:int, minute:int) -> void:
 	if hour == 3 && minute == 0:

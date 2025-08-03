@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bmu053f3c3kbq"]
+[gd_scene load_steps=20 format=3 uid="uid://bmu053f3c3kbq"]
 
 [ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_d676f"]
 [ext_resource type="Script" uid="uid://c72fhodjm4b2c" path="res://Game Logic/data/inventory/loot/loot_table_entry.gd" id="2_nngeb"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://c86dq5bxucb0f" path="res://Game Logic/object/plants/grass_appearance.gd" id="5_bwwr2"]
 [ext_resource type="Script" uid="uid://bndjcrkta02c4" path="res://Game Logic/object/plants/plant_component.gd" id="6_t7c6h"]
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="7_jddku"]
+[ext_resource type="Resource" uid="uid://vsx3twqbjssb" path="res://Resources/plants/reed.tres" id="7_nngeb"]
 
 [sub_resource type="Resource" id="Resource_t3n03"]
 script = ExtResource("2_nngeb")
@@ -98,8 +99,7 @@ growth_stage_minutes = Array[int]([0, 2000, 4000])
 collision = Array[bool]([false, false, false])
 destroy_on_harvest = true
 prop_days = 1.5
-propagation_type = "close"
-target_moisture = 3
+plant_gen_data = ExtResource("7_nngeb")
 
 [node name="InteractionHitbox" type="StaticBody2D" parent="."]
 collision_layer = 0

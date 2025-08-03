@@ -34,7 +34,6 @@ var facing: Vector2 = Vector2(0, 1)
 @onready var ray_cast_2d : RayCast2D = $PlayerActionHandler/RayCast2D
 #reference to sprite
 
-@onready var elevation_handler: ElevationHandler = $ElevationHandler
 @onready var health_handler:HealthHandler= $HealthHandler
 @onready var velocity_handler:VelocityHandler = $VelocityHandler
 @onready var animation_handler:AnimationHandler = $AnimationHandler

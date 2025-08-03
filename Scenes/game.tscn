@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bx0i1fqjjvygy"]
+[gd_scene load_steps=34 format=3 uid="uid://bx0i1fqjjvygy"]
 
 [ext_resource type="Script" uid="uid://ypbxt4lu3dxr" path="res://Game Logic/managers/game.gd" id="1_lgntb"]
 [ext_resource type="PackedScene" uid="uid://dy236j24tdfmr" path="res://Scenes/Entities/player.tscn" id="1_vlfca"]
@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dqm8g7yybo0pf" path="res://Scenes/UI/Inventory/inventory.tscn" id="4_kq4io"]
 [ext_resource type="Script" uid="uid://bwjidfdugtnfu" path="res://Game Logic/managers/calendar_manager.gd" id="5_cki0q"]
 [ext_resource type="Script" uid="uid://diuxqukbk35hy" path="res://Game Logic/world/world_manager.gd" id="5_wonyh"]
-[ext_resource type="Resource" uid="uid://d220f54sbgmnx" path="res://Test/data/world_datas/generation_test.tres" id="6_mucmn"]
+[ext_resource type="Resource" uid="uid://cvejtoh27cfuc" path="res://Test/data/world_datas/elevation_test.tres" id="6_cwurv"]
 [ext_resource type="Script" uid="uid://bgmqoj67px6a3" path="res://Game Logic/inventory/inventory_interface.gd" id="6_uons4"]
 [ext_resource type="Script" uid="uid://vjmm4ct83rqu" path="res://Game Logic/world/terrain_rules_handler.gd" id="7_fkv55"]
 [ext_resource type="Script" uid="uid://dxha2h40ws5cy" path="res://Game Logic/managers/entity_manager.gd" id="8_3dv0o"]
@@ -15,10 +15,10 @@
 [ext_resource type="Script" uid="uid://bsm4ra22m810k" path="res://Game Logic/world/object_atlas.gd" id="9_0s5wb"]
 [ext_resource type="Script" uid="uid://8m7bl77x4xw6" path="res://Game Logic/managers/pickup_manager.gd" id="10_d5qv3"]
 [ext_resource type="Script" uid="uid://ff7axvflmy38" path="res://Game Logic/data/inventory/slot_data.gd" id="12_iyjdd"]
+[ext_resource type="Texture2D" uid="uid://da0bxkbsh1hjv" path="res://Assets/misc/tile_indicator.png" id="13_cwurv"]
 [ext_resource type="PackedScene" uid="uid://cdeeqt3ae70lq" path="res://Scenes/object/pick_up.tscn" id="13_pouw6"]
 [ext_resource type="Resource" uid="uid://coc8478dbgool" path="res://Resources/items/stuff/timber.tres" id="16_cwurv"]
 [ext_resource type="PackedScene" uid="uid://b48eubjn547dd" path="res://Scenes/UI/Inventory/hot_bar_inventory.tscn" id="16_j6efu"]
-[ext_resource type="PackedScene" uid="uid://df2qdt4sw2ptf" path="res://Scenes/Entities/enemies/dust_bunny.tscn" id="17_6hk27"]
 [ext_resource type="Script" uid="uid://bam1itjhokose" path="res://Game Logic/data/saves/saverloader.gd" id="17_d5xvq"]
 [ext_resource type="Script" uid="uid://bmlp6lphyod7g" path="res://Game Logic/managers/story_manager.gd" id="19_by7u0"]
 [ext_resource type="PackedScene" uid="uid://cdrtf2c53anpa" path="res://Scenes/UI/player_interface.tscn" id="19_l4305"]
@@ -36,6 +36,10 @@ colors = PackedColorArray(0.153943, 0.14085, 0.369463, 1, 0.238675, 0.187243, 0.
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_6o1tu"]
 gradient = SubResource("Gradient_yfqml")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mucmn"]
+atlas = ExtResource("13_cwurv")
+region = Rect2(7, 7, 70, 70)
 
 [sub_resource type="Resource" id="Resource_qmoje"]
 script = ExtResource("12_iyjdd")
@@ -62,7 +66,7 @@ light_gradient = SubResource("GradientTexture1D_6o1tu")
 [node name="WorldManager" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("5_wonyh")
-_world_data = ExtResource("6_mucmn")
+_world_data = ExtResource("6_cwurv")
 load_chunks = true
 unload_chunks = true
 
@@ -70,7 +74,6 @@ unload_chunks = true
 script = ExtResource("7_fkv55")
 
 [node name="Elevation0" parent="WorldManager/TerrainRulesHandler" instance=ExtResource("8_of3dw")]
-position = Vector2(-1, 0)
 
 [node name="ObjectAtlas" type="Node2D" parent="WorldManager/TerrainRulesHandler"]
 y_sort_enabled = true
@@ -82,20 +85,18 @@ y_sort_enabled = true
 script = ExtResource("8_3dv0o")
 
 [node name="Player" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager" groups=["enemy_target"] instance=ExtResource("1_vlfca")]
-position = Vector2(1, 1)
 scale = Vector2(0.305, 0.305)
 inventory_data = ExtResource("3_xku57")
 speed = 340
 dash_length = 0.4
 
+[node name="TileIndicator" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player" index="7"]
+texture = SubResource("AtlasTexture_mucmn")
+
 [node name="Camera2D" type="Camera2D" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player"]
 position = Vector2(1.49012e-08, -10.25)
 scale = Vector2(0.259594, 0.246314)
 position_smoothing_enabled = true
-
-[node name="DustBunny" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager" instance=ExtResource("17_6hk27")]
-position = Vector2(-254, -264)
-scale = Vector2(0.335, 0.335)
 
 [node name="PickupManager" type="Node2D" parent="."]
 editor_description = "Holds pickups"

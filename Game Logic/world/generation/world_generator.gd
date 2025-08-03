@@ -91,17 +91,22 @@ func generate_world_based_on_vals() -> WorldData:
 	world.chunk_datas = map_big_grid_to_chunks(height_grid, wet_grid, temp_grid, debris_grid)
 	#print('world_size =', big_grid.values())
 	#sand/dirt/rocks
-	do_squaretype_stuff(world)
-	world.chunk_datas[Vector2i(-1, -1)] = SPAWN_CHUNK.chunk_datas[Vector2i(-1,-1)]
+	#do_squaretype_stuff(world)
+	var spawn:ChunkData = SPAWN_CHUNK.chunk_datas[Vector2i(-1,-1)]
+	spawn.chunk_position = Vector2i.ZERO
+	world.chunk_datas[Vector2i(0, 0)] = spawn
 	#run a single natural water pass
 	print("running water calc")
-	EnvironmentLogic.run_water_calc(world, world.chunk_datas.keys())
+	#EnvironmentLogic.run_water_calc(world, world.chunk_datas.keys())
 	
 	print("putting down plants")
 	#run plant pass
-	put_down_plants(world)
+	#put_down_plants(world)
 	
 	return world
+
+func plant_grass(world_data: WorldData) -> void:
+	pass
 	
 func put_down_plants(world_data: WorldData) -> void:
 	var plant_rate:float = .25
@@ -322,8 +327,8 @@ func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, temp_grid:D
 					var total_y : int = (y * chunk_size.y) + j
 					#print("total x : ", x, "total y: ",y, "elevation:", big_grid[Vector2i(total_x, total_y)])
 					var square:SquareData = SquareData.new()
-					#square.elevation = big_grid[Vector2i(total_x, total_y)]
-					square.elevation = 0
+					square.elevation = big_grid[Vector2i(total_x, total_y)]
+					#square.elevation = 0
 					square.location_in_chunk = Vector2i(i,j)
 					square.water_saturation = 1
 					square_datas[Vector2i(i,j)] = square

@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://hhg3v1k4bpbu"]
+[gd_scene load_steps=31 format=3 uid="uid://hhg3v1k4bpbu"]
 
 [ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_wvmc3"]
 [ext_resource type="Script" uid="uid://c72fhodjm4b2c" path="res://Game Logic/data/inventory/loot/loot_table_entry.gd" id="2_kjfpj"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://dq4ap3sv81447" path="res://Game Logic/data/inventory/loot/loot_table.gd" id="4_7xbho"]
 [ext_resource type="Resource" uid="uid://2e81mj4x8ahl" path="res://Resources/items/stuff/foliage.tres" id="4_b4eff"]
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="4_xe2qt"]
+[ext_resource type="Resource" uid="uid://b3embk5d3ufja" path="res://Resources/plants/poplar.tres" id="8_wcuh7"]
 
 [sub_resource type="Resource" id="Resource_wcuh7"]
 script = ExtResource("2_kjfpj")
@@ -129,7 +130,7 @@ script = ExtResource("3_kg4d2")
 growth_stage_minutes = Array[int]([0, 7200, 14400])
 collision = Array[bool]([false, true, true])
 prop_days = 15.0
-propagation_type = "close"
+plant_gen_data = ExtResource("8_wcuh7")
 
 [node name="InteractionHitbox" type="StaticBody2D" parent="."]
 collision_layer = 5

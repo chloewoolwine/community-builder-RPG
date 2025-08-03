@@ -45,7 +45,7 @@ func get_neighbor_matrix() -> Array[Location]:
 func get_world_coordinates(chunk_size: int) -> Vector2i:
 	return (chunk * chunk_size) + position
 
-static func get_location_from_world(world_loc: Vector2i, chunk_size:int) -> Location:
+static func get_location_from_world(world_loc: Vector2i, chunk_size:int = Constants.CHUNK_SIZE) -> Location:
 	var chunk_pos: Vector2i = world_loc / chunk_size
 	var square_pos: Vector2i = world_loc % chunk_size
 	#print("raw square_pos: ", square_pos)

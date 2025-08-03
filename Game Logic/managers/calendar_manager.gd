@@ -50,7 +50,7 @@ func calculate_gametime() -> void:
 		curr_date = day
 		curr_hour = hour
 		curr_minute = minute
-		print(str("day: ", day, " time: ", hour, ":", minute))
+		#print(str("day: ", day, " time: ", hour, ":", minute))
 
 func change_time_of_day(target: int) -> void:
 	time = target * gametime_to_minute

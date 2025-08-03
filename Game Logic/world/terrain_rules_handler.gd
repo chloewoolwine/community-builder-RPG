@@ -27,9 +27,9 @@ func _ready() -> void:
 	for child in get_children():
 		if child is ElevationLayer and !elevations.has(child):
 			elevations.append(child)
-	for x in elevations.size():
-		elevations[x].elevation = x
-		elevations[x].position.y = x * -32
+	for z in elevations.size():
+		elevations[z].elevation = z
+		elevations[z].position.y = z * -32
 	object_atlas.new_object_placed.connect(add_object)
 
 func _process(_delta: float) -> void:
@@ -91,28 +91,61 @@ func get_tileset_pos_from_global(pos: Vector2, layer: int) -> Vector2i:
 	
 ## Gets the highest layer at INGAME COORDINATE [pos]
 func get_topmost_layer_at_ingame_pos(pos: Vector2i) -> ElevationLayer:
-	elevations.reverse()
-	for layer in elevations:
-		if layer.get_cell_source_id(pos) != -1:
-			elevations.reverse()
-			return layer
-	#push_error("Error: couldn't find any tiles at position: ", tile_pos)
-	elevations.reverse()
-	return null
+	@warning_ignore("unused_variable")
+	var highest := 0
+	for x in range(1, elevations.size()):
+		var add:int = 0
+		@warning_ignore("integer_division")
+		if x % 2 != 0 && int(pos.y) / 64 < 32:
+			add = 1
+		@warning_ignore("integer_division")
+		var loc := Location.get_location_from_world(pos + (Vector2i(0,1) * ((x+add)/2)))
+		if loc.chunk not in loaded_chunks:
+			continue
+		var square:SquareData = loaded_chunks[loc.chunk].square_datas[loc.position]
+		if square.elevation != x:
+			continue
+		highest = x
+	#elevations.reverse()
+	#for layer in elevations:
+		#if layer.get_cell_source_id(pos) != -1:
+			#elevations.reverse()
+			#return layer
+	##push_error("Error: couldn't find any tiles at position: ", tile_pos)
+	#elevations.reverse()
+	return elevations[highest]
 
 func get_topmost_layer_at_global_pos(pos: Vector2) -> ElevationLayer:
-	elevations.reverse()
-	for layer:ElevationLayer in elevations:
-		var local: Vector2i = layer.local_to_map(layer.to_local(pos))
-		#this isnt working for water because its checking the fucking TILES? NOT THE DATA ??
-		if layer.get_cell_source_id(local) != -1:
-			elevations.reverse()
-			return layer
-		if layer.water_mapper.get_cell_source_id(local) != -1:
-			elevations.reverse()
-			return layer
-	elevations.reverse()
-	return null
+	# tilespace calculation: z * -32 = y
+	# 1. find all possible active tileset positions
+	# 2. return the highest one 
+	var base_layer: Vector2i = elevations[0].local_to_map(elevations[0].to_local(pos))
+	var highest := 0
+	for x in range(1, elevations.size()):
+		var add:int = 0
+		@warning_ignore("integer_division")
+		if x % 2 != 0 && abs(int(pos.y) % 64) < 32:
+			add = 1
+		@warning_ignore("integer_division")
+		var loc := Location.get_location_from_world(base_layer + (Vector2i(0,1) * ((x+add)/2)))
+		if loc.chunk not in loaded_chunks:
+			continue
+		var square:SquareData = loaded_chunks[loc.chunk].square_datas[loc.position]
+		if square.elevation != x:
+			continue
+		highest = x
+	#elevations.reverse()
+	#for layer:ElevationLayer in elevations:
+		#var local: Vector2i = layer.local_to_map(layer.to_local(pos))
+		##this isnt working for water because its checking the fucking TILES? NOT THE DATA ??
+		#if layer.get_cell_source_id(local) != -1:
+			#elevations.reverse()
+			#return layer
+		#if layer.water_mapper.get_cell_source_id(local) != -1:
+			#elevations.reverse()
+			#return layer
+	#elevations.reverse()
+	return elevations[highest]
 
 func unload_all_chunks() -> void:
 	unload_set_of_chunks(loaded_chunks)
@@ -182,16 +215,16 @@ func run_shader_data_stuff(chunk_keys: Array[Vector2i]) -> void:
 		for ele in elevations:
 			ele.build_gradient_maps(chunks, chunk_keys[0])
 
-func remove_floor_at(square_pos: Vector2i, chunk_pos:Vector2i) -> void:
-	var chunk_data:ChunkData = loaded_chunks[chunk_pos]
+func remove_floor_at(pos: Location) -> void:
+	var chunk_data:ChunkData = loaded_chunks[pos.chunk]
 	if chunk_data == null:
-		print("warning! tried to remove floor at unloaded chunk: ", chunk_pos, " square: ", square_pos)
+		print("warning! tried to remove floor at unloaded chunk: ", pos.chunk, " square: ", pos.position)
 		return
-	var square: SquareData = chunk_data.square_datas[square_pos]
+	var square: SquareData = chunk_data.square_datas[pos.position]
 	if square.object_data == null || square.object_data.is_empty():
 		return
 		
-	var overall_pos := (chunk_pos * chunk_data.chunk_size) + square_pos
+	var overall_pos := (pos.chunk * chunk_data.chunk_size) + pos.position
 	if square.object_data[0]:
 		square.object_data[0] = null
 		# TODO: different floor types will probably have other layers? 
@@ -203,16 +236,16 @@ func remove_floor_at(square_pos: Vector2i, chunk_pos:Vector2i) -> void:
 		return 
 
 ## Runtime method for applying floors 
-func apply_floor_at(square_pos: Vector2i, chunk_pos:Vector2i, floor_type: String) -> void: 
-	var chunk_data:ChunkData = loaded_chunks[chunk_pos]
+func apply_floor_at(pos: Location, floor_type: String) -> void: 
+	var chunk_data:ChunkData = loaded_chunks[pos.chunk]
 	if chunk_data == null:
-		print("warning! tried to aplly floor at unloaded chunk: ", chunk_pos, " square: ", square_pos)
+		print("warning! tried to aplly floor at unloaded chunk: ", pos.chunk, " square: ", pos.position)
 		return
-	var square: SquareData = chunk_data.square_datas[square_pos]
+	var square: SquareData = chunk_data.square_datas[pos.position]
 	if floor_type == "till": 
 		## no objects, apply immediately 
 		if square_has_no_objects(square) && square.water_saturation < 4:
-			var overall_pos := (chunk_pos * chunk_data.chunk_size) + square_pos
+			var overall_pos := (pos.chunk * chunk_data.chunk_size) + pos.position
 			match square.type:
 				SquareData.SquareType.Dirt:
 					var new_floor: FloorData = FloorData.new()
@@ -243,18 +276,18 @@ func square_has_no_objects(square: SquareData) -> bool:
 	return true
 
 ## Runtime method for watering
-func water_square_at(square_pos: Vector2i, chunk_pos:Vector2i) -> void:
-	var chunk_data:ChunkData = loaded_chunks[chunk_pos]
+func water_square_at(pos: Location) -> void:
+	var chunk_data:ChunkData = loaded_chunks[pos.chunk]
 	if chunk_data == null:
-		print("warning! tried to water at unloaded chunk: ", chunk_pos, " square: ", square_pos)
+		print("warning! tried to water at unloaded chunk: ", pos.chunk, " square: ", pos.position)
 		return
 	#print("square_pos: ", square_pos)
-	var square: SquareData = chunk_data.square_datas[square_pos]
+	var square: SquareData = chunk_data.square_datas[pos.position]
 	if square.water_saturation < 3:
 		#print("old water: ", square.water_saturation)
 		square.water_saturation += 1
 		#print("new water: ", square.water_saturation)
-		elevations[square.elevation].update_specific_pixel(chunk_pos, square_pos)
+		elevations[square.elevation].update_specific_pixel(pos.chunk, pos.square)
 
 func remove_roof_at(square_pos: Vector2i, chunk_pos: Vector2i) -> void:
 	var chunk: ChunkData = loaded_chunks[chunk_pos]
@@ -400,5 +433,10 @@ func request_square_at(square: Vector2i, chunk: Vector2i) -> SquareData:
 		return loaded_chunks[chunk].square_datas[square]
 	return null
 
+func request_square_at_loc(loc: Location) -> SquareData:
+	if loc.chunk in loaded_chunks:
+		return loaded_chunks[loc.chunk].square_datas[loc.position]
+	return null
+	
 func get_elevation_at(num: int) -> ElevationLayer:
 	return elevations[num]

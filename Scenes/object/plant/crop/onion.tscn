@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://b7chruygvbxaq"]
+[gd_scene load_steps=28 format=3 uid="uid://b7chruygvbxaq"]
 
 [ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_6mdcm"]
 [ext_resource type="Script" uid="uid://c3cgrr073uht8" path="res://Game Logic/object/plants/plant_appearance.gd" id="2_jo8fr"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://dq4ap3sv81447" path="res://Game Logic/data/inventory/loot/loot_table.gd" id="4_oklsi"]
 [ext_resource type="Script" uid="uid://bndjcrkta02c4" path="res://Game Logic/object/plants/plant_component.gd" id="4_ur4c4"]
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="5_a28q3"]
+[ext_resource type="Resource" uid="uid://lf7m2t0s632g" path="res://Resources/plants/onion.tres" id="9_oklsi"]
 
 [sub_resource type="Resource" id="Resource_a28q3"]
 script = ExtResource("2_ur4c4")
@@ -103,7 +104,7 @@ texture = SubResource("AtlasTexture_vltbs")
 script = ExtResource("4_ur4c4")
 growth_stage_minutes = Array[int]([0, 1440, 2880, 4320, 7200, 8640])
 collision = Array[bool]([false, false, false, false, false])
-target_moisture = 2
+plant_gen_data = ExtResource("9_oklsi")
 
 [node name="InteractionHitbox" type="StaticBody2D" parent="."]
 script = ExtResource("5_a28q3")

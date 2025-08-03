@@ -177,7 +177,7 @@ func player_died() -> void:
 	await get_tree().create_timer(3).timeout
 	## TERRIBLE IDEA need better spawn point Stat
 	player.global_position = Vector2.ZERO - Vector2(100,100)
-	player.elevation_handler.current_elevation = 1 
+#	player.elevation_handler.current_elevation = 1 
 	player.health_handler.change_health(50)
 	player.health_handler.current_hunger = player.health_handler.max_hunger/2
 	player.state = Player.PlayerStates.STATE_IDLE

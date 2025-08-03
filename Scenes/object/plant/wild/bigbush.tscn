@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cxytomuj26ka2"]
+[gd_scene load_steps=17 format=3 uid="uid://cxytomuj26ka2"]
 
 [ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_seeol"]
 [ext_resource type="Script" uid="uid://c72fhodjm4b2c" path="res://Game Logic/data/inventory/loot/loot_table_entry.gd" id="2_jbyn8"]
@@ -8,6 +8,7 @@
 [ext_resource type="Resource" uid="uid://cum0uus22nf72" path="res://Resources/items/tools/stick.tres" id="4_0ql0l"]
 [ext_resource type="Script" uid="uid://dq4ap3sv81447" path="res://Game Logic/data/inventory/loot/loot_table.gd" id="4_1tndt"]
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="4_jbyn8"]
+[ext_resource type="Resource" uid="uid://ba7snetns0dgb" path="res://Resources/plants/bush.tres" id="8_1tndt"]
 
 [sub_resource type="Resource" id="Resource_237d4"]
 script = ExtResource("2_jbyn8")
@@ -39,13 +40,6 @@ load_path = "res://.godot/imported/rocks_flowers_hole.png-2d5e7b0b7c58a8e4099b00
 atlas = SubResource("CompressedTexture2D_seeol")
 region = Rect2(132, 109, 119, 81)
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7wsvk"]
-load_path = "res://.godot/imported/rocks_flowers_hole.png-2d5e7b0b7c58a8e4099b00ddc008f6ae.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ovf4w"]
-atlas = SubResource("CompressedTexture2D_7wsvk")
-region = Rect2(62, 133, 67, 56)
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_0mxl1"]
 radius = 29.0689
 
@@ -66,12 +60,13 @@ growth_stage_texture_offset = Array[Vector2]([Vector2(0, 0)])
 
 [node name="Sprite2D" type="Sprite2D" parent="PlantAppearance"]
 y_sort_enabled = true
-texture = SubResource("AtlasTexture_ovf4w")
+texture = SubResource("AtlasTexture_kv3hi")
 
 [node name="PlantComponent" type="Node2D" parent="."]
 script = ExtResource("3_3cuob")
 growth_stage_minutes = Array[int]([0])
 collision = Array[bool]([false])
+plant_gen_data = ExtResource("8_1tndt")
 
 [node name="InteractionHitbox" type="StaticBody2D" parent="."]
 script = ExtResource("4_jbyn8")
