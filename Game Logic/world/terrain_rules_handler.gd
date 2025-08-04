@@ -184,8 +184,7 @@ func translate_square_data_to_tile(data: SquareData, world_pos: Vector2i, _chunk
 		elevations[x].build_base_of(data, world_pos)
 	elevations[ele].set_square(data, world_pos)
 	if data.object_data != null:
-		var actual_pos := world_pos * 64 + Vector2i(0, data.elevation*-32) + Vector2i(32, 32)
-		#this is broken for some old saves- probably generated this wrong
+		var actual_pos := EnvironmentLogic.get_real_pos_object(Location.get_location_from_world(world_pos), data.elevation)
 		#anyhow, the world data should be the ultimate authority for an objects position
 		for object in data.object_data:
 			if object != null:
@@ -287,7 +286,7 @@ func water_square_at(pos: Location) -> void:
 		#print("old water: ", square.water_saturation)
 		square.water_saturation += 1
 		#print("new water: ", square.water_saturation)
-		elevations[square.elevation].update_specific_pixel(pos.chunk, pos.square)
+		elevations[square.elevation].update_specific_pixel(pos.chunk, pos.position)
 
 func remove_roof_at(square_pos: Vector2i, chunk_pos: Vector2i) -> void:
 	var chunk: ChunkData = loaded_chunks[chunk_pos]

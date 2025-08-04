@@ -152,7 +152,7 @@ func _place_build_object(arr: Array[Vector2i], split: Array[String], layer: Elev
 
 func _assign_object_data(id: String, pos: Vector2i, chunk: Vector2i, layer:ElevationLayer) -> void:
 	var object_data := ObjectData.new()
-	var actual_pos := ((pos * 64) + (chunk * 64 * 32)) + Vector2i(0, layer.elevation*-32) + Vector2i(0, 32)
+	var actual_pos := EnvironmentLogic.get_real_pos_object(Location.new(pos, chunk), layer.elevation)
 	object_data.object_id = id
 	object_data.position = pos
 	object_data.chunk = chunk
@@ -170,6 +170,7 @@ func check_placement_validity(ind: Indicator, player_spot:Vector2, player_layer:
 		
 	var split := item.object_id.split("_")
 	#print("indicator current spot: ", ind.current_spot)
+	
 	if split[0] == "build":
 		ind.valid_place = _build_object_placement_validity(item, split[1], ind.current_spot.position,ind.current_spot.chunk)
 		return ind.valid_place 

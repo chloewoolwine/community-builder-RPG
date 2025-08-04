@@ -58,7 +58,7 @@ func _physics_process(_delta:float)->void:
 						pass
 
 func step_callback(up: bool) -> void:
-	print("step callback: ", curr_dirr, " up:", up)
+	#print("step callback: ", curr_dirr, " up:", up)
 	var dirr:Vector2i = curr_dirr.normalized().snapped(Vector2.ONE)
 	var direction:Vector2 = curr_dirr
 	match dirr:

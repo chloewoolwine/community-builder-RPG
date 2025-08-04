@@ -1,5 +1,11 @@
 class_name EnvironmentLogic
 
+static func get_real_pos_object(loc: Location, elevation: int) -> Vector2:
+	##((pos * 64) + (chunk * 64 * 32)) + Vector2i(0, layer.elevation*-32) + Vector2i(32, 32)
+	var world_pos := (loc.chunk * Constants.CHUNK_SIZE) + loc.position
+	@warning_ignore("integer_division")
+	return world_pos * Constants.TILE_SIZE + Vector2i(0, elevation*-(Constants.TILE_SIZE/2)) + Vector2i((Constants.TILE_SIZE/2), (Constants.TILE_SIZE/2))
+
 static func run_daily(world: WorldData, day:int, hour:int, minute:int, _is_raining: bool = false, do_plants:bool = true) -> void:
 	var all_chunks := world.chunk_datas
 	@warning_ignore("untyped_declaration")

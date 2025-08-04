@@ -16,6 +16,6 @@ shallow_water = false
 deep_water = false
 spread_distance = 3
 spread_chance = 0.3
-density = 0
+density = 4
 rarity = 0
 metadata/_custom_type_script = "uid://cw3bscpglfbb7"

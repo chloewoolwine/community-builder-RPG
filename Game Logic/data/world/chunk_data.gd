@@ -23,5 +23,5 @@ enum Biome{Dead, Forest, Deepforest, Wasteland, Shrubland, Cityscape, Grassland,
 @export var entities : Array[EntityData]
 
 ## Granular info for tiles in the chunk
-@export var square_datas : Dictionary
+@export var square_datas : Dictionary[Vector2i, SquareData]
 #
