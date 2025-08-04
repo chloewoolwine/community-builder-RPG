@@ -4,7 +4,7 @@ class_name HotBarInventory
 const SlotScene = preload("res://Scenes/UI/Inventory/slot.tscn")
 
 signal hot_bar_use(index: int)
-
+@onready var game: GameGod = $"../.."
 @onready var h_box_container: HBoxContainer = $PanelContainer/MarginContainer/HBoxContainer
 @onready var health_bar: TextureProgressBar = $HealthBar
 @onready var hunger_bar: TextureProgressBar = $HungerBar
@@ -28,8 +28,10 @@ func update_health(current: int, total:int)->void:
 	health_bar.value = current
 
 func _unhandled_key_input(event: InputEvent) -> void:
-	if !visible or !event.is_pressed():
+	if !game.game_ready or !visible or !event.is_pressed():
+		#print("whomp whomp")
 		return
+	#print("weeeeeee")
 	#TODO: make this work with the input map
 	if range(KEY_1, KEY_6).has(event.keycode):
 		var index:int = event.keycode - KEY_1

@@ -4,9 +4,10 @@ class_name VelocityHandler
 #This node should be the child of a character body 2d in order to work correctly
 #This node doesn't not *actually move* the character, it just updates it's velocity
 
+signal try_step(handle: VelocityHandler, requested_layer: ElevationLayer, callback: Callable)
+
 @export var body : CharacterBody2D
 ## used if slopes + water effects this creature
-@export var elevationhandler: ElevationHandler
 @export var knockbackable : bool = true
 #1 is the standard amount of knockback. more is a light creature, less is a heavy creature
 @export var knockback_mod : int = 1
@@ -15,10 +16,14 @@ class_name VelocityHandler
 @export var swimspeed: int = 90
 @export var friction: float = 0.01
 @export var acceleration: float = 0.101
-@export var elevation_climb_slowdown: float = .9
+@export var elevation_climb_speed: float = .9
 @export var elevation_vert_change: float = .9
+@export var elevation_pos_change_lr: int = 50
 
+var curr_dirr: Vector2
 var in_knockback : bool = false
+
+var movement_tween: PropertyTweener
 
 func _ready()->void:
 	if body == null:
@@ -40,45 +45,92 @@ func _ready()->void:
 func _physics_process(_delta:float)->void:
 	if in_knockback:
 		body.move_and_slide()
+	if !movement_tween:
+		for i in body.get_slide_collision_count():
+			if body.get_slide_collision(i):
+				var collider := body.get_slide_collision(i).get_collider()
+				#print("Collided with: ", collider.name)
+				#print(collider)
+				if collider is TileMapDual:
+					if collider.name == "Base":
+						try_step.emit(self, collider.get_parent(), step_callback)
+					elif collider.name == "WaterMapper":
+						pass
+
+func step_callback(up: bool) -> void:
+	print("step callback: ", curr_dirr, " up:", up)
+	var dirr:Vector2i = curr_dirr.normalized().snapped(Vector2.ONE)
+	var direction:Vector2 = curr_dirr
+	match dirr:
+		Vector2i.UP:
+			direction = direction + Vector2(0, -elevation_pos_change_lr)
+		Vector2i.DOWN:
+			direction = direction + Vector2(0, elevation_pos_change_lr)
+		Vector2i.LEFT:
+			if up:
+				##going up
+				direction = direction + Vector2(0,-elevation_vert_change)
+			else:
+				##going down
+				direction = direction + Vector2(0,elevation_vert_change)
+			direction = direction + Vector2(-elevation_pos_change_lr, 0)
+		Vector2i.RIGHT:
+			if up:
+				##going up
+				direction = direction + Vector2(0,-elevation_vert_change)
+			else:
+				##goign down
+				direction = direction + Vector2(0,elevation_vert_change)
+			direction = direction + Vector2(elevation_pos_change_lr, 0)
+		_: # diagonals ....
+			pass
+	
+	movement_tween = get_tree().create_tween().tween_property(body, "position", body.position + direction, elevation_climb_speed)
+	await movement_tween.finished
+	movement_tween = null
+	body.move_and_slide()
+	#purge_speed()
 		
 func move_to(direction: Vector2)->void:
-	if elevationhandler and elevationhandler.onslope:
-		calculate_slope_movement(direction)
-	elif elevationhandler and elevationhandler.swimming:
-		body.velocity = body.velocity.lerp(direction.normalized() * swimspeed, acceleration)
-		body.move_and_slide()
-	else:
-		body.velocity = body.velocity.lerp(direction.normalized() * speed, acceleration)
-		body.move_and_slide()
+	#if elevationhandler and elevationhandler.onslope:
+		#calculate_slope_movement(direction)
+	#elif elevationhandler and elevationhandler.swimming:
+		#body.velocity = body.velocity.lerp(direction.normalized() * swimspeed, acceleration)
+		#body.move_and_slide()
+	#else:
+	body.velocity = body.velocity.lerp(direction.normalized() * speed, acceleration)
+	body.move_and_slide()
+	curr_dirr = direction
 
 #this is: https://michaelbitzos.com/devblog/implementing-stairs-in-2d-top-down-games
 #ur also kidna doing this if else statement every frame... consider fixing that
 func calculate_slope_movement(direction: Vector2) -> void:
 	var calc_speed: float = speed
-	if elevationhandler.slope_type == "hstair_r":
-		if direction.normalized().x > 0:
-			#going up
-			direction = direction + Vector2(0,-elevation_vert_change)
-			pass
-		elif direction.normalized().x < 0:
-			#goign down
-			direction = direction + Vector2(0,elevation_vert_change)
-			pass
-	elif elevationhandler.slope_type == "hstair_l":
-		if direction.normalized().x > 0:
-			#going down
-			direction = direction + Vector2(0,elevation_vert_change)
-			pass
-		elif direction.normalized().x < 0:
-			#going up
-			direction = direction + Vector2(0,-elevation_vert_change)
-			pass
-				
-	if abs(direction.y) > 0: 
-		calc_speed = calc_speed * elevation_climb_slowdown
+	#if elevationhandler.slope_type == "hstair_r":
+		#if direction.normalized().x > 0:
+			##going up
+			#direction = direction + Vector2(0,-elevation_vert_change)
+			#pass
+		#elif direction.normalized().x < 0:
+			##goign down
+			#direction = direction + Vector2(0,elevation_vert_change)
+			#pass
+	#elif elevationhandler.slope_type == "hstair_l":
+		#if direction.normalized().x > 0:
+			##going down
+			#direction = direction + Vector2(0,elevation_vert_change)
+			#pass
+		#elif direction.normalized().x < 0:
+			##going up
+			#direction = direction + Vector2(0,-elevation_vert_change)
+			#pass
+				#
+	#if abs(direction.y) > 0: 
+		#calc_speed = calc_speed * elevation_climb_slowdown
 		
-	body.velocity = body.velocity.lerp(direction.normalized() * calc_speed, acceleration)
+	body.velocity = body.velocity.lerp(direction.normalized() * calc_speed, elevation_climb_speed)
 	body.move_and_slide()
+	
 
 func move_to_accel(direction:Vector2, mod:int, accel:float)->void:
 	body.velocity = body.velocity.lerp(direction.normalized() * speed * mod, accel)

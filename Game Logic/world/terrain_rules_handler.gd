@@ -184,7 +184,7 @@ func translate_square_data_to_tile(data: SquareData, world_pos: Vector2i, _chunk
 		elevations[x].build_base_of(data, world_pos)
 	elevations[ele].set_square(data, world_pos)
 	if data.object_data != null:
-		var actual_pos := world_pos * 64 + Vector2i(data.elevation * -32, data.elevation*-32) + Vector2i(32, 32)
+		var actual_pos := world_pos * 64 + Vector2i(0, data.elevation*-32) + Vector2i(32, 32)
 		#this is broken for some old saves- probably generated this wrong
 		#anyhow, the world data should be the ultimate authority for an objects position
 		for object in data.object_data:

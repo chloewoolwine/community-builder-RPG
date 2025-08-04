@@ -1776,6 +1776,7 @@ size = Vector2(20, 168)
 [node name="Player" type="CharacterBody2D"]
 y_sort_enabled = true
 collision_layer = 128
+collision_mask = 65025
 motion_mode = 1
 script = ExtResource("1_pwtpg")
 speed = 325
@@ -1834,8 +1835,11 @@ rotation = 3.14159
 scale = Vector2(15.6813, -31.4585)
 shape = SubResource("CapsuleShape2D_ujgxj")
 
-[node name="VelocityHandler" parent="." node_paths=PackedStringArray("elevationhandler") instance=ExtResource("7_djeui")]
-elevationhandler = NodePath("")
+[node name="VelocityHandler" parent="." instance=ExtResource("7_djeui")]
+acceleration = 1.0
+elevation_climb_speed = 0.2
+elevation_vert_change = 15.0
+metadata/_edit_lock_ = true
 
 [node name="AnimationHandler" parent="." node_paths=PackedStringArray("sprites", "animation_player", "animation_tree") instance=ExtResource("8_tfck8")]
 y_sort_enabled = true

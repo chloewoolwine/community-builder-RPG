@@ -66,7 +66,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		#temp_mousecast.global_position = mouse
 		tile_indicator.global_position = mouse
 		var layer := trh.get_topmost_layer_at_global_pos(mouse)
-		tile_indicator.temp = layer
 		if paint:
 			print("paint time")
 			match paint_type:

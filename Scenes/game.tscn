@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dqm8g7yybo0pf" path="res://Scenes/UI/Inventory/inventory.tscn" id="4_kq4io"]
 [ext_resource type="Script" uid="uid://bwjidfdugtnfu" path="res://Game Logic/managers/calendar_manager.gd" id="5_cki0q"]
 [ext_resource type="Script" uid="uid://diuxqukbk35hy" path="res://Game Logic/world/world_manager.gd" id="5_wonyh"]
-[ext_resource type="Resource" uid="uid://cvejtoh27cfuc" path="res://Test/data/world_datas/elevation_test.tres" id="6_cwurv"]
+[ext_resource type="Resource" uid="uid://cj85dsgjhavvm" path="res://Test/data/world_datas/elevation_test.tres" id="6_cwurv"]
 [ext_resource type="Script" uid="uid://bgmqoj67px6a3" path="res://Game Logic/inventory/inventory_interface.gd" id="6_uons4"]
 [ext_resource type="Script" uid="uid://vjmm4ct83rqu" path="res://Game Logic/world/terrain_rules_handler.gd" id="7_fkv55"]
 [ext_resource type="Script" uid="uid://dxha2h40ws5cy" path="res://Game Logic/managers/entity_manager.gd" id="8_3dv0o"]

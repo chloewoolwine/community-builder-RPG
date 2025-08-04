@@ -16,6 +16,10 @@ func _ready() -> void:
 #called in game to initiate most set up actions
 func do_setup() -> void: 
 	EnvironmentLogic.run_water_calc(_world_data, get_chunks_around_point(player.get_global_position(), 2))
+	if player:
+		print("player")
+		player.velocity_handler.try_step.connect(is_stepable_layer)
+	#entity collisions afterwards
 
 func _process(_delta: float) -> void:
 	## TODO... do this maybe 1/10 frames or smthn
@@ -148,7 +152,7 @@ func _place_build_object(arr: Array[Vector2i], split: Array[String], layer: Elev
 
 func _assign_object_data(id: String, pos: Vector2i, chunk: Vector2i, layer:ElevationLayer) -> void:
 	var object_data := ObjectData.new()
-	var actual_pos := ((pos * 64) + (chunk * 64 * 32)) + Vector2i(layer.elevation*-32, layer.elevation*-32) + Vector2i(32, 32)
+	var actual_pos := ((pos * 64) + (chunk * 64 * 32)) + Vector2i(0, layer.elevation*-32) + Vector2i(0, 32)
 	object_data.object_id = id
 	object_data.position = pos
 	object_data.chunk = chunk
@@ -165,7 +169,7 @@ func check_placement_validity(ind: Indicator, player_spot:Vector2, player_layer:
 		return false
 		
 	var split := item.object_id.split("_")
-	print("indicator current spot: ", ind.current_spot)
+	#print("indicator current spot: ", ind.current_spot)
 	if split[0] == "build":
 		ind.valid_place = _build_object_placement_validity(item, split[1], ind.current_spot.position,ind.current_spot.chunk)
 		return ind.valid_place 
@@ -404,3 +408,18 @@ func water_timer(day:int, hour:int, minute:int) -> void:
 	if minute == 30:
 		#TODO: make this async some how 
 		EnvironmentLogic.run_water_calc(_world_data, get_chunks_around_point(player.get_global_position(), 2))
+
+func is_stepable_layer(handler: VelocityHandler, to_layer: ElevationLayer, callback: Callable) -> void:
+	var loc := convert_to_chunks_at_world_pos(handler.global_position)
+	var square_data:SquareData = trh.request_square_at(loc[0], loc[1])
+	if abs(square_data.elevation - to_layer.elevation) == 1:
+		#going up 
+		callback.call(true)
+	if square_data.elevation == to_layer.elevation:
+		var other_loc := Location.new(loc[0], loc[1]).get_location(handler.curr_dirr.normalized().snapped(Vector2.ONE))
+		var other_square:SquareData = trh.request_square_at(other_loc.position, other_loc.chunk)
+		if abs(square_data.elevation - other_square.elevation) == 1:
+			#going down
+			callback.call(false)
+		#TODO: check for water and then all the swimming stuff 
+		pass

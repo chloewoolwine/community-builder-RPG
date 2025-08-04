@@ -28,6 +28,8 @@ var gui_state: GuiState
 @onready var options_menu:OptionsInterface = $UI/OptionsMenu
 @onready var entity_interface:EntityInterface = $UI/EntityInterface
 
+var game_ready: bool = false
+
 func _ready() -> void:
 	#TODO: make a "fresh game" resource save so i dont have to worry about chagning this
 	#saver_loader.world = world_manager.world_data
@@ -48,6 +50,7 @@ func handle_final_presentation() -> void:
 	await get_tree().create_timer(5).timeout
 	lighting.proccessTime = true
 	player.state = Player.PlayerStates.STATE_IDLE
+	game_ready = true
 
 ## Connects events dynamically
 func handle_world_setup() -> void:

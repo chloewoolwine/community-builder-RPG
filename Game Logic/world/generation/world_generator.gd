@@ -97,11 +97,11 @@ func generate_world_based_on_vals() -> WorldData:
 	world.chunk_datas[Vector2i(0, 0)] = spawn
 	#run a single natural water pass
 	print("running water calc")
-	#EnvironmentLogic.run_water_calc(world, world.chunk_datas.keys())
+	EnvironmentLogic.run_water_calc(world, world.chunk_datas.keys())
 	
 	print("putting down plants")
 	#run plant pass
-	#put_down_plants(world)
+	put_down_plants(world)
 	
 	return world
 
@@ -146,7 +146,8 @@ func put_down_plants(world_data: WorldData) -> void:
 									m = 0
 								#poof_grass(Location.new(Vector2i(i,j), Vector2i(x-modx, y-mody)), object.object_id, m, world_data.chunk_datas)
 							else:
-								square_data.object_data = [null, object, null]
+								pass
+								#square_data.object_data = [null, object, null]
 							
 								
 	pass

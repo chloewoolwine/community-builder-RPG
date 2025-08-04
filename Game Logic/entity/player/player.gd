@@ -4,7 +4,7 @@ class_name Player
 ## TODO: when i get back to this game, i want to refractor ALL of this. 
 ## input is weird, wtf is "facing", just generally organize and make normal
 
-enum PlayerStates{STATE_MENU, STATE_IDLE, STATE_ACTION, STATE_TOOL, STATE_WALK, STATE_SPELL, STATE_DASH, 
+enum PlayerStates{STATE_MENU, STATE_IDLE, STATE_ACTION, STATE_TOOL, STATE_WALK, STATE_SPELL, STATE_JUMP, STATE_DASH, 
 		STATE_KNOCKBACK, STATE_DEAD}
 
 signal health_changed(new_health:int, total_health:int)

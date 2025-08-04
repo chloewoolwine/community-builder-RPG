@@ -5,7 +5,7 @@ class_name LootTable
 @export var num_rolls: int = 1 ## Number of rolls that should be done
 
 #full disclosure: no idea if this actuall works
-func roll(rng:RandomNumberGenerator, rolls: int = num_rolls, drop_guarantee:bool=true) -> Array[ItemData]:
+func roll(rng:RandomNumberGenerator, rolls: int = num_rolls, _drop_guarantee:bool=true) -> Array[ItemData]:
 	var arr : Array[ItemData]= []
 	for x in range(rolls):
 		for entry in loot_table_entries:

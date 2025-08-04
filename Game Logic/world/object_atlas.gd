@@ -1,7 +1,6 @@
 extends Node2D
 class_name ObjectAtlas
 
-@onready var entity_manager: EntityManager = $EntityManager
 @onready var world_manager: WorldManager = $"../.."
 
 signal plant_placed(plant: GenericPlant)
