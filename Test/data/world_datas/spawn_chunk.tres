@@ -9468,7 +9468,7 @@ chunk_size = Vector2i(32, 32)
 chunk_position = Vector2i(-1, -1)
 biome = 1
 entities = Array[ExtResource("1_fkt8r")]([])
-square_datas = {
+square_datas = Dictionary[Vector2i, ExtResource("4_cerjq")]({
 Vector2i(0, 0): SubResource("Resource_d65nx"),
 Vector2i(0, 1): SubResource("Resource_tx4b7"),
 Vector2i(0, 2): SubResource("Resource_issrb"),
@@ -10493,13 +10493,13 @@ Vector2i(31, 28): SubResource("Resource_cy2u1"),
 Vector2i(31, 29): SubResource("Resource_r5f8t"),
 Vector2i(31, 30): SubResource("Resource_hgcrt"),
 Vector2i(31, 31): SubResource("Resource_5pm83")
-}
+})
 
 [resource]
 script = ExtResource("5_x31sy")
 world_seed = 3033
 world_size = Vector2i(1, 1)
 chunk_size = Vector2i(32, 32)
-chunk_datas = {
+chunk_datas = Dictionary[Vector2i, ExtResource("2_0ahy6")]({
 Vector2i(-1, -1): SubResource("Resource_33o8m")
-}
+})

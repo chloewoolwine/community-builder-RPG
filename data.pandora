@@ -1,0 +1,70 @@
+{
+	"_entity_data": {
+		"_categories": [
+			{
+				"_category_id": "",
+				"_generate_ids": true,
+				"_icon_color": "ff8bf6ff",
+				"_id": "8.0",
+				"_ids_generation_class": "ObjectIds",
+				"_index": 0,
+				"_name": "WorldObjects"
+			},
+			{
+				"_category_id": "8.0",
+				"_icon_color": "ffffff00",
+				"_id": "10.0",
+				"_index": 0,
+				"_name": "Plants"
+			}
+		],
+		"_entities": [
+			{
+				"_category_id": "10.0",
+				"_icon_color": "ffffff00",
+				"_icon_path": "res://addons/pandora/icons/Object.svg",
+				"_id": "9.0",
+				"_index": 1,
+				"_name": "Poplar",
+				"_property_overrides": {
+					"item_data": {
+						"type": "resource",
+						"value": "res://Resources/items/seeds/poplar_pod.tres"
+					},
+					"plant_data": {
+						"type": "resource",
+						"value": "res://Resources/plants/poplar.tres"
+					}
+				}
+			}
+		],
+		"_properties": [
+			{
+				"_category_id": "8.0",
+				"_default_value": "res://Game Logic/data/world/object_data.gd",
+				"_id": "3",
+				"_name": "object_data",
+				"_type": "resource"
+			},
+			{
+				"_category_id": "8.0",
+				"_default_value": "res://Game Logic/data/inventory/item_data.gd",
+				"_id": "5.0",
+				"_name": "item_data",
+				"_type": "resource"
+			},
+			{
+				"_category_id": "10.0",
+				"_default_value": "res://Game Logic/world/generation/plant_gen_data.gd",
+				"_id": "11.0",
+				"_name": "plant_data",
+				"_type": "resource"
+			}
+		]
+	},
+	"_id_generator": {
+		"_ids_by_context": {
+			"default": 11.0
+		}
+	}
+}
