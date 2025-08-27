@@ -92,7 +92,14 @@ func give_requested_layer(layer:int, callback: Callable) -> void:
 
 func manage_propagation_success(pos: Location, object_id: String) -> void: 
 	#print("checking for propagation of ", object_id, " at ", pos.position)
+	var database := DatabaseManager.WORLD_DATABASE
 	var _split := object_id.split("_")
+	print(_split[2])
+	if database._has_string_id(&"GenerationData", StringName(_split[2])):
+		database.fetch_data(&"GenerationData", StringName(_split[2]))
+	else:
+		print(database.fetch_collection_data(&"GenerationData").keys())
+	#var plant_data:PlantGenData = database.fetch_data("GenerationData",_split[2])
 	if pos.chunk in trh.loaded_chunks.keys():
 		var square := trh.get_square_at(pos.position, pos.chunk)
 		match square.type:
@@ -356,6 +363,7 @@ func modify_tilemap(loc: Location, _origin_pos: Vector2, action: String) -> bool
 	
 	if action == "water":
 		trh.water_square_at(loc)
+		trh.run_shader_data_stuff(get_chunks_around_point(player.get_global_position(), 1))
 	if action == "till": 
 		trh.apply_floor_at(loc, action)
 	if action == "remove_floor":
@@ -395,6 +403,8 @@ func move_indicator(indicator: Indicator, player_spot: Vector2, item: ItemData)-
 	var mouse := get_global_mouse_position()
 	var loc := convert_to_chunks_at_world_pos(mouse)
 	var square_data:SquareData = trh.request_square_at(loc[0], loc[1])
+	if square_data == null:
+		return
 	var mouse_layer := trh.elevations[square_data.elevation]
 	var old := indicator.global_position
 	indicator.current_spot = Location.new(loc[0], loc[1])

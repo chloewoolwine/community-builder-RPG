@@ -120,7 +120,7 @@ func _is_world_tile_sketched(_world_cell: Vector2i) -> bool:
 		return false
 
 ## Public method to add a tile in a given World cell
-func fill_tile(world_cell: Vector2i) -> void:
+func fill_tile(world_cell: Vector2i, source_id: int = 0) -> void:
 	if freeze:
 		return
 	if debug:

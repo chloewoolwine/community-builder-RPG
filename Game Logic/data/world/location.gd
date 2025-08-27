@@ -42,7 +42,7 @@ func get_neighbor_matrix() -> Array[Location]:
 				arr.append(get_location(Vector2i(x,y)))
 	return arr
 
-func get_world_coordinates(chunk_size: int) -> Vector2i:
+func get_world_coordinates(chunk_size: int = Constants.CHUNK_SIZE) -> Vector2i:
 	return (chunk * chunk_size) + position
 
 static func get_location_from_world(world_loc: Vector2i, chunk_size:int = Constants.CHUNK_SIZE) -> Location:

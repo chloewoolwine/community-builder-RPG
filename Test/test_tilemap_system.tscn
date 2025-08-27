@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dyamhmg7lwxjc" path="res://Test/temp_camera_script.gd" id="1_pg57c"]
 [ext_resource type="Script" uid="uid://vjmm4ct83rqu" path="res://Game Logic/world/terrain_rules_handler.gd" id="2_hk3wk"]
 [ext_resource type="Texture2D" uid="uid://dj8bni171no41" path="res://Assets/Testy Assets/map edit symbols/Asset 1@0.5x.png" id="2_lwt0r"]
-[ext_resource type="Resource" uid="uid://d220f54sbgmnx" path="res://Test/data/world_datas/generation_test.tres" id="2_y6nff"]
+[ext_resource type="Resource" uid="uid://cyfy5w7467lbb" path="res://Test/data/world_datas/generation_test.tres" id="2_y6nff"]
 [ext_resource type="Script" uid="uid://btkipgqft1s0h" path="res://Test/map_editor_control_menu.gd" id="3_4irie"]
 [ext_resource type="Texture2D" uid="uid://b71ycp15yowwk" path="res://Assets/Testy Assets/map edit symbols/Asset 25@0.5x.png" id="4_jjck8"]
 [ext_resource type="Texture2D" uid="uid://oulwhnc8mhq5" path="res://Assets/Testy Assets/map edit symbols/Asset 18@0.5x.png" id="5_gjubd"]
@@ -17,10 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://b71wkniwm1shg" path="res://Assets/Testy Assets/map edit symbols/Asset 81@0.5x.png" id="8_tgey8"]
 [ext_resource type="Script" uid="uid://dqyo70qnqpuvd" path="res://Game Logic/world/generation/world_generator.gd" id="13_i6roh"]
 [ext_resource type="Texture2D" uid="uid://bnxf6cstcmjft" path="res://Assets/Testy Assets/map edit symbols/paintbrush.png" id="13_ragj0"]
-[ext_resource type="FastNoiseLite" uid="uid://bbqhvyutia2e2" path="res://Test/data/noise/doesntworkanymorenoise.tres" id="14_16di6"]
 [ext_resource type="Texture2D" uid="uid://codo8ckb42t08" path="res://Assets/Testy Assets/map edit symbols/eraser.png" id="14_dmrar"]
 [ext_resource type="Script" uid="uid://b18kgtmd54e0v" path="res://Game Logic/world/WorldSaver.gd" id="16_neiaj"]
-[ext_resource type="FastNoiseLite" uid="uid://bdmyfboi5v4ci" path="res://Test/data/noise/decent_noise.tres" id="18_we2w1"]
 [ext_resource type="Script" uid="uid://c5wpksgdt3fdn" path="res://Game Logic/UI/debug_display.gd" id="18_y6nff"]
 [ext_resource type="Theme" uid="uid://c5pjopti0rq5n" path="res://Scenes/UI/debug_menu.tres" id="19_il8al"]
 
@@ -40,19 +38,24 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_y6nff"]
-noise_type = 3
-frequency = 0.0055
-fractal_type = 3
-fractal_octaves = 2
-fractal_lacunarity = 1.7
-fractal_gain = 0.1
-fractal_weighted_strength = 1.0
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_is11x"]
+frequency = 1.0
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_extud"]
-noise_type = 3
-frequency = 0.0176
-fractal_type = 2
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ladqw"]
+frequency = 0.0028
+fractal_octaves = 2
+fractal_lacunarity = 5.63
+fractal_gain = 0.145
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_y6nff"]
+noise_type = 0
+frequency = 0.005
+fractal_octaves = 4
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_il8al"]
+noise_type = 2
+frequency = 0.0131
+fractal_octaves = 10
 
 [node name="TestTilemapSystem" type="Node2D"]
 y_sort_enabled = true
@@ -378,10 +381,10 @@ terrain_rules_handler = NodePath("../../WorldManager/TerrainRulesHandler")
 worldseed = 3033
 chunk_size = Vector2i(32, 32)
 num_chunks = Vector2i(10, 10)
-altitude_noise = ExtResource("14_16di6")
-moisture_noise = SubResource("FastNoiseLite_y6nff")
-temperature_noise = ExtResource("18_we2w1")
-debris_noise = SubResource("FastNoiseLite_extud")
+altitude_noise = SubResource("FastNoiseLite_is11x")
+moisture_noise = SubResource("FastNoiseLite_ladqw")
+temperature_noise = SubResource("FastNoiseLite_y6nff")
+debris_noise = SubResource("FastNoiseLite_il8al")
 zero_moist = Array[String](["plant_wild_grass", "plant_wild_yarrow", "plant_wild_bush"])
 one_moist = Array[String](["plant_tree_poplar", "plant_wild_bigbush", "plant_tree_oak"])
 two_moist = Array[String](["plant_crop_onion", "plant_wild_reed"])

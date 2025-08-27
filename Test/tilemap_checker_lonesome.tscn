@@ -1,9 +1,41 @@
-[gd_scene load_steps=5 format=4 uid="uid://bp74tb8u2t8fs"]
+[gd_scene load_steps=11 format=4 uid="uid://bp74tb8u2t8fs"]
 
 [ext_resource type="TileSet" uid="uid://daplxp32jm5hh" path="res://Scenes/world/tilesets/water_tiles.tres" id="1_fkvux"]
+[ext_resource type="Texture2D" uid="uid://bsr1y04qjpc8" path="res://Assets/tiles/redsquare.png" id="1_rqo0b"]
 [ext_resource type="Script" uid="uid://dkqao5pny83l" path="res://Plugins/TileMapDualWater.gd" id="2_tpurl"]
 [ext_resource type="TileSet" uid="uid://dayemb55av64c" path="res://Scenes/world/tilesets/dirt_tiles.tres" id="3_sium3"]
+[ext_resource type="Shader" uid="uid://bu5t54pynuau5" path="res://Game Logic/shaders/tilemap/hueshift.gdshader" id="4_heu65"]
 [ext_resource type="Script" uid="uid://db7a5vewyhna4" path="res://Plugins/TileMapDual.gd" id="4_ydyjh"]
+[ext_resource type="Texture2D" uid="uid://cm8p5qwvem1fv" path="res://Assets/tiles/dirt_texture.png" id="5_rglh7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t57x4"]
+shader = ExtResource("4_heu65")
+shader_parameter/tex = ExtResource("5_rglh7")
+shader_parameter/hue_shift = -0.1
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pxdbi"]
+texture = ExtResource("1_rqo0b")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_heu65"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_pxdbi")
 
 [node name="Node2D" type="Node2D"]
 
@@ -27,6 +59,7 @@ tile_set = ExtResource("3_sium3")
 
 [node name="TileMapDual" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
 texture_filter = 1
+material = SubResource("ShaderMaterial_t57x4")
 position = Vector2(-32, -32)
 tile_map_data = PackedByteArray("AAAGAAQAAAABAAMAAAAGAAUAAAABAAAAAAAHAAQAAAADAAAAAAAHAAUAAAACAAEAAAAGAAYAAAABAAEAAAAHAAYAAAACAAEAAAAGAAcAAAACAAEAAAAHAAcAAAACAAEAAAAGAAgAAAACAAIAAAAHAAgAAAACAAEAAAAGAAkAAAABAAAAAAAHAAkAAAACAAEAAAAGAAoAAAAAAAIAAAAHAAoAAAABAAIAAAAIAAQAAAADAAAAAAAIAAUAAAACAAEAAAAIAAYAAAACAAEAAAAIAAcAAAACAAEAAAAIAAgAAAACAAEAAAAIAAkAAAACAAEAAAAIAAoAAAABAAIAAAAJAAQAAAADAAAAAAAJAAUAAAACAAEAAAAJAAYAAAACAAEAAAAJAAcAAAACAAEAAAAJAAgAAAACAAEAAAAJAAkAAAACAAEAAAAJAAoAAAABAAIAAAAKAAQAAAADAAAAAAAKAAUAAAACAAEAAAAKAAYAAAACAAEAAAAKAAcAAAACAAEAAAAKAAgAAAACAAEAAAAKAAkAAAACAAEAAAAKAAoAAAABAAIAAAALAAQAAAADAAAAAAALAAUAAAACAAEAAAALAAYAAAACAAEAAAALAAcAAAACAAEAAAALAAgAAAACAAEAAAALAAkAAAACAAEAAAALAAoAAAABAAIAAAAMAAQAAAADAAAAAAAMAAUAAAACAAEAAAAMAAYAAAACAAEAAAAMAAcAAAACAAEAAAAMAAgAAAACAAEAAAAMAAkAAAACAAEAAAAMAAoAAAABAAIAAAAFAAYAAAABAAMAAAAFAAcAAAABAAAAAAAFAAgAAAAAAAIAAAANAAYAAAACAAEAAAANAAcAAAACAAEAAAANAAgAAAACAAEAAAAOAAYAAAACAAEAAAAOAAcAAAACAAEAAAAOAAgAAAACAAEAAAANAAQAAAADAAAAAAANAAUAAAACAAEAAAANAAkAAAACAAEAAAANAAoAAAABAAIAAAAOAAQAAAADAAAAAAAOAAUAAAACAAEAAAAOAAkAAAACAAEAAAAOAAoAAAABAAIAAAAPAAQAAAAAAAAAAAAPAAUAAAADAAIAAAAPAAYAAAADAAIAAAAPAAcAAAADAAIAAAAPAAgAAAADAAIAAAAPAAkAAAADAAIAAAAPAAoAAAADAAMAAAA=")
 tile_set = ExtResource("3_sium3")
@@ -35,3 +68,9 @@ world_tilemap = NodePath("../TileMapLayer")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(646, 473)
+
+[node name="TileMapLayer2" type="TileMapLayer" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.396078)
+tile_map_data = PackedByteArray("AAAKAAUAAAAAAAAAAAALAAUAAAAAAAAAAAALAAYAAAAAAAAAAAAKAAYAAAAAAAAAAAAJAAYAAAAAAAAAAAAJAAUAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_heu65")

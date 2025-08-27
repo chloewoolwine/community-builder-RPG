@@ -252,7 +252,7 @@ func apply_floor_at(pos: Location, floor_type: String) -> void:
 					if square.object_data == null || square.object_data.is_empty():
 						square.object_data = [null, null, null]
 					square.object_data[0] = new_floor
-					elevations[square.elevation].till_square(overall_pos)
+					elevations[square.elevation].till_square(overall_pos, square)
 				SquareData.SquareType.Sand:
 					pass # idk what to do here yet
 				SquareData.SquareType.Grass:
@@ -286,7 +286,7 @@ func water_square_at(pos: Location) -> void:
 		#print("old water: ", square.water_saturation)
 		square.water_saturation += 1
 		#print("new water: ", square.water_saturation)
-		elevations[square.elevation].update_specific_pixel(pos.chunk, pos.position)
+		elevations[square.elevation].update_specific_pixel(pos.get_world_coordinates(), square)
 
 func remove_roof_at(square_pos: Vector2i, chunk_pos: Vector2i) -> void:
 	var chunk: ChunkData = loaded_chunks[chunk_pos]

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ObjectData" load_steps=2 format=3 uid="uid://m0t2wsmp0uv2"]
+
+[ext_resource type="Script" uid="uid://c40j31y4fl1i7" path="res://Game Logic/data/world/object_data.gd" id="1_u6oxp"]
+
+[resource]
+script = ExtResource("1_u6oxp")
+object_id = "build_roof_thatchroof"
+chunk = Vector2i(0, 0)
+position = Vector2i(0, 0)
+object_tags = {}
+size = Vector2i(1, 1)
+additive = false
+last_loaded_minute = -1
+metadata/_custom_type_script = "uid://c40j31y4fl1i7"
