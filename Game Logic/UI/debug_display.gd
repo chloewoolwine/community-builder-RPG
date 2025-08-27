@@ -46,7 +46,7 @@ func do_mouse_stuff() -> void:
 			var loc := world_manager.convert_to_chunks_at_world_pos(mouse)
 			var square_data:SquareData = world_manager.trh.request_square_at(loc[0], loc[1])
 			if square_data:
-				label_3.text = str("layer:", layer.elevation, " loc:", loc, " type: ", square_data.type, " wettness: ", square_data.water_saturation, " fertility: ", square_data.fertility)
+				label_3.text = str("layer:", layer.elevation, " loc:", loc, " type: ", square_data.type, " wettness: ", square_data.water_saturation, " fertility: ", square_data.fertility, " pollution: ", square_data.pollution)
 			label_4.text = str("objects:", world_manager.get_objects_at_world_pos(mouse))
 	else: 
 		if get_parent().get_parent().ready:

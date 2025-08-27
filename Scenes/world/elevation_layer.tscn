@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://1b78ipp0k2t8"]
+[gd_scene load_steps=14 format=4 uid="uid://1b78ipp0k2t8"]
 
 [ext_resource type="TileSet" uid="uid://bgvxhw7wfiv85" path="res://Scenes/world/tilesets/mapper.tres" id="1_to6hq"]
 [ext_resource type="Script" uid="uid://danvvilca6aui" path="res://Game Logic/world/elevation_layer.gd" id="2_xeqao"]
@@ -8,22 +8,17 @@
 [ext_resource type="TileSet" uid="uid://daplxp32jm5hh" path="res://Scenes/world/tilesets/water_tiles.tres" id="5_hkcog"]
 [ext_resource type="Script" uid="uid://dkqao5pny83l" path="res://Plugins/TileMapDualWater.gd" id="5_qi5cv"]
 [ext_resource type="TileSet" uid="uid://dabqwthi0ru5v" path="res://Scenes/world/tilesets/grass_tiles.tres" id="7_75y3v"]
-[ext_resource type="Shader" uid="uid://sx4rpjxvdtcn" path="res://Game Logic/shaders/tilemap/wet_gradient.gdshader" id="8_jrs31"]
 [ext_resource type="TileSet" uid="uid://p08d33rgacki" path="res://Scenes/world/tilesets/decor.tres" id="8_pj17r"]
-[ext_resource type="Texture2D" uid="uid://cvd2cu1dlkyko" path="res://Assets/Testy Assets/gradient_shader_test.png" id="9_grwxp"]
 [ext_resource type="Texture2D" uid="uid://dndc4iegm2omf" path="res://Assets/Testy Assets/till_spot.png" id="10_1dcxp"]
 [ext_resource type="TileSet" uid="uid://dsixtjjsc88sg" path="res://Scenes/world/tilesets/stone_tiles.tres" id="12_2adka"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_be3gh"]
-shader = ExtResource("8_jrs31")
-shader_parameter/mod_color_tex = ExtResource("9_grwxp")
-shader_parameter/tint_color = Color(0, 0, 0, 1)
-shader_parameter/global_corner_pos = Vector2(0, 0)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yiurd"]
 texture = ExtResource("10_1dcxp")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_8pwus"]
 tile_size = Vector2i(64, 64)
@@ -67,7 +62,6 @@ world_tilemap = NodePath("../WaterMapper")
 
 [node name="Till" type="TileMapLayer" parent="."]
 y_sort_enabled = true
-material = SubResource("ShaderMaterial_be3gh")
 tile_set = SubResource("TileSet_8pwus")
 
 [node name="Stone" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]

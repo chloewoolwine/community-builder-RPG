@@ -79,6 +79,7 @@ static func run_water_calc(world: WorldData, chunks_around:Array, _is_raining: b
 			var square_data:SquareData = all_chunks[loc.chunk].square_datas[loc.position]
 			if square_data.water_saturation < 3:
 				square_data.water_saturation = 3
+	#TODO: water falls farther in lower elevations
 
 static func _get_circle(world: WorldData, center: Location, radius: int) -> Array[Location]:
 	var chunk_size := world.chunk_size.x

@@ -11,15 +11,26 @@
         "visibility": 0.0
       }
     },
-    "res://Resources/plants/": {
+    "res://Resources/objects/": {
       "metadata/_custom_type_script": {
-        "visibility": 0
+        "visibility": 0.0
       },
       "resource_local_to_scene": {
-        "visibility": 0
+        "visibility": 0.0
       },
       "resource_name": {
-        "visibility": 0
+        "visibility": 0.0
+      }
+    },
+    "res://Resources/plants/": {
+      "metadata/_custom_type_script": {
+        "visibility": 0.0
+      },
+      "resource_local_to_scene": {
+        "visibility": 0.0
+      },
+      "resource_name": {
+        "visibility": 0.0
       }
     },
     "res://Scenes/items/": {
@@ -84,7 +95,8 @@
     "res://Scenes/items/",
     "res://Scenes/items/seeds/",
     "res://Resources/items/",
-    "res://Resources/plants/"
+    "res://Resources/plants/",
+    "res://Resources/objects/"
   ],
   "table_functions": {
     "filter": [

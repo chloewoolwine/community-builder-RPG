@@ -13,7 +13,6 @@ const SPAWN_CHUNK:WorldData = preload("res://Test/data/world_datas/spawn_chunk.t
 @export var worldseed: int
 @export var chunk_size: Vector2i = Vector2(50,50)
 @export var num_chunks: Vector2i = Vector2(3,3)
-@export var acceptable_objects: Array[ObjectData]
 
 @export_group("Noise generation properties")
 @export var altitude_noise : FastNoiseLite
@@ -40,7 +39,7 @@ const SPAWN_CHUNK:WorldData = preload("res://Test/data/world_datas/spawn_chunk.t
 
 @export var wild_crops: Array[String]
 
-var seed_generator:RandomNumberGenerator
+var seeder:RandomNumberGenerator
 
 # this is stupid, but until this has access to the Game script the emissions wont work 
 var world_to_save: WorldData
@@ -51,8 +50,8 @@ func _ready() -> void:
 	if worldseed == 0:
 		worldseed = randi_range(1, 10000)
 	# sets the seeds for the noise maps- silly but deterministic :D 
-	seed_generator = RandomNumberGenerator.new()
-	seed_generator.seed = worldseed
+	seeder = RandomNumberGenerator.new()
+	seeder.seed = worldseed
 		
 	#print("loading")
 	#var world:WorldData = ResourceLoader.load('res://Test/data/world_datas/BIGWORLD.tres')
@@ -75,20 +74,13 @@ func generate_world_based_on_vals() -> WorldData:
 	print('chunk_size =', chunk_size)
 	print('world_size =', num_chunks)
 	print('time at start generation: ', Time.get_time_string_from_system())
-	
-	var f1:int = seed_generator.randi_range(0, 10000)
-	var f2:int = seed_generator.randi_range(0, 10000)
-	var f3:int = seed_generator.randi_range(0, 10000)
-	var f4:int = seed_generator.randi_range(0, 10000)
-	
 	#Avar thread1: Thread = Thread.new()
 	
-	var height_grid:Dictionary = generate_heights(f1)
-	var wet_grid:Dictionary = generate_moisture(f2)
-	var temp_grid:Dictionary = generate_temperature(f3)
-	var debris_grid:Dictionary = generate_debris(f4)
+	var height_grid:Dictionary = generate_heights()
+	var wet_grid:Dictionary = generate_river()
+	var debris_grid:Dictionary = generate_debris()
 	
-	world.chunk_datas = map_big_grid_to_chunks(height_grid, wet_grid, temp_grid, debris_grid)
+	world.chunk_datas = map_big_grid_to_chunks(height_grid, wet_grid, debris_grid)
 	#print('world_size =', big_grid.values())
 	#sand/dirt/rocks
 	#do_squaretype_stuff(world)
@@ -100,15 +92,18 @@ func generate_world_based_on_vals() -> WorldData:
 	EnvironmentLogic.run_water_calc(world, world.chunk_datas.keys())
 	
 	print("putting down plants")
+	do_squaretype_stuff(world)
 	#run plant pass
 	put_down_plants(world)
 	
 	return world
 
-func plant_grass(world_data: WorldData) -> void:
+func plant_grass(_world_data: WorldData) -> void:
 	pass
 	
 func put_down_plants(world_data: WorldData) -> void:
+	var gen_data:Database = DatabaseManager.WORLD_DATABASE
+	var _plants := gen_data.fetch_collection_data("GenerationData")
 	var plant_rate:float = .25
 	
 	@warning_ignore("integer_division")
@@ -139,6 +134,7 @@ func put_down_plants(world_data: WorldData) -> void:
 							object.object_id = plant_pool[randi_range(0, plant_pool.size()-1)]
 							if object.object_id in common_grasses or object.object_id in rare_grasses:
 								square_data.object_data = [null, object, null]
+								@warning_ignore("unused_variable")
 								var m:int
 								if object.object_id == "plant_wild_reed:":
 									m = 3
@@ -215,39 +211,6 @@ func do_squaretype_stuff(world_data: WorldData) ->void:
 	@warning_ignore("integer_division")
 	var mody:int = num_chunks.y/2
 	
-	print("water pass")
-	for x in num_chunks.x:
-		for y in num_chunks.y:
-			var chunk:ChunkData = chunk_datas[Vector2i(x - modx, y - mody)]
-			#if x == q_x and y == q_y:
-				#continue
-			for i in chunk_size.x:
-				for j in chunk_size.y:
-					var square : SquareData= chunk.square_datas[Vector2i(i,j)]
-					var n1 :int = (x*32)+i
-					var n2:int = (y*32)+j
-					var val: float= abs(moisture_noise.get_noise_2d(n1, n2))
-					
-					#get rid of single water tiles
-					var has_neighbor: bool = true
-					for w in range(-1, 2, 1):
-						for v in range(-1, 2, 1):
-							if !(w == 0 && v == 0):
-								var neighbor: float= abs(moisture_noise.get_noise_2d(n1 + w, n2 + v))
-								if neighbor > .7:
-									has_neighbor = true
-					#print(val)
-					if val > .7 && has_neighbor: 
-						square.water_saturation = 4
-						if randf() > .5:
-							var matrix := Location.new(square.location_in_chunk, chunk.chunk_position).get_neighbor_matrix()
-							for item in matrix:
-								if item.chunk in chunk_datas.keys():
-									var s:SquareData = chunk_datas[item.chunk].square_datas[item.position]
-									s.type = SquareData.SquareType.Sand
-					if val > .9 && has_neighbor: 
-						square.water_saturation = 5
-	
 	print("sand pass")
 	for x in num_chunks.x:
 		for y in num_chunks.y:
@@ -275,8 +238,8 @@ func do_squaretype_stuff(world_data: WorldData) ->void:
 	#TODO: dirt pass
 
 @warning_ignore("unused_parameter")
-func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, temp_grid:Dictionary, debris_grid:Dictionary) ->  Dictionary:
-	var chunk_datas: Dictionary
+func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, debris_grid:Dictionary) ->  Dictionary[Vector2i, ChunkData]:
+	var chunk_datas: Dictionary[Vector2i, ChunkData]
 	
 	@warning_ignore("integer_division")
 	var modx:int = num_chunks.x/2
@@ -289,61 +252,58 @@ func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, temp_grid:D
 			var chunk:ChunkData = ChunkData.new()
 			chunk.chunk_size = chunk_size
 			chunk.chunk_position = Vector2i(x - modx, y - mody)
-			var moist:float = wet_grid[Vector2i(x,y)]
-			var temp:float = temp_grid[Vector2i(x,y)]
-			var debris:float = debris_grid[Vector2i(x,y)]
-			
-			if(moist > .5): 
-				if(temp > .5):
-					if(debris > .5):
-						chunk.biome = ChunkData.Biome.EvilWetland
-					else:
-						chunk.biome = ChunkData.Biome.Wetland
-				else:
-					if(debris > .5):
-						chunk.biome = ChunkData.Biome.Forest
-					else:
-						chunk.biome = ChunkData.Biome.Deepforest
-			else:
-				if(temp > .5):
-					if(debris > .5):
-						chunk.biome = ChunkData.Biome.Wasteland
-					else:
-						chunk.biome = ChunkData.Biome.Shrubland
-				else:
-					if(debris > .5):
-						chunk.biome = ChunkData.Biome.Cityscape
-					else:
-						chunk.biome = ChunkData.Biome.Grassland
+			#var moist:float = wet_grid[Vector2i(x,y)]
+			#var temp:float = temp_grid[Vector2i(x,y)]
+			#var debris:float = debris_grid[Vector2i(x,y)]
+			#
+			#if(moist > .5): 
+				#if(temp > .5):
+					#if(debris > .5):
+						#chunk.biome = ChunkData.Biome.EvilWetland
+					#else:
+						#chunk.biome = ChunkData.Biome.Wetland
+				#else:
+					#if(debris > .5):
+						#chunk.biome = ChunkData.Biome.Forest
+					#else:
+						#chunk.biome = ChunkData.Biome.Deepforest
+			#else:
+				#if(temp > .5):
+					#if(debris > .5):
+						#chunk.biome = ChunkData.Biome.Wasteland
+					#else:
+						#chunk.biome = ChunkData.Biome.Shrubland
+				#else:
+					#if(debris > .5):
+						#chunk.biome = ChunkData.Biome.Cityscape
+					#else:
+						#chunk.biome = ChunkData.Biome.Grassland
 			#if chunk.biome != ChunkData.Biome.Wetland:
 			# everything is a forest, for now 
 			chunk.biome = chunk.Biome.Forest
 			
-			var square_datas: Dictionary
+			var square_datas: Dictionary[Vector2i, SquareData]
 			for i in chunk_size.x:
 				for j in chunk_size.y:
 					@warning_ignore("unused_variable")
 					var total_x : int = (x * chunk_size.x) + i
 					@warning_ignore("unused_variable")
 					var total_y : int = (y * chunk_size.y) + j
-					#print("total x : ", x, "total y: ",y, "elevation:", big_grid[Vector2i(total_x, total_y)])
+					#if big_grid[Vector2i(total_x, total_y)] == 0:
+						#print("total x : ", x, "total y: ",y, "elevation:", big_grid[Vector2i(total_x, total_y)])
 					var square:SquareData = SquareData.new()
-					square.elevation = big_grid[Vector2i(total_x, total_y)]
+					var big_pos := Vector2i(total_x, total_y)
+					square.elevation = big_grid[big_pos]
+					square.water_saturation = wet_grid[big_pos] if big_pos in wet_grid.keys() else 0
 					#square.elevation = 0
 					square.location_in_chunk = Vector2i(i,j)
-					square.water_saturation = 1
 					square_datas[Vector2i(i,j)] = square
-					square.type = SquareData.SquareType.Grass
-					#if(j == 0):
-						#var object: ObjectData = ObjectData.new()
-						#object.object_id = "plant_tree_poplar"
-						#object.object_tags["age"] =  15000
-						#square.object_data = [null, null, null]
-						#square.object_data[1] = object
-						
+					square.type = SquareData.SquareType.Dirt
+					square.pollution = debris_grid[big_pos]
 					
 			chunk.square_datas = square_datas
 			chunk_datas[chunk.chunk_position] = chunk
+	
 	
 	#print("picking random chunk as quarry")
 	##TODO: blobular shape
@@ -388,102 +348,143 @@ func populate_sand_logic(square: SquareData, chunk: ChunkData, chunks: Dictionar
 
 ## Generates on square-by-square basis
 @warning_ignore("shadowed_global_identifier")
-func generate_heights(seed: int) -> Dictionary:
-	if !altitude_noise:
-		altitude_noise = FastNoiseLite.new()
-		altitude_noise.noise_type = FastNoiseLite.TYPE_PERLIN
-		altitude_noise.frequency = alt_freq
-		altitude_noise.fractal_octaves = oct
-		altitude_noise.fractal_lacunarity = lac
-		altitude_noise.fractal_gain = gain
+func generate_heights() -> Dictionary:
+	var rng := seeder
+	rng.seed = worldseed
+	var total_tiles := chunk_size * (num_chunks + Vector2i(2,2)) # add buffer chunks on each side 
+	print("total tiles: ", total_tiles)
+	altitude_noise.set_seed(worldseed)
+	var grid:Dictionary[Vector2i, int]
+	for x in total_tiles.x:
+		for y in total_tiles.y:
+			grid[Vector2i(x,y)] = 1
 
-	altitude_noise.set_seed(seed)
-	var total_tiles:Vector2 = chunk_size * num_chunks
+	var zero_brush:Brush = Brush.new(10, Vector2i(10, total_tiles.y - 160)) #bottom left
+	zero_brush.max_r = 150
+	for x in total_tiles.x:
+		#print("brush at ", zero_brush.position, " radius: ", zero_brush.radius)
+		#finish the hill
+		for y in range(zero_brush.position.y, total_tiles.y):
+			grid[Vector2i(zero_brush.position.x, y)] = 0
+		var tiles:Array[Vector2i]
+		if altitude_noise.get_noise_1d(x) > 0:
+			tiles = zero_brush.next(Vector2i(1, 1), false)
+		else:
+			tiles = zero_brush.next(Vector2i(1, -1), false)
+		#this is to get the nice edge
+		for tile:Vector2i in tiles:
+			if tile.x > 0 && tile.x <= total_tiles.x && tile.y > 0 && tile.y <= total_tiles.y:
+				grid.erase(tile)
+				grid[tile] = 0
+	for y in range(zero_brush.position.y, total_tiles.y):
+		grid[Vector2i(zero_brush.position.x, y)] = 0
+	
+	var two_brush:Brush = Brush.new(10, Vector2i(10, total_tiles.y - 260)) #bottom left
+	two_brush.max_r = 150
+	#two_brush.random_factor = 5
+	for x in total_tiles.x:
+		#print("brush at ", two_brush.position, " radius: ", two_brush.radius)
+		#finish the hill
+		for y in range(two_brush.position.y, 0, -1):
+			grid[Vector2i(two_brush.position.x, y)] = 2
+		var tiles:Array[Vector2i]
+		if altitude_noise.get_noise_1d(x + (total_tiles.x*1)) > 0:
+			tiles = two_brush.next(Vector2i(1, 1), false)
+		else:
+			tiles = two_brush.next(Vector2i(1, -1), false)
+		#this is to get the nice edge
+		for tile:Vector2i in tiles:
+			if tile.x > 0 && tile.x <= total_tiles.x && tile.y > 0 && tile.y <= total_tiles.y:
+				grid.erase(tile)
+				grid[tile] = 2
+	for y in range(two_brush.position.y, 0, -1):
+		grid[Vector2i(two_brush.position.x, y)] = 2
+		
+	var three_brush:Brush = Brush.new(10, Vector2i(10, total_tiles.y - 315)) #bottom left
+	three_brush.max_r = 150
+	#two_brush.random_factor = 5
+	for x in total_tiles.x:
+		#print("brush at ", three_brush.position, " radius: ", three_brush.radius)
+		#finish the hill
+		for y in range(three_brush.position.y, 0, -1):
+			grid[Vector2i(three_brush.position.x, y)] = 3
+		var tiles:Array[Vector2i]
+		if altitude_noise.get_noise_1d(x + (total_tiles.x*2)) > 0:
+			tiles = three_brush.next(Vector2i(1, 1), false)
+		else:
+			tiles = three_brush.next(Vector2i(1, -1), false)
+		#this is to get the nice edge
+		for tile:Vector2i in tiles:
+			if tile.x > 0 && tile.x <= total_tiles.x && tile.y > 0 && tile.y <= total_tiles.y:
+				grid.erase(tile)
+				grid[tile] = 3
+	for y in range(three_brush.position.y, 0, -1):
+		grid[Vector2i(three_brush.position.x, y)] = 3
+	
+	var four_brush:Brush = Brush.new(10, Vector2i(10, total_tiles.y - 320)) #bottom left
+	four_brush.max_r = 150
+	#two_brush.random_factor = 5
+	for x in total_tiles.x:
+		#print("brush at ", four_brush.position, " radius: ", four_brush.radius)
+		#finish the hill
+		for y in range(four_brush.position.y, 0, -1):
+			grid[Vector2i(four_brush.position.x, y)] = 4
+		var tiles:Array[Vector2i]
+		if altitude_noise.get_noise_1d(x + (total_tiles.x*3)) > 0:
+			tiles = four_brush.next(Vector2i(1, 1), false)
+		else:
+			tiles = four_brush.next(Vector2i(1, -1), false)
+		#this is to get the nice edge
+		for tile:Vector2i in tiles:
+			if tile.x > 0 && tile.x <= total_tiles.x && tile.y > 0 && tile.y <= total_tiles.y:
+				grid.erase(tile)
+				grid[tile] = 4
+	
+	for y in range(four_brush.position.y, 0, -1):
+		grid[Vector2i(four_brush.position.x, y)] = 4
+	return grid
+
+
+@warning_ignore("shadowed_global_identifier")
+func generate_river() -> Dictionary:
+	altitude_noise.seed = seeder.randi_range(0, 10000)
+	var grid :Dictionary = {}
+	var total_tiles := chunk_size * (num_chunks + Vector2i(2,2))
+	@warning_ignore("integer_division")
+	var start_x := seeder.randi_range(total_tiles.x/2 + 32, total_tiles.x) # ensure right side (i think lol)
+	
+	var brush:Brush = Brush.new(12, Vector2i(start_x, 0))
+	brush.rand = moisture_noise # crazy !
+	brush.min_r = 7
+	brush.max_r = 13
+	#for tile:Vector2i in brush.get_pix():
+		#grid[tile] = 4 #ill deal with deep water later LOL TODO: deep water gen
+	for y in total_tiles.y:
+		var tiles:Array[Vector2i]
+		if altitude_noise.get_noise_1d(y) > 0:
+			tiles = brush.next(Vector2i(1, 1))
+		else:
+			tiles = brush.next(Vector2i(-1, 1))
+		for tile:Vector2i in tiles:
+			#print("brush center:", brush.position, " tile:", tile)
+			grid[tile] = 4 #ill deal with deep water later LOL TODO: deep water gen
+	return grid
+
+## Generates on chunk-by-chunk basis- used for determining biome
+@warning_ignore("shadowed_global_identifier")
+func generate_debris() -> Dictionary:
+	debris_noise.set_seed(worldseed)
+	var counts:Dictionary[int, int]
+	var total_tiles := chunk_size * (num_chunks + Vector2i(2,2)) 
 	var grid :Dictionary = {}
 	for x in total_tiles.x:
 		for y in total_tiles.y:
-			#this could, theoretically, be 4. which is out of range. ah well
-			@warning_ignore("narrowing_conversion")
-			grid[Vector2i(x,y)] =  abs(altitude_noise.get_noise_2d(x,y))*4
+			var val:int = (abs(debris_noise.get_noise_2d(x, y)) + .15) * 4
+			grid[Vector2i(x,y)] = val
+			if val in counts.keys():
+				counts[val] = counts[val] + 1
+			else:
+				counts[val] = 1
+	print("pollution counts: ", counts)
 	
 	return grid
-
-## Generates on chunk-by-chunk basis- the rules handler will
-## find the True Moisture Value of each square during runtime
-@warning_ignore("shadowed_global_identifier")
-func generate_moisture(seed: int) -> Dictionary:
-	#if !moisture_noise:
-		#moisture_noise = FastNoiseLite.new()
-		#moisture_noise.noise_type = FastNoiseLite.TYPE_PERLIN
-		#moisture_noise.frequency = alt_freq
-		#moisture_noise.fractal_octaves = oct
-		#moisture_noise.fractal_lacunarity = lac
-		#moisture_noise.fractal_gain = gain
-
-	var other_noise := get_new_noise(123)
-	other_noise.set_seed(seed)
-	var total_chunks:Vector2 = num_chunks
-	var grid :Dictionary = {}
-	for x in total_chunks.x:
-		for y in total_chunks.y:
-			#this could, theoretically, be 4. which is out of range. ah well
-			@warning_ignore("narrowing_conversion")
-			grid[Vector2i(x,y)] = other_noise.get_noise_2d(x,y)
-	
-	return grid
-
-## Generates on chunk-by-chunk basis- used for determining biome
-@warning_ignore("shadowed_global_identifier")
-func generate_temperature(seed: int) -> Dictionary:
-	if !temperature_noise:
-		temperature_noise = FastNoiseLite.new()
-		temperature_noise.noise_type = FastNoiseLite.TYPE_PERLIN
-		temperature_noise.frequency = alt_freq
-		temperature_noise.fractal_octaves = oct
-		temperature_noise.fractal_lacunarity = lac
-		temperature_noise.fractal_gain = gain
-
-	temperature_noise.set_seed(seed)
-	var total_chunks:Vector2 = num_chunks
-	var grid :Dictionary = {}
-	for x in total_chunks.x:
-		for y in total_chunks.y:
-			#this could, theoretically, be 4. which is out of range. ah well
-			@warning_ignore("narrowing_conversion")
-			grid[Vector2i(x,y)] =  temperature_noise.get_noise_2d(x,y)
-	
-	return grid
-
-## Generates on chunk-by-chunk basis- used for determining biome
-@warning_ignore("shadowed_global_identifier")
-func generate_debris(seed: int) -> Dictionary:
-	if !debris_noise:
-		debris_noise = FastNoiseLite.new()
-		debris_noise.noise_type = FastNoiseLite.TYPE_PERLIN
-		debris_noise.frequency = alt_freq
-		debris_noise.fractal_octaves = oct
-		debris_noise.fractal_lacunarity = lac
-		debris_noise.fractal_gain = gain
-
-	debris_noise.set_seed(seed)
-	var total_chunks:Vector2 = num_chunks
-	var grid :Dictionary = {}
-	for x in total_chunks.x:
-		for y in total_chunks.y:
-			#this could, theoretically, be 4. which is out of range. ah well
-			@warning_ignore("narrowing_conversion")
-			#grid[Vector2i(x,y)] =  debris_noise.get_noise_2d(x,y)
-			grid[Vector2i(x,y)] =  0
-	
-	return grid
-
-@warning_ignore("shadowed_global_identifier")
-func get_new_noise(seed: int) -> FastNoiseLite:
-	var new_noise := FastNoiseLite.new()
-	new_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
-	new_noise.frequency = alt_freq
-	new_noise.fractal_octaves = oct
-	new_noise.fractal_lacunarity = lac
-	new_noise.fractal_gain = gain
-	new_noise.seed = seed 
-	return new_noise

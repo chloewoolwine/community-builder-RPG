@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ObjectData" load_steps=2 format=3 uid="uid://sds5qopywn7"]
+
+[ext_resource type="Script" uid="uid://c40j31y4fl1i7" path="res://Game Logic/data/world/object_data.gd" id="1_y7h2o"]
+
+[resource]
+script = ExtResource("1_y7h2o")
+object_id = "plant_tree_oak"
+chunk = Vector2i(0, 0)
+position = Vector2i(0, 0)
+object_tags = {}
+size = Vector2i(3, 3)
+additive = false
+last_loaded_minute = -1
+metadata/_custom_type_script = "uid://c40j31y4fl1i7"
