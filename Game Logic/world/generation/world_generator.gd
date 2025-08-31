@@ -83,22 +83,25 @@ func generate_world_based_on_vals() -> WorldData:
 	world.chunk_datas = map_big_grid_to_chunks(height_grid, wet_grid, debris_grid)
 	#print('world_size =', big_grid.values())
 	#sand/dirt/rocks
-	#do_squaretype_stuff(world)
+	print("running water calc")
+	EnvironmentLogic.run_water_calc(world, world.chunk_datas.keys())
+	do_squaretype_stuff(world)
 	var spawn:ChunkData = SPAWN_CHUNK.chunk_datas[Vector2i(-1,-1)]
 	spawn.chunk_position = Vector2i.ZERO
 	world.chunk_datas[Vector2i(0, 0)] = spawn
 	#run a single natural water pass
-	print("running water calc")
+	print("running water calc 2")
 	EnvironmentLogic.run_water_calc(world, world.chunk_datas.keys())
 	
 	print("putting down plants")
 	do_squaretype_stuff(world)
 	#run plant pass
-	put_down_plants(world)
+	#put_down_plants(world)
 	
 	return world
 
-func plant_grass(_world_data: WorldData) -> void:
+func plant_grass(square: SquareData) -> void:
+	var grass_gen := DatabaseManager.fetch_plant_gen(&"grass")
 	pass
 	
 func put_down_plants(world_data: WorldData) -> void:
@@ -110,98 +113,64 @@ func put_down_plants(world_data: WorldData) -> void:
 	var modx:int = num_chunks.x/2
 	@warning_ignore("integer_division")
 	var mody:int = num_chunks.y/2
-	
-	for x in num_chunks.x:
-		for y in num_chunks.y:
-			var chunk:ChunkData = world_data.chunk_datas[Vector2i(x-modx, y-mody)]
-			
-			for i in chunk_size.x:
-				for j in chunk_size.y:
-					var square_data:SquareData = chunk.square_datas[Vector2i(i,j)]
-					var object_datas := square_data.object_data
-					if square_data.water_saturation >= 4: # we dont have water plants... yet
-						continue
-					if object_datas.is_empty():
-						if randf() < plant_rate:
-							#generate plant
-							var object := ObjectData.new()
-							object.chunk = Vector2i(x-modx, y-mody)
-							object.position = Vector2i(i,j)
-							object.object_tags["age"] = 100000 #TODO: each plant needs its own age randomizer...
-							object.size = Vector2i(1,1) #TODO: i still dont have different sized objects done...
-							
-							var plant_pool: Array[String] = create_plant_pool(square_data.water_saturation, randf() > .9)
-							object.object_id = plant_pool[randi_range(0, plant_pool.size()-1)]
-							if object.object_id in common_grasses or object.object_id in rare_grasses:
-								square_data.object_data = [null, object, null]
-								@warning_ignore("unused_variable")
-								var m:int
-								if object.object_id == "plant_wild_reed:":
-									m = 3
-								else:
-									m = 0
-								#poof_grass(Location.new(Vector2i(i,j), Vector2i(x-modx, y-mody)), object.object_id, m, world_data.chunk_datas)
-							else:
-								pass
+	#
+	#for x in num_chunks.x:
+		#for y in num_chunks.y:
+			#var chunk:ChunkData = world_data.chunk_datas[Vector2i(x-modx, y-mody)]
+			#
+			#for i in chunk_size.x:
+				#for j in chunk_size.y:
+					#var square_data:SquareData = chunk.square_datas[Vector2i(i,j)]
+					#var object_datas := square_data.object_data
+					#if square_data.water_saturation >= 4: # we dont have water plants... yet
+						#continue
+					#if object_datas.is_empty():
+						#if randf() < plant_rate:
+							##generate plant
+							#var object := ObjectData.new()
+							#object.chunk = Vector2i(x-modx, y-mody)
+							#object.position = Vector2i(i,j)
+							#object.object_tags["age"] = 100000 #TODO: each plant needs its own age randomizer...
+							#object.size = Vector2i(1,1) #TODO: i still dont have different sized objects done...
+							#
+							#var plant_pool: Array[String] = create_plant_pool(square_data.water_saturation, randf() > .9)
+							#object.object_id = plant_pool[randi_range(0, plant_pool.size()-1)]
+							#if object.object_id in common_grasses or object.object_id in rare_grasses:
 								#square_data.object_data = [null, object, null]
-							
-								
+								#@warning_ignore("unused_variable")
+								#var m:int
+								#if object.object_id == "plant_wild_reed:":
+									#m = 3
+								#else:
+									#m = 0
+								##poof_grass(Location.new(Vector2i(i,j), Vector2i(x-modx, y-mody)), object.object_id, m, world_data.chunk_datas)
+							#else:
+								#pass
+								##square_data.object_data = [null, object, null]
+							#
+								#
 	pass
-
-func poof_grass(loc: Location, object_id: String, required_moist: int, chunks: Dictionary) -> void: 
-	var all_grass:=poof_grass_recursion_helper(loc, chunks, 2)
-	
-	for spot in all_grass:
-		var sd: SquareData = chunks[spot.chunk].square_datas[spot.position]
-		if sd.water_saturation < required_moist:
-			continue
-		if sd.water_saturation > 3:
-			continue
-		if !sd.object_data.is_empty():
-			#reeds should overtake grass
-			if !(object_id == "plant_wild_reed" && sd.object_data[1].object_id == "plant_wild_grass"):
-				continue
-		var object := ObjectData.new()
-		object.chunk = spot.chunk
-		object.position = spot.position
-		object.object_tags["age"] = 100000 #TODO: each plant needs its own age randomizer...
-		object.size = Vector2i(1,1) #TODO: i still dont have different sized objects done...
-		object.object_id = object_id
-		sd.object_data = [null, object, null]
-	pass
-
-func poof_grass_recursion_helper(loc: Location, chunks: Dictionary, depth: int) -> Array[Location]:
-	if depth <= 0:
-		return []
-	var matrix := loc.get_neighbor_matrix()
-	var neighbors:Array[Location]
-	for l:Location in matrix:
-		if l.chunk in chunks.keys():
-			neighbors.append(l)
-			neighbors.append_array(poof_grass_recursion_helper(l, chunks, depth-1))
-	
-	return neighbors
 
 func create_plant_pool(moisture: int, rare:bool) -> Array[String]:
 	var final_pool:Array[String]
-	var moist_varieties:Array[String]
-	if moisture >= 0:
-		moist_varieties.append_array(zero_moist)
-	if moisture >= 1:
-		moist_varieties.append_array(one_moist)
-	if moisture >= 2:
-		moist_varieties.append_array(two_moist)
-	if moisture >= 3: 
-		moist_varieties.append_array(three_moist)
-	
-	for vari in moist_varieties:
-		if rare:
-			if vari in rare_grasses or vari in rare_trees or vari in wild_crops:
-				final_pool.append(vari)
-		else:
-			if vari in common_grasses or vari in common_trees:
-				final_pool.append(vari)
-	
+	#var moist_varieties:Array[String]
+	#if moisture >= 0:
+		#moist_varieties.append_array(zero_moist)
+	#if moisture >= 1:
+		#moist_varieties.append_array(one_moist)
+	#if moisture >= 2:
+		#moist_varieties.append_array(two_moist)
+	#if moisture >= 3: 
+		#moist_varieties.append_array(three_moist)
+	#
+	#for vari in moist_varieties:
+		#if rare:
+			#if vari in rare_grasses or vari in rare_trees or vari in wild_crops:
+				#final_pool.append(vari)
+		#else:
+			#if vari in common_grasses or vari in common_trees:
+				#final_pool.append(vari)
+	#
 	return final_pool
 
 func do_squaretype_stuff(world_data: WorldData) ->void:
@@ -211,31 +180,18 @@ func do_squaretype_stuff(world_data: WorldData) ->void:
 	@warning_ignore("integer_division")
 	var mody:int = num_chunks.y/2
 	
-	print("sand pass")
-	for x in num_chunks.x:
-		for y in num_chunks.y:
-			var chunk:ChunkData = chunk_datas[Vector2i(x - modx, y - mody)]
-			#if x == q_x and y == q_y:
-				#continue
-			for i in chunk_size.x:
-				for j in chunk_size.y:
-					var square : SquareData= chunk.square_datas[Vector2i(i,j)]
-					if square.type == SquareData.SquareType.Sand:
-							#populate more sand
-							populate_sand_logic(square, chunk, chunk_datas)
-	#
-	#for x in num_chunks.x:
-		#for y in num_chunks.y:
-			#var chunk:ChunkData = chunk_datas[Vector2i(x - modx, y - mody)]
-			##if x == q_x and y == q_y:
-				##continue
-			#for i in range(chunk_size.x-1, -1, -1):
-				#for j in range(chunk_size.y-1, -1, -1):
-					#var square : SquareData= chunk.square_datas[Vector2i(i,j)]
-					#if square.type == SquareData.SquareType.Sand:
-							##populate more sand
-						#populate_sand_logic(square, chunk, chunk_datas)
-	#TODO: dirt pass
+	print("running water calc")
+	EnvironmentLogic.run_water_calc(world_data, world_data.chunk_datas.keys())
+	for c_key in chunk_datas.keys():
+		var chunk:ChunkData = chunk_datas[c_key]
+		for s_key in chunk.square_datas:
+			var square:SquareData = chunk.square_datas[s_key]
+			if square.type == SquareData.SquareType.Dirt && square.pollution < 4 && square.water_saturation > 0:
+				square.type = SquareData.SquareType.Grass
+				if square.pollution < 2:
+					plant_grass(square)
+				
+		
 
 @warning_ignore("unused_parameter")
 func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, debris_grid:Dictionary) ->  Dictionary[Vector2i, ChunkData]:
@@ -246,6 +202,10 @@ func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, debris_grid
 	@warning_ignore("integer_division")
 	var mody:int = num_chunks.y/2
 	
+	var sand_grid: Dictionary[Vector2i, bool]
+	for pos in sand_positions:
+		sand_grid[pos] = true
+	
 	for x in num_chunks.x:
 		for y in num_chunks.y:
 			#get all values in chunk (x,y)
@@ -255,31 +215,6 @@ func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, debris_grid
 			#var moist:float = wet_grid[Vector2i(x,y)]
 			#var temp:float = temp_grid[Vector2i(x,y)]
 			#var debris:float = debris_grid[Vector2i(x,y)]
-			#
-			#if(moist > .5): 
-				#if(temp > .5):
-					#if(debris > .5):
-						#chunk.biome = ChunkData.Biome.EvilWetland
-					#else:
-						#chunk.biome = ChunkData.Biome.Wetland
-				#else:
-					#if(debris > .5):
-						#chunk.biome = ChunkData.Biome.Forest
-					#else:
-						#chunk.biome = ChunkData.Biome.Deepforest
-			#else:
-				#if(temp > .5):
-					#if(debris > .5):
-						#chunk.biome = ChunkData.Biome.Wasteland
-					#else:
-						#chunk.biome = ChunkData.Biome.Shrubland
-				#else:
-					#if(debris > .5):
-						#chunk.biome = ChunkData.Biome.Cityscape
-					#else:
-						#chunk.biome = ChunkData.Biome.Grassland
-			#if chunk.biome != ChunkData.Biome.Wetland:
-			# everything is a forest, for now 
 			chunk.biome = chunk.Biome.Forest
 			
 			var square_datas: Dictionary[Vector2i, SquareData]
@@ -290,7 +225,7 @@ func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, debris_grid
 					@warning_ignore("unused_variable")
 					var total_y : int = (y * chunk_size.y) + j
 					#if big_grid[Vector2i(total_x, total_y)] == 0:
-						#print("total x : ", x, "total y: ",y, "elevation:", big_grid[Vector2i(total_x, total_y)])
+					#print("total x : ", x, "total y: ",y, "elevation:", big_grid[Vector2i(total_x, total_y)])
 					var square:SquareData = SquareData.new()
 					var big_pos := Vector2i(total_x, total_y)
 					square.elevation = big_grid[big_pos]
@@ -298,59 +233,17 @@ func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, debris_grid
 					#square.elevation = 0
 					square.location_in_chunk = Vector2i(i,j)
 					square_datas[Vector2i(i,j)] = square
-					square.type = SquareData.SquareType.Dirt
+					square.type = SquareData.SquareType.Sand if big_pos in sand_grid.keys() else SquareData.SquareType.Dirt
 					square.pollution = debris_grid[big_pos]
 					
 			chunk.square_datas = square_datas
 			chunk_datas[chunk.chunk_position] = chunk
 	
-	
-	#print("picking random chunk as quarry")
-	##TODO: blobular shape
-	#var q_x := randi_range(1, num_chunks.x-2)
-	#var q_y := randi_range(1, num_chunks.y-2)
-	#var quarry_chunk: ChunkData = chunk_datas[Vector2i(q_x-modx,q_y - mody)]
-	#for i in chunk_size.x:
-		#for j in chunk_size.y:
-			#var square: SquareData = quarry_chunk.square_datas[Vector2i(i,j)]
-			#square.type = SquareData.SquareType.Rock
-			#square.elevation = square.elevation + 1
-	
 	return chunk_datas 
-
-func populate_sand_logic(square: SquareData, chunk: ChunkData, chunks: Dictionary) -> void: 
-	var loc := Location.new(square.location_in_chunk, chunk.chunk_position)
-	var matrix := loc.get_neighbor_matrix()
-	var water_touch:bool = false
-	var neighbors:Array[Location]
-	for l:Location in matrix:
-		if l.chunk in chunks.keys():
-			neighbors.append(l)
-	#print("niehgbors: ", neighbors)
-	for neigh:Location in neighbors:
-		var s:SquareData = chunks[neigh.chunk].square_datas[neigh.position]
-		if s.water_saturation > 3:
-			water_touch = true
-	if square.water_saturation > 3:
-		water_touch = true
-
-	for neigh:Location in neighbors:
-		var s:SquareData = chunks[neigh.chunk].square_datas[neigh.position]
-		if s.type == SquareData.SquareType.Sand:
-			return
-		if water_touch:
-			if randf() > .05:
-				s.type = SquareData.SquareType.Sand
-		else:
-			if randf() > .9:
-				s.type = SquareData.SquareType.Sand
-	pass
 
 ## Generates on square-by-square basis
 @warning_ignore("shadowed_global_identifier")
 func generate_heights() -> Dictionary:
-	var rng := seeder
-	rng.seed = worldseed
 	var total_tiles := chunk_size * (num_chunks + Vector2i(2,2)) # add buffer chunks on each side 
 	print("total tiles: ", total_tiles)
 	altitude_noise.set_seed(worldseed)
@@ -444,7 +337,7 @@ func generate_heights() -> Dictionary:
 		grid[Vector2i(four_brush.position.x, y)] = 4
 	return grid
 
-
+var sand_positions: Array[Vector2i]
 @warning_ignore("shadowed_global_identifier")
 func generate_river() -> Dictionary:
 	altitude_noise.seed = seeder.randi_range(0, 10000)
@@ -457,14 +350,18 @@ func generate_river() -> Dictionary:
 	brush.rand = moisture_noise # crazy !
 	brush.min_r = 7
 	brush.max_r = 13
-	#for tile:Vector2i in brush.get_pix():
-		#grid[tile] = 4 #ill deal with deep water later LOL TODO: deep water gen
+	var sand_brush:Brush = Brush.new(15, Vector2i(start_x, 0))
+	brush.rand = moisture_noise 
+	brush.min_r = 10
+	brush.max_r = 20
 	for y in total_tiles.y:
 		var tiles:Array[Vector2i]
 		if altitude_noise.get_noise_1d(y) > 0:
 			tiles = brush.next(Vector2i(1, 1))
+			sand_positions.append_array(sand_brush.next_force_pos(brush.position))
 		else:
 			tiles = brush.next(Vector2i(-1, 1))
+			sand_positions.append_array(sand_brush.next_force_pos(brush.position))
 		for tile:Vector2i in tiles:
 			#print("brush center:", brush.position, " tile:", tile)
 			grid[tile] = 4 #ill deal with deep water later LOL TODO: deep water gen

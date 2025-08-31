@@ -45,6 +45,12 @@ func next(dir: Vector2i, change_size: bool = true) -> Array[Vector2i]:
 		rand_size_change()
 	return get_pix()
 
+func next_force_pos(new_pos: Vector2i, change_size: bool = true) -> Array[Vector2i]:
+	position = new_pos
+	if rand && change_size: 
+		rand_size_change()
+	return get_pix()
+
 func get_pix() -> Array[Vector2i]:
 	var pix: Array[Vector2i]
 	

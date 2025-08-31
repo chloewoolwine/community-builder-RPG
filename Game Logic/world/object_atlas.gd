@@ -52,7 +52,10 @@ func translate_object(object_datas: Array[ObjectData],overall_position: Vector2,
 		return 
 	for x in range(1, object_datas.size()):
 		var object_data := object_datas[x]
-		_parse_and_place(object_data, overall_position, square)
+		if object_data is ObjectDataPointer:
+			pass
+		else: 
+			_parse_and_place(object_data, overall_position, square)
 
 func remove_objects(object_datas: Array[ObjectData], pos: Location) -> Array[ObjectData]: 
 	for x in range(1, object_datas.size()):
