@@ -1,11 +1,5 @@
 class_name EnvironmentLogic
 
-static func get_real_pos_object(loc: Location, elevation: int) -> Vector2:
-	##((pos * 64) + (chunk * 64 * 32)) + Vector2i(0, layer.elevation*-32) + Vector2i(32, 32)
-	var world_pos := (loc.chunk * Constants.CHUNK_SIZE) + loc.position
-	@warning_ignore("integer_division")
-	return world_pos * Constants.TILE_SIZE + Vector2i(0, elevation*-(Constants.TILE_SIZE/2)) + Vector2i((Constants.TILE_SIZE/2), (Constants.TILE_SIZE/2))
-
 static func run_daily(world: WorldData, day:int, hour:int, minute:int, _is_raining: bool = false, do_plants:bool = true) -> void:
 	var all_chunks := world.chunk_datas
 	@warning_ignore("untyped_declaration")
@@ -107,3 +101,95 @@ static func _get_most_wet(water_source:Location) -> Array[Location]:
 	water_source.get_location(Vector2i.UP + Vector2i.RIGHT),
 	water_source.get_location(Vector2i.DOWN + Vector2i.LEFT),
 	water_source.get_location(Vector2i.DOWN + Vector2i.RIGHT)]
+
+static func get_real_pos_object(loc: Location, elevation: int) -> Vector2:
+	##((pos * 64) + (chunk * 64 * 32)) + Vector2i(0, layer.elevation*-32) + Vector2i(32, 32)
+	var world_pos := (loc.chunk * Constants.CHUNK_SIZE) + loc.position
+	@warning_ignore("integer_division")
+	return world_pos * Constants.TILE_SIZE + Vector2i(0, elevation*-(Constants.TILE_SIZE/2)) + Vector2i((Constants.TILE_SIZE/2), (Constants.TILE_SIZE/2))
+
+static func get_square(world_data: WorldData, loc: Location) -> SquareData:
+	return world_data.chunk_datas[loc.chunk].square_datas[loc.position]
+
+static func place_object_data(world_data: WorldData, loc: Location, name: StringName, age:int = -1, clear:bool = false) -> bool:
+	var object:= DatabaseManager.fetch_object_data(name)
+	var square:= get_square(world_data, loc)
+	if !object_is_valid_to_place(clear, object.additive, square):
+		return false
+	var locs:Array[Location]
+	if !clear:
+		match object.size: #yeah i cant think of a better way to do this :/ theres probably something with arrays but im stupid rn
+			Vector2i(1,1):
+				pass
+			Vector2i(1,2):
+				locs.append(loc.get_location(Vector2i(0,1)))
+			Vector2i(2,1):
+				locs.append(loc.get_location(Vector2i(1,0)))
+			Vector2i(2,2):
+				locs.append(loc.get_location(Vector2i(1,0)))
+				locs.append(loc.get_location(Vector2i(0,1)))
+				locs.append(loc.get_location(Vector2i(1,1)))
+			Vector2i(3,3):
+				for x in range(-1, 1):
+					for y in range(-1, 1):
+						locs.append(loc.get_location(Vector2i(x,y)))
+			_:
+				return false # give up !
+	
+	for new_loc in locs:
+		if !object_is_valid_to_place(clear, object.additive, get_square(world_data, new_loc)):
+			return false
+			
+	#if we're still here, we are Valid! 
+	var new_object:ObjectData = object.duplicate(true)
+	print("palcing object: ", new_object.object_id)
+	new_object.object_tags["age"] = age
+	new_object.last_loaded_minute = age
+	new_object.position = loc.position
+	new_object.chunk = loc.chunk
+	if square.object_data == null || square.object_data.is_empty():
+		square.object_data = [null, null, null]
+	if new_object.additive:
+		square.object_data.append(new_object)
+	else:
+		square.object_data[1] = new_object
+	
+	return true
+
+static func _fill_with_pointers(world_data, loc: Location, size: Vector2i) -> void: 
+	var pointer:ObjectDataPointer= DatabaseManager.fetch_object_data(&"object_data_pointer").duplicate(true)
+	pointer.originating_square = loc
+	var locs:Array[Location]
+	match size:
+		Vector2i(1,1):
+			pass
+		Vector2i(1,2):
+			locs.append(loc.get_location(Vector2i(0,1)))
+		Vector2i(2,1):
+			locs.append(loc.get_location(Vector2i(1,0)))
+		Vector2i(2,2):
+			locs.append(loc.get_location(Vector2i(1,0)))
+			locs.append(loc.get_location(Vector2i(0,1)))
+			locs.append(loc.get_location(Vector2i(1,1)))
+		Vector2i(3,3):
+			for x in range(-1, 1):
+				for y in range(-1, 1):
+					locs.append(loc.get_location(Vector2i(x,y)))
+		_:
+			return
+	for new_loc in locs:
+		var copy:= pointer.duplicate(true)
+		var square:= get_square(world_data, new_loc)
+		if square.object_data == null || square.object_data.is_empty():
+			square.object_data = [null, null, null]
+		square.object_data[1] = copy
+
+static func object_is_valid_to_place(clear:bool, additive:bool, square:SquareData) -> bool:
+	if square.object_data.size() > 1 && square.object_data[1] != null: # if there is something there
+		if clear: 
+			return true
+		elif additive:
+			return true
+		else:
+			return false
+	return true

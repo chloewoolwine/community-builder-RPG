@@ -17,13 +17,8 @@ const SPAWN_CHUNK:WorldData = preload("res://Test/data/world_datas/spawn_chunk.t
 @export_group("Noise generation properties")
 @export var altitude_noise : FastNoiseLite
 @export var moisture_noise : FastNoiseLite
-@export var temperature_noise : FastNoiseLite
 @export var debris_noise : FastNoiseLite
-@export var alt_freq : float = 0.005
-@export var oct : int = 4
-@export var lac : int = 2
-@export var gain : float = 0.5
-@export var amplitude : float = 1.0 
+@export var grass_noise : FastNoiseLite
 
 @export_group("Plant Population Properties")
 @export var zero_moist: Array[String]
@@ -47,25 +42,21 @@ var path: String
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if worldseed == 0:
-		worldseed = randi_range(1, 10000)
-	# sets the seeds for the noise maps- silly but deterministic :D 
-	seeder = RandomNumberGenerator.new()
-	seeder.seed = worldseed
-		
+	var world:WorldData = generate_world_based_on_vals()
+	world_manager.set_world_data(world)
+	
+	## old loading stuff
 	#print("loading")
 	#var world:WorldData = ResourceLoader.load('res://Test/data/world_datas/BIGWORLD.tres')
 	#print("loading coimplete")
-	##world_manager.set_world_data(world)
-	var world:WorldData = generate_world_based_on_vals()
-	print('time at end generation: ', Time.get_time_string_from_system())
-	world_manager.set_world_data(world)
 	#world_to_save = world
 	#path = str('res://Test/data/world_datas/generation_test.tres')
 	#save_world.emit(world, str('res://Test/data/world_datas/treez.tres'))
 
 # a lot of this is from https://www.reddit.com/r/godot/comments/10ho9d5/any_good_tutorials_on_the_new_fastnoiselite_class/
 func generate_world_based_on_vals() -> WorldData:
+	print('time at start generation: ', Time.get_time_string_from_system())
+	set_randomness()
 	var world : WorldData = WorldData.new()
 	world.world_seed = self.worldseed
 	world.chunk_size = chunk_size
@@ -73,16 +64,13 @@ func generate_world_based_on_vals() -> WorldData:
 	print('seed = ', worldseed)
 	print('chunk_size =', chunk_size)
 	print('world_size =', num_chunks)
-	print('time at start generation: ', Time.get_time_string_from_system())
-	#Avar thread1: Thread = Thread.new()
+	#Avar thread1: Thread = Thread.new() TODO: threads !
 	
 	var height_grid:Dictionary = generate_heights()
 	var wet_grid:Dictionary = generate_river()
 	var debris_grid:Dictionary = generate_debris()
 	
 	world.chunk_datas = map_big_grid_to_chunks(height_grid, wet_grid, debris_grid)
-	#print('world_size =', big_grid.values())
-	#sand/dirt/rocks
 	print("running water calc")
 	EnvironmentLogic.run_water_calc(world, world.chunk_datas.keys())
 	do_squaretype_stuff(world)
@@ -93,17 +81,72 @@ func generate_world_based_on_vals() -> WorldData:
 	print("running water calc 2")
 	EnvironmentLogic.run_water_calc(world, world.chunk_datas.keys())
 	
-	print("putting down plants")
-	do_squaretype_stuff(world)
 	#run plant pass
 	#put_down_plants(world)
-	
+	print('time at end generation: ', Time.get_time_string_from_system())
 	return world
 
-func plant_grass(square: SquareData) -> void:
-	var grass_gen := DatabaseManager.fetch_plant_gen(&"grass")
-	pass
+func set_randomness() -> void:
+	if worldseed == 0:
+		worldseed = randi_range(1, 10000)
+	# sets the seeds for the noise maps- silly but deterministic :D 
+	seeder = RandomNumberGenerator.new()
+	seeder.seed = worldseed
+	altitude_noise.set_seed(seeder.randi_range(0, 10000))
+	moisture_noise.set_seed(seeder.randi_range(0, 10000))
+	debris_noise.set_seed(seeder.randi_range(0, 10000))
+	grass_noise.set_seed(seeder.randi_range(0, 10000))
 	
+var grasses := DatabaseManager.fetch_plant_category(&"grass")
+func plant_grass(world_data: WorldData, loc: Location) -> String:
+	var square := EnvironmentLogic.get_square(world_data, loc)
+	var valids:Dictionary[int, bool]
+	
+	if square.pollution < 4 && square.type == SquareData.SquareType.Dirt:
+		square.type = SquareData.SquareType.Grass
+
+	for x:int in grasses:
+		valids[x] = true
+	for x:int in grasses:
+		var plant:PlantGenData = grasses[x]
+		if square.water_saturation < plant.target_moisture:
+			valids[x] = false
+		if square.water_saturation > 3:
+			#print("wet tile at ", loc)
+			if !plant.shallow_water:
+				#print("plant ", plant.object_id, " rejected")
+				valids[x] = false
+		if square.pollution > plant.pollution_tolerance:
+			valids[x] = false
+		if square.type == SquareData.SquareType.Sand && SquareData.SquareType.Sand not in plant.target_tiles:
+			valids[x] = false
+		#other factors
+	#for x:int in grasses:
+		#print(grasses[x].object_id)
+	#print(valids)
+	for x:int in grasses.keys():
+		if !valids[x]:
+			valids.erase(x)
+	
+	if valids.keys().is_empty():
+		#barren ass wasteland
+		return ""
+
+	var w_loc := loc.get_world_coordinates()
+	#print("grass noise at loc: ", grass_noise.get_noise_2d(w_loc.x, w_loc.y))
+	# low - like -.1 ~ .1 ish
+	#theres probably a better way than to map this by hand, but, eh, 
+	var noise:= grass_noise.get_noise_2d(w_loc.x, w_loc.y)
+	if noise <= -.2:
+		pass
+	else:
+		pass
+	var finali: int = valids.keys()[randi_range(0, valids.keys().size()-1)]
+	var final:PlantGenData = grasses[finali]
+	print(final.object_id)
+	EnvironmentLogic.place_object_data(world_data, loc, StringName(final.object_id), 10000)
+	return final.object_id
+
 func put_down_plants(world_data: WorldData) -> void:
 	var gen_data:Database = DatabaseManager.WORLD_DATABASE
 	var _plants := gen_data.fetch_collection_data("GenerationData")
@@ -114,43 +157,6 @@ func put_down_plants(world_data: WorldData) -> void:
 	@warning_ignore("integer_division")
 	var mody:int = num_chunks.y/2
 	#
-	#for x in num_chunks.x:
-		#for y in num_chunks.y:
-			#var chunk:ChunkData = world_data.chunk_datas[Vector2i(x-modx, y-mody)]
-			#
-			#for i in chunk_size.x:
-				#for j in chunk_size.y:
-					#var square_data:SquareData = chunk.square_datas[Vector2i(i,j)]
-					#var object_datas := square_data.object_data
-					#if square_data.water_saturation >= 4: # we dont have water plants... yet
-						#continue
-					#if object_datas.is_empty():
-						#if randf() < plant_rate:
-							##generate plant
-							#var object := ObjectData.new()
-							#object.chunk = Vector2i(x-modx, y-mody)
-							#object.position = Vector2i(i,j)
-							#object.object_tags["age"] = 100000 #TODO: each plant needs its own age randomizer...
-							#object.size = Vector2i(1,1) #TODO: i still dont have different sized objects done...
-							#
-							#var plant_pool: Array[String] = create_plant_pool(square_data.water_saturation, randf() > .9)
-							#object.object_id = plant_pool[randi_range(0, plant_pool.size()-1)]
-							#if object.object_id in common_grasses or object.object_id in rare_grasses:
-								#square_data.object_data = [null, object, null]
-								#@warning_ignore("unused_variable")
-								#var m:int
-								#if object.object_id == "plant_wild_reed:":
-									#m = 3
-								#else:
-									#m = 0
-								##poof_grass(Location.new(Vector2i(i,j), Vector2i(x-modx, y-mody)), object.object_id, m, world_data.chunk_datas)
-							#else:
-								#pass
-								##square_data.object_data = [null, object, null]
-							#
-								#
-	pass
-
 func create_plant_pool(moisture: int, rare:bool) -> Array[String]:
 	var final_pool:Array[String]
 	#var moist_varieties:Array[String]
@@ -180,18 +186,16 @@ func do_squaretype_stuff(world_data: WorldData) ->void:
 	@warning_ignore("integer_division")
 	var mody:int = num_chunks.y/2
 	
-	print("running water calc")
-	EnvironmentLogic.run_water_calc(world_data, world_data.chunk_datas.keys())
+	var all_grasses:Dictionary[String, int]
+	
 	for c_key in chunk_datas.keys():
 		var chunk:ChunkData = chunk_datas[c_key]
 		for s_key in chunk.square_datas:
-			var square:SquareData = chunk.square_datas[s_key]
-			if square.type == SquareData.SquareType.Dirt && square.pollution < 4 && square.water_saturation > 0:
-				square.type = SquareData.SquareType.Grass
-				if square.pollution < 2:
-					plant_grass(square)
-				
-		
+			var grass := plant_grass(world_data, Location.new(s_key, c_key))
+			var count:int = all_grasses.get_or_add(grass, 0)
+			all_grasses[grass] = count+1
+	
+	print("grasses planted: ", all_grasses)
 
 @warning_ignore("unused_parameter")
 func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, debris_grid:Dictionary) ->  Dictionary[Vector2i, ChunkData]:
@@ -203,8 +207,15 @@ func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, debris_grid
 	var mody:int = num_chunks.y/2
 	
 	var sand_grid: Dictionary[Vector2i, bool]
+	
+	var sand_brush:Brush = Brush.new(15, sand_positions[0], 0)
+	sand_brush.rand = moisture_noise 
+	sand_brush.min_r = 10
+	sand_brush.max_r = 20
 	for pos in sand_positions:
-		sand_grid[pos] = true
+		var tiles:=sand_brush.next_force_pos(pos)
+		for tile in tiles:
+			sand_grid[tile] = true
 	
 	for x in num_chunks.x:
 		for y in num_chunks.y:
@@ -229,7 +240,7 @@ func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, debris_grid
 					var square:SquareData = SquareData.new()
 					var big_pos := Vector2i(total_x, total_y)
 					square.elevation = big_grid[big_pos]
-					square.water_saturation = wet_grid[big_pos] if big_pos in wet_grid.keys() else 0
+					square.water_saturation = wet_grid.get(big_pos, 0)
 					#square.elevation = 0
 					square.location_in_chunk = Vector2i(i,j)
 					square_datas[Vector2i(i,j)] = square
@@ -246,7 +257,6 @@ func map_big_grid_to_chunks(big_grid:Dictionary,wet_grid:Dictionary, debris_grid
 func generate_heights() -> Dictionary:
 	var total_tiles := chunk_size * (num_chunks + Vector2i(2,2)) # add buffer chunks on each side 
 	print("total tiles: ", total_tiles)
-	altitude_noise.set_seed(worldseed)
 	var grid:Dictionary[Vector2i, int]
 	for x in total_tiles.x:
 		for y in total_tiles.y:
@@ -340,7 +350,6 @@ func generate_heights() -> Dictionary:
 var sand_positions: Array[Vector2i]
 @warning_ignore("shadowed_global_identifier")
 func generate_river() -> Dictionary:
-	altitude_noise.seed = seeder.randi_range(0, 10000)
 	var grid :Dictionary = {}
 	var total_tiles := chunk_size * (num_chunks + Vector2i(2,2))
 	@warning_ignore("integer_division")
@@ -350,18 +359,15 @@ func generate_river() -> Dictionary:
 	brush.rand = moisture_noise # crazy !
 	brush.min_r = 7
 	brush.max_r = 13
-	var sand_brush:Brush = Brush.new(15, Vector2i(start_x, 0))
-	brush.rand = moisture_noise 
-	brush.min_r = 10
-	brush.max_r = 20
+	sand_positions.append(Vector2i(start_x,0))
 	for y in total_tiles.y:
 		var tiles:Array[Vector2i]
 		if altitude_noise.get_noise_1d(y) > 0:
 			tiles = brush.next(Vector2i(1, 1))
-			sand_positions.append_array(sand_brush.next_force_pos(brush.position))
+			sand_positions.append(brush.position)
 		else:
 			tiles = brush.next(Vector2i(-1, 1))
-			sand_positions.append_array(sand_brush.next_force_pos(brush.position))
+			sand_positions.append(brush.position)
 		for tile:Vector2i in tiles:
 			#print("brush center:", brush.position, " tile:", tile)
 			grid[tile] = 4 #ill deal with deep water later LOL TODO: deep water gen
@@ -370,7 +376,6 @@ func generate_river() -> Dictionary:
 ## Generates on chunk-by-chunk basis- used for determining biome
 @warning_ignore("shadowed_global_identifier")
 func generate_debris() -> Dictionary:
-	debris_noise.set_seed(worldseed)
 	var counts:Dictionary[int, int]
 	var total_tiles := chunk_size * (num_chunks + Vector2i(2,2)) 
 	var grid :Dictionary = {}

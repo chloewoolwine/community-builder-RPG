@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dqm8g7yybo0pf" path="res://Scenes/UI/Inventory/inventory.tscn" id="4_kq4io"]
 [ext_resource type="Script" uid="uid://bwjidfdugtnfu" path="res://Game Logic/managers/calendar_manager.gd" id="5_cki0q"]
 [ext_resource type="Script" uid="uid://diuxqukbk35hy" path="res://Game Logic/world/world_manager.gd" id="5_wonyh"]
-[ext_resource type="Resource" uid="uid://28wdgybn6sfv" path="res://Test/data/world_datas/asdfdf.tres" id="6_cwurv"]
+[ext_resource type="Resource" uid="uid://d2jp5m37iwqgd" path="res://Test/data/world_datas/generation_test.tres" id="6_cwurv"]
 [ext_resource type="Script" uid="uid://bgmqoj67px6a3" path="res://Game Logic/inventory/inventory_interface.gd" id="6_uons4"]
 [ext_resource type="Script" uid="uid://vjmm4ct83rqu" path="res://Game Logic/world/terrain_rules_handler.gd" id="7_fkv55"]
 [ext_resource type="Script" uid="uid://dxha2h40ws5cy" path="res://Game Logic/managers/entity_manager.gd" id="8_3dv0o"]
@@ -87,7 +87,7 @@ script = ExtResource("8_3dv0o")
 [node name="Player" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager" groups=["enemy_target"] instance=ExtResource("1_vlfca")]
 scale = Vector2(0.305, 0.305)
 inventory_data = ExtResource("3_xku57")
-speed = 340
+speed = 270
 dash_length = 0.4
 
 [node name="TileIndicator" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player" index="7"]
@@ -103,10 +103,12 @@ editor_description = "Holds pickups"
 script = ExtResource("10_d5qv3")
 
 [node name="PickUp" parent="PickupManager" instance=ExtResource("13_pouw6")]
+visible = false
 position = Vector2(512, -382)
 slot_data = SubResource("Resource_qmoje")
 
 [node name="UI" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="EntityInterface" parent="UI" instance=ExtResource("20_vmo70")]
 

@@ -91,14 +91,15 @@ func give_requested_layer(layer:int, callback: Callable) -> void:
 		callback.call(trh.elevations[layer])
 
 func manage_propagation_success(pos: Location, object_id: String) -> void: 
+	pass # LOL ! TODO: properly use environment logic to place things instead of this
 	#print("checking for propagation of ", object_id, " at ", pos.position)
 	var database := DatabaseManager.WORLD_DATABASE
 	var _split := object_id.split("_")
-	print(_split[2])
-	if database._has_string_id(&"GenerationData", StringName(_split[2])):
-		database.fetch_data(&"GenerationData", StringName(_split[2]))
-	else:
-		print(database.fetch_collection_data(&"GenerationData").keys())
+	#print(_split[2])
+	#if database._has_string_id(&"GenerationData", StringName(_split[2])):
+		#database.fetch_data(&"GenerationData", StringName(_split[2]))
+	#else:
+		#print(database.fetch_collection_data(&"GenerationData").keys())
 	#var plant_data:PlantGenData = database.fetch_data("GenerationData",_split[2])
 	if pos.chunk in trh.loaded_chunks.keys():
 		var square := trh.get_square_at(pos.position, pos.chunk)

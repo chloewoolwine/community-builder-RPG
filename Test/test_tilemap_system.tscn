@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dyamhmg7lwxjc" path="res://Test/temp_camera_script.gd" id="1_pg57c"]
 [ext_resource type="Script" uid="uid://vjmm4ct83rqu" path="res://Game Logic/world/terrain_rules_handler.gd" id="2_hk3wk"]
 [ext_resource type="Texture2D" uid="uid://dj8bni171no41" path="res://Assets/Testy Assets/map edit symbols/Asset 1@0.5x.png" id="2_lwt0r"]
-[ext_resource type="Resource" uid="uid://cyfy5w7467lbb" path="res://Test/data/world_datas/generation_test.tres" id="2_y6nff"]
+[ext_resource type="Resource" uid="uid://d2jp5m37iwqgd" path="res://Test/data/world_datas/generation_test.tres" id="2_y6nff"]
 [ext_resource type="Script" uid="uid://btkipgqft1s0h" path="res://Test/map_editor_control_menu.gd" id="3_4irie"]
 [ext_resource type="Texture2D" uid="uid://b71ycp15yowwk" path="res://Assets/Testy Assets/map edit symbols/Asset 25@0.5x.png" id="4_jjck8"]
 [ext_resource type="Texture2D" uid="uid://oulwhnc8mhq5" path="res://Assets/Testy Assets/map edit symbols/Asset 18@0.5x.png" id="5_gjubd"]
@@ -47,15 +47,19 @@ fractal_octaves = 2
 fractal_lacunarity = 5.63
 fractal_gain = 0.145
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_y6nff"]
-noise_type = 0
-frequency = 0.005
-fractal_octaves = 4
-
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_il8al"]
 noise_type = 2
 frequency = 0.0131
 fractal_octaves = 10
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_y6nff"]
+noise_type = 4
+frequency = 0.0576
+fractal_lacunarity = 2.205
+fractal_gain = 0.505
+fractal_weighted_strength = 0.75
+domain_warp_enabled = true
+domain_warp_fractal_octaves = 4
 
 [node name="TestTilemapSystem" type="Node2D"]
 y_sort_enabled = true
@@ -383,8 +387,8 @@ chunk_size = Vector2i(32, 32)
 num_chunks = Vector2i(10, 10)
 altitude_noise = SubResource("FastNoiseLite_is11x")
 moisture_noise = SubResource("FastNoiseLite_ladqw")
-temperature_noise = SubResource("FastNoiseLite_y6nff")
 debris_noise = SubResource("FastNoiseLite_il8al")
+grass_noise = SubResource("FastNoiseLite_y6nff")
 zero_moist = Array[String](["plant_wild_grass", "plant_wild_yarrow", "plant_wild_bush"])
 one_moist = Array[String](["plant_tree_poplar", "plant_wild_bigbush", "plant_tree_oak"])
 two_moist = Array[String](["plant_crop_onion", "plant_wild_reed"])
