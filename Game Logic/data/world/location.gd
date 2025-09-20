@@ -4,7 +4,7 @@ class_name Location
 @export var chunk: Vector2i
 @export var position: Vector2i
 
-func _init(pos: Vector2i, chun: Vector2i) -> void:
+func _init(pos: Vector2i = Vector2i.ZERO, chun: Vector2i = Vector2i.ZERO) -> void:
 	chunk = chun
 	position = pos
 

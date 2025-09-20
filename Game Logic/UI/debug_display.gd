@@ -47,7 +47,16 @@ func do_mouse_stuff() -> void:
 			var square_data:SquareData = world_manager.trh.request_square_at(loc[0], loc[1])
 			if square_data:
 				label_3.text = str("layer:", layer.elevation, " loc:", loc, " type: ", square_data.type, " wettness: ", square_data.water_saturation, " fertility: ", square_data.fertility, " pollution: ", square_data.pollution)
-			label_4.text = str("objects:", world_manager.get_objects_at_world_pos(mouse))
+			var obj:Array[String] = []
+			for o in world_manager.get_objects_at_world_pos(mouse):
+				if o != null:
+					if o.object_id == Constants.POINTER:
+						obj.append(str(o.object_id, " origin: ", o.object_tags[Constants.ORIGIN]))
+					else:
+						obj.append(o.object_id)
+				else:
+					obj.append("null")
+			label_4.text = str("objects:", obj)
 	else: 
 		if get_parent().get_parent().ready:
 			world_manager = get_parent().get_parent().world_manager

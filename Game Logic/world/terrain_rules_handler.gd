@@ -106,13 +106,6 @@ func get_topmost_layer_at_ingame_pos(pos: Vector2i) -> ElevationLayer:
 		if square.elevation != x:
 			continue
 		highest = x
-	#elevations.reverse()
-	#for layer in elevations:
-		#if layer.get_cell_source_id(pos) != -1:
-			#elevations.reverse()
-			#return layer
-	##push_error("Error: couldn't find any tiles at position: ", tile_pos)
-	#elevations.reverse()
 	return elevations[highest]
 
 func get_topmost_layer_at_global_pos(pos: Vector2) -> ElevationLayer:
@@ -134,17 +127,6 @@ func get_topmost_layer_at_global_pos(pos: Vector2) -> ElevationLayer:
 		if square.elevation != x:
 			continue
 		highest = x
-	#elevations.reverse()
-	#for layer:ElevationLayer in elevations:
-		#var local: Vector2i = layer.local_to_map(layer.to_local(pos))
-		##this isnt working for water because its checking the fucking TILES? NOT THE DATA ??
-		#if layer.get_cell_source_id(local) != -1:
-			#elevations.reverse()
-			#return layer
-		#if layer.water_mapper.get_cell_source_id(local) != -1:
-			#elevations.reverse()
-			#return layer
-	#elevations.reverse()
 	return elevations[highest]
 
 func unload_all_chunks() -> void:
@@ -192,28 +174,7 @@ func translate_square_data_to_tile(data: SquareData, world_pos: Vector2i, _chunk
 				object.chunk = _chunk_overall
 		object_atlas.translate_object(data.object_data, actual_pos, data)
 		_settle_objects_at_square(data)
-
-func run_shader_data_stuff(chunk_keys: Array[Vector2i]) -> void:
-	#print("chunk_keys: ", chunk_keys)
-	#doesnt work for very small map sizes as im always excepting a "buffer chunk" barrier of 1
-	var chunks: Dictionary
-	var send: bool = true
-	for key in chunk_keys:
-		if loaded_chunks.has(key):
-			chunks[key] = loaded_chunks[key]
-		else:
-			#TODO: these are a good idea, but if the word is being intially loaded they will freak out
-			#push_warning("Terrain Rules Handler tried to build shader data for an unloaded chunk")
-			if chunks_in_loading.has(key):
-				chunks[key] = chunks_in_loading[key]
-			else:
-				send = false
-				#push_error("Terrain rules handler tried to build shader data for a chunk not even trying to load. troubling news.")
-	if !chunks.is_empty() and send:
-		#print("chunks sent to gradient maps: ", chunks)
-		for ele in elevations:
-			ele.build_gradient_maps(chunks, chunk_keys[0])
-
+	
 func remove_floor_at(pos: Location) -> void:
 	var chunk_data:ChunkData = loaded_chunks[pos.chunk]
 	if chunk_data == null:

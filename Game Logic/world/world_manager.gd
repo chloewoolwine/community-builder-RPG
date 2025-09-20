@@ -30,8 +30,6 @@ func _process(_delta: float) -> void:
 			#load_all_chunks()
 		elif player and load_chunks:
 			pos = player.get_global_position()
-		if Engine.get_process_frames() % 60 == 0: # Once a second might *still* be too much
-			trh.run_shader_data_stuff(get_chunks_around_point(pos, 1))
 		load_and_unload_chunks_surronding_point(pos)
 	
 func set_world_data(new_world: WorldData) -> void:
@@ -93,7 +91,7 @@ func give_requested_layer(layer:int, callback: Callable) -> void:
 func manage_propagation_success(pos: Location, object_id: String) -> void: 
 	pass # LOL ! TODO: properly use environment logic to place things instead of this
 	#print("checking for propagation of ", object_id, " at ", pos.position)
-	var database := DatabaseManager.WORLD_DATABASE
+	#var database := DatabaseManager.WORLD_DATABASE
 	var _split := object_id.split("_")
 	#print(_split[2])
 	#if database._has_string_id(&"GenerationData", StringName(_split[2])):

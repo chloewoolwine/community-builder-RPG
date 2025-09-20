@@ -65,7 +65,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		#world_manager.modify_tilemap(mouse, trh.get_topmost_layer_at_global_pos(mouse), "till")
 		#temp_mousecast.global_position = mouse
 		tile_indicator.global_position = mouse
-		var layer := trh.get_topmost_layer_at_global_pos(mouse)
+		#var layer := trh.get_topmost_layer_at_global_pos(mouse)
 		if paint:
 			print("paint time")
 			match paint_type:

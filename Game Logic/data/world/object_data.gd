@@ -5,9 +5,10 @@ class_name ObjectData
 
 #WARNING!
 #objects are not tested enough in saver loader
-@export var object_id : String # the path to which the corresponding scene exists
+@export var object_id : String # the path to which the corresponding scene exists- when this is a pointer, this is Constants.POINTER
 @export var chunk: Vector2i
 @export var position: Vector2i # - elevation nonwithstanding
+#@export var originator: Location = null #POINTERS ONLY ! 
 
 @export var inventory : InventoryData #NULL if not chest
 @export var object_tags : Dictionary #things like customized colors, growth stages, etc all saved here

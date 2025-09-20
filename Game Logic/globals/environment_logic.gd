@@ -108,59 +108,69 @@ static func get_real_pos_object(loc: Location, elevation: int) -> Vector2:
 	@warning_ignore("integer_division")
 	return world_pos * Constants.TILE_SIZE + Vector2i(0, elevation*-(Constants.TILE_SIZE/2)) + Vector2i((Constants.TILE_SIZE/2), (Constants.TILE_SIZE/2))
 
+#returns null if requested square is out of bounds
 static func get_square(world_data: WorldData, loc: Location) -> SquareData:
+	if loc == null:
+		push_error("location is null in get square :c")
+	#TODO: optimize this! this gets called all of the time
+	if loc.chunk not in world_data.chunk_datas:
+		return null
 	return world_data.chunk_datas[loc.chunk].square_datas[loc.position]
 
 static func place_object_data(world_data: WorldData, loc: Location, name: StringName, age:int = -1, clear:bool = false) -> bool:
 	var object:= DatabaseManager.fetch_object_data(name)
 	var square:= get_square(world_data, loc)
-	if !object_is_valid_to_place(clear, object.additive, square):
+	if !object_is_valid_to_place(clear, object.additive, square, square.elevation):
 		return false
-	var locs:Array[Location]
-	if !clear:
-		match object.size: #yeah i cant think of a better way to do this :/ theres probably something with arrays but im stupid rn
-			Vector2i(1,1):
-				pass
-			Vector2i(1,2):
-				locs.append(loc.get_location(Vector2i(0,1)))
-			Vector2i(2,1):
-				locs.append(loc.get_location(Vector2i(1,0)))
-			Vector2i(2,2):
-				locs.append(loc.get_location(Vector2i(1,0)))
-				locs.append(loc.get_location(Vector2i(0,1)))
-				locs.append(loc.get_location(Vector2i(1,1)))
-			Vector2i(3,3):
-				for x in range(-1, 1):
-					for y in range(-1, 1):
-						locs.append(loc.get_location(Vector2i(x,y)))
-			_:
-				return false # give up !
-	
+	var locs:Array[Location] = _get_locs_of_size(object.size, loc)
 	for new_loc in locs:
-		if !object_is_valid_to_place(clear, object.additive, get_square(world_data, new_loc)):
+		if !object_is_valid_to_place(clear, object.additive, get_square(world_data, new_loc), square.elevation):
 			return false
-			
+	
 	#if we're still here, we are Valid! 
 	var new_object:ObjectData = object.duplicate(true)
-	print("palcing object: ", new_object.object_id)
+	#print("palcing object: ", new_object.object_id)
 	new_object.object_tags["age"] = age
 	new_object.last_loaded_minute = age
 	new_object.position = loc.position
 	new_object.chunk = loc.chunk
 	if square.object_data == null || square.object_data.is_empty():
 		square.object_data = [null, null, null]
+	if square.object_data[1] != null && !new_object.additive:
+		remove_object(world_data, loc)
 	if new_object.additive:
 		square.object_data.append(new_object)
 	else:
 		square.object_data[1] = new_object
-	
+	if locs.size() > 0:
+		new_object.object_tags[Constants.POINTER] = locs
+		_fill_with_pointers(world_data, loc, new_object.size)
+
 	return true
 
-static func _fill_with_pointers(world_data, loc: Location, size: Vector2i) -> void: 
-	var pointer:ObjectDataPointer= DatabaseManager.fetch_object_data(&"object_data_pointer").duplicate(true)
-	pointer.originating_square = loc
-	var locs:Array[Location]
-	match size:
+static func _fill_with_pointers(world_data:WorldData, loc: Location, size: Vector2i) -> void: 
+	var locs := _get_locs_of_size(size, loc)
+	
+#	print("location: ", loc, " pointer locs: ", locs)
+	for new_loc in locs:
+		if new_loc.equals(loc):
+			continue
+		var pointer:ObjectData = ObjectData.new()
+		pointer.object_id = Constants.POINTER
+		pointer.object_tags[Constants.ORIGIN] = loc
+		pointer.position = new_loc.position
+		pointer.chunk = new_loc.chunk
+		var square:= get_square(world_data, new_loc)
+		if square == null: #out of bounds, probably doesn't matter ? 
+			continue 
+		if square.object_data == null || square.object_data.is_empty():
+			square.object_data = [null, null, null]
+		square.object_data[1] = pointer
+		pass
+
+static func _get_locs_of_size(size: Vector2i, loc: Location) -> Array[Location]:
+	var locs:Array[Location] = []
+	match size: #yeah i cant think of a better way to do this :/ theres probably something with arrays but im stupid rn
 		Vector2i(1,1):
 			pass
 		Vector2i(1,2):
@@ -172,19 +182,14 @@ static func _fill_with_pointers(world_data, loc: Location, size: Vector2i) -> vo
 			locs.append(loc.get_location(Vector2i(0,1)))
 			locs.append(loc.get_location(Vector2i(1,1)))
 		Vector2i(3,3):
-			for x in range(-1, 1):
-				for y in range(-1, 1):
-					locs.append(loc.get_location(Vector2i(x,y)))
-		_:
-			return
-	for new_loc in locs:
-		var copy:= pointer.duplicate(true)
-		var square:= get_square(world_data, new_loc)
-		if square.object_data == null || square.object_data.is_empty():
-			square.object_data = [null, null, null]
-		square.object_data[1] = copy
+			locs = (loc.get_neighbor_matrix())
+	return locs
 
-static func object_is_valid_to_place(clear:bool, additive:bool, square:SquareData) -> bool:
+static func object_is_valid_to_place(clear:bool, additive:bool, square:SquareData, ele_targ: int) -> bool:
+	if square == null:
+		return false
+	if square.elevation != ele_targ:
+		return false
 	if square.object_data.size() > 1 && square.object_data[1] != null: # if there is something there
 		if clear: 
 			return true
@@ -193,3 +198,25 @@ static func object_is_valid_to_place(clear:bool, additive:bool, square:SquareDat
 		else:
 			return false
 	return true
+
+#NOT intended to give loot or anything else. this is JUST for removing objects & its pointers from a loc
+static func remove_object(world_data:WorldData, loc: Location) -> void:
+	var square := get_square(world_data, loc)
+	if square.object_data == null || square.object_data[1] == null:
+		return
+	var object:ObjectData = square.object_data[1]
+	if object.object_id == Constants.POINTER:
+		square = get_square(world_data, object.object_tags[Constants.ORIGIN])
+		object = square.object_data[1]
+		if object == null:
+			#fuck
+			get_square(world_data, loc).object_data[1] = null
+			push_warning("Stray pointer :c")
+			return
+	var locs:Array = object.object_tags.get(Constants.POINTER, [])
+	for x:Location in locs:
+		var o_square := get_square(world_data, x)
+		if square.object_data == null || square.object_data[1] == null:
+			continue
+		o_square.object_data[1] = null
+	square.object_data[1] = null
