@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bx0i1fqjjvygy"]
+[gd_scene load_steps=34 format=3 uid="uid://bx0i1fqjjvygy"]
 
 [ext_resource type="Script" uid="uid://ypbxt4lu3dxr" path="res://Game Logic/managers/game.gd" id="1_lgntb"]
 [ext_resource type="PackedScene" uid="uid://dy236j24tdfmr" path="res://Scenes/Entities/player.tscn" id="1_vlfca"]
@@ -13,7 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://1b78ipp0k2t8" path="res://Scenes/world/elevation_layer.tscn" id="8_of3dw"]
 [ext_resource type="PackedScene" uid="uid://cwyeg4vhep7na" path="res://Scenes/UI/Inventory/slot.tscn" id="8_pioji"]
 [ext_resource type="Script" uid="uid://bsm4ra22m810k" path="res://Game Logic/world/object_atlas.gd" id="9_0s5wb"]
-[ext_resource type="TileSet" uid="uid://cvjwuudq7ykg3" path="res://Scenes/world/tilesets/pollution_grass.tres" id="9_mucmn"]
 [ext_resource type="Script" uid="uid://8m7bl77x4xw6" path="res://Game Logic/managers/pickup_manager.gd" id="10_d5qv3"]
 [ext_resource type="Script" uid="uid://ff7axvflmy38" path="res://Game Logic/data/inventory/slot_data.gd" id="12_iyjdd"]
 [ext_resource type="Texture2D" uid="uid://da0bxkbsh1hjv" path="res://Assets/misc/tile_indicator.png" id="13_cwurv"]
@@ -74,10 +73,6 @@ unload_chunks = true
 script = ExtResource("7_fkv55")
 
 [node name="Elevation0" parent="WorldManager/TerrainRulesHandler" instance=ExtResource("8_of3dw")]
-
-[node name="PollutionGrass" parent="WorldManager/TerrainRulesHandler/Elevation0" index="7"]
-visible = true
-tile_set = ExtResource("9_mucmn")
 
 [node name="ObjectAtlas" type="Node2D" parent="WorldManager/TerrainRulesHandler"]
 y_sort_enabled = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://1b78ipp0k2t8"]
+[gd_scene load_steps=15 format=4 uid="uid://1b78ipp0k2t8"]
 
 [ext_resource type="TileSet" uid="uid://bgvxhw7wfiv85" path="res://Scenes/world/tilesets/mapper.tres" id="1_to6hq"]
 [ext_resource type="Script" uid="uid://danvvilca6aui" path="res://Game Logic/world/elevation_layer.gd" id="2_xeqao"]
@@ -10,6 +10,7 @@
 [ext_resource type="TileSet" uid="uid://dabqwthi0ru5v" path="res://Scenes/world/tilesets/grass_tiles.tres" id="7_75y3v"]
 [ext_resource type="TileSet" uid="uid://p08d33rgacki" path="res://Scenes/world/tilesets/decor.tres" id="8_pj17r"]
 [ext_resource type="Texture2D" uid="uid://dndc4iegm2omf" path="res://Assets/Testy Assets/till_spot.png" id="10_1dcxp"]
+[ext_resource type="TileSet" uid="uid://cvjwuudq7ykg3" path="res://Scenes/world/tilesets/pollution_grass.tres" id="11_6fikv"]
 [ext_resource type="TileSet" uid="uid://dsixtjjsc88sg" path="res://Scenes/world/tilesets/stone_tiles.tres" id="12_2adka"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yiurd"]
@@ -49,6 +50,7 @@ y_sort_enabled = true
 texture_filter = 1
 position = Vector2(-32, -32)
 tile_set = ExtResource("5_6c57v")
+collision_enabled = false
 script = ExtResource("3_sc88q")
 world_tilemap = NodePath("..")
 
@@ -57,18 +59,21 @@ y_sort_enabled = true
 texture_filter = 1
 position = Vector2(-32, -32)
 tile_set = ExtResource("5_hkcog")
+collision_enabled = false
 script = ExtResource("5_qi5cv")
 world_tilemap = NodePath("../WaterMapper")
 
 [node name="Till" type="TileMapLayer" parent="."]
 y_sort_enabled = true
 tile_set = SubResource("TileSet_8pwus")
+collision_enabled = false
 
 [node name="Stone" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
 y_sort_enabled = true
 texture_filter = 1
 position = Vector2(-32, -32)
 tile_set = ExtResource("12_2adka")
+collision_enabled = false
 script = ExtResource("3_sc88q")
 world_tilemap = NodePath("..")
 
@@ -77,15 +82,16 @@ y_sort_enabled = true
 texture_filter = 1
 position = Vector2(-32, -32)
 tile_set = ExtResource("7_75y3v")
+collision_enabled = false
 script = ExtResource("3_sc88q")
 world_tilemap = NodePath("..")
 
 [node name="PollutionGrass" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
-visible = false
 y_sort_enabled = true
 texture_filter = 1
 position = Vector2(-32, -32)
-tile_set = ExtResource("7_75y3v")
+tile_set = ExtResource("11_6fikv")
+collision_enabled = false
 script = ExtResource("3_sc88q")
 world_tilemap = NodePath("..")
 

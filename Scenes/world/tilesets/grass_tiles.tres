@@ -47,12 +47,6 @@ texture_region_size = Vector2i(64, 64)
 
 [resource]
 tile_size = Vector2i(64, 64)
-physics_layer_0/collision_layer = 1
-physics_layer_0/collision_mask = 0
-physics_layer_1/collision_layer = 256
-physics_layer_1/collision_mask = 0
-physics_layer_2/collision_layer = 64
-physics_layer_2/collision_mask = 0
 custom_data_layer_0/name = "type"
 custom_data_layer_0/type = 4
 sources/0 = SubResource("TileSetAtlasSource_4rn1c")
