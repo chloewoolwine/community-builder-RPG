@@ -75,12 +75,10 @@ func set_square(_data: SquareData, overall_location: Vector2i)-> void:
 				else:
 					base.fill_tile(overall_location)
 			SquareData.SquareType.Grass:
+				base.fill_tile(overall_location, 0)
+				grass.fill_tile(overall_location, 0)
 				#print("filled grass")
-				if _data.pollution > 1:
-					base.fill_tile(overall_location, 0)
-					grass.fill_tile(overall_location, 0)
-				else:
-					base.fill_tile(overall_location)
+				if _data.pollution > 2:
 					grass.fill_tile(overall_location)
 			SquareData.SquareType.Rock:
 				#print("filled rocj")
@@ -119,50 +117,6 @@ func delete_square(overall_location: Vector2i) -> void:
 ## dont' have to worry about it until terrain edits can happen
 ## on layer 0, base tiles are just replaced with water tiles
 ## yippie :3 
-
-func set_biome(biome: int) -> void:
-	for layer in arr:
-		layer.source_id = biome
-	if elevation == 0:
-		base.source_id = 1
-	pond.source_id = 0 
-	
-func update_gradient_map_pos(new_pos: Vector2i) -> void:
-	gradient_top_left_pos = new_pos
-	base.material.set_shader_parameter("tint_pos", new_pos)
-	if(gradient_top_left_pos != null):
-		base.material.set_shader_parameter("tint_pos", gradient_top_left_pos)
-
-func build_gradient_maps(chunks: Dictionary, top_left: Vector2i) -> void:
-	pass
-	#var size: int = chunks.values()[0].chunk_size.x
-	#moisture_gradient_map = Image.create(size*3, size*3, false, Image.FORMAT_RGBA8) # RGB format for now? 
-	##TODO: there's probably some kind of optimization here if I construct a PackedByteArray instead of doing set_pixel, but idk how to do it yet
-	##print(moisture_gradient_map.get_size())
-	#for x in range(top_left.x, top_left.x + 3):
-		#for y in range(top_left.y, top_left.y + 3):
-			#var chunk: ChunkData = chunks[Vector2i(x, y)]
-			#var chu_x: int = abs(x - top_left.x) * size
-			#var chu_y: int = abs(y - top_left.y) * size
-			#for sub_x in range(size):
-				#var img_x: int = chu_x + sub_x
-				#for sub_y in range(size):
-					#var img_y: int = chu_y + sub_y
-					#moisture_gradient_map.set_pixel(img_x, img_y, Color.BLACK * chunk.square_datas[Vector2i(sub_x, sub_y)].water_saturation/5)
-					##print("pixel x: ", img_x, " pixel y", img_y, " mositure: ", chunk.square_datas[Vector2i(sub_x, sub_y)].water_saturation)
-	## moisture_gradient_map.resize(size*64,size*64,Image.INTERPOLATE_NEAREST)
-	## TODO: refractor this for better performance? 
-	#till.material.set("shader_parameter/mod_color_tex", ImageTexture.create_from_image(moisture_gradient_map))
-	##print("top_left_corner_chunk: ", top_left)
-	#var top_left_corner_pos:Vector2 = to_global(map_to_local(chunks[top_left].chunk_position * size))
-	##print("top_left_corner_pos = ", top_left_corner_pos)
-	#gradient_top_left_pos = top_left_corner_pos
-	#chunk_atlas = chunks
-	#top_left_chunk = top_left
-	#print("resize")
-	##moisture_gradient_map.resize(size*3*64, size*3*64, Image.INTERPOLATE_BILINEAR)
-	#print("resize over")
-	#till.material.set("shader_parameter/global_corner_pos", top_left_corner_pos)
 
 func update_specific_pixel(overall_location: Vector2i, _data:SquareData) -> void:
 	till.set_cell(overall_location, 0, Vector2i(_data.water_saturation,0))

@@ -242,7 +242,7 @@ func _is_world_tile_sketched(_world_cell: Vector2i) -> bool:
 
 
 ## Public method to add a tile in a given World cell
-func fill_tile(world_cell: Vector2i, source_id: int = biome_source_id) -> void:
+func fill_tile(world_cell: Vector2i, _source_id: int = biome_source_id) -> void:
 	if freeze:
 		return
 	world_tilemap.set_cell(world_cell, world_source_id, full_tile)
