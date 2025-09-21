@@ -11,18 +11,8 @@ region = Rect2(100, 324, 24, 24)
 
 [resource]
 script = ExtResource("1_5h83j")
-efficiency = 0
 type = 2
 name = "Hoe"
 description = "Disturbs the ground for planting."
-magical = false
-magicalDescription = ""
-stackable = false
 texture = SubResource("AtlasTexture_2574a")
-quality = 0
-placeable = false
-required_space = Vector2i(1, 1)
-object_id = ""
 sellable = false
-value = 1
-rarity = 1

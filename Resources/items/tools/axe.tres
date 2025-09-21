@@ -12,17 +12,7 @@ region = Rect2(35, 323, 26, 26)
 [resource]
 script = ExtResource("1_n2oit")
 efficiency = 1
-type = 0
 name = "Axe"
 description = "Chop trees"
-magical = false
-magicalDescription = ""
-stackable = false
 texture = SubResource("AtlasTexture_b263h")
-quality = 0
-placeable = false
-required_space = Vector2i(1, 1)
-object_id = ""
 sellable = false
-value = 1
-rarity = 1
