@@ -38,7 +38,7 @@ func attempt_modify(_player_loc: Vector2, action: String) -> bool:
 
 func signal_placement_if_valid(item: ItemData, _player_loc:Vector2) -> bool:
 	if valid_place and self.global_position.distance_to(_player_loc) <= 400:
-		placement.emit(self.global_position, get_parent().global_position, item)
+		placement.emit(self.global_position, _player_loc, item)
 		return true
 	return false
 

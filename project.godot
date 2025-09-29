@@ -64,6 +64,7 @@ plant_growable=""
 hungerhealth=""
 velocity_handler=""
 ageable="this component gets old (atatches to the world calendar) "
+removable="This object has an ObjectRemoved signal in it or it's children"
 
 [gui]
 

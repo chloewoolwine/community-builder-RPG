@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://pq10jex522gl"]
+
+[ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="1_6uokc"]
+[ext_resource type="Texture2D" uid="uid://ckvhsrc5fwinn" path="res://Assets/plants/wild/poplar_tree.png" id="1_eo4kj"]
+[ext_resource type="Script" uid="uid://b4vp6p8whfxdq" path="res://Scenes/object/interactable/GenericObject.gd" id="1_fbhhx"]
+[ext_resource type="Script" uid="uid://o4jcagjoxpeq" path="res://Scenes/object/interactable/simple_collectable.gd" id="3_labxh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ubcxi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_labxh"]
+atlas = ExtResource("1_eo4kj")
+region = Rect2(515, 93, 70, 36)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s8677"]
+radius = 29.0689
+
+[node name="Log" type="StaticBody2D" groups=["removable"]]
+script = ExtResource("1_fbhhx")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ubcxi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_labxh")
+
+[node name="InteractionHitbox" type="StaticBody2D" parent="."]
+script = ExtResource("1_6uokc")
+needs_tool = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionHitbox"]
+shape = SubResource("CircleShape2D_s8677")
+
+[node name="SimpleCollectable" type="Node" parent="." node_paths=PackedStringArray("hitbox")]
+script = ExtResource("3_labxh")
+hitbox = NodePath("../InteractionHitbox")

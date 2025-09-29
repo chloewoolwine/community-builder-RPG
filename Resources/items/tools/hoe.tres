@@ -7,7 +7,7 @@ load_path = "res://.godot/imported/#1 - Transparent Icons.png-66e482cdc506437ae5
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2574a"]
 atlas = SubResource("CompressedTexture2D_oukvp")
-region = Rect2(100, 324, 24, 24)
+region = Rect2(67, 323, 26, 26)
 
 [resource]
 script = ExtResource("1_5h83j")

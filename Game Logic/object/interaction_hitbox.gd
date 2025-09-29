@@ -7,7 +7,7 @@ signal player_interacted(hitbox:InteractionHitbox)
 @export var is_entity : bool = false
 @export var needs_tool : bool = false
 @export var tool_required : ItemDataTool.WeaponType 
-@export var neighbor_searcher: Area2D # Set this BY hand. finds neighbors if neccesary
+@export var neighbor_searcher: Area2D ## Finds neighbors for things like walls (that should probably replaced with a tileset lol)
  
 var current_elevation: int
 var accepting_interactions : bool = true
@@ -20,8 +20,10 @@ func player_interact()-> void:
 func set_to_wall(val: bool, search_neighbors: bool = true) -> void: 
 	#if get_parent() is GenericWall:
 		#print('setting to a wall value, elevation = ', current_elevation)
-	self.set_collision_layer_value(current_elevation + 10, val)
+	#self.set_collision_layer_value(current_elevation + 10, val)
+	self.set_collision_layer_value(1, val)
 	if neighbor_searcher:
 		#print("will search for neighbors now")
-		neighbor_searcher.set_collision_mask_value(current_elevation + 10, search_neighbors)
+		#neighbor_searcher.set_collision_mask_value(current_elevation + 10, search_neighbors)
+		neighbor_searcher.set_collision_mask_value(1, search_neighbors)
 	

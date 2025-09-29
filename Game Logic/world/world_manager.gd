@@ -126,6 +126,7 @@ func place_object(pos: Vector2, layer:ElevationLayer, itemdata: ItemData)->void:
 	var split := itemdata.object_id.split("_")
 	#_place_build_object calls _assign_object_data - it just needs a lot of extra 
 	# in case of wall or roof 
+	print("placing ", split)
 	if split[0] == "build":
 		_place_build_object(arr, split, layer, itemdata)
 	else:
@@ -362,7 +363,6 @@ func modify_tilemap(loc: Location, _origin_pos: Vector2, action: String) -> bool
 	
 	if action == "water":
 		trh.water_square_at(loc)
-		trh.run_shader_data_stuff(get_chunks_around_point(player.get_global_position(), 1))
 	if action == "till": 
 		trh.apply_floor_at(loc, action)
 	if action == "remove_floor":

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://ddp26hlnsmw5r"]
+[gd_scene load_steps=27 format=3 uid="uid://ddp26hlnsmw5r"]
 
 [ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_8ph1v"]
 [ext_resource type="Script" uid="uid://c72fhodjm4b2c" path="res://Game Logic/data/inventory/loot/loot_table_entry.gd" id="2_uks68"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://bndjcrkta02c4" path="res://Game Logic/object/plants/plant_component.gd" id="6_1dyr6"]
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="7_vbg4f"]
 [ext_resource type="Resource" uid="uid://ce57ixnk7vlqh" path="res://Resources/plants/oak.tres" id="8_vsbtn"]
+[ext_resource type="Script" uid="uid://bp4pf1bvr6hab" path="res://Game Logic/object/fade_overlap.gd" id="10_mptq2"]
 
 [sub_resource type="Resource" id="Resource_0qwql"]
 script = ExtResource("2_uks68")
@@ -38,7 +39,6 @@ metadata/_custom_type_script = "uid://c72fhodjm4b2c"
 [sub_resource type="Resource" id="Resource_ht84m"]
 script = ExtResource("4_mptq2")
 loot_table_entries = Array[ExtResource("2_uks68")]([SubResource("Resource_0qwql"), SubResource("Resource_uks68"), SubResource("Resource_vsbtn"), SubResource("Resource_mptq2")])
-num_rolls = 1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ivn77"]
 size = Vector2(50, 50)
@@ -73,6 +73,9 @@ region = Rect2(21, 528, 504, 543)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k4rme"]
 size = Vector2(115, 50)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mptq2"]
+radius = 231.17526
 
 [node name="Oak" type="Area2D" groups=["plant_growable", "player_interactable"]]
 script = ExtResource("1_8ph1v")
@@ -117,3 +120,16 @@ position = Vector2(13, -17)
 shape = SubResource("RectangleShape2D_k4rme")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+
+[node name="FadeOverlap" type="Area2D" parent="." node_paths=PackedStringArray("overlap_object")]
+collision_layer = 129
+collision_mask = 129
+script = ExtResource("10_mptq2")
+overlap_object = NodePath("../TreeAppearance")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FadeOverlap"]
+position = Vector2(0, -284)
+shape = SubResource("CircleShape2D_mptq2")
+
+[connection signal="body_entered" from="FadeOverlap" to="FadeOverlap" method="_on_body_entered"]
+[connection signal="body_exited" from="FadeOverlap" to="FadeOverlap" method="_on_body_exited"]
