@@ -117,15 +117,15 @@ static func get_square(world_data: WorldData, loc: Location) -> SquareData:
 		return null
 	return world_data.chunk_datas[loc.chunk].square_datas[loc.position]
 
-static func place_object_data(world_data: WorldData, loc: Location, name: StringName, age:int = -1, clear:bool = false) -> bool:
+static func place_object_data(world_data: WorldData, loc: Location, name: StringName, age:int = -1, clear:bool = false) -> ObjectData:
 	var object:= DatabaseManager.fetch_object_data(name)
 	var square:= get_square(world_data, loc)
 	if !object_is_valid_to_place(clear, object.additive, square, square.elevation):
-		return false
+		return null
 	var locs:Array[Location] = _get_locs_of_size(object.size, loc)
 	for new_loc in locs:
 		if !object_is_valid_to_place(clear, object.additive, get_square(world_data, new_loc), square.elevation):
-			return false
+			return null
 	
 	#if we're still here, we are Valid! 
 	var new_object:ObjectData = object.duplicate(true)
@@ -146,7 +146,7 @@ static func place_object_data(world_data: WorldData, loc: Location, name: String
 		new_object.object_tags[Constants.POINTER] = locs
 		_fill_with_pointers(world_data, loc, new_object.size)
 
-	return true
+	return new_object
 
 static func _fill_with_pointers(world_data:WorldData, loc: Location, size: Vector2i) -> void: 
 	var locs := _get_locs_of_size(size, loc)
@@ -220,3 +220,13 @@ static func remove_object(world_data:WorldData, loc: Location) -> void:
 			continue
 		o_square.object_data[1] = null
 	square.object_data[1] = null
+
+static func has_objects(square: SquareData) -> bool:
+	if square.object_data == null:
+		return false
+	if square.object_data.is_empty():
+		return false
+	for obj in square.object_data:
+		if obj != null:
+			return true
+	return false

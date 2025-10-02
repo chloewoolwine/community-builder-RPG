@@ -7,7 +7,7 @@ load_path = "res://.godot/imported/strawberry_onion.png-b4a809cfdd444c03b92ff5c9
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1f8xk"]
 atlas = SubResource("CompressedTexture2D_8qguy")
-region = Rect2(5.7956696, 59.865185, 43.257965, 34.351917)
+region = Rect2(5.855301, 59.17765, 45.927643, 35.15132)
 
 [resource]
 script = ExtResource("1_1dxf4")
@@ -19,4 +19,4 @@ description = "Plant these in spring or summer to grow onions."
 stackable = true
 texture = SubResource("AtlasTexture_1f8xk")
 placeable = true
-object_id = "plant_crop_strawberry"
+object_id = "plant_crop_onion"

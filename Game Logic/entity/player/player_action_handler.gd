@@ -32,7 +32,7 @@ func do_action() -> void:
 	elif equiped_item && equiped_item.item_data:
 		if equiped_item.item_data is ItemDataConsumable: 
 			player_wants_to_eat.emit(equiped_item)
-		elif equiped_item.item_data is ItemDataSeed:
+		elif equiped_item.item_data.placeable:
 			if tile_indicator.signal_placement_if_valid(equiped_item.item_data, self.global_position): 
 				player.decrease_item_val(equiped_item)
 		elif equiped_item.item_data is ItemDataTool: 
@@ -48,7 +48,7 @@ func use_tool(item:SlotData)->void:
 		ItemDataTool.WeaponType.AXE:
 			pass # idk what this would look like to be real 
 		ItemDataTool.WeaponType.SHOVEL:
-			tile_indicator.attempt_modify(player.global_position, "remove_floor")
+			tile_indicator.attempt_modify(player.global_position, "shovel")
 		ItemDataTool.WeaponType.HAMMER:
 			print("tool not yet implemented")
 		ItemDataTool.WeaponType.ROD:

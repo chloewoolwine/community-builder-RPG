@@ -1,6 +1,8 @@
 extends Node2D
 class_name WorldManager
 
+signal spawn_pickups(location:Vector2, list: Array)
+
 @export var _world_data: WorldData
 @export var world_edit_mode: bool = false
 @export var load_chunks: bool = false
@@ -121,8 +123,9 @@ func manage_propagation_success(pos: Location, object_id: String) -> void:
 		#TODO: plants should propagate in unloaded chunks
 		pass
 
-func place_object(pos: Vector2, layer:ElevationLayer, itemdata: ItemData)->void:
+func place_object(pos: Vector2, _player_pos:Vector2, itemdata: ItemData)->void:
 	var arr: Array[Vector2i] = convert_to_chunks_at_world_pos(pos)
+	var layer: ElevationLayer = trh.get_elevation_at(_world_data.chunk_datas[arr[1]].square_datas[arr[0]].elevation)
 	var split := itemdata.object_id.split("_")
 	#_place_build_object calls _assign_object_data - it just needs a lot of extra 
 	# in case of wall or roof 
@@ -156,16 +159,23 @@ func _place_build_object(arr: Array[Vector2i], split: Array[String], layer: Elev
 		_assign_object_data(itemdata.object_id, wall_data.position, wall_data.chunk, layer)
 	elif split[1] == "wall":
 		_assign_object_data(itemdata.object_id, arr[0], arr[1], layer)
+	elif split[1] == "terrain": #its dirt baby
+		if split[2] == "dirt":
+			raise_elevation(Location.new(arr[0], arr[1]), SquareData.SquareType.Dirt)
 
-func _assign_object_data(id: String, pos: Vector2i, chunk: Vector2i, layer:ElevationLayer) -> void:
-	var object_data := ObjectData.new()
-	var actual_pos := EnvironmentLogic.get_real_pos_object(Location.new(pos, chunk), layer.elevation)
-	object_data.object_id = id
-	object_data.position = pos
-	object_data.chunk = chunk
-	if id.contains("door"):
-		object_data.additive = true
-	trh.object_atlas.place_object(object_data, actual_pos, trh.get_square_at(pos, chunk))
+func _assign_object_data(id: String, pos: Vector2i, chunk: Vector2i, _layer:ElevationLayer) -> void:
+	var obj := EnvironmentLogic.place_object_data(_world_data, Location.new(pos, chunk), StringName(id))
+	if obj == null:
+		push_warning("EnvironmentLogic couldn't place object ", id, " at pos: ", pos, " chunk: ", chunk)
+		return #not a valid place
+	var actual_pos := EnvironmentLogic.get_real_pos_object(Location.new(pos, chunk), _layer.elevation)
+	trh.object_atlas.place_object(obj, actual_pos, trh.get_square_at(pos, chunk))
+
+func raise_elevation(loc: Location, type: SquareData.SquareType) -> void:
+	var square := EnvironmentLogic.get_square(_world_data, loc)
+	square.type = type
+	square.elevation = square.elevation + 1 
+	trh.raise_elevation(loc)
 
 func check_placement_validity(ind: Indicator, player_spot:Vector2, player_layer: ElevationLayer, item: ItemData) -> bool:
 	if ind.global_position.distance_to(player_spot) > 400:
@@ -210,7 +220,10 @@ func _plant_object_placement_validity(_item: ItemData, _cat: String, pos: Vector
 			pass
 	
 	return true
-	
+
+#TODO: i reaaaallly gotta set up some kind of "rule" system or wholesale steal it from that plugin i bought
+#need "rules" for validity, like tile type, whether or not it has objects, whether it has floors, etc.
+#then, need "rules" for actual placement- what actually happens when object is placed
 func _build_object_placement_validity(_item: ItemData, cat: String, pos: Vector2i, chunk:Vector2i) -> bool:
 	match cat:
 		"wall":
@@ -245,6 +258,10 @@ func _build_object_placement_validity(_item: ItemData, cat: String, pos: Vector2
 					if object.neighbors[1] != null and object.neighbors[3] != null and object.neighbors[0] == null and object.neighbors[2] == null:
 						print("has the right friends")
 						return !object.neighbors[1].is_door and !object.neighbors[3].is_door and !object.has_decor and !object.is_window and !object.is_door
+		"terrain":
+			if !trh.has_objects(trh.get_square_at(pos, chunk)):
+				#print("terrain")
+				return true
 	return false
 
 var roof_cache: Array[Location]
@@ -353,6 +370,8 @@ func change_water(loc: Vector2, new_water: int) -> void:
 	if pos.size() > 1:
 		trh.change_water(pos[0], pos[1], new_water)
 
+#TODO: this solution sucks dookie!
+const DIRT :ItemData = preload("uid://dtsowgtv4r3xb")
 # Returns true if the modification is successful
 # this probably isnt the best way to do this
 func modify_tilemap(loc: Location, _origin_pos: Vector2, action: String) -> bool:
@@ -365,8 +384,20 @@ func modify_tilemap(loc: Location, _origin_pos: Vector2, action: String) -> bool
 		trh.water_square_at(loc)
 	if action == "till": 
 		trh.apply_floor_at(loc, action)
-	if action == "remove_floor":
-		trh.remove_floor_at(loc)
+	if action == "shovel":
+		var square := EnvironmentLogic.get_square(_world_data, loc)
+		if EnvironmentLogic.has_objects(square) || square.type == SquareData.SquareType.Grass:
+			## TODO: more granular logic for removing objects
+			trh.remove_floor_at(loc)
+		else:
+			if square.elevation > 0 && square.type == SquareData.SquareType.Dirt:
+				square.elevation = square.elevation - 1 
+				trh.lower_elevation(loc)
+				var dirt_array: Array[ItemData]
+				dirt_array.append(DIRT)
+				spawn_pickups.emit(get_global_mouse_position(), dirt_array)
+			else:
+				return false
 	return true
 
 func get_objects_at_world_pos(loc: Vector2) -> Array[ObjectData]:

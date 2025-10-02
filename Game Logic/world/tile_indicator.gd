@@ -32,8 +32,8 @@ func attempt_modify(_player_loc: Vector2, action: String) -> bool:
 		return false
 	if current_spot == null:
 		return false
-	print("modify attempted")
-	modify.emit(current_spot, get_parent().global_position, action)
+	print("modify attempted, action ", action)
+	modify.emit(current_spot, _player_loc, action)
 	return true
 
 func signal_placement_if_valid(item: ItemData, _player_loc:Vector2) -> bool:

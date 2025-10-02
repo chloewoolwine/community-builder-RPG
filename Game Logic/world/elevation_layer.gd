@@ -56,7 +56,8 @@ func change_square(_data: SquareData, overall_location: Vector2i) -> void:
 	sand.erase_tile(overall_location)
 	pollution_grass.erase_cell(overall_location)
 	pond.just_erase_tile(overall_location)
-	set_square(_data, overall_location)
+	if _data.elevation == elevation:
+		set_square(_data, overall_location)
 		
 func set_square(_data: SquareData, overall_location: Vector2i)-> void:
 	#print("Setting top layer of ", _data.elevation, " loc: ", _data.location_in_chunk, " as type ", _data.type)
@@ -135,3 +136,9 @@ func till_square(overall_location: Vector2i, square: SquareData) -> void:
 
 func remove_till(overall_location: Vector2i) -> void:
 	till.set_cell(overall_location)
+
+func remove_base(overall_location: Vector2i) -> void: 
+	base.erase_tile(overall_location)
+
+func add_base(overall_location: Vector2i) -> void:
+	base.fill_tile(overall_location)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://bx0i1fqjjvygy"]
+[gd_scene load_steps=49 format=3 uid="uid://bx0i1fqjjvygy"]
 
 [ext_resource type="Script" uid="uid://ypbxt4lu3dxr" path="res://Game Logic/managers/game.gd" id="1_lgntb"]
 [ext_resource type="PackedScene" uid="uid://dy236j24tdfmr" path="res://Scenes/Entities/player.tscn" id="1_vlfca"]
@@ -19,17 +19,18 @@
 [ext_resource type="PackedScene" uid="uid://cdeeqt3ae70lq" path="res://Scenes/object/pick_up.tscn" id="13_pouw6"]
 [ext_resource type="Resource" uid="uid://bhhgw66haki3j" path="res://Resources/items/tools/axe.tres" id="14_xe308"]
 [ext_resource type="Resource" uid="uid://coc8478dbgool" path="res://Resources/items/stuff/timber.tres" id="16_cwurv"]
+[ext_resource type="Resource" uid="uid://cjftm0sbao7xa" path="res://Resources/items/seeds/strawberry_seed.tres" id="16_d3cha"]
 [ext_resource type="Resource" uid="uid://bttbsjkake846" path="res://Resources/items/tools/hoe.tres" id="16_i26dy"]
 [ext_resource type="PackedScene" uid="uid://b48eubjn547dd" path="res://Scenes/UI/Inventory/hot_bar_inventory.tscn" id="16_j6efu"]
 [ext_resource type="Script" uid="uid://bam1itjhokose" path="res://Game Logic/data/saves/saverloader.gd" id="17_d5xvq"]
 [ext_resource type="Resource" uid="uid://di8fcvn3313vx" path="res://Resources/items/tools/watering_can.tres" id="17_lmoi6"]
-[ext_resource type="Resource" uid="uid://cjftm0sbao7xa" path="res://Resources/items/seeds/strawberry_seed.tres" id="18_xe308"]
 [ext_resource type="Script" uid="uid://bmlp6lphyod7g" path="res://Game Logic/managers/story_manager.gd" id="19_by7u0"]
 [ext_resource type="Resource" uid="uid://b2i5vku4i331t" path="res://Resources/items/seeds/onion_seed.tres" id="19_d3cha"]
 [ext_resource type="PackedScene" uid="uid://cdrtf2c53anpa" path="res://Scenes/UI/player_interface.tscn" id="19_l4305"]
 [ext_resource type="PackedScene" uid="uid://dtu5t8l4754r1" path="res://Scenes/UI/data_tabs.tscn" id="20_eexrm"]
 [ext_resource type="PackedScene" uid="uid://ci7frj803w55q" path="res://Scenes/UI/options.tscn" id="20_fjp20"]
 [ext_resource type="Resource" uid="uid://dtsowgtv4r3xb" path="res://Resources/items/build/dirt.tres" id="20_i26dy"]
+[ext_resource type="Resource" uid="uid://dospt1grrjq6w" path="res://Resources/items/tools/shovel.tres" id="20_lmoi6"]
 [ext_resource type="PackedScene" uid="uid://b2sgcn3ke8bos" path="res://Scenes/UI/entity_interface.tscn" id="20_vmo70"]
 [ext_resource type="Resource" uid="uid://b33haxa1ag8tc" path="res://Test/data/test_story_data.tres" id="21_hwjbe"]
 [ext_resource type="Script" uid="uid://c5wpksgdt3fdn" path="res://Game Logic/UI/debug_display.gd" id="27_1wgsj"]
@@ -47,31 +48,36 @@ gradient = SubResource("Gradient_yfqml")
 script = ExtResource("12_iyjdd")
 item_data = ExtResource("14_xe308")
 
-[sub_resource type="Resource" id="Resource_trn8r"]
+[sub_resource type="Resource" id="Resource_i26dy"]
 script = ExtResource("12_iyjdd")
-item_data = ExtResource("18_xe308")
+item_data = ExtResource("19_d3cha")
 
 [sub_resource type="Resource" id="Resource_6tnq2"]
 script = ExtResource("12_iyjdd")
-item_data = ExtResource("16_i26dy")
+item_data = ExtResource("16_d3cha")
 
 [sub_resource type="Resource" id="Resource_it2nq"]
 script = ExtResource("12_iyjdd")
 item_data = ExtResource("17_lmoi6")
 
+[sub_resource type="Resource" id="Resource_trn8r"]
+script = ExtResource("12_iyjdd")
+item_data = ExtResource("16_i26dy")
+
 [sub_resource type="Resource" id="Resource_d3cha"]
 script = ExtResource("12_iyjdd")
 item_data = ExtResource("20_i26dy")
+quantity = 20
 metadata/_custom_type_script = "uid://ff7axvflmy38"
 
-[sub_resource type="Resource" id="Resource_i26dy"]
+[sub_resource type="Resource" id="Resource_ym3tv"]
 script = ExtResource("12_iyjdd")
-item_data = ExtResource("19_d3cha")
+item_data = ExtResource("20_lmoi6")
 metadata/_custom_type_script = "uid://ff7axvflmy38"
 
 [sub_resource type="Resource" id="Resource_6uxt2"]
 script = ExtResource("12_oeip8")
-slot_datas = Array[ExtResource("12_iyjdd")]([SubResource("Resource_yddo7"), SubResource("Resource_trn8r"), SubResource("Resource_6tnq2"), SubResource("Resource_it2nq"), SubResource("Resource_trn8r"), SubResource("Resource_d3cha"), SubResource("Resource_i26dy"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+slot_datas = Array[ExtResource("12_iyjdd")]([SubResource("Resource_yddo7"), SubResource("Resource_i26dy"), SubResource("Resource_6tnq2"), SubResource("Resource_it2nq"), SubResource("Resource_trn8r"), SubResource("Resource_d3cha"), SubResource("Resource_ym3tv"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mucmn"]
 atlas = ExtResource("13_cwurv")
@@ -120,6 +126,7 @@ y_sort_enabled = true
 script = ExtResource("8_3dv0o")
 
 [node name="Player" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager" groups=["enemy_target"] instance=ExtResource("1_vlfca")]
+position = Vector2(300, 300)
 scale = Vector2(0.305, 0.305)
 inventory_data = SubResource("Resource_6uxt2")
 speed = 270
@@ -138,7 +145,6 @@ editor_description = "Holds pickups"
 script = ExtResource("10_d5qv3")
 
 [node name="PickUp" parent="PickupManager" instance=ExtResource("13_pouw6")]
-visible = false
 position = Vector2(512, -382)
 slot_data = SubResource("Resource_qmoje")
 

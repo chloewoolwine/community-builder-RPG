@@ -181,11 +181,8 @@ func remove_floor_at(pos: Location) -> void:
 		print("warning! tried to remove floor at unloaded chunk: ", pos.chunk, " square: ", pos.position)
 		return
 	var square: SquareData = chunk_data.square_datas[pos.position]
-	if square.object_data == null || square.object_data.is_empty():
-		return
-		
 	var overall_pos := (pos.chunk * chunk_data.chunk_size) + pos.position
-	if square.object_data[0]:
+	if square.object_data && square.object_data[0]:
 		square.object_data[0] = null
 		# TODO: different floor types will probably have other layers? 
 		elevations[square.elevation].remove_till(overall_pos)
@@ -400,3 +397,39 @@ func request_square_at_loc(loc: Location) -> SquareData:
 	
 func get_elevation_at(num: int) -> ElevationLayer:
 	return elevations[num]
+
+func lower_elevation(loc: Location) -> void:
+	if !(loc.chunk in loaded_chunks):
+		return
+	var chunk:ChunkData = loaded_chunks[loc.chunk]
+	var square:SquareData = chunk.square_datas[loc.position]
+	elevations[square.elevation+1].remove_base(loc.get_world_coordinates())
+	#elevations[square.elevation].change_square(square, chunk_pos + loc.position)
+	#var friends := loc.get_neighbor_matrix()
+	#for f in friends:
+		#var chunk_data:ChunkData = loaded_chunks[f.chunk]
+		#var chunk_pos_:Vector2i = chunk_data.chunk_position * chunk_data.chunk_size
+		#var square_:SquareData = chunk_data.square_datas[f.position]
+		##for ele in elevations:
+			##ele.change_square(square, chunk_pos + square.location_in_chunk)
+		#elevations[square_.elevation].change_square(square_, chunk_pos_ + f.position)
+
+func raise_elevation(loc: Location) -> void: 
+	if !(loc.chunk in loaded_chunks):
+		return
+	var chunk:ChunkData = loaded_chunks[loc.chunk]
+	var square:SquareData = chunk.square_datas[loc.position]
+	if square.elevation >= elevations.size():
+		var ele:int = square.elevation
+		for x in range(elevations.size(), ele+1):
+			#print_if_debug(str("creating new layer: ", x))
+			var new_layer:ElevationLayer = ELEVATION_LAYER.instantiate()
+			new_layer.name = str("Elevation",x)
+			new_layer.elevation = x
+			self.add_child(new_layer)
+			#print_if_debug(str(new_layer.get_children()))
+			elevations.append(new_layer)
+			elevations[x].elevation = x
+			elevations[x].position.y = x * -32
+	print(elevations)
+	elevations[square.elevation].add_base(loc.get_world_coordinates())
