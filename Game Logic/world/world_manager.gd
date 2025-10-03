@@ -259,7 +259,8 @@ func _build_object_placement_validity(_item: ItemData, cat: String, pos: Vector2
 						print("has the right friends")
 						return !object.neighbors[1].is_door and !object.neighbors[3].is_door and !object.has_decor and !object.is_window and !object.is_door
 		"terrain":
-			if !trh.has_objects(trh.get_square_at(pos, chunk)):
+			var square:SquareData = trh.get_square_at(pos, chunk)
+			if square.elevation < 3 && !trh.has_objects(square):
 				#print("terrain")
 				return true
 	return false

@@ -17,17 +17,22 @@
 texture = ExtResource("10_1dcxp")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
+0:0/0/y_sort_origin = 30
 1:0/0 = 0
+1:0/0/y_sort_origin = 30
 2:0/0 = 0
+2:0/0/y_sort_origin = 30
 3:0/0 = 0
+3:0/0/y_sort_origin = 30
 
 [sub_resource type="TileSet" id="TileSet_8pwus"]
 tile_size = Vector2i(64, 64)
 sources/0 = SubResource("TileSetAtlasSource_yiurd")
 
 [node name="Elevation0" type="TileMapLayer"]
-z_index = -100
+z_index = -1
 use_parent_material = true
+enabled = false
 tile_set = ExtResource("1_to6hq")
 script = ExtResource("2_xeqao")
 
@@ -37,7 +42,6 @@ tile_map_data = PackedByteArray("AAD8//3/AAACAAEAAAD8//7/AAACAAEAAAD8////AAACAAE
 tile_set = ExtResource("5_hkcog")
 
 [node name="Base" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
-y_sort_enabled = true
 texture_filter = 1
 position = Vector2(-32, -32)
 tile_set = ExtResource("3_bynie")
@@ -46,7 +50,6 @@ world_tilemap = NodePath("..")
 is_base_layer = true
 
 [node name="Sand" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
-y_sort_enabled = true
 texture_filter = 1
 position = Vector2(-32, -32)
 tile_set = ExtResource("5_6c57v")
@@ -55,7 +58,6 @@ script = ExtResource("3_sc88q")
 world_tilemap = NodePath("..")
 
 [node name="Pond" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
-y_sort_enabled = true
 texture_filter = 1
 position = Vector2(-32, -32)
 tile_set = ExtResource("5_hkcog")
@@ -64,12 +66,10 @@ script = ExtResource("5_qi5cv")
 world_tilemap = NodePath("../WaterMapper")
 
 [node name="Till" type="TileMapLayer" parent="."]
-y_sort_enabled = true
 tile_set = SubResource("TileSet_8pwus")
 collision_enabled = false
 
 [node name="Stone" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
-y_sort_enabled = true
 texture_filter = 1
 position = Vector2(-32, -32)
 tile_set = ExtResource("12_2adka")
@@ -78,7 +78,6 @@ script = ExtResource("3_sc88q")
 world_tilemap = NodePath("..")
 
 [node name="Grass" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
-y_sort_enabled = true
 texture_filter = 1
 position = Vector2(-32, -32)
 tile_set = ExtResource("7_75y3v")
@@ -87,7 +86,6 @@ script = ExtResource("3_sc88q")
 world_tilemap = NodePath("..")
 
 [node name="PollutionGrass" type="TileMapLayer" parent="." node_paths=PackedStringArray("world_tilemap")]
-y_sort_enabled = true
 texture_filter = 1
 position = Vector2(-32, -32)
 tile_set = ExtResource("11_6fikv")
@@ -96,6 +94,5 @@ script = ExtResource("3_sc88q")
 world_tilemap = NodePath("..")
 
 [node name="Decor" type="TileMapLayer" parent="."]
-y_sort_enabled = true
 texture_filter = 1
 tile_set = ExtResource("8_pj17r")
