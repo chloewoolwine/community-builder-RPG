@@ -73,7 +73,6 @@ script = ExtResource("2_hk3wk")
 debug = true
 
 [node name="Elevation0" parent="WorldManager/TerrainRulesHandler" instance=ExtResource("5_twio2")]
-y_sort_enabled = true
 
 [node name="ObjectAtlas" type="Node2D" parent="WorldManager/TerrainRulesHandler"]
 y_sort_enabled = true

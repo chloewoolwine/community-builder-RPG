@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://cphd7kfw38oua"]
+
+[ext_resource type="Script" uid="uid://da4w0cd0xuubs" path="res://Game Logic/world/mask.gd" id="1_umrtl"]
+[ext_resource type="Shader" uid="uid://cgdyfbxwsqtq4" path="res://Game Logic/shaders/masker.gdshader" id="2_d7oij"]
+[ext_resource type="Texture2D" uid="uid://bsr1y04qjpc8" path="res://Assets/tiles/redsquare.png" id="3_asjn3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ims53"]
+shader = ExtResource("2_d7oij")
+
+[node name="Mask" type="Node2D" groups=["mask"]]
+script = ExtResource("1_umrtl")
+
+[node name="masker" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ims53")
+texture = ExtResource("3_asjn3")
+
+[node name="Mark" type="Sprite2D" parent="."]
+z_index = 4096
+scale = Vector2(0.315, 0.315)
+texture = ExtResource("3_asjn3")

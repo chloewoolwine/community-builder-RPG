@@ -98,16 +98,17 @@ func set_square(_data: SquareData, overall_location: Vector2i)-> void:
 
 func build_base_of(_data: SquareData, overall_location:Vector2i) -> void:
 	#print("build_base_of tile: ", overall_location, " type: ", _data.type)
-	match _data.type:
-		SquareData.SquareType.Dirt:
-			base.fill_tile(overall_location)
-		SquareData.SquareType.Grass:
-			base.fill_tile(overall_location)
-		# TODO: these two should be replaced with sand + stone bases respectively 
-		SquareData.SquareType.Rock:
-			base.fill_tile(overall_location)
-		SquareData.SquareType.Sand:
-			base.fill_tile(overall_location)
+	#match _data.type:
+		#SquareData.SquareType.Dirt:
+			#base.fill_tile(overall_location)
+		#SquareData.SquareType.Grass:
+			#base.fill_tile(overall_location)
+		## TODO: these two should be replaced with sand + stone bases respectively 
+		#SquareData.SquareType.Rock:
+			#base.fill_tile(overall_location)
+		#SquareData.SquareType.Sand:
+			#base.fill_tile(overall_location)
+	base.fill_tile(overall_location)
 	
 func delete_square(overall_location: Vector2i) -> void:
 	for layer in arr:

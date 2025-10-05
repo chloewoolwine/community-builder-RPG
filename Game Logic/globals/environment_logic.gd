@@ -102,11 +102,18 @@ static func _get_most_wet(water_source:Location) -> Array[Location]:
 	water_source.get_location(Vector2i.DOWN + Vector2i.LEFT),
 	water_source.get_location(Vector2i.DOWN + Vector2i.RIGHT)]
 
+#this is the "REAL" global position- y offset needs to be ON LOC
 static func get_real_pos_object(loc: Location, elevation: int) -> Vector2:
 	##((pos * 64) + (chunk * 64 * 32)) + Vector2i(0, layer.elevation*-32) + Vector2i(32, 32)
 	var world_pos := (loc.chunk * Constants.CHUNK_SIZE) + loc.position
 	@warning_ignore("integer_division")
+	## 		tile position 			+		elevation offset 							   +		middle of tile
 	return world_pos * Constants.TILE_SIZE + Vector2i(0, elevation*-(Constants.TILE_SIZE/2)) + Vector2i((Constants.TILE_SIZE/2), (Constants.TILE_SIZE/2))
+
+static func get_base_pos_object(loc: Location) -> Vector2:
+	var world_pos := (loc.chunk * Constants.CHUNK_SIZE) + loc.position
+	@warning_ignore("integer_division")
+	return world_pos * Constants.TILE_SIZE + Vector2i((Constants.TILE_SIZE/2), (Constants.TILE_SIZE/2))
 
 #returns null if requested square is out of bounds
 static func get_square(world_data: WorldData, loc: Location) -> SquareData:
@@ -230,3 +237,6 @@ static func has_objects(square: SquareData) -> bool:
 		if obj != null:
 			return true
 	return false
+
+static func ele_y_offset(elevation: int) -> int:
+	return elevation * Constants.ELEVATION_Y_OFFSET

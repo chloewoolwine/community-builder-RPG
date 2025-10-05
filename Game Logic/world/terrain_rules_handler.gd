@@ -5,6 +5,7 @@ const ELEVATION_LAYER = preload("res://Scenes/world/elevation_layer.tscn")
 @export var debug: bool = false
 @export var elevations: Array[ElevationLayer]
 @onready var object_atlas: ObjectAtlas = $ObjectAtlas
+@onready var bbc: BackBufferCopy = $BackBufferCopy
 
 ## TODO: attatch the entity/object loading to this method
 signal chunk_loaded(chunk: ChunkData)
@@ -24,12 +25,12 @@ var chunk_row_next: Dictionary
 var chunks_to_unload: Dictionary
 
 func _ready() -> void:
-	for child in get_children():
+	for child in bbc.get_children():
 		if child is ElevationLayer and !elevations.has(child):
 			elevations.append(child)
 	for z in elevations.size():
 		elevations[z].elevation = z
-		elevations[z].position.y = z * -32
+		elevations[z].position.y = EnvironmentLogic.ele_y_offset(z)
 	object_atlas.new_object_placed.connect(add_object)
 
 func _process(_delta: float) -> void:
@@ -155,11 +156,11 @@ func translate_square_data_to_tile(data: SquareData, world_pos: Vector2i, _chunk
 			var new_layer:ElevationLayer = ELEVATION_LAYER.instantiate()
 			new_layer.name = str("Elevation",x)
 			new_layer.elevation = x
-			self.add_child(new_layer)
+			bbc.add_child(new_layer)
 			#print_if_debug(str(new_layer.get_children()))
 			elevations.append(new_layer)
 			elevations[x].elevation = x
-			elevations[x].position.y = x * -32
+			elevations[x].position.y = EnvironmentLogic.ele_y_offset(x)
 			
 	for x in range(0, data.elevation):
 		#print("building base in elevation: ", x)
@@ -426,10 +427,10 @@ func raise_elevation(loc: Location) -> void:
 			var new_layer:ElevationLayer = ELEVATION_LAYER.instantiate()
 			new_layer.name = str("Elevation",x)
 			new_layer.elevation = x
-			self.add_child(new_layer)
+			bbc.add_child(new_layer)
 			#print_if_debug(str(new_layer.get_children()))
 			elevations.append(new_layer)
 			elevations[x].elevation = x
-			elevations[x].position.y = x * -32
+			elevations[x].position.y = EnvironmentLogic.ele_y_offset(x)
 	print(elevations)
 	elevations[square.elevation].add_base(loc.get_world_coordinates())
