@@ -37,6 +37,7 @@ func _process(_delta: float) -> void:
 func set_world_data(new_world: WorldData) -> void:
 	#print("world data recieved, new world seed: ", new_world.world_seed, " \n chunks to unload: ", loaded_chunks.keys(), " \n number of new chunks: ", new_world.chunk_datas.size())
 	trh.unload_all_chunks()
+	trh.world_data = new_world
 	while(trh.loaded_chunks.size() > 0):
 		pass #this is silly but idk how else to do it and i dont feel like looking it up
 	#print("new world chunk datas: ", new_world.chunk_datas)

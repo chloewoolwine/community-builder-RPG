@@ -23,6 +23,7 @@ var chunks_in_loading: Dictionary
 ## Map of chunk pos to next row
 var chunk_row_next: Dictionary
 var chunks_to_unload: Dictionary
+var world_data: WorldData # ONLY USE for checks and stuff!!!! 
 
 func _ready() -> void:
 	for child in bbc.get_children():
@@ -175,6 +176,13 @@ func translate_square_data_to_tile(data: SquareData, world_pos: Vector2i, _chunk
 				object.chunk = _chunk_overall
 		object_atlas.translate_object(data.object_data, actual_pos, data)
 		_settle_objects_at_square(data)
+	
+	var loc:= Location.get_location_from_world(world_pos)
+	var square := EnvironmentLogic.get_square(world_data, loc.get_location(Vector2(0, -1)))
+	if square != null && square.elevation < ele:
+		#back facing cliff, need to mask
+		object_atlas.create_mask(loc, square)
+		pass
 	
 func remove_floor_at(pos: Location) -> void:
 	var chunk_data:ChunkData = loaded_chunks[pos.chunk]
@@ -399,12 +407,17 @@ func request_square_at_loc(loc: Location) -> SquareData:
 func get_elevation_at(num: int) -> ElevationLayer:
 	return elevations[num]
 
+##TODO: NEED TO CHECK NEIGHBORS FOR PROPER MASKING IN BOTH RAISE AND LOWER 
 func lower_elevation(loc: Location) -> void:
 	if !(loc.chunk in loaded_chunks):
 		return
 	var chunk:ChunkData = loaded_chunks[loc.chunk]
 	var square:SquareData = chunk.square_datas[loc.position]
 	elevations[square.elevation+1].remove_base(loc.get_world_coordinates())
+	var mask := object_atlas.get_mask(loc)
+	if mask:
+		mask.decrease_elevation()
+	handle_mask_relation(loc)
 	#elevations[square.elevation].change_square(square, chunk_pos + loc.position)
 	#var friends := loc.get_neighbor_matrix()
 	#for f in friends:
@@ -434,3 +447,38 @@ func raise_elevation(loc: Location) -> void:
 			elevations[x].position.y = EnvironmentLogic.ele_y_offset(x)
 	print(elevations)
 	elevations[square.elevation].add_base(loc.get_world_coordinates())
+	var mask := object_atlas.get_mask(loc)
+	if mask:
+		mask.increase_elevation()
+	handle_mask_relation(loc)
+
+func handle_mask_relation(loc: Location) -> void: 
+	# /shrug we're doing all of the mask logic here
+	var square := EnvironmentLogic.get_square(world_data, loc)
+	var up_square := EnvironmentLogic.get_square(world_data, loc.get_location(Vector2i(0, -1)))
+	var down_loc := loc.get_location(Vector2i(0, 1))
+	var down_square := EnvironmentLogic.get_square(world_data, down_loc)
+	# square/up relationship
+	# case 1: elevation equals
+	# op: remove mask from square
+	if square.elevation <= up_square.elevation:
+		object_atlas.unload_mask_if_real(loc)
+	else:
+		# we need a mask
+		var mask := object_atlas.get_mask(loc)
+		if mask:
+			mask.change_elevation_to(square.elevation)
+		else:
+			object_atlas.create_mask(loc, square)
+	
+	#square/down relationship
+	if square.elevation >= down_square.elevation:
+		object_atlas.unload_mask_if_real(down_loc)
+	else: #curr square is lower than down square, need mask on down square
+		var mask := object_atlas.get_mask(down_loc)
+		if mask:
+			mask.change_elevation_to(down_square.elevation)
+		else:
+			object_atlas.create_mask(down_loc, down_square)
+	
+	##TODO: need to change the shape of the mask depending on left/right

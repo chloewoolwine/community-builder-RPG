@@ -12,6 +12,7 @@ script = ExtResource("1_umrtl")
 
 [node name="masker" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_ims53")
+position = Vector2(0, -31)
 texture = ExtResource("3_asjn3")
 
 [node name="Mark" type="Sprite2D" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://bx0i1fqjjvygy"]
+[gd_scene load_steps=49 format=3 uid="uid://bx0i1fqjjvygy"]
 
 [ext_resource type="Script" uid="uid://ypbxt4lu3dxr" path="res://Game Logic/managers/game.gd" id="1_lgntb"]
 [ext_resource type="PackedScene" uid="uid://dy236j24tdfmr" path="res://Scenes/Entities/player.tscn" id="1_vlfca"]
@@ -33,8 +33,6 @@
 [ext_resource type="Resource" uid="uid://dospt1grrjq6w" path="res://Resources/items/tools/shovel.tres" id="20_lmoi6"]
 [ext_resource type="PackedScene" uid="uid://b2sgcn3ke8bos" path="res://Scenes/UI/entity_interface.tscn" id="20_vmo70"]
 [ext_resource type="Resource" uid="uid://b33haxa1ag8tc" path="res://Test/data/test_story_data.tres" id="21_hwjbe"]
-[ext_resource type="Shader" uid="uid://cgdyfbxwsqtq4" path="res://Game Logic/shaders/masker.gdshader" id="22_6uxt2"]
-[ext_resource type="Texture2D" uid="uid://bsr1y04qjpc8" path="res://Assets/tiles/redsquare.png" id="23_ym3tv"]
 [ext_resource type="Script" uid="uid://c5wpksgdt3fdn" path="res://Game Logic/UI/debug_display.gd" id="27_1wgsj"]
 [ext_resource type="Theme" uid="uid://c5pjopti0rq5n" path="res://Scenes/UI/debug_menu.tres" id="28_ti2iv"]
 [ext_resource type="Script" uid="uid://tq23mgtitkjv" path="res://Game Logic/UI/options_menu.gd" id="28_uohxa"]
@@ -85,9 +83,6 @@ slot_datas = Array[ExtResource("12_iyjdd")]([SubResource("Resource_yddo7"), SubR
 atlas = ExtResource("13_cwurv")
 region = Rect2(7, 7, 70, 70)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bwj6o"]
-shader = ExtResource("22_6uxt2")
-
 [sub_resource type="Resource" id="Resource_qmoje"]
 script = ExtResource("12_iyjdd")
 item_data = ExtResource("16_cwurv")
@@ -123,7 +118,6 @@ script = ExtResource("7_fkv55")
 copy_mode = 2
 
 [node name="Elevation0" parent="WorldManager/TerrainRulesHandler/BackBufferCopy" instance=ExtResource("8_of3dw")]
-y_sort_enabled = false
 
 [node name="ObjectAtlas" type="Node2D" parent="WorldManager/TerrainRulesHandler"]
 y_sort_enabled = true
@@ -151,17 +145,6 @@ texture = SubResource("AtlasTexture_mucmn")
 position = Vector2(1.49012e-08, -10.25)
 scale = Vector2(0.259594, 0.246314)
 position_smoothing_enabled = true
-
-[node name="masker" type="Sprite2D" parent="WorldManager/TerrainRulesHandler/ObjectAtlas"]
-material = SubResource("ShaderMaterial_bwj6o")
-position = Vector2(531.665, 34.91)
-texture = ExtResource("23_ym3tv")
-offset = Vector2(0, -32)
-
-[node name="Sprite2D" type="Sprite2D" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/masker"]
-position = Vector2(-28.999998, -60.999996)
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("23_ym3tv")
 
 [node name="PickupManager" type="Node2D" parent="."]
 editor_description = "Holds pickups"

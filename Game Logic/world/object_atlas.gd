@@ -12,7 +12,6 @@ signal new_object_placed(object: ObjectData)
 #  not it's grand children. You can therefore use the scene tree hierarchy to sort 
 #  the Sprites of your character how you like. 
 
-
 # every object type: 
 # plant
 #  - plants should be able to have more than one sprite
@@ -35,15 +34,18 @@ signal new_object_placed(object: ObjectData)
 # maybe if i make modding tools, i can have a script that creates these scenes in the 
 # right spots? then i wouldn't have to refracro this that much 
 const object_scene_location: String = "res://Scenes/object/"
+const MASK = preload("uid://cphd7kfw38oua")
 
 #this is unloaded when the chunks are unloaded
 var loaded_objects: Dictionary
-
 # object id: plant_tree_poplar, tags: "age": "100" 
 
 # all objects live in the scene Individually- key is the object data
 # they keep track of their own object datas
 var live_objects: Dictionary
+
+#every live mask
+var masks: Dictionary[Vector2i, ElevationMask]
 
 func translate_object(object_datas: Array[ObjectData],overall_position: Vector2, square: SquareData) -> void: 
 	if object_datas == null:
@@ -123,3 +125,25 @@ func pop_away_object(object_data: ObjectData) -> void:
 	#TODO: object needs to go into the players inventory or spawn new
 	object.queue_free()
 	live_objects.erase(object_data)
+
+func create_mask(loc: Location, square: SquareData) -> void: 
+	var mask:ElevationMask = MASK.instantiate()
+	mask.elevation = square.elevation
+	mask.loc = loc.get_world_coordinates()
+	mask.freeing_self.connect(mask_freeing_self)
+	mask.position = EnvironmentLogic.get_real_pos_object(loc, 0)
+	add_child(mask)
+	masks[loc.get_world_coordinates()] = mask
+
+func unload_mask_if_real(loc: Location) -> void: 
+	var mask:ElevationMask = masks.get(loc.get_world_coordinates(), null)
+	if mask == null:
+		return
+	mask.queue_free()
+	masks.erase(loc.get_world_coordinates())
+
+func get_mask(loc: Location) -> ElevationMask:
+	return masks.get(loc.get_world_coordinates(), null)
+
+func mask_freeing_self(mask: ElevationMask) -> void: 
+	masks.erase(mask.loc)
