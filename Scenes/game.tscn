@@ -118,6 +118,13 @@ script = ExtResource("7_fkv55")
 copy_mode = 2
 
 [node name="Elevation0" parent="WorldManager/TerrainRulesHandler/BackBufferCopy" instance=ExtResource("8_of3dw")]
+visible = false
+
+[node name="Elevation1" parent="WorldManager/TerrainRulesHandler/BackBufferCopy" instance=ExtResource("8_of3dw")]
+enabled = true
+
+[node name="Base" parent="WorldManager/TerrainRulesHandler/BackBufferCopy/Elevation1" index="1"]
+debug = true
 
 [node name="ObjectAtlas" type="Node2D" parent="WorldManager/TerrainRulesHandler"]
 y_sort_enabled = true
@@ -308,5 +315,6 @@ script = ExtResource("17_d5xvq")
 [connection signal="visibility_changed" from="UI/InventoryInterface" to="UI/InventoryInterface" method="_on_visibility_changed"]
 
 [editable path="WorldManager/TerrainRulesHandler/BackBufferCopy/Elevation0"]
+[editable path="WorldManager/TerrainRulesHandler/BackBufferCopy/Elevation1"]
 [editable path="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player"]
 [editable path="UI/InventoryInterface/PlayerInventory"]

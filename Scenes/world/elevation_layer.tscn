@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://1b78ipp0k2t8"]
+[gd_scene load_steps=18 format=4 uid="uid://1b78ipp0k2t8"]
 
 [ext_resource type="TileSet" uid="uid://bgvxhw7wfiv85" path="res://Scenes/world/tilesets/mapper.tres" id="1_to6hq"]
 [ext_resource type="Script" uid="uid://danvvilca6aui" path="res://Game Logic/world/elevation_layer.gd" id="2_xeqao"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dndc4iegm2omf" path="res://Assets/Testy Assets/till_spot.png" id="10_1dcxp"]
 [ext_resource type="TileSet" uid="uid://cvjwuudq7ykg3" path="res://Scenes/world/tilesets/pollution_grass.tres" id="11_6fikv"]
 [ext_resource type="TileSet" uid="uid://dsixtjjsc88sg" path="res://Scenes/world/tilesets/stone_tiles.tres" id="12_2adka"]
+[ext_resource type="Texture2D" uid="uid://bsr1y04qjpc8" path="res://Assets/tiles/redsquare.png" id="13_2x6pn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yiurd"]
 texture = ExtResource("10_1dcxp")
@@ -28,6 +29,17 @@ texture_region_size = Vector2i(64, 64)
 [sub_resource type="TileSet" id="TileSet_8pwus"]
 tile_size = Vector2i(64, 64)
 sources/0 = SubResource("TileSetAtlasSource_yiurd")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2x6pn"]
+texture = ExtResource("13_2x6pn")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_6fikv"]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 0
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_2x6pn")
 
 [node name="Elevation0" type="TileMapLayer"]
 z_index = -10
@@ -104,3 +116,7 @@ world_tilemap = NodePath("..")
 z_index = -1
 texture_filter = 1
 tile_set = ExtResource("8_pj17r")
+
+[node name="HigherElevationWarner" type="TileMapLayer" parent="."]
+z_index = -1
+tile_set = SubResource("TileSet_6fikv")

@@ -18,6 +18,7 @@ class_name ElevationLayer
 @onready var pollution_grass: TileMapDual = $PollutionGrass
 @onready var decor: TileMapLayer = $Decor
 @onready var water_mapper: TileMapLayer = $WaterMapper
+@onready var higher_elevation_warner: TileMapLayer = $HigherElevationWarner
 
 @onready var arr:Array[TileMapDual] = [base, pond, sand, grass, stone, pollution_grass]
 
@@ -35,9 +36,12 @@ func _ready() -> void:
 func set_physics_data() -> void:
 	self.tile_set = self.tile_set.duplicate()
 	self.tile_set.set_physics_layer_collision_mask(0,0)
+	base.tile_set = base.tile_set.duplicate()
 	base.tile_set.set_physics_layer_collision_mask(0,0)
 	base.tile_set.set_physics_layer_collision_layer(0, 0b1 << elevation+9)
-	
+	higher_elevation_warner.tile_set = higher_elevation_warner.tile_set.duplicate()
+	higher_elevation_warner.tile_set.set_physics_layer_collision_mask(0,0)
+	higher_elevation_warner.tile_set.set_physics_layer_collision_layer(0, 0b1 << elevation+9)
 	## CHLOE LOOK AT ME 
 	## WHEN YOU ADD A NEW LAYER. GO INTO THE ELEVATION. AND ADD IT THERE TOO. OK?
 	## OR ELSE !!!!!
@@ -78,10 +82,11 @@ func set_square(_data: SquareData, overall_location: Vector2i)-> void:
 					base.fill_tile(overall_location)
 			SquareData.SquareType.Grass:
 				base.fill_tile(overall_location, 0)
-				grass.fill_tile(overall_location, 0)
 				#print("filled grass")
 				if _data.pollution > 2:
 					pollution_grass.fill_tile(overall_location)
+				else:
+					grass.fill_tile(overall_location, 0)
 			SquareData.SquareType.Rock:
 				#print("filled rocj")
 				base.fill_tile(overall_location)
@@ -109,16 +114,14 @@ func build_base_of(_data: SquareData, overall_location:Vector2i) -> void:
 		#SquareData.SquareType.Sand:
 			#base.fill_tile(overall_location)
 	base.fill_tile(overall_location)
+	add_elevation_barrier(overall_location)
 	
 func delete_square(overall_location: Vector2i) -> void:
 	for layer in arr:
 		layer.just_erase_tile(overall_location)
 	#pond.set_cell(overall_location)
 	till.set_cell(overall_location)
-## we can have a layer for elevation changes (base) and then a layer for ponds
-## dont' have to worry about it until terrain edits can happen
-## on layer 0, base tiles are just replaced with water tiles
-## yippie :3 
+	higher_elevation_warner.set_cell(overall_location)
 
 func update_specific_pixel(overall_location: Vector2i, _data:SquareData) -> void:
 	till.set_cell(overall_location, 0, Vector2i(_data.water_saturation,0))
@@ -140,6 +143,13 @@ func remove_till(overall_location: Vector2i) -> void:
 
 func remove_base(overall_location: Vector2i) -> void: 
 	base.erase_tile(overall_location)
+	higher_elevation_warner.set_cell(overall_location, -1)
 
 func add_base(overall_location: Vector2i) -> void:
 	base.fill_tile(overall_location)
+
+func add_elevation_barrier(overall_location: Vector2i) -> void: 
+	higher_elevation_warner.set_cell(overall_location, 0, Vector2i.ZERO)
+
+func remove_elevation_barrier(overall_location: Vector2i) -> void: 
+	higher_elevation_warner.set_cell(overall_location, -1)

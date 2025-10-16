@@ -45,8 +45,9 @@ func do_mouse_stuff() -> void:
 		if layer != null:
 			var loc := world_manager.convert_to_chunks_at_world_pos(mouse)
 			var square_data:SquareData = world_manager.trh.request_square_at(loc[0], loc[1])
+			var actual_loc: Location = Location.new(loc[0], loc[1])
 			if square_data:
-				label_3.text = str("layer:", layer.elevation, " loc:", loc, " type: ", square_data.type, " wettness: ", square_data.water_saturation, " fertility: ", square_data.fertility, " pollution: ", square_data.pollution)
+				label_3.text = str("layer:", layer.elevation," world cell: ",actual_loc.get_world_coordinates(), " loc:", loc, " type: ", square_data.type, " wettness: ", square_data.water_saturation, " fertility: ", square_data.fertility, " pollution: ", square_data.pollution)
 			var obj:Array[String] = []
 			for o in world_manager.get_objects_at_world_pos(mouse):
 				if o != null:

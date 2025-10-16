@@ -14,6 +14,8 @@ var masks: Array[Sprite2D]
 func _ready() -> void:
 	if elevation == 0:
 		push_warning("ElevationMask created for elevation 0 or elevation not set")
+		freeing_self.emit(self)
+		self.queue_free()
 	if debug:
 		mark.visible = true
 	else:

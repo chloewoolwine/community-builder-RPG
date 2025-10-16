@@ -1,9 +1,9 @@
 extends CharacterBody2D
 class_name Player
 
-## TODO: when i get back to this game, i want to refractor ALL of this. 
-## input is weird, wtf is "facing", just generally organize and make normal
+## TODO: organize and make normal
 
+##TODO: need to make a load in state
 enum PlayerStates{STATE_MENU, STATE_IDLE, STATE_ACTION, STATE_TOOL, STATE_WALK, STATE_SPELL, STATE_JUMP, STATE_DASH, 
 		STATE_KNOCKBACK, STATE_DEAD}
 

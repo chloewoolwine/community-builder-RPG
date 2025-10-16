@@ -223,8 +223,8 @@ func _is_world_tile_sketched(_world_cell: Vector2i) -> bool:
 	var _source_id: int = world_tilemap.get_cell_source_id(_world_cell)
 	if debug:
 		print('      	looking for source id:' + str(world_source_id) + ' found source id:  ' + str(_source_id) + '   found atlas coords:  ', _atlas_coords)
-	
-	if is_base_layer and _atlas_coords == full_tile: #base should always draw
+	if is_base_layer && _atlas_coords == full_tile: #base should always draw
+		print('      BASE LAYER world cell ' + str(_world_cell) + ' IS sketched with atlas coords ' + str(_atlas_coords))
 		return true
 	if _atlas_coords == full_tile && _source_id == world_source_id:
 		if debug:
@@ -253,7 +253,11 @@ func fill_tile(world_cell: Vector2i, _source_id: int = biome_source_id) -> void:
 func erase_tile(world_cell: Vector2i) -> void:
 	if freeze:
 		return
-	world_tilemap.set_cell(world_cell, world_source_id, empty_tile)
+	if is_base_layer:
+		world_tilemap.set_cell(world_cell, world_source_id, empty_tile)
+	else:
+		#0 is base source id
+		world_tilemap.set_cell(world_cell, 0, full_tile)
 	update_tile(world_cell)
 	
 	

@@ -374,14 +374,23 @@ func change_water(loc: Vector2, new_water: int) -> void:
 
 #TODO: this solution sucks dookie!
 const DIRT :ItemData = preload("uid://dtsowgtv4r3xb")
+var modify_cooldown:Timer #Overall cooldown for all of the tilemap. mostly so it updates correctly because i dont know what the race condition is 
 # Returns true if the modification is successful
 # this probably isnt the best way to do this
 func modify_tilemap(loc: Location, _origin_pos: Vector2, action: String) -> bool:
 	var layer: ElevationLayer = trh.get_elevation_at(_world_data.chunk_datas[loc.chunk].square_datas[loc.position].elevation)
+	if modify_cooldown == null:
+		modify_cooldown = Timer.new()
+		modify_cooldown.one_shot = true
+		modify_cooldown.wait_time = Constants.MILLISECONDS_BETWEEN_MODIFICATIONS / 1000.0
+		add_child(modify_cooldown)
+	if !modify_cooldown.is_stopped():
+		return false
+	modify_cooldown.start()
+	
 	print("global: ", loc)
 	if layer == null:
 		print("modification failed, layer was null at global: ", loc) 
-	
 	if action == "water":
 		trh.water_square_at(loc)
 	if action == "till": 

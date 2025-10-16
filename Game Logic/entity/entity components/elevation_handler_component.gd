@@ -1,5 +1,5 @@
 extends Area2D
-class_name ElevationHandler
+#class_name ElevationHandler
 
 # Possible bug with this design: if an entity loads in on a slope that might be weird
 
