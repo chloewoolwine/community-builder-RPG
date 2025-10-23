@@ -10,17 +10,8 @@ region = Rect2(694, 93, 91, 93)
 [resource]
 script = ExtResource("1_kaqds")
 heal_value = 10
-hunger_value = 0
 name = "Yarrow"
 description = "Brew into a nice tea for some health, or eat right away if you're crazy."
-magical = false
-magicalDescription = ""
 stackable = true
 texture = SubResource("AtlasTexture_i3v1o")
-quality = 0
 placeable = true
-required_space = Vector2i(1, 1)
-object_id = ""
-sellable = true
-value = 1
-rarity = 1

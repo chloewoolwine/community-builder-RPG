@@ -20,8 +20,8 @@ void fragment() {
 	int sample_x = int(floor((relative_position.x + tile_size / 2.0)/ tile_size));
 	int sample_y = int(floor((relative_position.y + tile_size / 2.0)/ tile_size));
 	float sample_value = texelFetch(mod_color_tex, ivec2(sample_x, sample_y), 0).a;
-	if (base_pixel.a > 0.){
+	//if (base_pixel.a > 0.){
 		base_pixel = mix(base_pixel, tint_color, sample_value);
-	}
+	//}
 	COLOR = base_pixel;
 }

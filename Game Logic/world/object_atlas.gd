@@ -106,6 +106,9 @@ func _parse_and_place(object_data: ObjectData, overall_position: Vector2, square
 			var hitbox: Node2D = find_child("InteractionHitbox", false)
 			if hitbox: 
 				hitbox.current_elevation = square.elevation
+			var elevation_hanlder:ObjElevationHandler = object.find_child("ObjElevationHandler")
+			if elevation_hanlder != null:
+				elevation_hanlder.current_elevation = square.elevation
 			live_objects[object_data] = object
 			add_child(object)
 			if split[0] == "plant":

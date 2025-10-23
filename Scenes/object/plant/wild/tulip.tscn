@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://bvpoastirsff1"]
+[gd_scene load_steps=10 format=3 uid="uid://bvpoastirsff1"]
 
 [ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_gfyt7"]
 [ext_resource type="Script" uid="uid://c3cgrr073uht8" path="res://Game Logic/object/plants/plant_appearance.gd" id="2_3v85t"]
 [ext_resource type="Texture2D" uid="uid://cookuowu2ywfl" path="res://Assets/plants/wild/rocks_flowers_hole.png" id="3_fyuyk"]
 [ext_resource type="Script" uid="uid://bndjcrkta02c4" path="res://Game Logic/object/plants/plant_component.gd" id="3_xwbov"]
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="4_ug55d"]
+[ext_resource type="Script" uid="uid://c1whaq778qys2" path="res://Game Logic/object/obj_elevation_handler.gd" id="6_no4qu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l825y"]
 size = Vector2(40, 40)
@@ -44,3 +45,7 @@ script = ExtResource("4_ug55d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionHitbox"]
 shape = SubResource("CircleShape2D_0mxl1")
+
+[node name="ObjElevationHandler" type="Node" parent="."]
+script = ExtResource("6_no4qu")
+metadata/_custom_type_script = "uid://c1whaq778qys2"

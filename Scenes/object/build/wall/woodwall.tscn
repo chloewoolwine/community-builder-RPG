@@ -1,7 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://dmgtcev0m6n5b"]
+[gd_scene load_steps=30 format=3 uid="uid://dmgtcev0m6n5b"]
 
 [ext_resource type="Script" uid="uid://nkogovoc7bye" path="res://Game Logic/object/build/generic_wall.gd" id="1_5v8vj"]
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="3_amp3a"]
+[ext_resource type="Script" uid="uid://c1whaq778qys2" path="res://Game Logic/object/obj_elevation_handler.gd" id="3_iwp6s"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jotit"]
 load_path = "res://.godot/imported/wood_walls.png-a281811508f74fc369d6f20e9465799e.ctex"
@@ -125,3 +126,7 @@ y_sort_enabled = true
 position = Vector2(0, -70.165)
 texture = SubResource("AtlasTexture_yyomc")
 offset = Vector2(0, -9.965)
+
+[node name="ObjElevationHandler" type="Node" parent="." node_paths=PackedStringArray("parent")]
+script = ExtResource("3_iwp6s")
+parent = NodePath("..")

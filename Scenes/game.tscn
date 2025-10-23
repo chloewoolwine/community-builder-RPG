@@ -118,13 +118,9 @@ script = ExtResource("7_fkv55")
 copy_mode = 2
 
 [node name="Elevation0" parent="WorldManager/TerrainRulesHandler/BackBufferCopy" instance=ExtResource("8_of3dw")]
-visible = false
 
 [node name="Elevation1" parent="WorldManager/TerrainRulesHandler/BackBufferCopy" instance=ExtResource("8_of3dw")]
-enabled = true
-
-[node name="Base" parent="WorldManager/TerrainRulesHandler/BackBufferCopy/Elevation1" index="1"]
-debug = true
+elevation = 1
 
 [node name="ObjectAtlas" type="Node2D" parent="WorldManager/TerrainRulesHandler"]
 y_sort_enabled = true

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://e0l3vhu4cilc"]
+[gd_scene load_steps=4 format=3 uid="uid://e0l3vhu4cilc"]
 
 [ext_resource type="Script" uid="uid://cvh1oa3swkest" path="res://Game Logic/object/build/genericdoor.gd" id="1_yxlxp"]
 [ext_resource type="Texture2D" uid="uid://b0etpli3pkjcn" path="res://Assets/build/door.png" id="2_7kkkh"]
+[ext_resource type="Script" uid="uid://c1whaq778qys2" path="res://Game Logic/object/obj_elevation_handler.gd" id="3_63yke"]
 
 [node name="GenericDoor" type="Node2D"]
 script = ExtResource("1_yxlxp")
@@ -10,3 +11,8 @@ script = ExtResource("1_yxlxp")
 position = Vector2(0, -69)
 texture = ExtResource("2_7kkkh")
 offset = Vector2(0, 5)
+
+[node name="ObjElevationHandler" type="Node" parent="." node_paths=PackedStringArray("parent", "things_to_offset")]
+script = ExtResource("3_63yke")
+parent = NodePath("..")
+things_to_offset = [NodePath("../Sprite2D")]

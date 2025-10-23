@@ -28,6 +28,8 @@ func do_action() -> void:
 			player_opened_menu.emit("chest")
 		if cast.is_entity:
 			player_opened_menu.emit("entity")
+		if !cast.needs_tool:
+			cast.player_interact()
 	#if we are holding a usuable item...
 	elif equiped_item && equiped_item.item_data:
 		if equiped_item.item_data is ItemDataConsumable: 

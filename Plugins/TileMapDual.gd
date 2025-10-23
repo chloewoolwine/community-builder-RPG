@@ -224,7 +224,8 @@ func _is_world_tile_sketched(_world_cell: Vector2i) -> bool:
 	if debug:
 		print('      	looking for source id:' + str(world_source_id) + ' found source id:  ' + str(_source_id) + '   found atlas coords:  ', _atlas_coords)
 	if is_base_layer && _atlas_coords == full_tile: #base should always draw
-		print('      BASE LAYER world cell ' + str(_world_cell) + ' IS sketched with atlas coords ' + str(_atlas_coords))
+		if debug:
+			print('      BASE LAYER world cell ' + str(_world_cell) + ' IS sketched with atlas coords ' + str(_atlas_coords))
 		return true
 	if _atlas_coords == full_tile && _source_id == world_source_id:
 		if debug:

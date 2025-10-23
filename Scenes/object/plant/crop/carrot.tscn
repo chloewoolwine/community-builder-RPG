@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://kueht0rr6u4q"]
+[gd_scene load_steps=10 format=3 uid="uid://kueht0rr6u4q"]
 
 [ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_mt5gv"]
 [ext_resource type="Script" uid="uid://c3cgrr073uht8" path="res://Game Logic/object/plants/plant_appearance.gd" id="2_vk3rb"]
 [ext_resource type="Script" uid="uid://bndjcrkta02c4" path="res://Game Logic/object/plants/plant_component.gd" id="3_2drfb"]
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="4_vdkux"]
+[ext_resource type="Script" uid="uid://c1whaq778qys2" path="res://Game Logic/object/obj_elevation_handler.gd" id="5_vk3rb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l825y"]
 size = Vector2(40, 40)
@@ -45,3 +46,7 @@ script = ExtResource("4_vdkux")
 shape = SubResource("CircleShape2D_0mxl1")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+
+[node name="ObjElevationHandler" type="Node" parent="."]
+script = ExtResource("5_vk3rb")
+metadata/_custom_type_script = "uid://c1whaq778qys2"

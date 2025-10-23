@@ -14,5 +14,5 @@ func _ready() -> void:
 func on_hit() -> void: 
 	curr_hits += 1
 	if hits_required <= curr_hits:
-		drops
+		drops.roll
 	pass

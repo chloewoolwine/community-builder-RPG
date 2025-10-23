@@ -15,9 +15,8 @@ func _offset_sprites() -> void:
 	#todo... some kind of animation thing needs to happen .>.
 	#tween or something
 	for sprite in things_to_offset:
-		sprite.y = current_elevation * Constants.ELEVATION_Y_OFFSET
-	entity.y = -1 * current_elevation * Constants.ELEVATION_Y_OFFSET
+		sprite.position.y = current_elevation * Constants.ELEVATION_Y_OFFSET
 
 func _change_collision_layer(prev: int, new: int) -> void:
-	entity.set_collision_mask_value(new+10,true)
 	entity.set_collision_mask_value(prev+10, false)
+	entity.set_collision_mask_value(new+10,true)

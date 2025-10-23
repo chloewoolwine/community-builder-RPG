@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://c4fsgf5tactjp"]
+[gd_scene load_steps=28 format=3 uid="uid://c4fsgf5tactjp"]
 
 [ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_q3gg6"]
 [ext_resource type="Script" uid="uid://c3cgrr073uht8" path="res://Game Logic/object/plants/plant_appearance.gd" id="2_27dju"]
@@ -9,6 +9,7 @@
 [ext_resource type="Resource" uid="uid://cjftm0sbao7xa" path="res://Resources/items/seeds/strawberry_seed.tres" id="4_75800"]
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="4_g21qu"]
 [ext_resource type="Resource" uid="uid://donhulmr2y23l" path="res://Resources/plants/strawberry.tres" id="8_astqg"]
+[ext_resource type="Script" uid="uid://c1whaq778qys2" path="res://Game Logic/object/obj_elevation_handler.gd" id="10_4nhya"]
 
 [sub_resource type="Resource" id="Resource_75800"]
 script = ExtResource("2_oim8e")
@@ -21,13 +22,11 @@ metadata/_custom_type_script = "uid://c72fhodjm4b2c"
 script = ExtResource("2_oim8e")
 chance = 0.205
 item_data = ExtResource("4_75800")
-amount = 0
 metadata/_custom_type_script = "uid://c72fhodjm4b2c"
 
 [sub_resource type="Resource" id="Resource_astqg"]
 script = ExtResource("3_g21qu")
 loot_table_entries = Array[ExtResource("2_oim8e")]([SubResource("Resource_75800"), SubResource("Resource_4nhya")])
-num_rolls = 1
 metadata/_custom_type_script = "uid://dq4ap3sv81447"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l825y"]
@@ -112,3 +111,7 @@ shape = SubResource("CircleShape2D_0mxl1")
 disabled = true
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+
+[node name="ObjElevationHandler" type="Node" parent="."]
+script = ExtResource("10_4nhya")
+metadata/_custom_type_script = "uid://c1whaq778qys2"

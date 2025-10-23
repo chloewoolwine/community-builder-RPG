@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cscjf83p2disu"]
+[gd_scene load_steps=16 format=3 uid="uid://cscjf83p2disu"]
 
 [ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_7wsvk"]
 [ext_resource type="Script" uid="uid://c72fhodjm4b2c" path="res://Game Logic/data/inventory/loot/loot_table_entry.gd" id="2_hdsru"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://dq4ap3sv81447" path="res://Game Logic/data/inventory/loot/loot_table.gd" id="4_boweu"]
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="4_hdsru"]
 [ext_resource type="Resource" uid="uid://ba7snetns0dgb" path="res://Resources/plants/bush.tres" id="7_oj7hg"]
+[ext_resource type="Script" uid="uid://c1whaq778qys2" path="res://Game Logic/object/obj_elevation_handler.gd" id="9_boweu"]
 
 [sub_resource type="Resource" id="Resource_kkt0v"]
 script = ExtResource("2_hdsru")
@@ -19,7 +20,6 @@ metadata/_custom_type_script = "uid://c72fhodjm4b2c"
 [sub_resource type="Resource" id="Resource_esv50"]
 script = ExtResource("4_boweu")
 loot_table_entries = Array[ExtResource("2_hdsru")]([SubResource("Resource_kkt0v")])
-num_rolls = 1
 metadata/_custom_type_script = "uid://dq4ap3sv81447"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l825y"]
@@ -65,3 +65,7 @@ script = ExtResource("4_hdsru")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionHitbox"]
 shape = SubResource("CircleShape2D_0mxl1")
+
+[node name="ObjElevationHandler" type="Node" parent="."]
+script = ExtResource("9_boweu")
+metadata/_custom_type_script = "uid://c1whaq778qys2"

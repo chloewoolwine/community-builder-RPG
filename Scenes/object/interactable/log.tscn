@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://pq10jex522gl"]
+[gd_scene load_steps=9 format=3 uid="uid://pq10jex522gl"]
 
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="1_6uokc"]
 [ext_resource type="Texture2D" uid="uid://ckvhsrc5fwinn" path="res://Assets/plants/wild/poplar_tree.png" id="1_eo4kj"]
 [ext_resource type="Script" uid="uid://b4vp6p8whfxdq" path="res://Scenes/object/interactable/GenericObject.gd" id="1_fbhhx"]
 [ext_resource type="Script" uid="uid://o4jcagjoxpeq" path="res://Scenes/object/interactable/simple_collectable.gd" id="3_labxh"]
+[ext_resource type="Script" uid="uid://c1whaq778qys2" path="res://Game Logic/object/obj_elevation_handler.gd" id="5_bn05r"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ubcxi"]
 
@@ -35,3 +36,7 @@ shape = SubResource("CircleShape2D_s8677")
 [node name="SimpleCollectable" type="Node" parent="." node_paths=PackedStringArray("hitbox")]
 script = ExtResource("3_labxh")
 hitbox = NodePath("../InteractionHitbox")
+
+[node name="ObjElevationHandler" type="Node" parent="."]
+script = ExtResource("5_bn05r")
+metadata/_custom_type_script = "uid://c1whaq778qys2"

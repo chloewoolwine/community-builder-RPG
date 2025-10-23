@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://b7chruygvbxaq"]
+[gd_scene load_steps=29 format=3 uid="uid://b7chruygvbxaq"]
 
 [ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_6mdcm"]
 [ext_resource type="Script" uid="uid://c3cgrr073uht8" path="res://Game Logic/object/plants/plant_appearance.gd" id="2_jo8fr"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://bndjcrkta02c4" path="res://Game Logic/object/plants/plant_component.gd" id="4_ur4c4"]
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="5_a28q3"]
 [ext_resource type="Resource" uid="uid://lf7m2t0s632g" path="res://Resources/plants/onion.tres" id="9_oklsi"]
+[ext_resource type="Script" uid="uid://c1whaq778qys2" path="res://Game Logic/object/obj_elevation_handler.gd" id="11_4n2lp"]
 
 [sub_resource type="Resource" id="Resource_a28q3"]
 script = ExtResource("2_ur4c4")
@@ -34,7 +35,6 @@ metadata/_custom_type_script = "uid://c72fhodjm4b2c"
 [sub_resource type="Resource" id="Resource_oklsi"]
 script = ExtResource("4_oklsi")
 loot_table_entries = Array[ExtResource("2_ur4c4")]([SubResource("Resource_a28q3"), SubResource("Resource_4n2lp"), SubResource("Resource_cn07r")])
-num_rolls = 1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l825y"]
 size = Vector2(40, 40)
@@ -114,3 +114,7 @@ shape = SubResource("CircleShape2D_0mxl1")
 disabled = true
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+
+[node name="ObjElevationHandler" type="Node" parent="."]
+script = ExtResource("11_4n2lp")
+metadata/_custom_type_script = "uid://c1whaq778qys2"

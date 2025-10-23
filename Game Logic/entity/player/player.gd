@@ -4,7 +4,7 @@ class_name Player
 ## TODO: organize and make normal
 
 ##TODO: need to make a load in state
-enum PlayerStates{STATE_MENU, STATE_IDLE, STATE_ACTION, STATE_TOOL, STATE_WALK, STATE_SPELL, STATE_JUMP, STATE_DASH, 
+enum PlayerStates{STATE_LOAD, STATE_MENU, STATE_IDLE, STATE_ACTION, STATE_TOOL, STATE_WALK, STATE_SPELL, STATE_JUMP, STATE_DASH, 
 		STATE_KNOCKBACK, STATE_DEAD}
 
 signal health_changed(new_health:int, total_health:int)
@@ -45,6 +45,8 @@ var facing: Vector2 = Vector2(0, 1)
 @onready var tile_indicator: Indicator = $TileIndicator
 
 func _ready() -> void:
+	#only leaves state load when told to by game.gd
+	state = PlayerStates.STATE_LOAD
 	toggle_menu.connect(toggle_menu_state)
 	toggle_options.connect(toggle_menu_state)  
 	
@@ -62,10 +64,14 @@ func _ready() -> void:
 	#set hair and outfit... eventually 
 	#animation_player.add_animation_library()
 	await get_tree().create_timer(.3).timeout
-	state = PlayerStates.STATE_MENU
 
 func _physics_process(_delta: float) -> void: 
 	match state:
+		PlayerStates.STATE_LOAD:
+			#waiting for game.gd to tell us to go to menu or idle
+			return
+		PlayerStates.STATE_MENU:
+			return
 		PlayerStates.STATE_IDLE:
 			if !velocity_handler.in_knockback:
 				velocity_handler.purge_speed()
@@ -84,6 +90,7 @@ func _physics_process(_delta: float) -> void:
 		PlayerStates.STATE_TOOL:
 			pass
 	updateAnimation()
+	velocity_handler.do_physics(_delta)
 	
 func purge_input() -> void:
 	input.y = 0

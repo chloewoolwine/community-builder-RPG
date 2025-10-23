@@ -42,20 +42,23 @@ func _ready()->void:
 	if "swimspeed" in body:
 		swimspeed = body.swimspeed
 		
-func _physics_process(_delta:float)->void:
+func do_physics(_delta:float)->void:
 	if in_knockback:
 		body.move_and_slide()
 	if !movement_tween:
 		for i in body.get_slide_collision_count():
 			if body.get_slide_collision(i):
 				var collider := body.get_slide_collision(i).get_collider()
-				#print("Collided with: ", collider.name)
-				#print(collider)
+				print("Collided with: ", collider.name)
+				print(collider.get_parent())
 				if collider is TileMapDual:
 					if collider.name == "Base":
-						try_step.emit(self, collider.get_parent(), step_callback)
+						pass
+						#try_step.emit(self, collider.get_parent(), step_callback)
 					elif collider.name == "WaterMapper":
 						pass
+					elif collider.name == "HigherElevationWarner":
+						print("oo ee ee aa ee ee oo ee ee aa ee ee")
 
 func step_callback(up: bool) -> void:
 	#print("step callback: ", curr_dirr, " up:", up)

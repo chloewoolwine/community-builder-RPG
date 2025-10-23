@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://ddp26hlnsmw5r"]
+[gd_scene load_steps=28 format=3 uid="uid://ddp26hlnsmw5r"]
 
 [ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_8ph1v"]
 [ext_resource type="Script" uid="uid://c72fhodjm4b2c" path="res://Game Logic/data/inventory/loot/loot_table_entry.gd" id="2_uks68"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="7_vbg4f"]
 [ext_resource type="Resource" uid="uid://ce57ixnk7vlqh" path="res://Resources/plants/oak.tres" id="8_vsbtn"]
 [ext_resource type="Script" uid="uid://bp4pf1bvr6hab" path="res://Game Logic/object/fade_overlap.gd" id="10_mptq2"]
+[ext_resource type="Script" uid="uid://c1whaq778qys2" path="res://Game Logic/object/obj_elevation_handler.gd" id="11_r54r7"]
 
 [sub_resource type="Resource" id="Resource_0qwql"]
 script = ExtResource("2_uks68")
@@ -130,6 +131,10 @@ overlap_object = NodePath("../TreeAppearance")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FadeOverlap"]
 position = Vector2(0, -284)
 shape = SubResource("CircleShape2D_mptq2")
+
+[node name="ObjElevationHandler" type="Node" parent="."]
+script = ExtResource("11_r54r7")
+metadata/_custom_type_script = "uid://c1whaq778qys2"
 
 [connection signal="body_entered" from="FadeOverlap" to="FadeOverlap" method="_on_body_entered"]
 [connection signal="body_exited" from="FadeOverlap" to="FadeOverlap" method="_on_body_exited"]
