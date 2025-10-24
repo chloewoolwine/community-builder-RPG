@@ -39,6 +39,7 @@ var facing: Vector2 = Vector2(0, 1)
 @onready var animation_handler:AnimationHandler = $AnimationHandler
 @onready var player_action_handler: PlayerActionHandler = $PlayerActionHandler
 @onready var player_outfit_handler: PlayerOutfitHandler = $PlayerOutfitHandler
+@onready var elevation_handler: ElevationHandler = $ElevationHandler
 
 #THIS IS TEMPORARY. TODO: remove this when the animations create hitboxes properly
 @onready var sword_hitbox:CollisionShape2D = $HitBox/CollisionShape2D
@@ -57,6 +58,11 @@ func _ready() -> void:
 	
 	player_action_handler.player_wants_to_eat.connect(attempt_eat)
 	player_action_handler.player_opened_menu.connect(toggle_menu_state)
+
+	velocity_handler.step_complete.connect(func(new_ele:int, new_pos:Vector2)->void:
+		elevation_handler.current_elevation = new_ele
+		self.global_position = new_pos - (Vector2(0, 1) * Constants.ELEVATION_Y_OFFSET * new_ele)
+	)
 	
 	## notify that we are ready for collisions
 	#elevation_handler.set_parents_collision_mask(elevation_handler.current_elevation, true)

@@ -461,17 +461,18 @@ func water_timer(day:int, hour:int, minute:int) -> void:
 		#TODO: make this async some how 
 		EnvironmentLogic.run_water_calc(_world_data, get_chunks_around_point(player.get_global_position(), 2))
 
-func is_stepable_layer(handler: VelocityHandler, to_layer: ElevationLayer, callback: Callable) -> void:
-	var loc := convert_to_chunks_at_world_pos(handler.global_position)
-	var square_data:SquareData = trh.request_square_at(loc[0], loc[1])
-	if abs(square_data.elevation - to_layer.elevation) == 1:
-		#going up 
-		callback.call(true)
-	if square_data.elevation == to_layer.elevation:
-		var other_loc := Location.new(loc[0], loc[1]).get_location(handler.curr_dirr.normalized().snapped(Vector2.ONE))
-		var other_square:SquareData = trh.request_square_at(other_loc.position, other_loc.chunk)
-		if abs(square_data.elevation - other_square.elevation) == 1:
-			#going down
-			callback.call(false)
-		#TODO: check for water and then all the swimming stuff 
-		pass
+func is_stepable_layer(curr_position: Vector2, curr_dir: Vector2, _curr_elevation: int, callback: Callable) -> void:
+	var loc := Location.get_location_from_world(trh.get_elevation_at(0).local_to_map(curr_position))
+	var targ := loc.get_location(curr_dir.normalized().snapped(Vector2.ONE))
+	var square_data:SquareData = trh.request_square_at(loc.position, loc.chunk)
+	var targ_square:SquareData = trh.request_square_at(targ.position, targ.chunk)
+	if targ_square.elevation - square_data.elevation == 1:
+		#going up
+		callback.call(true, targ_square.elevation)
+	if square_data.elevation == targ_square.elevation:
+		#its water
+		return
+	if square_data.elevation - targ_square.elevation == 1:
+		#going down
+		callback.call(false, targ_square.elevation)
+		#TODO: check for water and then all the swimming stuff

@@ -22,11 +22,13 @@ func _ready() -> void:
 var current_elevation:int = 0:
 	set(value):
 		# print("setting elevation in OEH of ", parent.name)
-		_change_collision_layer(current_elevation, value)
+		#_change_collision_layer(current_elevation, value)
 		current_elevation = value
-		_offset_sprites()
+		#_offset_sprites()
 
 func _offset_sprites() -> void:
+	#if parent != null:
+	#	print("offsetting sprites of ", parent.name)
 	for sprite in things_to_offset:
 		sprite.position.y = current_elevation * Constants.ELEVATION_Y_OFFSET
 

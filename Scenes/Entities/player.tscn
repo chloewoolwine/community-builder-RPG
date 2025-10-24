@@ -1,4 +1,4 @@
-[gd_scene load_steps=157 format=3 uid="uid://dy236j24tdfmr"]
+[gd_scene load_steps=158 format=3 uid="uid://dy236j24tdfmr"]
 
 [ext_resource type="Script" uid="uid://bjjblaytsdioe" path="res://Game Logic/entity/player/player.gd" id="1_pwtpg"]
 [ext_resource type="Script" uid="uid://24l8lsvok70c" path="res://Game Logic/entity/player/player_action_handler.gd" id="2_c3tp2"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://da0bxkbsh1hjv" path="res://Assets/misc/tile_indicator.png" id="10_ypkgf"]
 [ext_resource type="Script" uid="uid://b1dg7b6hoqvmm" path="res://Game Logic/world/tile_indicator.gd" id="11_msv3g"]
 [ext_resource type="Script" uid="uid://cdf7pv6j4f303" path="res://Game Logic/entity/entity components/elevation_handler_v2.gd" id="14_at1v1"]
+[ext_resource type="Texture2D" uid="uid://bsr1y04qjpc8" path="res://Assets/tiles/redsquare.png" id="15_pm2yg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ejf0w"]
 atlas = ExtResource("3_rss0s")
@@ -1836,9 +1837,10 @@ rotation = 3.14159
 scale = Vector2(15.6813, -31.4585)
 shape = SubResource("CapsuleShape2D_ujgxj")
 
-[node name="VelocityHandler" type="Node2D" parent="." node_paths=PackedStringArray("body") groups=["velocity_handler"]]
+[node name="VelocityHandler" type="Node2D" parent="." node_paths=PackedStringArray("body", "elevation_handler") groups=["velocity_handler"]]
 script = ExtResource("9_at1v1")
 body = NodePath("..")
+elevation_handler = NodePath("../ElevationHandler")
 acceleration = 1.0
 elevation_climb_speed = 0.2
 elevation_vert_change = 15.0
@@ -1885,5 +1887,8 @@ script = ExtResource("11_msv3g")
 script = ExtResource("14_at1v1")
 entity = NodePath("..")
 things_to_offset = [NodePath("../PlayerActionHandler"), NodePath("../PlayerOutfitHandler"), NodePath("../CollisionBox"), NodePath("../HealthHandler"), NodePath("../HitBox"), NodePath("../TileIndicator"), NodePath("../VelocityHandler")]
+
+[node name="trueloc" type="Sprite2D" parent="."]
+texture = ExtResource("15_pm2yg")
 
 [connection signal="animation_finished" from="AnimationHandler/AnimationTree" to="." method="_on_animation_tree_animation_finished"]

@@ -6,7 +6,7 @@ class_name ElevationHandler
 
 var current_elevation:int = 0:
 	set(value):
-		# print("setting elevation in EH of ", entity.name)
+		print("setting elevation in EH of ", entity.name, " old: ", current_elevation, " new: ", value)
 		_change_collision_layer(current_elevation, value)
 		current_elevation = value
 		_offset_sprites()

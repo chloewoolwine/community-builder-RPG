@@ -4,9 +4,11 @@ class_name VelocityHandler
 #This node should be the child of a character body 2d in order to work correctly
 #This node doesn't not *actually move* the character, it just updates it's velocity
 
-signal try_step(handle: VelocityHandler, requested_layer: ElevationLayer, callback: Callable)
+signal try_step(curr_position: Vector2, curr_dir: Vector2, curr_elevation: int, callback: Callable)
+signal step_complete(new_elevation: int, new_displayed_pos:Vector2)
 
 @export var body : CharacterBody2D
+@export var elevation_handler: ElevationHandler
 ## used if slopes + water effects this creature
 @export var knockbackable : bool = true
 #1 is the standard amount of knockback. more is a light creature, less is a heavy creature
@@ -50,17 +52,16 @@ func do_physics(_delta:float)->void:
 			if body.get_slide_collision(i):
 				var collider := body.get_slide_collision(i).get_collider()
 				print("Collided with: ", collider.name)
-				print(collider.get_parent())
-				if collider is TileMapDual:
+				#print(collider.get_parent())
+				if collider is TileMapLayer:
 					if collider.name == "Base":
-						pass
-						#try_step.emit(self, collider.get_parent(), step_callback)
+						try_step.emit(body.global_position, curr_dirr, elevation_handler.current_elevation, step_callback)
 					elif collider.name == "WaterMapper":
 						pass
 					elif collider.name == "HigherElevationWarner":
-						print("oo ee ee aa ee ee oo ee ee aa ee ee")
+						try_step.emit(body.global_position, curr_dirr, elevation_handler.current_elevation, step_callback)
 
-func step_callback(up: bool) -> void:
+func step_callback(up: bool, new_ele:int) -> void:
 	#print("step callback: ", curr_dirr, " up:", up)
 	var dirr:Vector2i = curr_dirr.normalized().snapped(Vector2.ONE)
 	var direction:Vector2 = curr_dirr
@@ -90,8 +91,9 @@ func step_callback(up: bool) -> void:
 	
 	movement_tween = get_tree().create_tween().tween_property(body, "position", body.position + direction, elevation_climb_speed)
 	await movement_tween.finished
-	movement_tween = null
 	body.move_and_slide()
+	step_complete.emit(new_ele, body.global_position)
+	movement_tween = null
 	#purge_speed()
 		
 func move_to(direction: Vector2)->void:
