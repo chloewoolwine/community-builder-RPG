@@ -64,6 +64,10 @@ func _ready() -> void:
 		self.global_position = new_pos - (Vector2(0, 1) * Constants.ELEVATION_Y_OFFSET * new_ele)
 	)
 	
+	velocity_handler.jump_complete.connect(func()-> void: 
+		state = PlayerStates.STATE_IDLE
+	)
+	
 	## notify that we are ready for collisions
 	#elevation_handler.set_parents_collision_mask(elevation_handler.current_elevation, true)
 	
@@ -113,12 +117,14 @@ func get_input() -> void:
 		sword_hitbox.position.y = 127
 		sword_hitbox.position.x = 0
 		sword_hitbox.rotation_degrees = 0
-		state = PlayerStates.STATE_WALK
+		if state != PlayerStates.STATE_JUMP:
+			state = PlayerStates.STATE_WALK
 	elif Input.is_action_pressed('up'):
 		input.y = -1
 		facing = Vector2(0, -1)
 		ray_cast_2d.rotation_degrees = 180
-		state = PlayerStates.STATE_WALK
+		if state != PlayerStates.STATE_JUMP:
+			state = PlayerStates.STATE_WALK
 		sword_hitbox.position.y = -127
 		sword_hitbox.position.x = 0
 		sword_hitbox.rotation_degrees = 0
@@ -128,7 +134,8 @@ func get_input() -> void:
 		input.x = 1
 		facing = Vector2(1, 0)
 		ray_cast_2d.rotation_degrees = 270
-		state = PlayerStates.STATE_WALK
+		if state != PlayerStates.STATE_JUMP:
+			state = PlayerStates.STATE_WALK
 		sword_hitbox.position.y = 0
 		sword_hitbox.position.x = 127
 		sword_hitbox.rotation_degrees = 90
@@ -136,7 +143,8 @@ func get_input() -> void:
 		input.x = -1
 		facing = Vector2(-1, 0)
 		ray_cast_2d.rotation_degrees = 90
-		state = PlayerStates.STATE_WALK
+		if state != PlayerStates.STATE_JUMP:
+			state = PlayerStates.STATE_WALK
 		sword_hitbox.position.y = 0
 		sword_hitbox.position.x = -127
 		sword_hitbox.rotation_degrees = 90
@@ -144,7 +152,8 @@ func get_input() -> void:
 		input.x = 0 
 	
 	if input.x == 0 && input.y == 0:
-		state = PlayerStates.STATE_IDLE
+		if state != PlayerStates.STATE_JUMP:
+			state = PlayerStates.STATE_IDLE
 	
 	#fix diagonals
 	if Input.is_action_just_released('up'):
@@ -155,6 +164,10 @@ func get_input() -> void:
 		input.x = 0
 	if Input.is_action_just_released('down'):
 		input.y = 0
+	
+	if Input.is_action_pressed("jump"):
+		state = PlayerStates.STATE_JUMP
+		velocity_handler.jump()
 	
 func updateAnimation() -> void:
 	animation_handler.flip_all_sprites(false)
@@ -173,6 +186,8 @@ func updateAnimation() -> void:
 			animation_handler.travel_to_and_blend("Idle", facing)
 		PlayerStates.STATE_TOOL:
 			pass #TODO: different animations for different tools
+		PlayerStates.STATE_JUMP:
+			animation_handler.travel_to_and_blend("Jump", facing)
 
 func _unhandled_input(_event: InputEvent)  -> void: 
 	#Note: chests + dialogues are opened up with do_action and state is handled

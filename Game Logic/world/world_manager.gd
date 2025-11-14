@@ -18,9 +18,9 @@ func _ready() -> void:
 #called in game to initiate most set up actions
 func do_setup() -> void: 
 	EnvironmentLogic.run_water_calc(_world_data, get_chunks_around_point(player.get_global_position(), 2))
-	if player:
-		print("player")
-		player.velocity_handler.try_step.connect(is_stepable_layer)
+#	if player:
+#		print("player")
+#		player.velocity_handler.try_step.connect(is_stepable_layer)
 	#entity collisions afterwards
 
 func _process(_delta: float) -> void:

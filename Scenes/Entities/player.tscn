@@ -1,4 +1,4 @@
-[gd_scene load_steps=158 format=3 uid="uid://dy236j24tdfmr"]
+[gd_scene load_steps=190 format=3 uid="uid://dy236j24tdfmr"]
 
 [ext_resource type="Script" uid="uid://bjjblaytsdioe" path="res://Game Logic/entity/player/player.gd" id="1_pwtpg"]
 [ext_resource type="Script" uid="uid://24l8lsvok70c" path="res://Game Logic/entity/player/player_action_handler.gd" id="2_c3tp2"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://da768tqgkql4q" path="res://Assets/Testy Assets/Player/pinkhair_walk_idle.png" id="3_cvocj"]
 [ext_resource type="Texture2D" uid="uid://b0kmh31cmueie" path="res://Assets/Testy Assets/Player/player_body.png" id="3_rss0s"]
 [ext_resource type="Texture2D" uid="uid://du6k2r3ewu6mw" path="res://Assets/Testy Assets/Player/slash_test.png" id="3_yt4w2"]
+[ext_resource type="Texture2D" uid="uid://bxk47cdmdxijy" path="res://Assets/walk.png" id="4_43gew"]
 [ext_resource type="Texture2D" uid="uid://cwtryim1k70ar" path="res://Assets/Testy Assets/Player/cardigan_walk_idle.png" id="4_mfrdo"]
 [ext_resource type="PackedScene" uid="uid://erdkvldy5ggp" path="res://Scenes/combat/health_component.tscn" id="6_o8nbr"]
 [ext_resource type="Script" uid="uid://1unpg5jsks3g" path="res://Game Logic/entity/entity components/velocity_handler.gd" id="9_at1v1"]
@@ -15,6 +16,121 @@
 [ext_resource type="Script" uid="uid://b1dg7b6hoqvmm" path="res://Game Logic/world/tile_indicator.gd" id="11_msv3g"]
 [ext_resource type="Script" uid="uid://cdf7pv6j4f303" path="res://Game Logic/entity/entity components/elevation_handler_v2.gd" id="14_at1v1"]
 [ext_resource type="Texture2D" uid="uid://bsr1y04qjpc8" path="res://Assets/tiles/redsquare.png" id="15_pm2yg"]
+[ext_resource type="Texture2D" uid="uid://ddtqgt2xkhhj3" path="res://Assets/jumps.png" id="17_udx2w"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_udx2w"]
+atlas = ExtResource("4_43gew")
+region = Rect2(0, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aqs8i"]
+atlas = ExtResource("4_43gew")
+region = Rect2(64, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vbauc"]
+atlas = ExtResource("4_43gew")
+region = Rect2(128, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6fni"]
+atlas = ExtResource("4_43gew")
+region = Rect2(192, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_32wac"]
+atlas = ExtResource("4_43gew")
+region = Rect2(512, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uhw1m"]
+atlas = ExtResource("4_43gew")
+region = Rect2(576, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_awd1p"]
+atlas = ExtResource("4_43gew")
+region = Rect2(640, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1nbkv"]
+atlas = ExtResource("4_43gew")
+region = Rect2(704, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w4uu0"]
+atlas = ExtResource("4_43gew")
+region = Rect2(256, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_abjg5"]
+atlas = ExtResource("4_43gew")
+region = Rect2(320, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e8wcv"]
+atlas = ExtResource("4_43gew")
+region = Rect2(384, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8d5w2"]
+atlas = ExtResource("4_43gew")
+region = Rect2(448, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ke5yh"]
+atlas = ExtResource("4_43gew")
+region = Rect2(0, 0, 64, 112)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ke5yh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_udx2w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aqs8i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vbauc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p6fni")
+}],
+"loop": true,
+"name": &"WalkDown",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_32wac")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uhw1m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_awd1p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1nbkv")
+}],
+"loop": true,
+"name": &"WalkRight",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w4uu0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_abjg5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e8wcv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8d5w2")
+}],
+"loop": true,
+"name": &"WalkUp",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ke5yh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ejf0w"]
 atlas = ExtResource("3_rss0s")
@@ -872,780 +988,270 @@ tracks/4/keys = {
 "values": [&"idle_side"]
 }
 
-[sub_resource type="Animation" id="Animation_cvsr1"]
-resource_name = "dash_side"
+[sub_resource type="Animation" id="Animation_vbauc"]
+length = 1.2
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerOutfitHandler/Body:animation")
+tracks/0/path = NodePath("PlayerOutfitHandler/NewBody:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [&"idle_side"]
+"values": [0, 1, 2, 3, 4, 5]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("PlayerOutfitHandler/Body:frame")
+tracks/1/path = NodePath("PlayerOutfitHandler/NewBody:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("PlayerOutfitHandler/Hair:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle_side"]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("PlayerOutfitHandler/Hair:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("PlayerOutfitHandler/Outfit:animation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle_side"]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("PlayerOutfitHandler/Outfit:frame")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
+"values": ["JumpDown"]
 }
 
-[sub_resource type="Animation" id="Animation_g35m5"]
-resource_name = "idle_back"
+[sub_resource type="Animation" id="Animation_p6fni"]
+length = 1.604
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerOutfitHandler/Body:animation")
+tracks/0/path = NodePath("PlayerOutfitHandler/NewBody:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 1.002, 1.404),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [&"idle_back"]
+"values": [0, 1, 2, 3, 4, 5]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("PlayerOutfitHandler/Body:frame")
+tracks/1/path = NodePath("PlayerOutfitHandler/NewBody:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("PlayerOutfitHandler/Hair:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle_back"]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("PlayerOutfitHandler/Hair:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("PlayerOutfitHandler/Outfit:animation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle_back"]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("PlayerOutfitHandler/Outfit:frame")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
+"values": ["JumpRight"]
 }
 
-[sub_resource type="Animation" id="Animation_r4vjv"]
-resource_name = "idle_forward"
+[sub_resource type="Animation" id="Animation_w4uu0"]
+length = 1.2
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerOutfitHandler/Body:animation")
+tracks/0/path = NodePath("PlayerOutfitHandler/NewBody:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [&"idle_forward"]
+"values": [0, 1, 2, 3, 4, 5]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("PlayerOutfitHandler/Body:frame")
+tracks/1/path = NodePath("PlayerOutfitHandler/NewBody:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("PlayerOutfitHandler/Hair:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle_forward"]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("PlayerOutfitHandler/Hair:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("PlayerOutfitHandler/Outfit:animation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle_forward"]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("PlayerOutfitHandler/Outfit:frame")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
+"values": ["JumpUp"]
 }
 
-[sub_resource type="Animation" id="Animation_x7qog"]
-resource_name = "idle_side"
+[sub_resource type="Animation" id="Animation_udx2w"]
+length = 0.2
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerOutfitHandler/Body:animation")
+tracks/0/path = NodePath("PlayerOutfitHandler/NewBody:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"idle_side"]
+"values": [0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("PlayerOutfitHandler/Body:frame")
+tracks/1/path = NodePath("PlayerOutfitHandler/NewBody:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("PlayerOutfitHandler/Hair:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle_side"]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("PlayerOutfitHandler/Hair:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("PlayerOutfitHandler/Outfit:animation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle_side"]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("PlayerOutfitHandler/Outfit:frame")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
+"values": ["IdleRight"]
 }
 
-[sub_resource type="Animation" id="Animation_ncbpx"]
-resource_name = "slash_back"
-length = 0.5
+[sub_resource type="Animation" id="Animation_aqs8i"]
+length = 0.2
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerOutfitHandler/Body:animation")
+tracks/0/path = NodePath("PlayerOutfitHandler/NewBody:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"slash_back"]
+"values": [0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("PlayerOutfitHandler/Body:frame")
+tracks/1/path = NodePath("PlayerOutfitHandler/NewBody:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("PlayerOutfitHandler/Outfit:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"idle_side"]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("PlayerOutfitHandler/Outfit:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("PlayerOutfitHandler/Hair:animation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0.0333333),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle_side"]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("PlayerOutfitHandler/Hair:frame")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0.0333333),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
+"values": ["IdleUp"]
 }
 
-[sub_resource type="Animation" id="Animation_vcgoy"]
-resource_name = "slash_forward"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerOutfitHandler/Body:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"slash_forward"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("PlayerOutfitHandler/Body:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 3]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("PlayerOutfitHandler/Hair:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle_side"]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("PlayerOutfitHandler/Hair:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("PlayerOutfitHandler/Outfit:animation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0.0333333),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle_side"]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("PlayerOutfitHandler/Outfit:frame")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0.0333333),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_42w8f"]
-resource_name = "slash_side"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerOutfitHandler/Body:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"slash_side"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("PlayerOutfitHandler/Body:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("PlayerOutfitHandler/Outfit:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle_side"]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("PlayerOutfitHandler/Outfit:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("PlayerOutfitHandler/Hair:animation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0.0333333),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle_side"]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("PlayerOutfitHandler/Hair:frame")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0.0333333),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_aknuy"]
-resource_name = "walk_back"
+[sub_resource type="Animation" id="Animation_abjg5"]
 length = 0.8
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerOutfitHandler/Body:animation")
+tracks/0/path = NodePath("PlayerOutfitHandler/NewBody:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [&"walk_back"]
+"values": [0, 1, 2, 3]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("PlayerOutfitHandler/Body:frame")
+tracks/1/path = NodePath("PlayerOutfitHandler/NewBody:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("PlayerOutfitHandler/Hair:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"walk_back"]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("PlayerOutfitHandler/Hair:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("PlayerOutfitHandler/Outfit:animation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"walk_back"]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("PlayerOutfitHandler/Outfit:frame")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7]
+"values": ["WalkDown"]
 }
 
-[sub_resource type="Animation" id="Animation_n0s3f"]
-resource_name = "walk_forward"
-length = 1.00001
+[sub_resource type="Animation" id="Animation_e8wcv"]
+length = 0.8
 loop_mode = 1
-step = 0.125
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerOutfitHandler/Body:animation")
+tracks/0/path = NodePath("PlayerOutfitHandler/NewBody:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [&"walk_forward"]
+"values": [0, 1, 2, 3]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("PlayerOutfitHandler/Body:frame")
+tracks/1/path = NodePath("PlayerOutfitHandler/NewBody:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("PlayerOutfitHandler/Hair:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"walk_forward"]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("PlayerOutfitHandler/Hair:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("PlayerOutfitHandler/Outfit:animation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"walk_forward"]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("PlayerOutfitHandler/Outfit:frame")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7]
+"values": ["WalkRight"]
 }
 
-[sub_resource type="Animation" id="Animation_cqlsh"]
-resource_name = "walk_side"
-length = 1.00001
+[sub_resource type="Animation" id="Animation_8d5w2"]
+length = 0.8
 loop_mode = 1
-step = 0.125
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerOutfitHandler/Body:animation")
+tracks/0/path = NodePath("PlayerOutfitHandler/NewBody:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PlayerOutfitHandler/NewBody:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["WalkUp"]
+}
+
+[sub_resource type="Animation" id="Animation_32wac"]
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerOutfitHandler/NewBody:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"walk_side"]
+"values": [0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("PlayerOutfitHandler/Body:frame")
+tracks/1/path = NodePath("PlayerOutfitHandler/NewBody:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("PlayerOutfitHandler/Hair:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"walk_side"]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("PlayerOutfitHandler/Hair:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("PlayerOutfitHandler/Outfit:animation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"walk_side"]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("PlayerOutfitHandler/Outfit:frame")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7]
+"values": ["default"]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_seylt"]
 _data = {
+&"JumpDown": SubResource("Animation_vbauc"),
+&"JumpRight": SubResource("Animation_p6fni"),
+&"JumpUp": SubResource("Animation_w4uu0"),
 &"RESET": SubResource("Animation_vrpjf"),
-&"dash_side": SubResource("Animation_cvsr1"),
-&"idle_back": SubResource("Animation_g35m5"),
-&"idle_forward": SubResource("Animation_r4vjv"),
-&"idle_side": SubResource("Animation_x7qog"),
-&"slash_back": SubResource("Animation_ncbpx"),
-&"slash_forward": SubResource("Animation_vcgoy"),
-&"slash_side": SubResource("Animation_42w8f"),
-&"walk_back": SubResource("Animation_aknuy"),
-&"walk_forward": SubResource("Animation_n0s3f"),
-&"walk_side": SubResource("Animation_cqlsh")
+&"idle_back": SubResource("Animation_aqs8i"),
+&"idle_forward": SubResource("Animation_32wac"),
+&"idle_side": SubResource("Animation_udx2w"),
+&"walk_back": SubResource("Animation_8d5w2"),
+&"walk_forward": SubResource("Animation_abjg5"),
+&"walk_right": SubResource("Animation_e8wcv")
 }
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_6aqi6"]
@@ -1674,45 +1280,34 @@ blend_point_3/pos = Vector2(1, 0)
 blend_mode = 1
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_5r55p"]
-graph_offset = Vector2(-1.24774, 108.795)
+graph_offset = Vector2(87.528656, 221.9985)
 nodes/output/position = Vector2(630, 350)
 nodes/BlendSpace2D/node = SubResource("AnimationNodeBlendSpace2D_bjxqy")
 nodes/BlendSpace2D/position = Vector2(410, 270)
 node_connections = [&"output", 0, &"BlendSpace2D"]
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fcx52"]
-animation = &"slash_side"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_udx2w"]
+animation = &"JumpUp"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tl463"]
-animation = &"slash_side"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_aqs8i"]
+animation = &"JumpRight"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rpxus"]
-animation = &"slash_forward"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vbauc"]
+animation = &"JumpDown"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_i05q5"]
-animation = &"slash_back"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p6fni"]
+animation = &"JumpRight"
 
-[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_os5tg"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_fcx52")
-blend_point_0/pos = Vector2(-1, 0)
-blend_point_1/node = SubResource("AnimationNodeAnimation_tl463")
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_w4uu0"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_udx2w")
+blend_point_0/pos = Vector2(0, 1)
+blend_point_1/node = SubResource("AnimationNodeAnimation_aqs8i")
 blend_point_1/pos = Vector2(1, 0)
-blend_point_2/node = SubResource("AnimationNodeAnimation_rpxus")
-blend_point_2/pos = Vector2(0, 1)
-blend_point_3/node = SubResource("AnimationNodeAnimation_i05q5")
-blend_point_3/pos = Vector2(0, -0.9)
+blend_point_2/node = SubResource("AnimationNodeAnimation_vbauc")
+blend_point_2/pos = Vector2(0, -1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_p6fni")
+blend_point_3/pos = Vector2(-1, 0)
 blend_mode = 1
-
-[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_0388t"]
-
-[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_nenv8"]
-graph_offset = Vector2(-107.844, 262.018)
-nodes/output/position = Vector2(770, 220)
-nodes/BlendSpace2D/node = SubResource("AnimationNodeBlendSpace2D_os5tg")
-nodes/BlendSpace2D/position = Vector2(232.015, 205.204)
-nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_0388t")
-nodes/TimeScale/position = Vector2(611.53, 285.225)
-node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"BlendSpace2D"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_eey36"]
 animation = &"walk_side"
@@ -1738,6 +1333,7 @@ blend_point_3/pos = Vector2(0, -0.9)
 blend_mode = 1
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_qhnvw"]
+graph_offset = Vector2(24.827972, 124.99646)
 nodes/output/position = Vector2(710, 190)
 nodes/BlendSpace2D/node = SubResource("AnimationNodeBlendSpace2D_xro47")
 nodes/BlendSpace2D/position = Vector2(301.412, 179.975)
@@ -1749,13 +1345,17 @@ node_connections = [&"output", 0, &"BlendSpace2D"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pr5v2"]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_iugcj"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_abjg5"]
+advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8dnn7"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_e8wcv"]
+switch_mode = 2
+advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xugf5"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8d5w2"]
+advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_k03ts"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_32wac"]
 switch_mode = 2
 advance_mode = 2
 
@@ -1763,17 +1363,166 @@ advance_mode = 2
 states/Death/node = SubResource("AnimationNodeBlendTree_6aqi6")
 states/Death/position = Vector2(42.5, 99.25)
 states/Idle/node = SubResource("AnimationNodeBlendTree_5r55p")
-states/Idle/position = Vector2(234, -90.6328)
-states/Slash/node = SubResource("AnimationNodeBlendTree_nenv8")
-states/Slash/position = Vector2(425.5, -90.6328)
+states/Idle/position = Vector2(234, -91.1328)
+states/Jump/node = SubResource("AnimationNodeBlendSpace2D_w4uu0")
+states/Jump/position = Vector2(480.5, -92.8164)
 states/Start/position = Vector2(50, -90.3711)
 states/Walk/node = SubResource("AnimationNodeBlendTree_qhnvw")
-states/Walk/position = Vector2(285.813, 58)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_1whsk"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_hev2m"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_pr5v2"), "Idle", "Slash", SubResource("AnimationNodeStateMachineTransition_iugcj"), "Walk", "Slash", SubResource("AnimationNodeStateMachineTransition_8dnn7"), "Slash", "Walk", SubResource("AnimationNodeStateMachineTransition_xugf5"), "Slash", "Idle", SubResource("AnimationNodeStateMachineTransition_k03ts")]
+states/Walk/position = Vector2(424.70325, 48)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_1whsk"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_hev2m"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_pr5v2"), "Idle", "Jump", SubResource("AnimationNodeStateMachineTransition_abjg5"), "Jump", "Idle", SubResource("AnimationNodeStateMachineTransition_e8wcv"), "Walk", "Jump", SubResource("AnimationNodeStateMachineTransition_8d5w2"), "Jump", "Walk", SubResource("AnimationNodeStateMachineTransition_32wac")]
 graph_offset = Vector2(-184, -142)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1vrl1"]
 size = Vector2(20, 168)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qminb"]
+atlas = ExtResource("17_udx2w")
+region = Rect2(0, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_770oy"]
+atlas = ExtResource("17_udx2w")
+region = Rect2(64, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pai8e"]
+atlas = ExtResource("17_udx2w")
+region = Rect2(128, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d6fof"]
+atlas = ExtResource("17_udx2w")
+region = Rect2(192, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hi0an"]
+atlas = ExtResource("17_udx2w")
+region = Rect2(256, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cx7vx"]
+atlas = ExtResource("17_udx2w")
+region = Rect2(320, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yu82y"]
+atlas = ExtResource("17_udx2w")
+region = Rect2(384, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2mdcc"]
+atlas = ExtResource("17_udx2w")
+region = Rect2(448, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ol88v"]
+atlas = ExtResource("17_udx2w")
+region = Rect2(512, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjndi"]
+atlas = ExtResource("17_udx2w")
+region = Rect2(576, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cnm44"]
+atlas = ExtResource("17_udx2w")
+region = Rect2(640, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oiqwr"]
+atlas = ExtResource("17_udx2w")
+region = Rect2(704, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r7dsx"]
+atlas = ExtResource("17_udx2w")
+region = Rect2(768, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6q8pc"]
+atlas = ExtResource("17_udx2w")
+region = Rect2(832, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5emx0"]
+atlas = ExtResource("17_udx2w")
+region = Rect2(896, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_04g10"]
+atlas = ExtResource("17_udx2w")
+region = Rect2(960, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2xivm"]
+atlas = ExtResource("17_udx2w")
+region = Rect2(1024, 0, 64, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u4xwb"]
+atlas = ExtResource("17_udx2w")
+region = Rect2(1088, 0, 64, 112)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wsp85"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qminb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_770oy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pai8e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6fof")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hi0an")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx7vx")
+}],
+"loop": true,
+"name": &"Anim001",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yu82y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2mdcc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ol88v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gjndi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cnm44")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oiqwr")
+}],
+"loop": true,
+"name": &"Anim002",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r7dsx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6q8pc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5emx0")
+}, {
+"duration": 2.01,
+"texture": SubResource("AtlasTexture_04g10")
+}, {
+"duration": 2.01,
+"texture": SubResource("AtlasTexture_2xivm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u4xwb")
+}],
+"loop": true,
+"name": &"Anim003",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Player" type="CharacterBody2D"]
 y_sort_enabled = true
@@ -1787,43 +1536,58 @@ speed = 325
 script = ExtResource("2_c3tp2")
 
 [node name="RayCast2D" type="RayCast2D" parent="PlayerActionHandler"]
-scale = Vector2(20, 1)
+scale = Vector2(7, 0.35)
 target_position = Vector2(0, 177.03)
 collision_mask = 4
 
-[node name="PlayerOutfitHandler" type="Node2D" parent="."]
+[node name="PlayerOutfitHandler" type="Node2D" parent="." node_paths=PackedStringArray("velocity_handler", "animation_handler")]
 z_as_relative = false
 y_sort_enabled = true
 script = ExtResource("2_pghmh")
+velocity_handler = NodePath("../VelocityHandler")
+animation_handler = NodePath("../AnimationHandler")
+
+[node name="NewBody" type="AnimatedSprite2D" parent="PlayerOutfitHandler"]
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(0, -56)
+sprite_frames = SubResource("SpriteFrames_ke5yh")
+animation = &""
+autoplay = "default"
 
 [node name="Body" type="AnimatedSprite2D" parent="PlayerOutfitHandler"]
+visible = false
 modulate = Color(0.968193, 0.803596, 0.700107, 1)
 z_as_relative = false
 y_sort_enabled = true
+scale = Vector2(0.305, 0.305)
 sprite_frames = SubResource("SpriteFrames_oxra1")
-animation = &""
+animation = &"idle_back"
 autoplay = "idle_forward"
-frame = 1
 offset = Vector2(0, -141)
 
 [node name="Hair" type="AnimatedSprite2D" parent="PlayerOutfitHandler"]
+visible = false
 z_as_relative = false
 y_sort_enabled = true
+scale = Vector2(0.305, 0.305)
 sprite_frames = SubResource("SpriteFrames_olv46")
 animation = &"idle_side"
 autoplay = "idle_forward"
 offset = Vector2(0, -141)
 
 [node name="Outfit" type="AnimatedSprite2D" parent="PlayerOutfitHandler"]
+visible = false
 z_as_relative = false
 y_sort_enabled = true
+scale = Vector2(0.305, 0.305)
 sprite_frames = SubResource("SpriteFrames_i46n4")
 animation = &"idle_side"
 autoplay = "idle_forward"
 offset = Vector2(0, -141)
 
 [node name="CollisionBox" type="CollisionShape2D" parent="."]
-scale = Vector2(4.238, 14.39)
+scale = Vector2(1.573, 5.341)
 shape = SubResource("RectangleShape2D_73skx")
 
 [node name="HealthHandler" parent="." groups=["hungerhealth"] instance=ExtResource("6_o8nbr")]
@@ -1832,24 +1596,31 @@ collision_mask = 8
 has_iframes = true
 
 [node name="HurtBox" type="CollisionShape2D" parent="HealthHandler"]
-position = Vector2(0, -1)
+position = Vector2(0, 93.695)
 rotation = 3.14159
-scale = Vector2(15.6813, -31.4585)
+scale = Vector2(5.566, -11.166)
 shape = SubResource("CapsuleShape2D_ujgxj")
 
-[node name="VelocityHandler" type="Node2D" parent="." node_paths=PackedStringArray("body", "elevation_handler") groups=["velocity_handler"]]
+[node name="VelocityHandler" type="Area2D" parent="." node_paths=PackedStringArray("body", "elevation_handler") groups=["velocity_handler"]]
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("9_at1v1")
 body = NodePath("..")
 elevation_handler = NodePath("../ElevationHandler")
 acceleration = 1.0
 elevation_climb_speed = 0.2
 elevation_vert_change = 15.0
+jump_time = 1.0
 metadata/_edit_lock_ = true
+
+[node name="CollisionBox2" type="CollisionShape2D" parent="VelocityHandler"]
+scale = Vector2(1.573, 5.341)
+shape = SubResource("RectangleShape2D_73skx")
 
 [node name="AnimationHandler" type="Node" parent="." node_paths=PackedStringArray("sprites", "animation_player", "animation_tree")]
 script = ExtResource("10_at1v1")
 sprites = [NodePath("../PlayerOutfitHandler/Body"), NodePath("../PlayerOutfitHandler/Hair"), NodePath("../PlayerOutfitHandler/Outfit")]
-animation_player = NodePath("AnimationPlayer")
+animation_player = NodePath("NewAnimationPlayer")
 animation_tree = NodePath("AnimationTree")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationHandler"]
@@ -1858,13 +1629,18 @@ libraries = {
 &"": SubResource("AnimationLibrary_seylt")
 }
 
+[node name="NewAnimationPlayer" type="AnimationPlayer" parent="AnimationHandler"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_seylt")
+}
+
 [node name="AnimationTree" type="AnimationTree" parent="AnimationHandler"]
 root_node = NodePath("../..")
 tree_root = SubResource("AnimationNodeStateMachine_wb1pj")
-anim_player = NodePath("../AnimationPlayer")
+anim_player = NodePath("../NewAnimationPlayer")
 parameters/Idle/BlendSpace2D/blend_position = Vector2(-0.00427186, -0.00826442)
-parameters/Slash/BlendSpace2D/blend_position = Vector2(0, 0)
-parameters/Slash/TimeScale/scale = 1.5
+parameters/Jump/blend_position = Vector2(-0.0117384195, 0.004219413)
 parameters/Walk/BlendSpace2D/blend_position = Vector2(0.00271845, 0.152542)
 
 [node name="HitBox" parent="." instance=ExtResource("9_ict53")]
@@ -1889,6 +1665,15 @@ entity = NodePath("..")
 things_to_offset = [NodePath("../PlayerActionHandler"), NodePath("../PlayerOutfitHandler"), NodePath("../CollisionBox"), NodePath("../HealthHandler"), NodePath("../HitBox"), NodePath("../TileIndicator"), NodePath("../VelocityHandler")]
 
 [node name="trueloc" type="Sprite2D" parent="."]
+scale = Vector2(0.105, 0.105)
 texture = ExtResource("15_pm2yg")
+
+[node name="jumpsAnimatedSprite" type="AnimatedSprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(0, -55)
+sprite_frames = SubResource("SpriteFrames_wsp85")
+animation = &"Anim001"
+frame_progress = 0.6542477
 
 [connection signal="animation_finished" from="AnimationHandler/AnimationTree" to="." method="_on_animation_tree_animation_finished"]

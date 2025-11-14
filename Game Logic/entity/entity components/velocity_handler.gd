@@ -1,11 +1,15 @@
-extends Node2D
+extends Area2D
 class_name VelocityHandler
 
 #This node should be the child of a character body 2d in order to work correctly
 #This node doesn't not *actually move* the character, it just updates it's velocity
 
-signal try_step(curr_position: Vector2, curr_dir: Vector2, curr_elevation: int, callback: Callable)
+#signal try_step(curr_position: Vector2, curr_dir: Vector2, curr_elevation: int, callback: Callable)
 signal step_complete(new_elevation: int, new_displayed_pos:Vector2)
+signal can_i_jump_here(curr_position: Vector2, curr_dir: Vector2, curr_elevation: int, callback: Callable)
+signal jump_start()
+signal jump_apex()
+signal jump_complete()
 
 @export var body : CharacterBody2D
 @export var elevation_handler: ElevationHandler
@@ -21,10 +25,13 @@ signal step_complete(new_elevation: int, new_displayed_pos:Vector2)
 @export var elevation_climb_speed: float = .9
 @export var elevation_vert_change: float = .9
 @export var elevation_pos_change_lr: int = 50
+@export var jump_time: float = 0.5
 
 var curr_dirr: Vector2
 var in_knockback : bool = false
 
+var jumping: bool = false
+var prev_mask: int
 var movement_tween: PropertyTweener
 
 func _ready()->void:
@@ -43,23 +50,82 @@ func _ready()->void:
 		acceleration = body.acceleration
 	if "swimspeed" in body:
 		swimspeed = body.swimspeed
-		
+	
+	jump_complete.connect(func()->void:
+		#restore collision mask
+		#body.collision_mask = prev_mask
+		jumping = false
+		for e in body.get_collision_exceptions():
+			body.remove_collision_exception_with(e)
+		)
+
 func do_physics(_delta:float)->void:
 	if in_knockback:
 		body.move_and_slide()
-	if !movement_tween:
-		for i in body.get_slide_collision_count():
-			if body.get_slide_collision(i):
-				var collider := body.get_slide_collision(i).get_collider()
-				print("Collided with: ", collider.name)
-				#print(collider.get_parent())
-				if collider is TileMapLayer:
-					if collider.name == "Base":
-						try_step.emit(body.global_position, curr_dirr, elevation_handler.current_elevation, step_callback)
-					elif collider.name == "WaterMapper":
-						pass
-					elif collider.name == "HigherElevationWarner":
-						try_step.emit(body.global_position, curr_dirr, elevation_handler.current_elevation, step_callback)
+	# commented out because im making jumping instead - will repurpose for walking off ledges later
+	# if !movement_tween:
+	# 	for i in body.get_slide_collision_count():
+	# 		if body.get_slide_collision(i):
+	# 			var collider := body.get_slide_collision(i).get_collider()
+	# 			#print("Collided with: ", collider.name)
+	# 			#print(collider.get_parent())
+	# 			if collider is TileMapLayer:
+	# 				if collider.name == "Base":
+	# 					try_step.emit(body.global_position, curr_dirr, elevation_handler.current_elevation, step_callback)
+	# 				elif collider.name == "WaterMapper":
+	# 					pass
+	# 				elif collider.name == "HigherElevationWarner":
+	# 					try_step.emit(body.global_position, curr_dirr, elevation_handler.current_elevation, step_callback)
+	
+	if jumping:
+		do_active_jump_logic()
+
+func do_active_jump_logic() -> void:
+	for i in self.get_overlapping_bodies():
+		if i is TileMapLayer:
+			var elevation_layer := i.get_parent() as ElevationLayer
+			if elevation_layer.elevation == elevation_handler.current_elevation:
+				## call world to ask if we can land here
+				if elevation_layer.name == "Base":
+					#ledge of layer we are on
+					body.add_collision_exception_with(elevation_layer)
+					#TODO: calculations with different heights
+				elif elevation_layer.name == "HigherElevationWarner":
+					#jumped into higher layer
+					can_i_jump_here.emit(body.global_position, curr_dirr, elevation_handler.current_elevation, 
+					func (can_jump: bool, new_ele:int) -> void:
+						if can_jump:
+							#need to wait for apex, then add collision exception
+							jump_apex.connect(
+								func()->void:
+									#add collision exception so we dont land early
+								body.add_collision_exception_with(elevation_layer)
+								, ConnectFlags.CONNECT_ONE_SHOT
+							)
+							elevation_handler.current_elevation = new_ele
+						else:
+							#keep going up
+							pass
+					)
+				elif elevation_layer.name == "WaterMapper":
+					#water- should only happen after base is found
+					pass
+		elif i.get_parent().is_in_group("jumpable") || i.is_in_group("jumpable"): #i will probably fuck this up
+			body.add_collision_exception_with(i)
+			pass
+		else: #not jumpable
+			pass
+
+
+func jump() -> void:
+	if jumping:
+		return #already jumping
+	jump_start.emit()
+	jumping = true
+	await get_tree().create_timer(jump_time/2).timeout
+	jump_apex.emit()
+	await get_tree().create_timer(jump_time/2).timeout
+	jump_complete.emit()
 
 func step_callback(up: bool, new_ele:int) -> void:
 	#print("step callback: ", curr_dirr, " up:", up)
