@@ -137,10 +137,13 @@ inventory_data = SubResource("Resource_6uxt2")
 speed = 270
 dash_length = 0.4
 
-[node name="HealthHandler" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player" index="3"]
+[node name="NewBody" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player/PlayerOutfitHandler" index="0"]
+animation = &""
+
+[node name="HealthHandler" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player" index="4"]
 hunger_base_fall_rate = 0.0
 
-[node name="TileIndicator" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player" index="7"]
+[node name="TileIndicator" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player" index="8"]
 texture = SubResource("AtlasTexture_mucmn")
 
 [node name="Camera2D" type="Camera2D" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player"]

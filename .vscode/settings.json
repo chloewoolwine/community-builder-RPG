@@ -1,3 +1,5 @@
 {
-    "godotTools.editorPath.godot4": "c:\\Users\\chloe\\Desktop\\Godot_v4.5-stable_win64.exe"
+	"godotTools.editorPath.godot4": "c:\\Users\\chloe\\Desktop\\Godot_v4.5-stable_win64.exe",
+	"editor.comments.insertSpace": false,
+	"editor.insertSpaces": false
 }

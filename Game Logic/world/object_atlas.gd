@@ -111,6 +111,7 @@ func _parse_and_place(object_data: ObjectData, overall_position: Vector2, square
 				elevation_hanlder.current_elevation = square.elevation
 			live_objects[object_data] = object
 			add_child(object)
+			object.owner = owner
 			if split[0] == "plant":
 				object.square_data = square
 				plant_placed.emit(object)

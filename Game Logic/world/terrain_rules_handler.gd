@@ -158,6 +158,7 @@ func translate_square_data_to_tile(data: SquareData, world_pos: Vector2i, _chunk
 			new_layer.name = str("Elevation",x)
 			new_layer.elevation = x
 			bbc.add_child(new_layer)
+			new_layer.owner = elevations[0].owner
 			#print_if_debug(str(new_layer.get_children()))
 			elevations.append(new_layer)
 			elevations[x].elevation = x
@@ -442,6 +443,7 @@ func raise_elevation(loc: Location) -> void:
 			new_layer.name = str("Elevation",x)
 			new_layer.elevation = x
 			bbc.add_child(new_layer)
+			new_layer.owner = elevations[0].owner
 			#print_if_debug(str(new_layer.get_children()))
 			elevations.append(new_layer)
 			elevations[x].elevation = x

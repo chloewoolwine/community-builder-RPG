@@ -170,9 +170,7 @@ func get_input() -> void:
 		velocity_handler.jump()
 	
 func updateAnimation() -> void:
-	animation_handler.flip_all_sprites(false)
-	if facing.x == -1:
-		animation_handler.flip_all_sprites(true)
+	#print("facing: ", facing)
 	match state:
 		PlayerStates.STATE_IDLE, PlayerStates.STATE_MENU:
 			animation_handler.travel_to_and_blend("Idle", facing)
@@ -261,15 +259,6 @@ func decrease_item_val(item:SlotData)->void:
 		tile_indicator.visible = false
 		player_action_handler.equiped_item = null
 	inventory_data.inventory_updated.emit(inventory_data)
-		
-func _on_animation_tree_animation_finished(anim_name:String) -> void:
-	if "slash" in anim_name:
-		state = PlayerStates.STATE_IDLE
-		velocity_handler.purge_speed()
-		sword_hitbox.disabled = true
-	#when i *have* a dash animation, link this up instead 
-	if "hoe" in anim_name:
-		state = PlayerStates.STATE_IDLE
 	
 #(-1, 0) = right, (1,0) = left, (0,-1) = back, (0,1) = forward
 #TODO; fix this method, it's wrong
