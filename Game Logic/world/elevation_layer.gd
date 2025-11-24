@@ -41,7 +41,7 @@ func set_physics_data() -> void:
 	higher_elevation_warner.tile_set = higher_elevation_warner.tile_set.duplicate()
 	higher_elevation_warner.tile_set.set_physics_layer_collision_layer(0, 1 << (elevation + 9))
 	print("elevation: ", elevation)
-	print("physics layer 0 collision layer: ", base.tile_set.get_physics_layer_collision_layer(0))
+	print("physics layer ", elevation, " collision layer: ", base.tile_set.get_physics_layer_collision_layer(0))
 	## CHLOE LOOK AT ME 
 	## WHEN YOU ADD A NEW LAYER. GO INTO THE ELEVATION. AND ADD IT THERE TOO. OK?
 	## OR ELSE !!!!!

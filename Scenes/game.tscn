@@ -106,6 +106,7 @@ light_gradient = SubResource("GradientTexture1D_6o1tu")
 
 [node name="WorldManager" type="Node2D" parent="."]
 y_sort_enabled = true
+texture_filter = 1
 script = ExtResource("5_wonyh")
 _world_data = ExtResource("6_cwurv")
 load_chunks = true
@@ -140,10 +141,10 @@ dash_length = 0.4
 [node name="NewBody" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player/PlayerOutfitHandler" index="0"]
 animation = &""
 
-[node name="HealthHandler" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player" index="4"]
+[node name="HealthHandler" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player" index="8"]
 hunger_base_fall_rate = 0.0
 
-[node name="TileIndicator" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player" index="8"]
+[node name="TileIndicator" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player" index="10"]
 texture = SubResource("AtlasTexture_mucmn")
 
 [node name="Camera2D" type="Camera2D" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player"]

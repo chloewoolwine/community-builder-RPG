@@ -1,17 +1,12 @@
 extends Node2D
 class_name PlayerOutfitHandler
 
-@export var velocity_handler: VelocityHandler
 @export var animation_handler: AnimationHandler
 
 var components: Array[AnimatedSprite2D]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if velocity_handler == null:
-		push_warning("PlayerOutfitHandler in ", self.get_parent().name, " has no velocity handler assigned!")
-		self.queue_free()
-		
 	for child in get_children(true):
 		if child is AnimatedSprite2D:
 			components.append(child)

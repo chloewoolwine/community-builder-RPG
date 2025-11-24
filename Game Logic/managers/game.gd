@@ -49,7 +49,7 @@ func handle_final_presentation() -> void:
 	## TODO: make some juice here, like a fade in from black :D 
 	await get_tree().create_timer(5).timeout
 	lighting.proccessTime = true
-	player.state = Player.PlayerStates.STATE_IDLE
+	player.loading_done()
 	game_ready = true
 
 ## Connects events dynamically
@@ -93,7 +93,7 @@ func handle_entity_setup() -> void:
 	for node in get_tree().get_nodes_in_group("entity_interactable"):
 		node.toggle_menu.connect(toggle_entity_interface)
 	for node in get_tree().get_nodes_in_group("elevation_handler"): 
-		node.give_me_layer_please.connect(world_manager.give_requested_layer)
+		node.terrain_rules_handler = world_manager.trh
 	for node in get_tree().get_nodes_in_group("hungerhealth"):
 		node.player = player
 	
@@ -122,8 +122,8 @@ func handle_inventory_setup() -> void:
 func handle_options_press() -> void:
 	if gui_state == GuiState.INVENTORY || gui_state == GuiState.CHEST:
 		toggle_inventory_interface()
-	elif gui_state == GuiState.ENTITY:
-		player.toggle_menu_state() #stay paused
+	#elif gui_state == GuiState.ENTITY:
+		#player.toggle_menu_state() #stay paused
 	else: 
 		hot_bar_inventory.visible = !hot_bar_inventory.visible
 		options_menu.visible = !options_menu.visible
@@ -141,7 +141,8 @@ func handle_options_press() -> void:
 @warning_ignore("untyped_declaration")
 func toggle_inventory_interface(external_inventory_owner = null, _isPerson : bool = false) -> void:
 	if gui_state == GuiState.OPTIONS || gui_state == GuiState.ENTITY:
-		player.toggle_menu_state() #stay paused
+		#player.toggle_menu_state() #stay paused
+		pass
 	else: 
 		inventory_interface.visible = !inventory_interface.visible
 		hot_bar_inventory.visible = !inventory_interface.visible
@@ -173,42 +174,15 @@ func toggle_entity_interface(entity: Entity) -> void:
 		gui_state = GuiState.ENTITY
 	else:
 		gui_state = GuiState.WORLD
-		player.toggle_menu_state()
 
 func player_died() -> void:
 	#do cool stuff here 
-	player.state = Player.PlayerStates.STATE_DEAD
-	await get_tree().create_timer(3).timeout
-	## TERRIBLE IDEA need better spawn point Stat
-	player.global_position = Vector2.ZERO - Vector2(100,100)
-#	player.elevation_handler.current_elevation = 1 
-	player.health_handler.change_health(50)
-	player.health_handler.current_hunger = player.health_handler.max_hunger/2
-	player.state = Player.PlayerStates.STATE_IDLE
+#	player.state = Player.PlayerStates.STATE_DEAD
+#	await get_tree().create_timer(3).timeout
+#	## TERRIBLE IDEA need better spawn point Stat
+#	player.global_position = Vector2.ZERO - Vector2(100,100)
+##	player.elevation_handler.current_elevation = 1 
+#	player.health_handler.change_health(50)
+#	player.health_handler.current_hunger = player.health_handler.max_hunger/2
+#	player.state = Player.PlayerStates.STATE_IDLE
 	pass
-		
-# chat gpt generated name ideas lmao 
-#Town of Bloom
-#Rising Horizons
-#Starlight Acres
-#Sunrise Settlement
-#Echoes of Eden
-#Ashen Acres
-#Last Garden
-#Seeds of Tomorrow
-#Hallowed Harvest
-#Phoenix Grove
-#Blooming Wastes
-#Renewal Ridge
-#Echoing Harvest
-#Waking Grove
-#The Last Orchard
-#Twilight Tillage
-#Eternal Springs
-#Hallowed Harvest
-
-#my ideas
-# Twilight Bloom
-# Star/Moonlight Grove
-# Echoes of the Grove
-# Twilight Grove <- WOW location

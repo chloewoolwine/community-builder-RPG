@@ -13,3 +13,5 @@ static var ORIGIN:String = "originator"
 static var MILLISECONDS_BETWEEN_MODIFICATIONS: int = 100
 
 static var water_source_saturation_width: int = 4
+static var SHALLOW_WATER: int = 4
+static var DEEP_WATER: int = 5

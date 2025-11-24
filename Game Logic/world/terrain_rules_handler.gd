@@ -90,7 +90,10 @@ func _process(_delta: float) -> void:
 
 func get_tileset_pos_from_global(pos: Vector2, layer: int) -> Vector2i: 
 	return elevations[layer].local_to_map(pos)
-	
+
+func get_base_pos_from_global(pos: Vector2) -> Vector2i:
+	return elevations[0].local_to_map(pos)
+
 ## Gets the highest layer at INGAME COORDINATE [pos]
 func get_topmost_layer_at_ingame_pos(pos: Vector2i) -> ElevationLayer:
 	@warning_ignore("unused_variable")
@@ -486,3 +489,8 @@ func handle_mask_relation(loc: Location) -> void:
 			object_atlas.create_mask(down_loc, down_square)
 	
 	##TODO: need to change the shape of the mask depending on left/right
+
+func get_square_data_at_location(loc: Location) -> SquareData:
+	if loc.chunk in loaded_chunks:
+		return loaded_chunks[loc.chunk].square_datas[loc.position]
+	return null

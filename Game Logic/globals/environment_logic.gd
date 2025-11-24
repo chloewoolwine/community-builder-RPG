@@ -112,11 +112,6 @@ static func get_real_pos_object(loc: Location, _elevation: int) -> Vector2:
 	## TEMP TEST: NO ELEVATION OFFSET, thats handled in-object
 	return world_pos * Constants.TILE_SIZE + Vector2i((Constants.TILE_SIZE/2), (Constants.TILE_SIZE/2))
 
-static func get_base_pos_object(loc: Location) -> Vector2:
-	var world_pos := (loc.chunk * Constants.CHUNK_SIZE) + loc.position
-	@warning_ignore("integer_division")
-	return world_pos * Constants.TILE_SIZE + Vector2i((Constants.TILE_SIZE/2), (Constants.TILE_SIZE/2))
-
 #returns null if requested square is out of bounds
 static func get_square(world_data: WorldData, loc: Location) -> SquareData:
 	if loc == null:

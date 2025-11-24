@@ -1,7 +1,6 @@
 extends Node2D
 class_name PlayerActionHandler
 
-signal player_opened_menu(type:String)
 signal player_wants_to_eat(type:SlotData)
 
 var equiped_item: SlotData
@@ -18,17 +17,19 @@ var equiped_item: SlotData
 #4 = object is there, interactable, has requirements that player meets. animation plays/menu opens
 #5 = nothing is there, but the player has an item equiped. something happens with the item depending 
 #on it 
-func do_action() -> void:
+func do_action() -> String:
 	#if player is holding tool, or if player is in front of interactable
 	var cast:Object = ray_cast_2d.get_collider()
 	if cast && cast is InteractionHitbox && cast.accepting_interactions:
 		if cast.needs_tool and equiped_item and equiped_item.item_data is ItemDataTool and equiped_item.item_data.type == cast.tool_required:
 			cast.player_interact()
-		if cast.is_chest:
-			player_opened_menu.emit("chest")
-		if cast.is_entity:
-			player_opened_menu.emit("entity")
-		if !cast.needs_tool:
+		elif cast.is_chest:
+			cast.player_interact()
+			return "chest"
+		elif cast.is_entity:
+			cast.player_interact()
+			return "entity"
+		elif !cast.needs_tool:
 			cast.player_interact()
 	#if we are holding a usuable item...
 	elif equiped_item && equiped_item.item_data:
@@ -39,6 +40,7 @@ func do_action() -> void:
 				player.decrease_item_val(equiped_item)
 		elif equiped_item.item_data is ItemDataTool: 
 			use_tool(equiped_item)
+	return ""
 
 func use_tool(item:SlotData)->void:
 	match item.item_data.type:

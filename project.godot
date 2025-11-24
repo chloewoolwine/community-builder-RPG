@@ -67,6 +67,7 @@ ageable="this component gets old (atatches to the world calendar) "
 removable="This object has an ObjectRemoved signal in it or it's children"
 mask=""
 jumpable=""
+elevation_handler=""
 
 [gui]
 
@@ -173,8 +174,3 @@ jump={
 2d_physics/layer_11="elevation1"
 2d_physics/layer_12="elevation2"
 2d_physics/layer_13="elevation3"
-
-[rendering]
-
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"

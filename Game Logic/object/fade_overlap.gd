@@ -21,12 +21,12 @@ func _ready() -> void:
 #TODO: some tweening here to make it look nice when going transparent
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
-		print("going transparent")
+		#print("going transparent")
 		for sprite in all_sprites:
 			sprite.self_modulate.a = transparent_opacity
 
 func _on_body_exited(body: Node2D) -> void:
 	if body is Player:
-		print("removing transparent")
+		#print("removing transparent")
 		for sprite in all_sprites:
 			sprite.self_modulate.a = 1
