@@ -112,6 +112,7 @@ disabled = true
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 
-[node name="ObjElevationHandler" type="Node" parent="."]
+[node name="ObjElevationHandler" type="Node" parent="." node_paths=PackedStringArray("things_to_offset")]
 script = ExtResource("10_4nhya")
+things_to_offset = [NodePath("../StepCollision"), NodePath("../InteractionHitbox"), NodePath("../PlantAppearance/Sprite2D")]
 metadata/_custom_type_script = "uid://c1whaq778qys2"

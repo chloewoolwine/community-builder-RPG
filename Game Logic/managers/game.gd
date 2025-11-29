@@ -18,9 +18,8 @@ var gui_state: GuiState
 @onready var story_manager:StoryManager = $StoryManager
 #@onready var saver_loader:SaverLoader = $SaverLoader
 # player moved down the scene tree, also for y-aasorting :C
-#@onready var player:Player = $EntityManager/Player
 @onready var lighting:CalendarManager= $StoryManager/Lighting
-@onready var player: Player = $WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player
+@onready var player: Player = $WorldManager/TerrainRulesHandler/ObjectAtlas/Player
 
 #UI
 @onready var inventory_interface:InventoryInterface = $UI/InventoryInterface

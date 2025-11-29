@@ -110,10 +110,10 @@ script = ExtResource("7_jddku")
 shape = SubResource("CircleShape2D_0mxl1")
 disabled = true
 
-[node name="Camera2D" type="Camera2D" parent="."]
-
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 
-[node name="ObjElevationHandler" type="Node" parent="."]
+[node name="ObjElevationHandler" type="Node" parent="." node_paths=PackedStringArray("things_to_offset")]
 script = ExtResource("9_5w3dk")
+things_to_offset = [NodePath("../GrassAppearance/Sprite2D"), NodePath("../GrassAppearance/Sprite2D2"), NodePath("../GrassAppearance/Sprite2D3"), NodePath("../GrassAppearance/Sprite2D4"), NodePath("../InteractionHitbox"), NodePath("../StepCollision")]
+solid = false
 metadata/_custom_type_script = "uid://c1whaq778qys2"

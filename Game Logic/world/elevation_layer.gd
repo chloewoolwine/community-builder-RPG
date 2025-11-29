@@ -37,6 +37,10 @@ func set_physics_data() -> void:
 	#self.tile_set = self.tile_set.duplicate()
 	#self.tile_set.set_physics_layer_collision_mask(0,0)
 	base.tile_set = base.tile_set.duplicate()
+	## how this works for future reference
+	## for elevation 0, this will eval to 1000000000 (only the 10th bit flipped) 
+	## that's why in the elevation handler you can do entity.set_collision_mask_value(current_elevation+10)
+	## as set_collision_mask_value changes the nth bit 
 	base.tile_set.set_physics_layer_collision_layer(0, 1 << (elevation + 9))
 	higher_elevation_warner.tile_set = higher_elevation_warner.tile_set.duplicate()
 	higher_elevation_warner.tile_set.set_physics_layer_collision_layer(0, 1 << (elevation + 9))

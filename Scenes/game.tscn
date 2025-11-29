@@ -127,30 +127,30 @@ elevation = 1
 y_sort_enabled = true
 script = ExtResource("9_0s5wb")
 
-[node name="EntityManager" type="Node2D" parent="WorldManager/TerrainRulesHandler/ObjectAtlas"]
-editor_description = "Holds things with AI- player, npcs, enemies, etc"
-y_sort_enabled = true
-script = ExtResource("8_3dv0o")
-
-[node name="Player" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager" groups=["enemy_target"] instance=ExtResource("1_vlfca")]
+[node name="Player" parent="WorldManager/TerrainRulesHandler/ObjectAtlas" groups=["enemy_target"] instance=ExtResource("1_vlfca")]
 position = Vector2(300, 300)
 inventory_data = SubResource("Resource_6uxt2")
 speed = 270
 dash_length = 0.4
 
-[node name="NewBody" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player/PlayerOutfitHandler" index="0"]
+[node name="NewBody" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/Player/PlayerOutfitHandler" index="0"]
 animation = &""
 
-[node name="HealthHandler" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player" index="8"]
+[node name="HealthHandler" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/Player" index="8"]
 hunger_base_fall_rate = 0.0
 
-[node name="TileIndicator" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player" index="10"]
+[node name="TileIndicator" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/Player" index="10"]
 texture = SubResource("AtlasTexture_mucmn")
 
-[node name="Camera2D" type="Camera2D" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player"]
+[node name="Camera2D" type="Camera2D" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/Player"]
 position = Vector2(1.49012e-08, -10.25)
 scale = Vector2(0.259594, 0.246314)
 position_smoothing_enabled = true
+
+[node name="EntityManager" type="Node2D" parent="WorldManager/TerrainRulesHandler/ObjectAtlas"]
+editor_description = "Holds things with AI- player, npcs, enemies, etc"
+y_sort_enabled = true
+script = ExtResource("8_3dv0o")
 
 [node name="PickupManager" type="Node2D" parent="."]
 editor_description = "Holds pickups"
@@ -315,5 +315,5 @@ script = ExtResource("17_d5xvq")
 
 [editable path="WorldManager/TerrainRulesHandler/BackBufferCopy/Elevation0"]
 [editable path="WorldManager/TerrainRulesHandler/BackBufferCopy/Elevation1"]
-[editable path="WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player"]
+[editable path="WorldManager/TerrainRulesHandler/ObjectAtlas/Player"]
 [editable path="UI/InventoryInterface/PlayerInventory"]

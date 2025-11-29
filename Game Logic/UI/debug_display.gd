@@ -1,7 +1,7 @@
 extends Control
 @onready var object_atlas: ObjectAtlas = $"../../WorldManager/TerrainRulesHandler/ObjectAtlas"
 @onready var world_manager: WorldManager = $"../../WorldManager"
-@onready var player: Player = $"../../WorldManager/TerrainRulesHandler/ObjectAtlas/EntityManager/Player"
+@onready var player: Player = $"../../WorldManager/TerrainRulesHandler/ObjectAtlas/Player"
 @onready var lighting: CalendarManager = $"../../StoryManager/Lighting"
 
 @onready var label: Label = $PanelContainer/VBoxContainer/Label

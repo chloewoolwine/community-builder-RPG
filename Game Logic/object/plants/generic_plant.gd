@@ -1,4 +1,4 @@
-extends Area2D
+extends Node2D
 class_name GenericPlant
 
 signal spawn_pickups(spawnpoint: Vector2, datas: Array[ItemData])

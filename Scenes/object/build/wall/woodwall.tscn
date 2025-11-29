@@ -127,6 +127,6 @@ position = Vector2(0, -70.165)
 texture = SubResource("AtlasTexture_yyomc")
 offset = Vector2(0, -9.965)
 
-[node name="ObjElevationHandler" type="Node" parent="." node_paths=PackedStringArray("parent")]
+[node name="ObjElevationHandler" type="Node" parent="." node_paths=PackedStringArray("things_to_offset")]
 script = ExtResource("3_iwp6s")
-parent = NodePath("..")
+things_to_offset = [NodePath("../Sprite2D"), NodePath("../InteractionHitbox"), NodePath("../NeighborSearcher")]
