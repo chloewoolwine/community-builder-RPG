@@ -1726,7 +1726,6 @@ height = 10.0
 size = Vector2(20, 168)
 
 [node name="Player" type="CharacterBody2D"]
-y_sort_enabled = true
 collision_layer = 128
 collision_mask = 512
 motion_mode = 1
@@ -1819,7 +1818,7 @@ y_sort_enabled = true
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = SubResource("SpriteFrames_ke5yh")
-animation = &"IdleUp"
+animation = &"JumpRight"
 autoplay = "IdleDown"
 offset = Vector2(0, -45)
 
@@ -1887,5 +1886,6 @@ texture = ExtResource("10_ypkgf")
 script = ExtResource("11_msv3g")
 
 [node name="trueloc" type="Sprite2D" parent="."]
+z_index = 1000
 scale = Vector2(0.105, 0.105)
 texture = ExtResource("15_pm2yg")

@@ -411,7 +411,6 @@ func request_square_at_loc(loc: Location) -> SquareData:
 func get_elevation_at(num: int) -> ElevationLayer:
 	return elevations[num]
 
-##TODO: NEED TO CHECK NEIGHBORS FOR PROPER MASKING IN BOTH RAISE AND LOWER 
 func lower_elevation(loc: Location) -> void:
 	if !(loc.chunk in loaded_chunks):
 		return
@@ -423,15 +422,6 @@ func lower_elevation(loc: Location) -> void:
 	if mask:
 		mask.decrease_elevation()
 	handle_mask_relation(loc)
-	#elevations[square.elevation].change_square(square, chunk_pos + loc.position)
-	#var friends := loc.get_neighbor_matrix()
-	#for f in friends:
-		#var chunk_data:ChunkData = loaded_chunks[f.chunk]
-		#var chunk_pos_:Vector2i = chunk_data.chunk_position * chunk_data.chunk_size
-		#var square_:SquareData = chunk_data.square_datas[f.position]
-		##for ele in elevations:
-			##ele.change_square(square, chunk_pos + square.location_in_chunk)
-		#elevations[square_.elevation].change_square(square_, chunk_pos_ + f.position)
 
 func raise_elevation(loc: Location) -> void: 
 	if !(loc.chunk in loaded_chunks):

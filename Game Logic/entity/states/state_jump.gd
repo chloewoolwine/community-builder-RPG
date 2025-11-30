@@ -6,6 +6,7 @@ var jump_time: float = 0.7
 var input:Vector2i = Vector2i.ZERO
 var checked_bodies: Array = []
 var timer: SceneTreeTimer
+var eleh:ElevationHandler
 
 func _ready() -> void:
 	super._ready()
@@ -19,6 +20,7 @@ func enter(prev_state: String, data:Dictionary = {"input": Vector2i.ZERO}) -> vo
 	player.animation_handler.travel_to_and_blend(PlayerState.JUMP, player.facing)
 	timer = get_tree().create_timer(jump_time)
 	input = data.get("input", Vector2i.ZERO)
+	eleh = player.elevation_handler
 	machine.print_if_debug("Entered StateJump")
 	jump_area.collision_mask = 0
 	jump_area.set_collision_mask_value(player.elevation_handler.current_elevation + 10, true)
@@ -70,43 +72,35 @@ func validate_lower_jump(true_loc: Location, elevation: int, trh: TerrainRulesHa
 	if sd_other.water_saturation >= Constants.SHALLOW_WATER:
 		#not dealing with this yet lol 
 		return
+	var targ := Vector2(input * Constants.TILE_SIZE) + eleh.get_assumed_pos()
+	if check_obstacles_at_point(targ, sd_other.elevation):
+		machine.print_if_debug("StateJump: Obstacle detected at higher elevation jump target, cannot jump there.")
+		return
 	var diff := player.elevation_handler.current_elevation - sd_other.elevation
 	machine.print_if_debug("StateJump: Base collision elevation difference: " + str(diff))
-	var targ := EnvironmentLogic.get_displayed_pos_object(loc_other, sd_other.elevation) #TODO; once we have checking, more better
 	transition_please.emit(PlayerState.FORCEFALL, self, {"target_global_loc": targ, "location": loc_other, "elevation_diff": diff})
-	#ledge of the layer we are on
-	#TODO: 
-		#Check the height difference
-		#TODO: some way of determining how long/how to animate the fall properly 
-		#if valid, transition to ForceFall state=
-	return
+	#TODO: some way of determining how long/how to animate the fall properly 
 
 func validate_higher_jump(true_loc: Location, elevation: int, trh: TerrainRulesHandler) -> void:
 	var loc_other := true_loc.get_location(input)
 	var sd_other := trh.get_square_data_at_location(loc_other)
 	if sd_other and sd_other.elevation == player.elevation_handler.current_elevation+1:
-		#THE PLAN:
-		#ensure the target tile is clear of objects
-		#- DONE check for overlapping bodies at that tile position
-		#- NOT DONE check it's not water 
-		#- DONE IF all clear, activate FALLING IMMEDIATELY
-		if check_obstacles_at_point(EnvironmentLogic.get_displayed_pos_object(loc_other, sd_other.elevation), sd_other.elevation):
+		var targ := Vector2(input * Constants.TILE_SIZE) + eleh.get_assumed_pos()
+		#print("target: " + str(targ))
+		if check_obstacles_at_point(targ, sd_other.elevation):
 			machine.print_if_debug("StateJump: Obstacle detected at higher elevation jump target, cannot jump there.")
 			return
 		machine.print_if_debug("StateJump: Valid higher elevation jump found to loc " + str(loc_other))
-		#this gets the center of the tile. once we have checking, we can make this straight
-		#in the direction of the player's last input (as long as the space is clear)
-		var targ := EnvironmentLogic.get_displayed_pos_object(loc_other, sd_other.elevation)
 		transition_please.emit(PlayerState.FORCEJUMP, self, {"target_global_loc": targ, "location": loc_other})
 
 ## WARNING: i wrote this when i was sick (my tummy hurts)
 func check_obstacles_at_point(global_point: Vector2, elevation: int) -> bool:
 	var space_state := player.get_world_2d().direct_space_state
-	var query := PhysicsRayQueryParameters2D.create(player.global_position + Vector2(0, elevation * Constants.ELEVATION_Y_OFFSET), global_point, 1 << (elevation + 9), [player.get_rid()])
+	var query := PhysicsRayQueryParameters2D.create(eleh.get_assumed_pos(), global_point, 1 << (elevation + 9), [player.get_rid()])
 	var result := space_state.intersect_ray(query)
 	machine.print_if_debug("checking obstacles at point: "+ str(global_point) + " elevation: "+ str(elevation) + " result: "+ str(result))
 	if result.size() > 0 && result.collider.name == "Base": #should be! 
-		var new_query := PhysicsRayQueryParameters2D.create(player.global_position + Vector2(0, elevation * Constants.ELEVATION_Y_OFFSET), global_point, 1 << (elevation + 9), [player.get_rid(), result.rid])
+		var new_query := PhysicsRayQueryParameters2D.create(eleh.get_assumed_pos(), global_point, 1 << (elevation + 9), [player.get_rid(), result.rid])
 		machine.print_if_debug('excluding: '+ str(new_query.exclude))
 		result = space_state.intersect_ray(new_query)
 	machine.print_if_debug("checking obstacles at point: "+ str(global_point) + " elevation: "+ str(elevation) + " result: "+ str(result))

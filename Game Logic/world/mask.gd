@@ -20,11 +20,11 @@ func _ready() -> void:
 		mark.visible = true
 	else:
 		mark.visible = false
-	masks.push_front(masker)
-	masker.position.y = Constants.ELEVATION_Y_OFFSET
-	var prev := elevation
-	elevation = 0
-	increase_elevation(prev)
+	#masks.push_front(masker)
+	#masker.position.y = 0
+	#var prev := elevation
+	elevation = elevation
+	#increase_elevation(prev)
 	#for x in range(0, elevation):
 		#var new := masker.duplicate()
 		#new.position.y = (x+1) * Constants.ELEVATION_Y_OFFSET

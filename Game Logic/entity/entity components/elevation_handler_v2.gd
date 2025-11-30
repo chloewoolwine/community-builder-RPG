@@ -51,5 +51,9 @@ func set_to_elevation_at_loc(loc: Location) -> void:
 	if square_data == null:
 		push_warning("ElevationHandler: square_data is null for loc %s in set_to_elevation_at_loc()!" % loc)
 		return
-	current_elevation = square_data.elevation
+	if current_elevation != square_data.elevation:
+		current_elevation = square_data.elevation
 	#_offset_sprites()
+
+func get_assumed_pos() -> Vector2:
+	return entity.global_position + Vector2(0, current_elevation * Constants.ELEVATION_Y_OFFSET)

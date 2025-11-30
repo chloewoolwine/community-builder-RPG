@@ -133,6 +133,9 @@ inventory_data = SubResource("Resource_6uxt2")
 speed = 270
 dash_length = 0.4
 
+[node name="StateMachine" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/Player" index="1"]
+debug = true
+
 [node name="NewBody" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/Player/PlayerOutfitHandler" index="0"]
 animation = &""
 
