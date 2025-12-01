@@ -1,4 +1,4 @@
-[gd_scene load_steps=176 format=3 uid="uid://dy236j24tdfmr"]
+[gd_scene load_steps=182 format=3 uid="uid://dy236j24tdfmr"]
 
 [ext_resource type="Script" uid="uid://bjjblaytsdioe" path="res://Game Logic/entity/player/player.gd" id="1_pwtpg"]
 [ext_resource type="Script" uid="uid://bcnyi4l6l1lro" path="res://Game Logic/entity/states/state_machine.gd" id="2_aqs8i"]
@@ -26,6 +26,7 @@
 [ext_resource type="Script" uid="uid://cdf7pv6j4f303" path="res://Game Logic/entity/entity components/elevation_handler_v2.gd" id="14_at1v1"]
 [ext_resource type="Texture2D" uid="uid://bsr1y04qjpc8" path="res://Assets/tiles/redsquare.png" id="15_pm2yg"]
 [ext_resource type="Texture2D" uid="uid://ddtqgt2xkhhj3" path="res://Assets/jumps.png" id="17_udx2w"]
+[ext_resource type="Texture2D" uid="uid://0b328wnqn4nq" path="res://Assets/player_shadow.png" id="18_awd1p"]
 
 [sub_resource type="Animation" id="Animation_vbauc"]
 length = 0.4
@@ -642,6 +643,66 @@ _data = {
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8d5w2"]
 size = Vector2(20, 5.62883)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wsp85"]
+atlas = ExtResource("18_awd1p")
+region = Rect2(0, 0, 46, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ihn7"]
+atlas = ExtResource("18_awd1p")
+region = Rect2(0, 0, 46, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_likui"]
+atlas = ExtResource("18_awd1p")
+region = Rect2(46, 0, 46, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dsrad"]
+atlas = ExtResource("18_awd1p")
+region = Rect2(92, 0, 46, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8ihn7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wsp85")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ihn7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_likui")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dsrad")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_likui")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_likui")
+}],
+"loop": true,
+"name": &"medium",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dsrad")
+}],
+"loop": true,
+"name": &"small",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hi0an"]
 atlas = ExtResource("17_udx2w")
@@ -1736,7 +1797,7 @@ speed = 325
 script = ExtResource("14_at1v1")
 entity = NodePath("..")
 trueloc = NodePath("../trueloc")
-offsettees = [NodePath("../JumpArea"), NodePath("../PlayerActionHandler"), NodePath("../PlayerOutfitHandler/NewBody"), NodePath("../CollisionBox"), NodePath("../HealthHandler"), NodePath("../HitBox")]
+offsettees = [NodePath("../JumpArea"), NodePath("../PlayerActionHandler"), NodePath("../PlayerOutfitHandler/NewBody"), NodePath("../CollisionBox"), NodePath("../HealthHandler"), NodePath("../HitBox"), NodePath("../PlayerOutfitHandler/Shadow")]
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_aqs8i")
@@ -1789,6 +1850,7 @@ libraries = {
 autoplay = "IdleDown"
 
 [node name="JumpArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 0
 
@@ -1799,6 +1861,7 @@ shape = SubResource("RectangleShape2D_8d5w2")
 debug_color = Color(0.48786712, 0.58116096, 0.20442906, 0.41960785)
 
 [node name="PlayerActionHandler" type="Node2D" parent="."]
+visible = false
 script = ExtResource("2_c3tp2")
 
 [node name="RayCast2D" type="RayCast2D" parent="PlayerActionHandler"]
@@ -1809,8 +1872,17 @@ collision_mask = 4
 [node name="PlayerOutfitHandler" type="Node2D" parent="." node_paths=PackedStringArray("animation_handler")]
 z_as_relative = false
 y_sort_enabled = true
+texture_filter = 1
 script = ExtResource("2_pghmh")
 animation_handler = NodePath("../AnimationHandler")
+
+[node name="Shadow" type="AnimatedSprite2D" parent="PlayerOutfitHandler"]
+modulate = Color(1, 1, 1, 0.50980395)
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_8ihn7")
+animation = &"idle"
+frame_progress = 0.14342192
+offset = Vector2(0, 4.5)
 
 [node name="NewBody" type="AnimatedSprite2D" parent="PlayerOutfitHandler"]
 z_as_relative = false
@@ -1854,6 +1926,7 @@ autoplay = "idle_forward"
 offset = Vector2(0, -141)
 
 [node name="CollisionBox" type="CollisionShape2D" parent="."]
+visible = false
 z_index = 1000
 z_as_relative = false
 scale = Vector2(1.573, 5.341)
@@ -1861,6 +1934,7 @@ shape = SubResource("RectangleShape2D_73skx")
 debug_color = Color(0.95099145, 1.540184e-06, 0.56829035, 0.41960785)
 
 [node name="HealthHandler" parent="." groups=["hungerhealth"] instance=ExtResource("6_o8nbr")]
+visible = false
 collision_mask = 8
 has_iframes = true
 
@@ -1870,6 +1944,7 @@ scale = Vector2(5.566, -11.166)
 shape = SubResource("CapsuleShape2D_ujgxj")
 
 [node name="HitBox" parent="." instance=ExtResource("9_ict53")]
+visible = false
 scale = Vector2(1, 1.2)
 collision_layer = 2
 touch_damage = 50
