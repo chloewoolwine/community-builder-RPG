@@ -135,7 +135,7 @@ func create_mask(loc: Location, square: SquareData) -> void:
 	mask.elevation = square.elevation
 	mask.loc = loc.get_world_coordinates()
 	mask.freeing_self.connect(mask_freeing_self)
-	mask.position = EnvironmentLogic.get_displayed_pos_object(loc, square.elevation)
+	mask.position = EnvironmentLogic.get_displayed_pos_object(loc, 1)
 	add_child(mask)
 	masks[loc.get_world_coordinates()] = mask
 

@@ -18,8 +18,8 @@ func enter(prev_state: String, data:Dictionary = {}) -> void:
 		push_error("StateForceFall: No location provided in data dictionary.")
 		transition_please.emit(PlayerState.IDLE, self)
 		return
-	elevation_diff = data.get("elevation_diff", -1)
-	if elevation_diff == -1:
+	elevation_diff = data.get("elevation_diff", -10000)
+	if elevation_diff == -10000:
 		push_error("StateForceFall: No elevation_diff provided in data dictionary.")
 		transition_please.emit(PlayerState.IDLE, self)
 		return

@@ -23,76 +23,6 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ims53"]
 shader = ExtResource("3_q7nff")
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_fspdr"]
-load_path = "res://.godot/imported/poplar_tree.png-0dbe1866154817b90ae5364e2c312842.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_v8dcf"]
-atlas = SubResource("CompressedTexture2D_fspdr")
-region = Rect2(4, 46, 140, 337)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ljxsm"]
-load_path = "res://.godot/imported/poplar_tree.png-0dbe1866154817b90ae5364e2c312842.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_j3ibm"]
-atlas = SubResource("CompressedTexture2D_ljxsm")
-region = Rect2(164, 1, 254, 385)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_f2v41"]
-load_path = "res://.godot/imported/strawberry_onion.png-b4a809cfdd444c03b92ff5c903bee763.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_q7nff"]
-atlas = SubResource("CompressedTexture2D_f2v41")
-region = Rect2(347, 150, 79, 63)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vbg4f"]
-load_path = "res://.godot/imported/sketch_crap_1.png-bea57c075dc9a87edb56ffe3da19b943.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qmuma"]
-atlas = SubResource("CompressedTexture2D_vbg4f")
-region = Rect2(21, 528, 504, 543)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8i76p"]
-load_path = "res://.godot/imported/poplar_tree.png-0dbe1866154817b90ae5364e2c312842.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xpwyp"]
-atlas = SubResource("CompressedTexture2D_8i76p")
-region = Rect2(475, 176, 80, 118)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_omdd6"]
-load_path = "res://.godot/imported/poplar_tree.png-0dbe1866154817b90ae5364e2c312842.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dxprt"]
-atlas = SubResource("CompressedTexture2D_omdd6")
-region = Rect2(164, 1, 254, 385)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_si0s2"]
-load_path = "res://.godot/imported/poplar_tree.png-0dbe1866154817b90ae5364e2c312842.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_g0uim"]
-atlas = SubResource("CompressedTexture2D_si0s2")
-region = Rect2(548, 299, 117, 87)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_quwvq"]
-load_path = "res://.godot/imported/poplar_tree.png-0dbe1866154817b90ae5364e2c312842.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ld0pq"]
-atlas = SubResource("CompressedTexture2D_quwvq")
-region = Rect2(436, 90, 42, 41)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_u45ec"]
-load_path = "res://.godot/imported/poplar_tree.png-0dbe1866154817b90ae5364e2c312842.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4xoo2"]
-atlas = SubResource("CompressedTexture2D_u45ec")
-region = Rect2(568, 168, 38, 123)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_i3uh7"]
-load_path = "res://.godot/imported/poplar_tree.png-0dbe1866154817b90ae5364e2c312842.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3dghr"]
-atlas = SubResource("CompressedTexture2D_i3uh7")
-region = Rect2(4, 46, 140, 337)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_hi0an"]
 atlas = ExtResource("16_j3ibm")
 region = Rect2(256, 0, 64, 112)
@@ -1165,6 +1095,76 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_fspdr"]
+load_path = "res://.godot/imported/poplar_tree.png-0dbe1866154817b90ae5364e2c312842.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v8dcf"]
+atlas = SubResource("CompressedTexture2D_fspdr")
+region = Rect2(4, 46, 140, 337)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ljxsm"]
+load_path = "res://.godot/imported/poplar_tree.png-0dbe1866154817b90ae5364e2c312842.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j3ibm"]
+atlas = SubResource("CompressedTexture2D_ljxsm")
+region = Rect2(164, 1, 254, 385)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_f2v41"]
+load_path = "res://.godot/imported/strawberry_onion.png-b4a809cfdd444c03b92ff5c903bee763.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q7nff"]
+atlas = SubResource("CompressedTexture2D_f2v41")
+region = Rect2(347, 150, 79, 63)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vbg4f"]
+load_path = "res://.godot/imported/sketch_crap_1.png-bea57c075dc9a87edb56ffe3da19b943.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qmuma"]
+atlas = SubResource("CompressedTexture2D_vbg4f")
+region = Rect2(21, 528, 504, 543)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8i76p"]
+load_path = "res://.godot/imported/poplar_tree.png-0dbe1866154817b90ae5364e2c312842.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xpwyp"]
+atlas = SubResource("CompressedTexture2D_8i76p")
+region = Rect2(475, 176, 80, 118)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_omdd6"]
+load_path = "res://.godot/imported/poplar_tree.png-0dbe1866154817b90ae5364e2c312842.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dxprt"]
+atlas = SubResource("CompressedTexture2D_omdd6")
+region = Rect2(164, 1, 254, 385)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_si0s2"]
+load_path = "res://.godot/imported/poplar_tree.png-0dbe1866154817b90ae5364e2c312842.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0uim"]
+atlas = SubResource("CompressedTexture2D_si0s2")
+region = Rect2(548, 299, 117, 87)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_quwvq"]
+load_path = "res://.godot/imported/poplar_tree.png-0dbe1866154817b90ae5364e2c312842.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ld0pq"]
+atlas = SubResource("CompressedTexture2D_quwvq")
+region = Rect2(436, 90, 42, 41)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_u45ec"]
+load_path = "res://.godot/imported/poplar_tree.png-0dbe1866154817b90ae5364e2c312842.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4xoo2"]
+atlas = SubResource("CompressedTexture2D_u45ec")
+region = Rect2(568, 168, 38, 123)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_i3uh7"]
+load_path = "res://.godot/imported/poplar_tree.png-0dbe1866154817b90ae5364e2c312842.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dghr"]
+atlas = SubResource("CompressedTexture2D_i3uh7")
+region = Rect2(4, 46, 140, 337)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t57x4"]
 shader = ExtResource("4_heu65")
 shader_parameter/tex = ExtResource("5_rglh7")
@@ -1332,6 +1332,24 @@ z_index = 4096
 scale = Vector2(0.315, 0.315)
 texture = ExtResource("1_rqo0b")
 
+[node name="Mask3" type="Node2D" parent="ObjectAtlas"]
+position = Vector2(528, -159)
+scale = Vector2(0.84743214, 0.9773954)
+
+[node name="masker" type="Sprite2D" parent="ObjectAtlas/Mask3"]
+material = SubResource("ShaderMaterial_ims53")
+texture = ExtResource("1_rqo0b")
+
+[node name="masker2" type="Sprite2D" parent="ObjectAtlas/Mask3"]
+material = SubResource("ShaderMaterial_ims53")
+position = Vector2(0, -34.78633)
+texture = ExtResource("1_rqo0b")
+
+[node name="Sprite2D" type="Sprite2D" parent="ObjectAtlas/Mask3"]
+z_index = 4096
+scale = Vector2(0.315, 0.315)
+texture = ExtResource("1_rqo0b")
+
 [node name="Mask8" type="Node2D" parent="ObjectAtlas"]
 position = Vector2(468, -159)
 
@@ -1345,6 +1363,7 @@ scale = Vector2(0.315, 0.315)
 texture = ExtResource("1_rqo0b")
 
 [node name="Mask9" type="Node2D" parent="ObjectAtlas"]
+visible = false
 position = Vector2(468, -226)
 
 [node name="masker" type="Sprite2D" parent="ObjectAtlas/Mask9"]
@@ -1368,6 +1387,116 @@ z_index = 4096
 scale = Vector2(0.315, 0.315)
 texture = ExtResource("1_rqo0b")
 
+[node name="Player6" type="CharacterBody2D" parent="ObjectAtlas"]
+y_sort_enabled = true
+position = Vector2(501, -130)
+collision_layer = 128
+collision_mask = 512
+motion_mode = 1
+
+[node name="PlayerOutfitHandler" type="Node2D" parent="ObjectAtlas/Player6"]
+z_as_relative = false
+
+[node name="NewBody" type="AnimatedSprite2D" parent="ObjectAtlas/Player6/PlayerOutfitHandler"]
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(0, -64)
+sprite_frames = SubResource("SpriteFrames_ke5yh")
+animation = &"JumpUp"
+autoplay = "IdleDown"
+offset = Vector2(0, -45)
+
+[node name="Body" type="AnimatedSprite2D" parent="ObjectAtlas/Player6/PlayerOutfitHandler"]
+visible = false
+modulate = Color(0.968193, 0.803596, 0.700107, 1)
+z_as_relative = false
+y_sort_enabled = true
+scale = Vector2(0.305, 0.305)
+sprite_frames = SubResource("SpriteFrames_oxra1")
+animation = &"idle_back"
+autoplay = "idle_forward"
+offset = Vector2(0, -141)
+
+[node name="Hair" type="AnimatedSprite2D" parent="ObjectAtlas/Player6/PlayerOutfitHandler"]
+visible = false
+z_as_relative = false
+y_sort_enabled = true
+scale = Vector2(0.305, 0.305)
+sprite_frames = SubResource("SpriteFrames_olv46")
+animation = &"idle_side"
+autoplay = "idle_forward"
+offset = Vector2(0, -141)
+
+[node name="Outfit" type="AnimatedSprite2D" parent="ObjectAtlas/Player6/PlayerOutfitHandler"]
+visible = false
+z_as_relative = false
+y_sort_enabled = true
+scale = Vector2(0.305, 0.305)
+sprite_frames = SubResource("SpriteFrames_i46n4")
+animation = &"idle_side"
+autoplay = "idle_forward"
+offset = Vector2(0, -141)
+
+[node name="trueloc" type="Sprite2D" parent="ObjectAtlas/Player6"]
+z_index = 100
+scale = Vector2(0.105, 0.105)
+texture = ExtResource("1_rqo0b")
+
+[node name="Player7" type="CharacterBody2D" parent="ObjectAtlas"]
+y_sort_enabled = true
+position = Vector2(435, -169)
+collision_layer = 128
+collision_mask = 512
+motion_mode = 1
+
+[node name="PlayerOutfitHandler" type="Node2D" parent="ObjectAtlas/Player7"]
+z_as_relative = false
+
+[node name="NewBody" type="AnimatedSprite2D" parent="ObjectAtlas/Player7/PlayerOutfitHandler"]
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(0, -32)
+sprite_frames = SubResource("SpriteFrames_ke5yh")
+animation = &"JumpUp"
+autoplay = "IdleDown"
+offset = Vector2(0, -45)
+
+[node name="Body" type="AnimatedSprite2D" parent="ObjectAtlas/Player7/PlayerOutfitHandler"]
+visible = false
+modulate = Color(0.968193, 0.803596, 0.700107, 1)
+z_as_relative = false
+y_sort_enabled = true
+scale = Vector2(0.305, 0.305)
+sprite_frames = SubResource("SpriteFrames_oxra1")
+animation = &"idle_back"
+autoplay = "idle_forward"
+offset = Vector2(0, -141)
+
+[node name="Hair" type="AnimatedSprite2D" parent="ObjectAtlas/Player7/PlayerOutfitHandler"]
+visible = false
+z_as_relative = false
+y_sort_enabled = true
+scale = Vector2(0.305, 0.305)
+sprite_frames = SubResource("SpriteFrames_olv46")
+animation = &"idle_side"
+autoplay = "idle_forward"
+offset = Vector2(0, -141)
+
+[node name="Outfit" type="AnimatedSprite2D" parent="ObjectAtlas/Player7/PlayerOutfitHandler"]
+visible = false
+z_as_relative = false
+y_sort_enabled = true
+scale = Vector2(0.305, 0.305)
+sprite_frames = SubResource("SpriteFrames_i46n4")
+animation = &"idle_side"
+autoplay = "idle_forward"
+offset = Vector2(0, -141)
+
+[node name="trueloc" type="Sprite2D" parent="ObjectAtlas/Player7"]
+z_index = 100
+scale = Vector2(0.105, 0.105)
+texture = ExtResource("1_rqo0b")
+
 [node name="Oak" parent="ObjectAtlas" instance=ExtResource("3_vybgh")]
 position = Vector2(28, -182)
 script = null
@@ -1384,7 +1513,7 @@ texture = SubResource("AtlasTexture_j3ibm")
 offset = Vector2(0, -284.145)
 
 [node name="poplar spoof" type="Node2D" parent="ObjectAtlas"]
-position = Vector2(471, -118)
+position = Vector2(573, -112)
 
 [node name="Poplar2" type="Node2D" parent="ObjectAtlas/poplar spoof"]
 position = Vector2(0, -68)
@@ -1559,63 +1688,8 @@ z_index = 100
 scale = Vector2(0.105, 0.105)
 texture = ExtResource("1_rqo0b")
 
-[node name="Player6" type="CharacterBody2D" parent="ObjectAtlas"]
-y_sort_enabled = true
-position = Vector2(409, -149)
-collision_layer = 128
-collision_mask = 512
-motion_mode = 1
-
-[node name="PlayerOutfitHandler" type="Node2D" parent="ObjectAtlas/Player6"]
-z_as_relative = false
-
-[node name="NewBody" type="AnimatedSprite2D" parent="ObjectAtlas/Player6/PlayerOutfitHandler"]
-texture_filter = 1
-texture_repeat = 1
-position = Vector2(0, -64)
-sprite_frames = SubResource("SpriteFrames_ke5yh")
-animation = &"JumpUp"
-autoplay = "IdleDown"
-offset = Vector2(0, -45)
-
-[node name="Body" type="AnimatedSprite2D" parent="ObjectAtlas/Player6/PlayerOutfitHandler"]
-visible = false
-modulate = Color(0.968193, 0.803596, 0.700107, 1)
-z_as_relative = false
-y_sort_enabled = true
-scale = Vector2(0.305, 0.305)
-sprite_frames = SubResource("SpriteFrames_oxra1")
-animation = &"idle_back"
-autoplay = "idle_forward"
-offset = Vector2(0, -141)
-
-[node name="Hair" type="AnimatedSprite2D" parent="ObjectAtlas/Player6/PlayerOutfitHandler"]
-visible = false
-z_as_relative = false
-y_sort_enabled = true
-scale = Vector2(0.305, 0.305)
-sprite_frames = SubResource("SpriteFrames_olv46")
-animation = &"idle_side"
-autoplay = "idle_forward"
-offset = Vector2(0, -141)
-
-[node name="Outfit" type="AnimatedSprite2D" parent="ObjectAtlas/Player6/PlayerOutfitHandler"]
-visible = false
-z_as_relative = false
-y_sort_enabled = true
-scale = Vector2(0.305, 0.305)
-sprite_frames = SubResource("SpriteFrames_i46n4")
-animation = &"idle_side"
-autoplay = "idle_forward"
-offset = Vector2(0, -141)
-
-[node name="trueloc" type="Sprite2D" parent="ObjectAtlas/Player6"]
-z_index = 100
-scale = Vector2(0.105, 0.105)
-texture = ExtResource("1_rqo0b")
-
 [node name="Player5" type="CharacterBody2D" parent="ObjectAtlas"]
-position = Vector2(217, -196)
+position = Vector2(477, -235)
 collision_layer = 128
 collision_mask = 512
 motion_mode = 1
