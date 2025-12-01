@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://ci7frj803w55q"]
+[gd_scene load_steps=2 format=3 uid="uid://ci7frj803w55q"]
+
+[ext_resource type="Script" uid="uid://tq23mgtitkjv" path="res://Game Logic/UI/options_menu.gd" id="1_sncl2"]
 
 [node name="Options" type="Control"]
 layout_mode = 3
@@ -8,8 +10,9 @@ anchor_right = 0.5
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_sncl2")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -22,3 +25,12 @@ offset_right = 250.0
 offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "save da world"
+
+[connection signal="pressed" from="Panel/VBoxContainer/Button" to="." method="_on_save_button_pressed"]

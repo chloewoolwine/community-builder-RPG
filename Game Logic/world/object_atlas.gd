@@ -131,8 +131,10 @@ func pop_away_object(object_data: ObjectData) -> void:
 	live_objects.erase(object_data)
 
 func create_mask(loc: Location, square: SquareData) -> void: 
+	#print("creating mask at: ", loc)
 	var mask:ElevationMask = MASK.instantiate()
 	mask.elevation = square.elevation
+	#print("square elevation: ", square.elevation, " mask elevation: ", mask.elevation)
 	mask.loc = loc.get_world_coordinates()
 	mask.freeing_self.connect(mask_freeing_self)
 	mask.position = EnvironmentLogic.get_displayed_pos_object(loc, 1)
@@ -147,7 +149,11 @@ func unload_mask_if_real(loc: Location) -> void:
 	masks.erase(loc.get_world_coordinates())
 
 func get_mask(loc: Location) -> ElevationMask:
+	#print(loc)
+	#print(masks)
 	return masks.get(loc.get_world_coordinates(), null)
 
 func mask_freeing_self(mask: ElevationMask) -> void: 
+	#print("mask at ", mask.loc, " freed itself")
 	masks.erase(mask.loc)
+	#print(masks)

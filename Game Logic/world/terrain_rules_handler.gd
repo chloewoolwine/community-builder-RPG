@@ -153,7 +153,8 @@ func populate_set_of_chunks(chunks: Dictionary) -> void:
 	
 func translate_square_data_to_tile(data: SquareData, world_pos: Vector2i, _chunk_overall: Vector2i)-> void:
 	var ele:int = data.elevation
-	#print("loading tile: ", world_pos, " elevation: ", ele)
+	if world_pos == Vector2i(5,5):
+		print("loading tile: ", world_pos, " elevation: ", ele)
 	if (ele >= elevations.size()):
 		for x in range(elevations.size(), ele+1):
 			#print_if_debug(str("creating new layer: ", x))
@@ -182,10 +183,10 @@ func translate_square_data_to_tile(data: SquareData, world_pos: Vector2i, _chunk
 		_settle_objects_at_square(data)
 	
 	var loc:= Location.get_location_from_world(world_pos)
-	var square := EnvironmentLogic.get_square(world_data, loc.get_location(Vector2(0, -1)))
-	if square != null && square.elevation < ele:
+	var new_square := EnvironmentLogic.get_square(world_data, loc.get_location(Vector2(0, -1)))
+	if new_square != null && new_square.elevation < ele:
 		#back facing cliff, need to mask
-		object_atlas.create_mask(loc, square)
+		object_atlas.create_mask(loc, data)
 		pass
 	
 func remove_floor_at(pos: Location) -> void:

@@ -17,6 +17,7 @@ var gui_state: GuiState
 @onready var pickup_manager:PickupManager = $PickupManager
 @onready var story_manager:StoryManager = $StoryManager
 #@onready var saver_loader:SaverLoader = $SaverLoader
+@onready var world_saver: WorldSaver = $WorldSaver
 # player moved down the scene tree, also for y-aasorting :C
 @onready var lighting:CalendarManager= $StoryManager/Lighting
 @onready var player: Player = $WorldManager/TerrainRulesHandler/ObjectAtlas/Player
@@ -40,6 +41,7 @@ func _ready() -> void:
 	handle_entity_setup()
 	handle_player_setup()
 	handle_world_setup()
+	handle_gui_setup()
 	
 	handle_final_presentation()
 
@@ -50,6 +52,11 @@ func handle_final_presentation() -> void:
 	lighting.proccessTime = true
 	player.loading_done()
 	game_ready = true
+	
+func handle_gui_setup() -> void: 
+	options_menu.please_save_game.connect(func() -> void:
+		print("world saver called")
+		world_saver.save_world(world_manager._world_data, ""))
 
 ## Connects events dynamically
 func handle_world_setup() -> void:

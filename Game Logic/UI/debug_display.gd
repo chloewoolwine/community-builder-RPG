@@ -3,6 +3,7 @@ extends Control
 @onready var world_manager: WorldManager = $"../../WorldManager"
 @onready var player: Player = $"../../WorldManager/TerrainRulesHandler/ObjectAtlas/Player"
 @onready var lighting: CalendarManager = $"../../StoryManager/Lighting"
+@onready var world_saver: WorldSaver = $"../../WorldSaver"
 
 @onready var label: Label = $PanelContainer/VBoxContainer/Label
 @onready var label_2: Label = $PanelContainer/VBoxContainer/Label2
@@ -81,3 +82,6 @@ func do_chunk_stuff() -> void:
 	if world_manager != null:
 		label_8.text = str("chunks in loading: ", world_manager.trh.chunks_in_loading, ", chunks to unload: ", world_manager.trh.chunks_to_unload)
 		label_9.text = str("loaded chunks: ", world_manager.trh.loaded_chunks)
+
+func on_button_press() -> void: 
+	world_saver.save_world(world_manager._world_data, "")

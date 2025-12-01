@@ -66,28 +66,32 @@ func _unhandled_input(event: InputEvent) -> void:
 		#temp_mousecast.global_position = mouse
 		tile_indicator.global_position = mouse
 		#var layer := trh.get_topmost_layer_at_global_pos(mouse)
+		var pos := world_manager.convert_to_chunks_at_world_pos(mouse)
+		var loc := Location.new(pos[0], pos[1])
 		if paint:
-			print("paint time")
-			match paint_type:
-				"grass":
-					world_manager.modify_terrain(mouse, SquareData.SquareType.Grass)
-				"stone":
-					world_manager.modify_terrain(mouse, SquareData.SquareType.Rock)
-				"soil":
-					world_manager.modify_terrain(mouse, SquareData.SquareType.Dirt)
-				"water":
-					world_manager.change_water(mouse, 4)
-				"sand":
-					world_manager.modify_terrain(mouse, SquareData.SquareType.Sand)
-				"dry":
-					world_manager.change_water(mouse, 0)
-			#if world_manager.check_placement_validity(tile_indicator, mouse, trh.get_topmost_layer_at_global_pos(mouse), WOOD_WALL):
-				#world_manager.place_object(mouse, trh.get_topmost_layer_at_global_pos(mouse), WOOD_WALL)
-		else:
-			var objects := world_manager.get_objects_at_world_pos(mouse)
-			for x in objects:
-				if x != null:
-					world_manager.destroy_object(x)
+			world_manager.raise_elevation(loc, SquareData.SquareType.Dirt)
+		#if paint:
+			#print("paint time")
+			#match paint_type:
+				#"grass":
+					#world_manager.modify_terrain(mouse, SquareData.SquareType.Grass)
+				#"stone":
+					#world_manager.modify_terrain(mouse, SquareData.SquareType.Rock)
+				#"soil":
+					#world_manager.modify_terrain(mouse, SquareData.SquareType.Dirt)
+				#"water":
+					#world_manager.change_water(mouse, 4)
+				#"sand":
+					#world_manager.modify_terrain(mouse, SquareData.SquareType.Sand)
+				#"dry":
+					#world_manager.change_water(mouse, 0)
+			##if world_manager.check_placement_validity(tile_indicator, mouse, trh.get_topmost_layer_at_global_pos(mouse), WOOD_WALL):
+				##world_manager.place_object(mouse, trh.get_topmost_layer_at_global_pos(mouse), WOOD_WALL)
+		#else:
+			#var objects := world_manager.get_objects_at_world_pos(mouse)
+			#for x in objects:
+				#if x != null:
+					#world_manager.destroy_object(x)
 
 func _on_temp_mousecast_body_entered(body: Node2D) -> void:
 	if body is InteractionHitbox:
