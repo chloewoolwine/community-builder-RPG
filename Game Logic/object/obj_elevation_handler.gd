@@ -15,7 +15,7 @@ func _ready() -> void:
 func _offset_sprites() -> void:
 	#print("offsetting sprites of ", owner.object_id)
 	for x in range(things_to_offset.size()):
-		var sprite = things_to_offset[x]
+		var sprite:Node2D = things_to_offset[x]
 		sprite.position.y = (current_elevation * Constants.ELEVATION_Y_OFFSET) + original_positions[x]
 
 func _change_collision_layer(prev: int, new: int) -> void:

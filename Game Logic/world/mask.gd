@@ -9,7 +9,7 @@ signal freeing_self(me: ElevationMask)
 @export var debug: bool = false
 var elevation: int
 var loc: Vector2i
-var masks: Array[Sprite2D]
+var masks: Array[Sprite2D] = []
 
 func _ready() -> void:
 	if elevation == 0:
@@ -27,6 +27,9 @@ func _ready() -> void:
 		increase_elevation()
 	
 func decrease_elevation() -> void:
+	if masks.size() == 0:
+		freeing_self.emit(self)
+		self.queue_free()
 	elevation = elevation - 1
 	masks.pop_front().queue_free()
 	if elevation == 0:
@@ -43,6 +46,6 @@ func increase_elevation() -> void:
 
 func change_elevation_to(val:int) -> void:
 	while val < elevation:
-		increase_elevation()
-	while val > elevation:
 		decrease_elevation()
+	while val > elevation:
+		increase_elevation()
