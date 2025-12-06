@@ -6,7 +6,7 @@ signal freeing_self(me: ElevationMask)
 @onready var masker: Sprite2D = $masker
 @onready var mark: Sprite2D = $Mark
 
-var debug: bool = true
+@export var debug: bool = false
 var elevation: int
 var loc: Vector2i
 var masks: Array[Sprite2D]
