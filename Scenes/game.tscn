@@ -136,10 +136,10 @@ dash_length = 0.4
 [node name="NewBody" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/Player/PlayerOutfitHandler" index="1"]
 animation = &""
 
-[node name="HealthHandler" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/Player" index="8"]
+[node name="HealthHandler" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/Player" index="11"]
 hunger_base_fall_rate = 0.0
 
-[node name="TileIndicator" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/Player" index="10"]
+[node name="TileIndicator" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/Player" index="13"]
 texture = SubResource("AtlasTexture_mucmn")
 
 [node name="EntityManager" type="Node2D" parent="WorldManager/TerrainRulesHandler/ObjectAtlas"]

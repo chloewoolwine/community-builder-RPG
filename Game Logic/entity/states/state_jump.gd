@@ -110,7 +110,7 @@ func validate_higher_jump(true_loc: Location, elevation: int, trh: TerrainRulesH
 	var loc_other := true_loc.get_location(input)
 	var sd_other := trh.get_square_data_at_location(loc_other) #TODO: I NEED to get square data somehow else. this is not testable!
 	if sd_other and sd_other.elevation == player.elevation_handler.current_elevation+1:
-		var targ := Vector2(input * Constants.TILE_SIZE) + eleh.get_assumed_pos()
+		var targ := Vector2(input * Constants.TILE_SIZE) + player.global_position
 		#print("target: " + str(targ))
 		if check_obstacles_at_point(targ, sd_other.elevation):
 			machine.print_if_debug("StateJump: Obstacle detected at higher elevation jump target, cannot jump there.")

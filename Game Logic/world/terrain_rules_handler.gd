@@ -51,6 +51,8 @@ func _process(_delta: float) -> void:
 			chunk_loaded.emit(chunk_data)
 				#print("key did not erase, ", key)
 			#print("chunk_row_next: ", chunk_row_next.keys())
+			#finish edges in adjacant loading chunks - this is because of how things are unloaded
+			finish_edge_between_chunks(key)
 		else:
 			var chunk_pos:Vector2i = chunk_data.chunk_position * chunk_data.chunk_size
 			for y in range(chunk_data.chunk_size.y):
@@ -150,8 +152,32 @@ func unload_set_of_chunks(chunks: Dictionary) -> void:
 		
 func populate_set_of_chunks(chunks: Dictionary) -> void:
 	chunks_in_loading.merge(chunks)
+
+func finish_edge_between_chunks(new_chunk: Vector2i) -> void:
+	var adjacents:Array = [Vector2i(0,1), Vector2i(0,-1), Vector2i(1,0), Vector2i(-1,0)]
+	var dict:Dictionary = {Vector2i(0, -1): Vector2i(0, 31), Vector2i(0,1): Vector2i(0,0), Vector2i(1,0): Vector2i(0,0), Vector2i(-1,0): Vector2i(31,0)}
+	for adj:Vector2i in adjacents:
+		var adj_key:Vector2i = new_chunk + adj
+		if loaded_chunks.has(adj_key):
+			#print("finishing edge between ", new_chunk, " and ", adj_key)
+			#then we need to update the edge between (loaded_chunk) and (new_chunk) inside of (loaded_chunk)
+			# if old chunk is above (0,-1), we need to update the row (x, 31)
+			# if old chunk is below (0,1), we need to update the row (x,0)
+			# if old chunk is to the right (1, 0), we need to update the col (0,y)
+			# if old chunk is to the left (-1, 0), we need to update the col (31,y)
+			var old_chunk:ChunkData = loaded_chunks[adj_key]
+			var edge_pos:Vector2i = dict[adj]
+			for z in range(Constants.CHUNK_SIZE):
+				var square_data:SquareData
+				if adj.x == 0:
+					# vertical adj
+					square_data = old_chunk.square_datas[Vector2i(z, edge_pos.y)]
+				else:
+					# horizontal adj
+					square_data = old_chunk.square_datas[Vector2i(edge_pos.x, z)]
+				translate_square_data_to_tile(square_data, (old_chunk.chunk_position * old_chunk.chunk_size) + square_data.location_in_chunk, old_chunk.chunk_position, false)
 	
-func translate_square_data_to_tile(data: SquareData, world_pos: Vector2i, _chunk_overall: Vector2i)-> void:
+func translate_square_data_to_tile(data: SquareData, world_pos: Vector2i, _chunk_overall: Vector2i, update_objs:bool = true)-> void:
 	var ele:int = data.elevation
 	if world_pos == Vector2i(5,5):
 		print("loading tile: ", world_pos, " elevation: ", ele)
@@ -172,7 +198,7 @@ func translate_square_data_to_tile(data: SquareData, world_pos: Vector2i, _chunk
 		#print("building base in elevation: ", x)
 		elevations[x].build_base_of(data, world_pos)
 	elevations[ele].set_square(data, world_pos)
-	if data.object_data != null:
+	if data.object_data != null && update_objs:
 		var actual_pos := EnvironmentLogic.get_real_pos_object(Location.get_location_from_world(world_pos), data.elevation)
 		#anyhow, the world data should be the ultimate authority for an objects position
 		for object in data.object_data:

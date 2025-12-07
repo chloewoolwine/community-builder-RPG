@@ -53,8 +53,9 @@ func exit() -> void:
 	super.exit()
 	#if !free:
 		#we never made it! oh no :/
-	end_special_collisions() 
-	player.animation_handler.jump_finished.disconnect(_on_jump_finished)
+	end_special_collisions()
+	if player.animation_handler.jump_finished.is_connected(_on_jump_finished):
+		player.animation_handler.jump_finished.disconnect(_on_jump_finished)
 	machine.print_if_debug("Exited StateForceFall")
 	if targ != null:
 		targ.visible = false
