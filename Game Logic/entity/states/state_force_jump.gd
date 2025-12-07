@@ -4,6 +4,7 @@ extends PlayerState
 var target_global_loc:Vector2
 var location:Location
 var free:bool = false
+var targ:Sprite2D
 
 func enter(prev_state: String, data:Dictionary = {}) -> void:
 	super.enter(prev_state, data)
@@ -21,14 +22,25 @@ func enter(prev_state: String, data:Dictionary = {}) -> void:
 	player.elevation_handler.empty_collision_layer()
 	player.animation_handler.jump_finished.connect(_on_jump_finished)
 	machine.print_if_debug("Entered state ForceJump")
+	if machine.debug:
+		targ = player.find_child("target")
+		if targ != null:
+			targ.visible = true
+			targ.global_position = target_global_loc
+			targ.self_modulate = Color.YELLOW_GREEN
 
 func exit() -> void:
 	super.exit()
 	end_special_collisions() 
 	player.animation_handler.jump_finished.disconnect(_on_jump_finished)
 	machine.print_if_debug("Exited state ForceJump")
+	if targ != null:
+		targ.visible = false
 
 func physics_update(_delta: float) -> void:
+	if targ != null:
+		targ.visible = true
+		targ.global_position = target_global_loc
 	if !free && player.elevation_handler.trueloc.global_position.distance_to(target_global_loc) > 5.0:
 		var direction:Vector2 = (target_global_loc - player.elevation_handler.trueloc.global_position).normalized()
 		player.velocity_handler.move_to(direction)

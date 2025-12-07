@@ -1,6 +1,10 @@
 extends PlayerState
 
-@export var jump_area:Area2D
+@export var up_area:Area2D
+@export var down_area:Area2D
+@export var right_area:Area2D
+@export var left_area:Area2D
+
 signal jump_start()
 var jump_time: float = 0.7
 var input:Vector2i = Vector2i.ZERO
@@ -22,8 +26,14 @@ func enter(prev_state: String, data:Dictionary = {"input": Vector2i.ZERO}) -> vo
 	input = data.get("input", Vector2i.ZERO)
 	eleh = player.elevation_handler
 	machine.print_if_debug("Entered StateJump")
-	jump_area.collision_mask = 0
-	jump_area.set_collision_mask_value(player.elevation_handler.current_elevation + 10, true)
+	up_area.collision_mask = 0
+	up_area.set_collision_mask_value(player.elevation_handler.current_elevation + 10, true)
+	down_area.collision_mask = 0
+	down_area.set_collision_mask_value(player.elevation_handler.current_elevation + 10, true)
+	right_area.collision_mask = 0
+	right_area.set_collision_mask_value(player.elevation_handler.current_elevation + 10, true)
+	left_area.collision_mask = 0
+	left_area.set_collision_mask_value(player.elevation_handler.current_elevation + 10, true)
 	#print("Jump area collision mask set to: ", jump_area.collision_mask)
 	
 func exit() -> void:
@@ -38,11 +48,24 @@ func physics_update(_delta: float) -> void:
 	player.animation_handler.travel_to_and_blend(PlayerState.JUMP, player.facing)
 	player.velocity_handler.move_to(input)
 	player.velocity_handler.do_physics(_delta)
-	for body in jump_area.get_overlapping_bodies():
-		#print("body.name: ", body.name)
-		if body not in checked_bodies:
-			check_overlapping_body(body)
-			checked_bodies.append(body)
+	#check different area depending on dir
+	var jump_area:Area2D
+	if player.facing.y != 0:
+		if player.facing.y < 0:
+			jump_area = up_area
+		else:
+			jump_area = down_area
+	elif player.facing.x != 0:
+		if player.facing.x > 0:
+			jump_area = right_area
+		else:
+			jump_area = left_area
+	if jump_area != null:
+		for body in jump_area.get_overlapping_bodies():
+			#print("body.name: ", body.name)
+			if body not in checked_bodies:
+				check_overlapping_body(body)
+				checked_bodies.append(body)
 	if timer.time_left <= 0.0:
 		#jump complete
 		transition_please.emit(PlayerState.FALL, self)
@@ -50,11 +73,13 @@ func physics_update(_delta: float) -> void:
 func check_overlapping_body(body: Node) -> void:
 	if body is TileMapLayer:
 		machine.print_if_debug("Collided with tilemap layer: " + body.name + " ensuring valid jump")
-		var el := body.get_parent() as ElevationLayer
-		var trh := el.get_parent().get_parent() as TerrainRulesHandler
+		var trh := body.get_parent().get_parent().get_parent() as TerrainRulesHandler
 		var true_loc := player.elevation_handler.get_true_loc()
+		#this doesn't take direction into account, causing Problems....
 		if body.name == "Base":
-			validate_lower_jump(true_loc, player.elevation_handler.current_elevation, trh)
+			pass #taking this out for now because it's causing issues - i want this out by end of year
+			#TODO: see i if can make lower jumps work somehow. maybe only block certain ones. 
+			#validate_lower_jump(true_loc, player.elevation_handler.current_elevation, trh)
 		elif body.name == "HigherElevationWarner":
 			#higher jump position
 			validate_higher_jump(true_loc, player.elevation_handler.current_elevation, trh)
@@ -62,7 +87,7 @@ func check_overlapping_body(body: Node) -> void:
 			#water- should only happen after base is found
 			pass
 	elif body.get_parent().is_in_group("jumpable") || body.is_in_group("jumpable"):
-		body.add_collision_exception_with(jump_area)
+		#body.add_collision_exception_with(jump_area) TODO: this doesn't make any sense- need the collider
 		machine.print_if_debug("Collided with jumpable object: " + body.name)
 		#jumped onto a jumpable object
 
@@ -72,11 +97,11 @@ func validate_lower_jump(true_loc: Location, elevation: int, trh: TerrainRulesHa
 	if sd_other.water_saturation >= Constants.SHALLOW_WATER:
 		#not dealing with this yet lol 
 		return
-	var targ := Vector2(input * Constants.TILE_SIZE) + eleh.get_assumed_pos()
+	var diff := player.elevation_handler.current_elevation - sd_other.elevation
+	var targ := Vector2(input * Constants.TILE_SIZE) + eleh.get_assumed_pos() - Vector2(0, diff * Constants.ELEVATION_Y_OFFSET)
 	if check_obstacles_at_point(targ, sd_other.elevation):
 		machine.print_if_debug("StateJump: Obstacle detected at higher elevation jump target, cannot jump there.")
 		return
-	var diff := player.elevation_handler.current_elevation - sd_other.elevation
 	machine.print_if_debug("StateJump: Base collision elevation difference: " + str(diff))
 	transition_please.emit(PlayerState.FORCEFALL, self, {"target_global_loc": targ, "location": loc_other, "elevation_diff": diff})
 	#TODO: some way of determining how long/how to animate the fall properly 
@@ -99,7 +124,7 @@ func check_obstacles_at_point(global_point: Vector2, elevation: int) -> bool:
 	var query := PhysicsRayQueryParameters2D.create(eleh.get_assumed_pos(), global_point, 1 << (elevation + 9), [player.get_rid()])
 	var result := space_state.intersect_ray(query)
 	machine.print_if_debug("checking obstacles at point: "+ str(global_point) + " elevation: "+ str(elevation) + " result: "+ str(result))
-	if result.size() > 0 && result.collider.name == "Base": #should be! 
+	if result.size() > 0 && (result.collider.name == "Base" || result.collider.name == "HigherElevationWarner"): #should be! 
 		var new_query := PhysicsRayQueryParameters2D.create(eleh.get_assumed_pos(), global_point, 1 << (elevation + 9), [player.get_rid(), result.rid])
 		machine.print_if_debug('excluding: '+ str(new_query.exclude))
 		result = space_state.intersect_ray(new_query)

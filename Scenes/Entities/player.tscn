@@ -1,4 +1,4 @@
-[gd_scene load_steps=182 format=3 uid="uid://dy236j24tdfmr"]
+[gd_scene load_steps=186 format=3 uid="uid://dy236j24tdfmr"]
 
 [ext_resource type="Script" uid="uid://bjjblaytsdioe" path="res://Game Logic/entity/player/player.gd" id="1_pwtpg"]
 [ext_resource type="Script" uid="uid://bcnyi4l6l1lro" path="res://Game Logic/entity/states/state_machine.gd" id="2_aqs8i"]
@@ -27,6 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://bsr1y04qjpc8" path="res://Assets/tiles/redsquare.png" id="15_pm2yg"]
 [ext_resource type="Texture2D" uid="uid://ddtqgt2xkhhj3" path="res://Assets/jumps.png" id="17_udx2w"]
 [ext_resource type="Texture2D" uid="uid://0b328wnqn4nq" path="res://Assets/player_shadow.png" id="18_awd1p"]
+[ext_resource type="Texture2D" uid="uid://8yhbo7pme6x8" path="res://Assets/Testy Assets/debug_walls.tres" id="28_1nbkv"]
 
 [sub_resource type="Animation" id="Animation_vbauc"]
 length = 0.4
@@ -642,7 +643,16 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8d5w2"]
-size = Vector2(20, 5.62883)
+size = Vector2(13.662638, 1.2666674)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1nbkv"]
+size = Vector2(13.662638, 1.2666674)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ke5yh"]
+size = Vector2(3.6784027, 3.8693695)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qminb"]
+size = Vector2(3.6784027, 3.8693695)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wsp85"]
 atlas = ExtResource("18_awd1p")
@@ -1797,7 +1807,7 @@ speed = 325
 script = ExtResource("14_at1v1")
 entity = NodePath("..")
 trueloc = NodePath("../trueloc")
-offsettees = [NodePath("../JumpArea"), NodePath("../PlayerActionHandler"), NodePath("../PlayerOutfitHandler/NewBody"), NodePath("../CollisionBox"), NodePath("../HealthHandler"), NodePath("../HitBox"), NodePath("../PlayerOutfitHandler/Shadow")]
+offsettees = [NodePath("../UpArea"), NodePath("../PlayerActionHandler"), NodePath("../PlayerOutfitHandler/NewBody"), NodePath("../CollisionBox"), NodePath("../HealthHandler"), NodePath("../HitBox"), NodePath("../PlayerOutfitHandler/Shadow"), NodePath("../DownArea"), NodePath("../RightArea"), NodePath("../LeftArea")]
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_aqs8i")
@@ -1810,15 +1820,22 @@ script = ExtResource("4_e8wcv")
 [node name="Idle" type="Node" parent="StateMachine"]
 script = ExtResource("3_vbauc")
 
-[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("jump_area")]
+[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("up_area", "down_area", "right_area", "left_area")]
 script = ExtResource("5_8d5w2")
-jump_area = NodePath("../../JumpArea")
+up_area = NodePath("../../UpArea")
+down_area = NodePath("../../DownArea")
+right_area = NodePath("../../RightArea")
+left_area = NodePath("../../LeftArea")
 
 [node name="Fall" type="Node" parent="StateMachine"]
 script = ExtResource("6_32wac")
 
-[node name="Walk" type="Node" parent="StateMachine"]
+[node name="Walk" type="Node" parent="StateMachine" node_paths=PackedStringArray("up_area", "down_area", "right_area", "left_area")]
 script = ExtResource("7_uhw1m")
+up_area = NodePath("../../UpArea")
+down_area = NodePath("../../DownArea")
+right_area = NodePath("../../RightArea")
+left_area = NodePath("../../LeftArea")
 
 [node name="Menu" type="Node" parent="StateMachine"]
 script = ExtResource("8_8d5w2")
@@ -1850,15 +1867,48 @@ libraries = {
 }
 autoplay = "IdleDown"
 
-[node name="JumpArea" type="Area2D" parent="."]
-visible = false
+[node name="UpArea" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 0
 
-[node name="CollisionBox2" type="CollisionShape2D" parent="JumpArea"]
+[node name="CollisionBox2" type="CollisionShape2D" parent="UpArea"]
 show_behind_parent = true
+position = Vector2(-3.874302e-07, -14.091967)
 scale = Vector2(1.903, 6.461)
 shape = SubResource("RectangleShape2D_8d5w2")
+debug_color = Color(0.48786712, 0.58116096, 0.20442906, 0.41960785)
+
+[node name="DownArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionBox2" type="CollisionShape2D" parent="DownArea"]
+show_behind_parent = true
+position = Vector2(-5.684342e-14, 13.999996)
+scale = Vector2(1.903, 6.461)
+shape = SubResource("RectangleShape2D_1nbkv")
+debug_color = Color(0.48786712, 0.58116096, 0.20442906, 0.41960785)
+
+[node name="RightArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionBox2" type="CollisionShape2D" parent="RightArea"]
+show_behind_parent = true
+position = Vector2(15.000001, 2.9802322e-08)
+scale = Vector2(1.903, 6.461)
+shape = SubResource("RectangleShape2D_ke5yh")
+debug_color = Color(0.48786712, 0.58116096, 0.20442906, 0.41960785)
+
+[node name="LeftArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionBox2" type="CollisionShape2D" parent="LeftArea"]
+show_behind_parent = true
+position = Vector2(-14.999997, 3.5527137e-15)
+scale = Vector2(1.903, 6.461)
+shape = SubResource("RectangleShape2D_qminb")
 debug_color = Color(0.48786712, 0.58116096, 0.20442906, 0.41960785)
 
 [node name="PlayerActionHandler" type="Node2D" parent="."]
@@ -1927,7 +1977,6 @@ autoplay = "idle_forward"
 offset = Vector2(0, -141)
 
 [node name="CollisionBox" type="CollisionShape2D" parent="."]
-visible = false
 z_index = 1000
 z_as_relative = false
 scale = Vector2(1.573, 5.341)
@@ -1970,3 +2019,9 @@ texture = ExtResource("15_pm2yg")
 position = Vector2(1.49012e-08, -10.25)
 scale = Vector2(0.259594, 0.246314)
 position_smoothing_enabled = true
+
+[node name="target" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+scale = Vector2(0.34, 0.34)
+texture = ExtResource("28_1nbkv")

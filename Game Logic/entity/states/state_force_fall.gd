@@ -5,6 +5,7 @@ var target_global_loc:Vector2
 var location:Location
 var elevation_diff:int
 var free:bool = false
+var targ:Sprite2D
 
 func enter(prev_state: String, data:Dictionary = {}) -> void:
 	super.enter(prev_state, data)
@@ -25,8 +26,28 @@ func enter(prev_state: String, data:Dictionary = {}) -> void:
 		return
 	free = false
 	player.elevation_handler.empty_collision_layer()
-	player.animation_handler.jump_finished.connect(_on_jump_finished)
 	machine.print_if_debug("Entered StateForceFall")
+	if machine.debug:
+		targ = player.find_child("target")
+		if targ != null:
+			targ.visible = true
+			targ.global_position = target_global_loc
+			targ.self_modulate = Color.BLUE_VIOLET
+	var caller:String = data.get("caller", "")
+	print("caller:", caller)
+	if caller == PlayerState.WALK:
+		print("caller is walk")
+		player.animation_handler.travel_to_and_blend(PlayerState.FALL, player.facing)
+		await get_tree().create_timer(fall_time * elevation_diff).timeout
+		var input := get_curr_input()
+		machine.print_if_debug("animation done, emitting transition from StateForceFall")
+		if input == Vector2i.ZERO:
+			transition_please.emit(PlayerState.IDLE, self, {"caller": "StateForceFall"})
+		else:
+			transition_please.emit(PlayerState.WALK, self, {"input_vector": input, "caller": "StateForceFall"})
+		return
+	else:
+		player.animation_handler.jump_finished.connect(_on_jump_finished)
 
 func exit() -> void:
 	super.exit()
@@ -35,8 +56,13 @@ func exit() -> void:
 	end_special_collisions() 
 	player.animation_handler.jump_finished.disconnect(_on_jump_finished)
 	machine.print_if_debug("Exited StateForceFall")
+	if targ != null:
+		targ.visible = false
 
 func physics_update(_delta: float) -> void:
+	if targ != null:
+		targ.visible = true
+		targ.global_position = target_global_loc
 	if !free && player.elevation_handler.trueloc.global_position.distance_to(target_global_loc) > 5.0 :
 		var direction:Vector2 = (target_global_loc - player.elevation_handler.trueloc.global_position).normalized()
 		player.velocity_handler.move_to(direction)
