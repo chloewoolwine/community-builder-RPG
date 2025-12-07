@@ -18,6 +18,8 @@ func _ready() -> void:
 #called in game to initiate most set up actions
 func do_setup() -> void: 
 	EnvironmentLogic.run_water_calc(_world_data, get_chunks_around_point(player.get_global_position(), 2))
+	trh.object_atlas.removable_object_placed.connect(func(object: Node2D) -> void:
+		object.object_removed.connect(destroy_object))
 #	if player:
 #		print("player")
 #		player.velocity_handler.try_step.connect(is_stepable_layer)

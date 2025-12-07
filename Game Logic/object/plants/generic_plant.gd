@@ -12,7 +12,7 @@ signal object_removed(me: ObjectData)
 @export var loot_table: LootTable
 @export var axe_hits: int ## These aren't saved- when trees are unloaded/reloaded this will reset. this is intended
 
-var object_data: ObjectData
+@export var object_data: ObjectData
 var square_data: SquareData
 # TODO: pass the square_data into here upon instantiation
 

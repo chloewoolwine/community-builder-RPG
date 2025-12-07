@@ -142,11 +142,6 @@ hunger_base_fall_rate = 0.0
 [node name="TileIndicator" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/Player" index="10"]
 texture = SubResource("AtlasTexture_mucmn")
 
-[node name="Camera2D" type="Camera2D" parent="WorldManager/TerrainRulesHandler/ObjectAtlas/Player"]
-position = Vector2(1.49012e-08, -10.25)
-scale = Vector2(0.259594, 0.246314)
-position_smoothing_enabled = true
-
 [node name="EntityManager" type="Node2D" parent="WorldManager/TerrainRulesHandler/ObjectAtlas"]
 editor_description = "Holds things with AI- player, npcs, enemies, etc"
 y_sort_enabled = true

@@ -1,10 +1,9 @@
 extends Node2D
 class_name ObjectAtlas
 
-@onready var world_manager: WorldManager = $"../.."
-
 signal plant_placed(plant: GenericPlant)
 signal new_object_placed(object: ObjectData)
+signal removable_object_placed(object: Node2D)
 
 # GODOT SORT HEIRARCHY 
 #  CanvasLayer > overrules > z_index > overrules > Ysort > overrules > scene tree hierarchy 
@@ -98,11 +97,13 @@ func _parse_and_place(object_data: ObjectData, overall_position: Vector2, square
 			# TODO: this is shit!! fix when refractoring to be more component based
 			if object is GenericPlant or object is GenericWall or object.is_in_group(&"removable"):
 				if object.has_signal(&"object_removed"):
-					object.object_removed.connect(world_manager.destroy_object)
+					removable_object_placed.emit(object)
+					#object.object_removed.connect(world_manager.destroy_object)
 				else:
 					var child:Node = object.find_child("SimpleCollectable")
 					if child != null:
-						child.object_removed.connect(world_manager.destroy_object)
+						removable_object_placed.emit(object)
+						#child.object_removed.connect(world_manager.destroy_object)
 			var hitbox: Node2D = find_child("InteractionHitbox", false)
 			if hitbox: 
 				hitbox.current_elevation = square.elevation

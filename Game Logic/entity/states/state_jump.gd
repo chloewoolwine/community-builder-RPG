@@ -83,7 +83,7 @@ func validate_lower_jump(true_loc: Location, elevation: int, trh: TerrainRulesHa
 
 func validate_higher_jump(true_loc: Location, elevation: int, trh: TerrainRulesHandler) -> void:
 	var loc_other := true_loc.get_location(input)
-	var sd_other := trh.get_square_data_at_location(loc_other)
+	var sd_other := trh.get_square_data_at_location(loc_other) #TODO: I NEED to get square data somehow else. this is not testable!
 	if sd_other and sd_other.elevation == player.elevation_handler.current_elevation+1:
 		var targ := Vector2(input * Constants.TILE_SIZE) + eleh.get_assumed_pos()
 		#print("target: " + str(targ))

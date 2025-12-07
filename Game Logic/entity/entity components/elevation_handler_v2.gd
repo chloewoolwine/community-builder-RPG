@@ -47,12 +47,12 @@ func set_to_elevation_at_loc(loc: Location) -> void:
 	if terrain_rules_handler == null:
 		push_warning("ElevationHandler: terrain_rules_handler is null in set_to_elevation_at_loc()!")
 		return
+	#TODO: maybe change this, its real hard to test
 	var square_data: SquareData = terrain_rules_handler.get_square_data_at_location(loc)
 	if square_data == null:
 		push_warning("ElevationHandler: square_data is null for loc %s in set_to_elevation_at_loc()!" % loc)
 		return
-	if current_elevation != square_data.elevation:
-		current_elevation = square_data.elevation
+	current_elevation = square_data.elevation
 	#_offset_sprites()
 
 func get_assumed_pos() -> Vector2:

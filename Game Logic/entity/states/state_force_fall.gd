@@ -37,7 +37,7 @@ func exit() -> void:
 	machine.print_if_debug("Exited StateForceFall")
 
 func physics_update(_delta: float) -> void:
-	if !free && player.elevation_handler.trueloc.global_position.distance_to(target_global_loc) > 5.0:
+	if !free && player.elevation_handler.trueloc.global_position.distance_to(target_global_loc) > 5.0 :
 		var direction:Vector2 = (target_global_loc - player.elevation_handler.trueloc.global_position).normalized()
 		player.velocity_handler.move_to(direction)
 		player.velocity_handler.do_physics(_delta)
@@ -63,6 +63,7 @@ func _on_jump_finished() -> void:
 	return
 
 func end_special_collisions() -> void: 
+	machine.print_if_debug("ending special collisions")
 	player.elevation_handler.set_to_elevation_at_loc(location)
 	for e in player.get_collision_exceptions():
 		player.remove_collision_exception_with(e)

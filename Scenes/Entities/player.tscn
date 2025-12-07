@@ -1802,6 +1802,7 @@ offsettees = [NodePath("../JumpArea"), NodePath("../PlayerActionHandler"), NodeP
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_aqs8i")
 initial_state = NodePath("Load")
+debug = true
 
 [node name="Load" type="Node" parent="StateMachine"]
 script = ExtResource("4_e8wcv")
@@ -1964,3 +1965,8 @@ script = ExtResource("11_msv3g")
 z_index = 1000
 scale = Vector2(0.105, 0.105)
 texture = ExtResource("15_pm2yg")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(1.49012e-08, -10.25)
+scale = Vector2(0.259594, 0.246314)
+position_smoothing_enabled = true

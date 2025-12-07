@@ -3,7 +3,7 @@ class_name ObjElevationHandler
 
 @export var things_to_offset: Array[Node2D] #this plus all its children are offset based on elevation
 var original_positions:Array[float]
-var current_elevation:int = 0
+@export var current_elevation:int = 0
 @export var solid:bool = true
 
 func _ready() -> void:
