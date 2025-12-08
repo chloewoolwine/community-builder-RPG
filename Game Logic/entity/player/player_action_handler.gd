@@ -19,6 +19,7 @@ var equiped_item: SlotData
 #on it 
 func do_action() -> String:
 	#if player is holding tool, or if player is in front of interactable
+	rotate_raycast()
 	var cast:Object = ray_cast_2d.get_collider()
 	if cast && cast is InteractionHitbox && cast.accepting_interactions:
 		if cast.needs_tool and equiped_item and equiped_item.item_data is ItemDataTool and equiped_item.item_data.type == cast.tool_required:
@@ -59,3 +60,19 @@ func use_tool(item:SlotData)->void:
 			print("tool not yet implemented")
 		ItemDataTool.WeaponType.CAN:
 			tile_indicator.attempt_modify(player.global_position, "water")
+
+func rotate_raycast() -> void: 
+	if player.facing.x != 0:
+		if player.facing.x > 0:
+			#right
+			ray_cast_2d.rotation_degrees = 270
+		else:
+			#left
+			ray_cast_2d.rotation_degrees = 90
+	else:
+		if player.facing.y > 0:
+			#down
+			ray_cast_2d.rotation_degrees = 0
+		else:
+			#up
+			ray_cast_2d.rotation_degrees = 180

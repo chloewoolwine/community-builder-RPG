@@ -1911,10 +1911,10 @@ shape = SubResource("RectangleShape2D_qminb")
 debug_color = Color(0.48786712, 0.58116096, 0.20442906, 0.41960785)
 
 [node name="PlayerActionHandler" type="Node2D" parent="."]
-visible = false
 script = ExtResource("2_c3tp2")
 
 [node name="RayCast2D" type="RayCast2D" parent="PlayerActionHandler"]
+position = Vector2(1.9999999, 0)
 scale = Vector2(7, 0.35)
 target_position = Vector2(0, 177.03)
 collision_mask = 4
@@ -1940,7 +1940,7 @@ y_sort_enabled = true
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = SubResource("SpriteFrames_ke5yh")
-animation = &"FallDown"
+animation = &"IdleUp"
 autoplay = "IdleDown"
 offset = Vector2(0, -45)
 

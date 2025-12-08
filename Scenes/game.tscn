@@ -44,17 +44,14 @@ colors = PackedColorArray(0.153943, 0.14085, 0.369463, 1, 0.238675, 0.187243, 0.
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_6o1tu"]
 gradient = SubResource("Gradient_yfqml")
 
+[sub_resource type="Resource" id="Resource_ym3tv"]
+script = ExtResource("12_iyjdd")
+item_data = ExtResource("20_lmoi6")
+metadata/_custom_type_script = "uid://ff7axvflmy38"
+
 [sub_resource type="Resource" id="Resource_yddo7"]
 script = ExtResource("12_iyjdd")
 item_data = ExtResource("14_xe308")
-
-[sub_resource type="Resource" id="Resource_i26dy"]
-script = ExtResource("12_iyjdd")
-item_data = ExtResource("19_d3cha")
-
-[sub_resource type="Resource" id="Resource_6tnq2"]
-script = ExtResource("12_iyjdd")
-item_data = ExtResource("16_d3cha")
 
 [sub_resource type="Resource" id="Resource_it2nq"]
 script = ExtResource("12_iyjdd")
@@ -70,14 +67,17 @@ item_data = ExtResource("20_i26dy")
 quantity = 20
 metadata/_custom_type_script = "uid://ff7axvflmy38"
 
-[sub_resource type="Resource" id="Resource_ym3tv"]
+[sub_resource type="Resource" id="Resource_6tnq2"]
 script = ExtResource("12_iyjdd")
-item_data = ExtResource("20_lmoi6")
-metadata/_custom_type_script = "uid://ff7axvflmy38"
+item_data = ExtResource("16_d3cha")
+
+[sub_resource type="Resource" id="Resource_i26dy"]
+script = ExtResource("12_iyjdd")
+item_data = ExtResource("19_d3cha")
 
 [sub_resource type="Resource" id="Resource_6uxt2"]
 script = ExtResource("12_oeip8")
-slot_datas = Array[ExtResource("12_iyjdd")]([SubResource("Resource_yddo7"), SubResource("Resource_i26dy"), SubResource("Resource_6tnq2"), SubResource("Resource_it2nq"), SubResource("Resource_trn8r"), SubResource("Resource_d3cha"), SubResource("Resource_ym3tv"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+slot_datas = Array[ExtResource("12_iyjdd")]([SubResource("Resource_ym3tv"), SubResource("Resource_yddo7"), SubResource("Resource_it2nq"), SubResource("Resource_trn8r"), SubResource("Resource_d3cha"), SubResource("Resource_6tnq2"), SubResource("Resource_i26dy"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mucmn"]
 atlas = ExtResource("13_cwurv")
