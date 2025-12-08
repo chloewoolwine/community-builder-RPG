@@ -14,3 +14,5 @@ class_name WorldData
 # GOTTA CAHNGE THIS IN SAVER LOADER YOU HAVENT DONE THAT YET!
 # Key- Vector2i, place of chunk, value- chunk data
 @export var chunk_datas: Dictionary[Vector2i, ChunkData]
+
+@export var spawn_point: Location

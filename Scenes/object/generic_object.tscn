@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://d3kov3ehthpy"]
+[gd_scene load_steps=10 format=3 uid="uid://d3kov3ehthpy"]
 
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="1_gfcto"]
 [ext_resource type="Script" uid="uid://b4vp6p8whfxdq" path="res://Scenes/object/interactable/GenericObject.gd" id="1_vw4sj"]
+[ext_resource type="Script" uid="uid://bel1qlmjcnajh" path="res://Game Logic/object/object_appearance.gd" id="3_47uqf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ubcxi"]
 
@@ -13,6 +14,26 @@ region = Rect2(69.3498, 118.948, 39.2364, 37.6564)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s8677"]
 radius = 29.0689
+
+[sub_resource type="Animation" id="Animation_47uqf"]
+resource_name = "new_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x0l6i"]
+_data = {
+&"new_animation": SubResource("Animation_47uqf")
+}
 
 [node name="GenericObject" type="StaticBody2D"]
 script = ExtResource("1_vw4sj")
@@ -34,3 +55,13 @@ script = ExtResource("1_gfcto")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionHitbox"]
 shape = SubResource("CircleShape2D_s8677")
+
+[node name="ObjectAppearance" type="Node2D" parent="."]
+script = ExtResource("3_47uqf")
+
+[node name="Sprite2D" type="Sprite2D" parent="ObjectAppearance"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ObjectAppearance"]
+libraries = {
+&"": SubResource("AnimationLibrary_x0l6i")
+}

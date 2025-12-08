@@ -31,3 +31,7 @@ func consume_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("option_menu"):
 		player.toggle_options.emit()
 		transition_please.emit(prev_state, self)
+
+func leave_options_menu() -> void:
+	player.toggle_options.emit()
+	transition_please.emit(prev_state, self)

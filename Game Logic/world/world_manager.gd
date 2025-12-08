@@ -478,3 +478,6 @@ func is_stepable_layer(curr_position: Vector2, curr_dir: Vector2, _curr_elevatio
 		#going down
 		callback.call(false, targ_square.elevation)
 		#TODO: check for water and then all the swimming stuff
+
+func get_spawn_point() -> SquareData:
+	return _world_data.chunk_datas[_world_data.spawn_point.chunk].square_datas[_world_data.spawn_point.position]

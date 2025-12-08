@@ -57,6 +57,20 @@ func handle_gui_setup() -> void:
 	options_menu.please_save_game.connect(func() -> void:
 		print("world saver called")
 		world_saver.save_world(world_manager._world_data, ""))
+		
+	options_menu.unstuck_player.connect(func() -> void:
+		print("unstuck player called")
+		player.teleport_to_square_data(world_manager.get_spawn_point(), EnvironmentLogic.get_real_pos_object(world_manager._world_data.spawn_point, 0))
+		if world_manager._world_data.spawn_point.chunk not in world_manager.trh.loaded_chunks:
+			world_manager.trh.chunk_loaded.connect(unstuck_loading_callback)
+		else:
+			player.leave_options_menu()
+		)
+
+func unstuck_loading_callback(chunk: ChunkData) -> void: 
+	if chunk.chunk_position == world_manager._world_data.spawn_point.chunk:
+		player.leave_options_menu()
+		world_manager.trh.chunk_loaded.disconnect(unstuck_loading_callback)
 
 ## Connects events dynamically
 func handle_world_setup() -> void:

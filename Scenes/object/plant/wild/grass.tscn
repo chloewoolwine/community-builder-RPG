@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://dsa3wrfrtbwrb"]
+[gd_scene load_steps=38 format=3 uid="uid://dsa3wrfrtbwrb"]
 
 [ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_jnmuw"]
 [ext_resource type="Script" uid="uid://c72fhodjm4b2c" path="res://Game Logic/data/inventory/loot/loot_table_entry.gd" id="2_l5d4k"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://c86dq5bxucb0f" path="res://Game Logic/object/plants/grass_appearance.gd" id="5_j7b3c"]
 [ext_resource type="Resource" uid="uid://cdekbqgdpnxeh" path="res://Resources/plants/grass.tres" id="8_lhq4j"]
 [ext_resource type="Script" uid="uid://c1whaq778qys2" path="res://Game Logic/object/obj_elevation_handler.gd" id="10_oq85o"]
+[ext_resource type="Texture2D" uid="uid://bsr1y04qjpc8" path="res://Assets/tiles/redsquare.png" id="11_ps71e"]
 
 [sub_resource type="Resource" id="Resource_oq85o"]
 script = ExtResource("2_l5d4k")
@@ -175,3 +176,7 @@ script = ExtResource("10_oq85o")
 things_to_offset = [NodePath("../GrassAppearance/Sprite2D"), NodePath("../GrassAppearance/Sprite2D2"), NodePath("../GrassAppearance/Sprite2D3"), NodePath("../GrassAppearance/Sprite2D4"), NodePath("../InteractionHitbox"), NodePath("../StepCollision")]
 solid = false
 metadata/_custom_type_script = "uid://c1whaq778qys2"
+
+[node name="trueloc" type="Sprite2D" parent="."]
+scale = Vector2(0.19, 0.19)
+texture = ExtResource("11_ps71e")

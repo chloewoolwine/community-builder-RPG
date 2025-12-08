@@ -117,6 +117,13 @@ func get_raycast_target() -> Vector2:
 	var target_position:Vector2 = ray_cast_2d.target_position
 	print_if_debug("raycast target local vector: %v", target_position)
 	return to_global(target_position)
+	
+func teleport_to_square_data(data:SquareData, world_pos: Vector2) -> void:
+	elevation_handler.current_elevation = data.elevation
+	self.global_position = world_pos
+	
+func leave_options_menu() -> void:
+	state_machine.find_child("Menu").leave_options_menu()
 
 #remove later
 @onready var debug:bool = false
