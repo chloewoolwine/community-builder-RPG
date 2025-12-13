@@ -1981,7 +1981,6 @@ scale = Vector2(0.105, 0.105)
 texture = ExtResource("15_pm2yg")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(1.49012e-08, -10.25)
 scale = Vector2(0.259594, 0.246314)
 position_smoothing_enabled = true
 

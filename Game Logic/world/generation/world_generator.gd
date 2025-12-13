@@ -8,6 +8,7 @@ const SPAWN_CHUNK:WorldData = preload("res://Test/data/world_datas/spawn_chunk.t
 
 @export var world_manager: WorldManager
 @export var terrain_rules_handler: TerrainRulesHandler
+@export var ON: bool = false
 
 @export_group("WorldData properties")
 @export var worldseed: int
@@ -39,22 +40,23 @@ var seeder:RandomNumberGenerator
 var grass_noise: FastNoiseLite
 var tree_noise: FastNoiseLite
 
-# this is stupid, but until this has access to the Game script the emissions wont work 
 var world_to_save: WorldData
 var path: String
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#var world:WorldData = generate_world_based_on_vals()
-	#world_manager.set_world_data(world)
-	
-	## old loading stuff
-	#print("loading")
-	#var world:WorldData = ResourceLoader.load('res://Test/data/world_datas/BIGWORLD.tres')
-	#print("loading coimplete")
-	#world_to_save = world
-	#path = str('res://Test/data/world_datas/generation_test.tres')
-	#save_world.emit(world, str('res://Test/data/world_datas/treez.tres'))
+	if ON:
+		var world:WorldData = generate_world_based_on_vals()
+		world_manager.set_world_data(world)
+		
+		## old loading stuff
+		#print("loading")
+		#var world:WorldData = ResourceLoader.load('res://Test/data/world_datas/BIGWORLD.tres')
+		#print("loading coimplete")
+		#world_to_save = world
+		#path = str('res://Test/data/world_datas/generation_test.tres')
+		#save_world.emit(world, str('res://Test/data/world_datas/treez.tres'))
+		save_world.emit(world, str(''))
 	pass
 
 # a lot of this is from https://www.reddit.com/r/godot/comments/10ho9d5/any_good_tutorials_on_the_new_fastnoiselite_class/
@@ -78,9 +80,7 @@ func generate_world_based_on_vals() -> WorldData:
 	print("running water calc")
 	EnvironmentLogic.run_water_calc(world, world.chunk_datas.keys())
 	do_squaretype_stuff(world)
-	var spawn:ChunkData = SPAWN_CHUNK.chunk_datas[Vector2i(-1,-1)]
-	spawn.chunk_position = Vector2i.ZERO
-	world.chunk_datas[Vector2i(0, 0)] = spawn
+	world = fix_spawn_chunk(world)
 	#run a single natural water pass
 	print("running water calc 2")
 	EnvironmentLogic.run_water_calc(world, world.chunk_datas.keys())
@@ -89,6 +89,28 @@ func generate_world_based_on_vals() -> WorldData:
 	#put_down_plants(world)
 	print('time at end generation: ', Time.get_time_string_from_system())
 	return world
+
+static func fix_spawn_chunk(data: WorldData) -> WorldData:
+	var spawn:ChunkData = SPAWN_CHUNK.chunk_datas[Vector2i(-1,-1)]
+	spawn.chunk_position = Vector2i.ZERO
+	var old_chunk := data.chunk_datas[Vector2i(0,0)]
+	for s_key:Vector2i in old_chunk.square_datas.keys():
+		var old_square:SquareData = old_chunk.square_datas[s_key]
+		var spawn_square:SquareData = spawn.square_datas[s_key]
+		spawn_square.elevation = old_square.elevation
+		spawn_square.pollution = old_square.pollution
+		#don't want any waterfalls, cuz they dont have sprites yet
+		if spawn_square.water_saturation >= Constants.SHALLOW_WATER:
+			var locs := Location.new(s_key, Vector2i(0,0)).get_neighbor_matrix()
+			for loc in locs:
+				var square := EnvironmentLogic.get_square(data, loc)
+				square.elevation = spawn_square.elevation
+		if spawn_square.water_saturation < Constants.SHALLOW_WATER && (spawn_square.type == SquareData.SquareType.Grass || spawn_square.type == SquareData.SquareType.Dirt):
+			spawn_square.object_data = old_square.object_data
+		else:
+			spawn_square.object_data = [null,null,null,null] #sorry little building :/
+	data.chunk_datas[Vector2i(0, 0)] = spawn
+	return data
 
 func set_randomness() -> void:
 	if worldseed == 0:

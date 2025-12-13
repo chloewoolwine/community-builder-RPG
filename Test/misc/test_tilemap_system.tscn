@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://diuxqukbk35hy" path="res://Game Logic/world/world_manager.gd" id="1_d3v3l"]
 [ext_resource type="Script" uid="uid://dyamhmg7lwxjc" path="res://Test/misc/temp_camera_script.gd" id="1_pg57c"]
+[ext_resource type="Resource" uid="uid://djniwry0o5743" path="res://Test/data/world_datas/wadadfasdf.tres" id="2_fa4m3"]
 [ext_resource type="Script" uid="uid://vjmm4ct83rqu" path="res://Game Logic/world/terrain_rules_handler.gd" id="2_hk3wk"]
 [ext_resource type="Texture2D" uid="uid://dj8bni171no41" path="res://Assets/Testy Assets/map edit symbols/Asset 1@0.5x.png" id="2_lwt0r"]
-[ext_resource type="Resource" uid="uid://cc3kxgqrt8nuk" path="res://Test/data/world_datas/generation_test.tres" id="2_y6nff"]
 [ext_resource type="Script" uid="uid://btkipgqft1s0h" path="res://Test/misc/map_editor_control_menu.gd" id="3_4irie"]
 [ext_resource type="Texture2D" uid="uid://b71ycp15yowwk" path="res://Assets/Testy Assets/map edit symbols/Asset 25@0.5x.png" id="4_jjck8"]
 [ext_resource type="Texture2D" uid="uid://oulwhnc8mhq5" path="res://Assets/Testy Assets/map edit symbols/Asset 18@0.5x.png" id="5_gjubd"]
@@ -62,7 +62,7 @@ y_sort_enabled = true
 [node name="WorldManager" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("1_d3v3l")
-_world_data = ExtResource("2_y6nff")
+_world_data = ExtResource("2_fa4m3")
 world_edit_mode = true
 load_chunks = true
 unload_chunks = true
@@ -72,7 +72,9 @@ y_sort_enabled = true
 script = ExtResource("2_hk3wk")
 debug = true
 
-[node name="Elevation0" parent="WorldManager/TerrainRulesHandler" instance=ExtResource("5_twio2")]
+[node name="BackBufferCopy" type="BackBufferCopy" parent="WorldManager/TerrainRulesHandler"]
+
+[node name="Elevation0" parent="WorldManager/TerrainRulesHandler/BackBufferCopy" instance=ExtResource("5_twio2")]
 
 [node name="ObjectAtlas" type="Node2D" parent="WorldManager/TerrainRulesHandler"]
 y_sort_enabled = true
@@ -378,6 +380,7 @@ script = ExtResource("16_neiaj")
 script = ExtResource("13_i6roh")
 world_manager = NodePath("../../WorldManager")
 terrain_rules_handler = NodePath("../../WorldManager/TerrainRulesHandler")
+ON = true
 worldseed = 3033
 chunk_size = Vector2i(32, 32)
 num_chunks = Vector2i(12, 12)
@@ -411,4 +414,4 @@ wild_crops = Array[String](["plant_crop_onion", "plant_crop_strawberry"])
 [connection signal="pressed" from="CanvasLayer/Control/PanelContainer3/VBoxContainer/stone" to="CanvasLayer/Control" method="_on_stone_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/PanelContainer3/VBoxContainer/dry" to="CanvasLayer/Control" method="_on_dry_pressed"]
 
-[editable path="WorldManager/TerrainRulesHandler/Elevation0"]
+[editable path="WorldManager/TerrainRulesHandler/BackBufferCopy/Elevation0"]

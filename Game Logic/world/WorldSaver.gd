@@ -7,7 +7,7 @@ func _ready() -> void:
 	if world_generator == null:
 		return
 	if world_generator.world_to_save != null:
-		save_world(world_generator.world_to_save, world_generator.path)
+		save_world(world_generator.world_to_save, "")
 	world_generator.save_world.connect(save_world)
 
 func save_world(world: WorldData, _location: String) -> void: 

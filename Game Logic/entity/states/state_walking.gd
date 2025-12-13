@@ -65,6 +65,10 @@ func check_overlapping_body(body: Node) -> void:
 		var true_loc := player.elevation_handler.get_true_loc()
 		var loc_other := true_loc.get_location(input)
 		var sd_other := trh.get_square_data_at_location(loc_other)
+		if !sd_other:
+			#this is hopefully and editor-only bug
+			push_warning("player tried to jump onto a tile that does not exist")
+			return
 		if sd_other.water_saturation >= Constants.SHALLOW_WATER:
 			#not dealing with this yet lol 
 			return

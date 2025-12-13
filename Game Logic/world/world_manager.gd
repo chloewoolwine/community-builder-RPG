@@ -42,7 +42,7 @@ func set_world_data(new_world: WorldData) -> void:
 	trh.world_data = new_world
 	while(trh.loaded_chunks.size() > 0):
 		pass #this is silly but idk how else to do it and i dont feel like looking it up
-	#print("new world chunk datas: ", new_world.chunk_datas)
+	print("new world chunk datas: ", new_world.chunk_datas)
 	_world_data = new_world
 	
 func load_all_chunks() -> void:
