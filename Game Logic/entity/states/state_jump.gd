@@ -6,10 +6,8 @@ extends PlayerState
 @export var left_area:Area2D
 
 signal jump_start()
-var jump_time: float = 0.7
 var input:Vector2i = Vector2i.ZERO
 var checked_bodies: Array = []
-var timer: SceneTreeTimer
 var eleh:ElevationHandler
 
 func _ready() -> void:
@@ -19,13 +17,11 @@ func _ready() -> void:
 func enter(prev_state: String, data:Dictionary = {"input": Vector2i.ZERO}) -> void:
 	super.enter(prev_state, data)
 	jump_start.emit()
-	if "jump_time" in player:
-		jump_time = player.jump_time
 	player.animation_handler.travel_to_and_blend(PlayerState.JUMP, player.facing)
-	timer = get_tree().create_timer(jump_time)
 	input = data.get("input", Vector2i.ZERO)
 	eleh = player.elevation_handler
 	machine.print_if_debug("Entered StateJump")
+	player.animation_handler.animation_player.animation_finished.connect(_on_animation_finished)
 	up_area.collision_mask = 0
 	up_area.set_collision_mask_value(player.elevation_handler.current_elevation + 10, true)
 	down_area.collision_mask = 0
@@ -34,18 +30,28 @@ func enter(prev_state: String, data:Dictionary = {"input": Vector2i.ZERO}) -> vo
 	right_area.set_collision_mask_value(player.elevation_handler.current_elevation + 10, true)
 	left_area.collision_mask = 0
 	left_area.set_collision_mask_value(player.elevation_handler.current_elevation + 10, true)
+	checked_bodies.clear()
 	#print("Jump area collision mask set to: ", jump_area.collision_mask)
 	
 func exit() -> void:
 	super.exit()
 	checked_bodies.clear()
+	player.animation_handler.animation_player.animation_finished.disconnect(_on_animation_finished)
 	machine.print_if_debug("Exited StateJump")
+
+func _on_animation_finished(anim_name: String) -> void:
+	#print("aniamtion finsihed from state_jump")
+	if anim_name.begins_with(PlayerState.JUMP):
+		machine.print_if_debug("StateJump: Jump animation finished, transitioning to Fall state.")
+		transition_please.emit(PlayerState.FALL, self, {})
 
 func physics_update(_delta: float) -> void:
 	input = get_curr_input()
+	var prev_facing := player.facing
 	configure_facing(input)
+	if player.facing != prev_facing || true:
+		player.animation_handler.travel_to_and_blend(PlayerState.JUMP, player.facing)
 	#print("jumping with input: ", input)
-	player.animation_handler.travel_to_and_blend(PlayerState.JUMP, player.facing)
 	player.velocity_handler.move_to(input)
 	player.velocity_handler.do_physics(_delta)
 	#check different area depending on dir
@@ -62,13 +68,10 @@ func physics_update(_delta: float) -> void:
 			jump_area = left_area
 	if jump_area != null:
 		for body in jump_area.get_overlapping_bodies():
-			#print("body.name: ", body.name)
+			print("body.name: ", body.name)
 			if body not in checked_bodies:
 				check_overlapping_body(body)
 				checked_bodies.append(body)
-	if timer.time_left <= 0.0:
-		#jump complete
-		transition_please.emit(PlayerState.FALL, self)
 
 func check_overlapping_body(body: Node) -> void:
 	if body is TileMapLayer:

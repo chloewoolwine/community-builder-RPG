@@ -20,7 +20,7 @@ func enter(prev_state: String, data:Dictionary = {}) -> void:
 		return
 	free = false
 	player.elevation_handler.empty_collision_layer()
-	player.animation_handler.jump_finished.connect(_on_jump_finished)
+	player.animation_handler.animation_player.animation_finished.connect(_on_animation_finished)
 	machine.print_if_debug("Entered state ForceJump")
 	if machine.debug:
 		targ = player.find_child("target")
@@ -32,7 +32,7 @@ func enter(prev_state: String, data:Dictionary = {}) -> void:
 func exit() -> void:
 	super.exit()
 	end_special_collisions() 
-	player.animation_handler.jump_finished.disconnect(_on_jump_finished)
+	player.animation_handler.animation_player.animation_finished.disconnect(_on_animation_finished)
 	machine.print_if_debug("Exited state ForceJump")
 	if targ != null:
 		targ.visible = false
@@ -64,6 +64,13 @@ func _on_jump_finished() -> void:
 	else:
 		transition_please.emit(PlayerState.WALK, self, {"input_vector": input})
 	return
+
+	
+func _on_animation_finished(anim_name: String) -> void:
+	#print("aniamtion finsihed from state_jump")
+	if anim_name.begins_with(PlayerState.JUMP):
+		machine.print_if_debug("StateForceJump: Jump animation finished, transitioning to Fall state.")
+		_on_jump_finished()
 
 func end_special_collisions() -> void: 
 	player.elevation_handler.set_to_elevation_at_loc(location)

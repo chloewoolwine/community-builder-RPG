@@ -1,4 +1,4 @@
-[gd_scene load_steps=186 format=3 uid="uid://dy236j24tdfmr"]
+[gd_scene load_steps=178 format=3 uid="uid://dy236j24tdfmr"]
 
 [ext_resource type="Script" uid="uid://bjjblaytsdioe" path="res://Game Logic/entity/player/player.gd" id="1_pwtpg"]
 [ext_resource type="Script" uid="uid://bcnyi4l6l1lro" path="res://Game Logic/entity/states/state_machine.gd" id="2_aqs8i"]
@@ -66,7 +66,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.33333334, 0.4),
 "transitions": PackedFloat32Array(1, 1.681794, 1),
 "update": 0,
-"values": [-128.0, -45.0, -45.0]
+"values": [-145.0, -45.0, -45.0]
 }
 
 [sub_resource type="Animation" id="Animation_p6fni"]
@@ -106,7 +106,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.325, 0.42499998),
 "transitions": PackedFloat32Array(1, 1.681794, 1),
 "update": 0,
-"values": [-128.0, -45.0, -45.0]
+"values": [-145.0, -45.0, -45.0]
 }
 
 [sub_resource type="Animation" id="Animation_w4uu0"]
@@ -146,7 +146,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.33333334, 0.4),
 "transitions": PackedFloat32Array(1, 1.681794, 1),
 "update": 0,
-"values": [-128.0, -45.0, -45.0]
+"values": [-145.0, -45.0, -45.0]
 }
 
 [sub_resource type="Animation" id="Animation_aqs8i"]
@@ -270,7 +270,7 @@ tracks/2/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_uhw1m"]
-length = 0.7
+length = 0.3
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -279,10 +279,10 @@ tracks/0/path = NodePath("PlayerOutfitHandler/NewBody:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.14285715, 0.2857143, 0.42857143),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0, 1, 2, 3]
+"values": [0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -303,10 +303,10 @@ tracks/2/path = NodePath("PlayerOutfitHandler/NewBody:offset:y")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.43333334, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 0.18301074),
 "update": 0,
-"values": [-45.0, -45.0, -128.0]
+"values": [-45.0, -145.0]
 }
 tracks/3/type = "method"
 tracks/3/imported = false
@@ -324,7 +324,7 @@ tracks/3/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_awd1p"]
-length = 0.7
+length = 0.3
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -333,10 +333,10 @@ tracks/0/path = NodePath("PlayerOutfitHandler/NewBody:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1429, 0.2857, 0.4286),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0, 1, 2, 3]
+"values": [0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -357,10 +357,10 @@ tracks/2/path = NodePath("PlayerOutfitHandler/NewBody:offset:y")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.46666667, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 0.18301074),
 "update": 0,
-"values": [-45.0, -45.0, -128.0]
+"values": [-45.0, -145.0]
 }
 tracks/3/type = "method"
 tracks/3/imported = false
@@ -378,7 +378,7 @@ tracks/3/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_1nbkv"]
-length = 0.7
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -386,10 +386,10 @@ tracks/0/path = NodePath("PlayerOutfitHandler/NewBody:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1429, 0.2857, 0.4286),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0, 1, 2, 3]
+"values": [0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -410,10 +410,10 @@ tracks/2/path = NodePath("PlayerOutfitHandler/NewBody:offset:y")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.43333334, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 0.18301074),
 "update": 0,
-"values": [-45.0, -45.0, -128.0]
+"values": [-45.0, -145.0]
 }
 tracks/3/type = "method"
 tracks/3/imported = false
@@ -596,6 +596,18 @@ tracks/1/keys = {
 "update": 1,
 "values": ["WalkRight"]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PlayerOutfitHandler/NewBody:offset:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-45.0]
+}
 
 [sub_resource type="Animation" id="Animation_qminb"]
 length = 0.8
@@ -623,6 +635,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["WalkUp"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PlayerOutfitHandler/NewBody:offset:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-45.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_seylt"]
@@ -750,45 +774,13 @@ region = Rect2(768, 0, 64, 112)
 atlas = ExtResource("4_43gew")
 region = Rect2(256, 0, 64, 112)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qminb"]
-atlas = ExtResource("17_udx2w")
-region = Rect2(0, 0, 64, 112)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_770oy"]
-atlas = ExtResource("17_udx2w")
-region = Rect2(64, 0, 64, 112)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pai8e"]
-atlas = ExtResource("17_udx2w")
-region = Rect2(128, 0, 64, 112)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_d6fof"]
 atlas = ExtResource("17_udx2w")
 region = Rect2(192, 0, 64, 112)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6q8pc"]
-atlas = ExtResource("17_udx2w")
-region = Rect2(832, 0, 64, 112)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5emx0"]
-atlas = ExtResource("17_udx2w")
-region = Rect2(896, 0, 64, 112)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_04g10"]
 atlas = ExtResource("17_udx2w")
 region = Rect2(960, 0, 64, 112)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yu82y"]
-atlas = ExtResource("17_udx2w")
-region = Rect2(384, 0, 64, 112)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2mdcc"]
-atlas = ExtResource("17_udx2w")
-region = Rect2(448, 0, 64, 112)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ol88v"]
-atlas = ExtResource("17_udx2w")
-region = Rect2(512, 0, 64, 112)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gjndi"]
 atlas = ExtResource("17_udx2w")
@@ -898,15 +890,6 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qminb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_770oy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pai8e")
-}, {
 "duration": 2.0,
 "texture": SubResource("AtlasTexture_d6fof")
 }],
@@ -916,15 +899,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_r7dsx")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6q8pc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5emx0")
-}, {
-"duration": 2.0,
 "texture": SubResource("AtlasTexture_04g10")
 }],
 "loop": true,
@@ -933,15 +907,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_yu82y")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2mdcc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ol88v")
-}, {
-"duration": 2.0,
 "texture": SubResource("AtlasTexture_gjndi")
 }],
 "loop": true,
@@ -1812,6 +1777,7 @@ offsettees = [NodePath("../UpArea"), NodePath("../PlayerActionHandler"), NodePat
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_aqs8i")
 initial_state = NodePath("Load")
+debug = true
 
 [node name="Load" type="Node" parent="StateMachine"]
 script = ExtResource("4_e8wcv")
@@ -1940,7 +1906,7 @@ y_sort_enabled = true
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = SubResource("SpriteFrames_ke5yh")
-animation = &"IdleUp"
+animation = &"WalkUp"
 autoplay = "IdleDown"
 offset = Vector2(0, -45)
 

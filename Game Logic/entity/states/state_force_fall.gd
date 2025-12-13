@@ -47,15 +47,15 @@ func enter(prev_state: String, data:Dictionary = {}) -> void:
 			transition_please.emit(PlayerState.WALK, self, {"input_vector": input, "caller": "StateForceFall"})
 		return
 	else:
-		player.animation_handler.jump_finished.connect(_on_jump_finished)
+		player.animation_handler.animation_player.animation_finished.connect(_on_animation_finished)
 
 func exit() -> void:
 	super.exit()
 	#if !free:
 		#we never made it! oh no :/
 	end_special_collisions()
-	if player.animation_handler.jump_finished.is_connected(_on_jump_finished):
-		player.animation_handler.jump_finished.disconnect(_on_jump_finished)
+	if player.animation_handler.animation_player.animation_finished.is_connected(_on_animation_finished):
+		player.animation_handler.animation_player.animation_finished.disconnect(_on_animation_finished)
 	machine.print_if_debug("Exited StateForceFall")
 	if targ != null:
 		targ.visible = false
@@ -88,6 +88,12 @@ func _on_jump_finished() -> void:
 	else:
 		transition_please.emit(PlayerState.WALK, self, {"input_vector": input, "caller": "StateForceFall"})
 	return
+
+func _on_animation_finished(anim_name: String) -> void:
+	#print("aniamtion finsihed from state_jump")
+	if anim_name.begins_with(PlayerState.JUMP):
+		machine.print_if_debug("StateForceJump: Jump animation finished, transitioning to Fall state.")
+		_on_jump_finished()
 
 func end_special_collisions() -> void: 
 	machine.print_if_debug("ending special collisions")
