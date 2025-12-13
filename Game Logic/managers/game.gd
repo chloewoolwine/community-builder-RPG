@@ -48,7 +48,9 @@ func _ready() -> void:
 ## TURNS ON THE SPICE! After everything else has finished loading. 
 func handle_final_presentation() -> void: 
 	## TODO: make some juice here, like a fade in from black :D 
-	await get_tree().create_timer(5).timeout
+	await get_tree().create_timer(2.5).timeout
+	player.teleport_to_square_data(world_manager.get_spawn_point(), EnvironmentLogic.get_real_pos_object(world_manager._world_data.spawn_point, 0))
+	await get_tree().create_timer(2.5).timeout
 	lighting.proccessTime = true
 	player.loading_done()
 	game_ready = true
