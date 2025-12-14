@@ -42,7 +42,7 @@ func set_world_data(new_world: WorldData) -> void:
 	trh.world_data = new_world
 	while(trh.loaded_chunks.size() > 0):
 		pass #this is silly but idk how else to do it and i dont feel like looking it up
-	print("new world chunk datas: ", new_world.chunk_datas)
+	#print("new world chunk datas: ", new_world.chunk_datas)
 	_world_data = new_world
 	
 func load_all_chunks() -> void:
@@ -399,10 +399,17 @@ func modify_tilemap(loc: Location, _origin_pos: Vector2, action: String) -> bool
 		trh.apply_floor_at(loc, action)
 	if action == "shovel":
 		var square := EnvironmentLogic.get_square(_world_data, loc)
+		if square.water_saturation >= Constants.SHALLOW_WATER:
+			return false
 		if EnvironmentLogic.has_objects(square) || square.type == SquareData.SquareType.Grass:
 			## TODO: more granular logic for removing objects
 			trh.remove_floor_at(loc)
 		else:
+			var neighbors := loc.get_neighbor_matrix()
+			for nloc in neighbors:
+				var nsquare := EnvironmentLogic.get_square(_world_data, nloc)
+				if nsquare.water_saturation >= Constants.SHALLOW_WATER:
+					return false
 			if square.elevation > 0 && square.type == SquareData.SquareType.Dirt:
 				square.elevation = square.elevation - 1 
 				trh.lower_elevation(loc)
