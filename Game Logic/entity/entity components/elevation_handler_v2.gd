@@ -23,7 +23,7 @@ func _ready() -> void:
 func _offset_sprites() -> void:
 	#todo... some kind of animation thing needs to happen .>.
 	#tween or something
-	print("offsetting sprites")
+	#print("offsetting sprites")
 	for x in range(offsettees.size()):
 		var off := offsettees[x]
 		#print(off.name)

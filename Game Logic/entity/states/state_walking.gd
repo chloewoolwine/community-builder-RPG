@@ -59,12 +59,15 @@ func physics_update(_delta: float) -> void:
 
 func check_overlapping_body(body: Node) -> void:
 	if body is TileMapLayer && body.name == "Base":
-		machine.print_if_debug("Collided with tilemap layer: " + body.name + " ensuring valid jump")
+		machine.print_if_debug("Collided with tilemap layer: " + body.name + " ensuring valid fall")
 		#TODO: change this later to be a signal, this is dookie
 		var trh := body.get_parent().get_parent().get_parent() as TerrainRulesHandler
 		var true_loc := player.elevation_handler.get_true_loc()
 		var loc_other := true_loc.get_location(input)
 		var sd_other := trh.get_square_data_at_location(loc_other)
+		if sd_other.elevation > eleh.current_elevation:
+			machine.print_if_debug("StateWalk hit the base of a higher elevation, must be collision error")
+			return
 		if !sd_other:
 			#this is hopefully and editor-only bug
 			push_warning("player tried to jump onto a tile that does not exist")
