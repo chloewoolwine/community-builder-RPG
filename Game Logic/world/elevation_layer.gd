@@ -51,9 +51,11 @@ func set_physics_data() -> void:
 	## OR ELSE !!!!!
 	## "world source id" is the source id in the master tileset- mapper.tres
 	## World source id doesn't matter for pond because it reads from its own map
+	# todo: i maybe gotta figure out a way for this to be data based
 	pond.world_source_id = 0 
 	sand.world_source_id = 2
 	grass.world_source_id = 4
+	stone.world_source_id = 5
 	pollution_grass.world_source_id = 1
 
 func change_square(_data: SquareData, overall_location: Vector2i) -> void:
