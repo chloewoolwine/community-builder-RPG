@@ -28,15 +28,17 @@ func _process(_delta: float) -> void:
 
 func attempt_modify(_player_loc: Vector2, action: String) -> bool:
 	if self.global_position.distance_to(_player_loc) > 400: 
-		print("too far :C")
+		#print("too far :C")
 		return false
-	if current_spot == null:
+	if current_spot == null || !valid_place:
 		return false
-	print("modify attempted, action ", action)
+	#print("modify attempted, action ", action)
+	#TODO: validation, but i dont have any animations so who cares really
 	modify.emit(current_spot, _player_loc, action)
 	return true
 
 func signal_placement_if_valid(item: ItemData, _player_loc:Vector2) -> bool:
+	#print("placement valid place: ", valid_place)
 	if valid_place and self.global_position.distance_to(_player_loc) <= 400:
 		placement.emit(self.global_position, _player_loc, item)
 		return true

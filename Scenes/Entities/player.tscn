@@ -1777,7 +1777,6 @@ offsettees = [NodePath("../UpArea"), NodePath("../PlayerActionHandler"), NodePat
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_aqs8i")
 initial_state = NodePath("Load")
-debug = true
 
 [node name="Load" type="Node" parent="StateMachine"]
 script = ExtResource("4_e8wcv")

@@ -188,6 +188,12 @@ func check_placement_validity(ind: Indicator, player_spot:Vector2, player_layer:
 		ind.valid_place = false
 		return false
 		
+	var player_loc := Location.get_location_from_world(trh.elevations[0].local_to_map(player_spot))
+	#print(player_loc)
+	if player_loc.equals(ind.current_spot):
+		#print("return false")
+		ind.valid_place = false
+		return false
 	var split := item.object_id.split("_")
 	#print("indicator current spot: ", ind.current_spot)
 	
@@ -389,6 +395,12 @@ func modify_tilemap(loc: Location, _origin_pos: Vector2, action: String) -> bool
 	if !modify_cooldown.is_stopped():
 		return false
 	modify_cooldown.start()
+	
+	#check player is not standing on it
+	var player_loc := Location.get_location_from_world(trh.elevations[0].local_to_map(_origin_pos))
+	#print(player_loc)
+	if player_loc.equals(loc):
+		return false
 	
 	print("global: ", loc)
 	if layer == null:
