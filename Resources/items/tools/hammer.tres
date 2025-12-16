@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" uid="uid://cmusmcngq68cl" path="res://Game Logic/data/inventory/item_data_tool.gd" id="1_bpoys"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bikp8"]
-load_path = "res://.godot/imported/#1 - Transparent Icons.png-66e482cdc506437ae5ff6b63757a4b91.ctex"
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bpoys"]
+load_path = "res://.godot/imported/tools.png-ac29f591082a22e1845eccaf440bdebf.ctex"
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bmfqi"]
-atlas = SubResource("CompressedTexture2D_bikp8")
-region = Rect2(131, 327, 26, 20)
+[sub_resource type="AtlasTexture" id="AtlasTexture_irc2x"]
+atlas = SubResource("CompressedTexture2D_bpoys")
+region = Rect2(64, 32, 32, 32)
 
 [resource]
 script = ExtResource("1_bpoys")
@@ -15,5 +15,5 @@ efficiency = 1
 type = 4
 name = "Hammer"
 description = "Smash rocks and clear old rubble"
-texture = SubResource("AtlasTexture_bmfqi")
+texture = SubResource("AtlasTexture_irc2x")
 sellable = false

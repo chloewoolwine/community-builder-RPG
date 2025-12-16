@@ -2,17 +2,17 @@
 
 [ext_resource type="Script" uid="uid://cmusmcngq68cl" path="res://Game Logic/data/inventory/item_data_tool.gd" id="1_n2oit"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_fvwon"]
-load_path = "res://.godot/imported/#1 - Transparent Icons.png-66e482cdc506437ae5ff6b63757a4b91.ctex"
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_n2oit"]
+load_path = "res://.godot/imported/tools.png-ac29f591082a22e1845eccaf440bdebf.ctex"
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_b263h"]
-atlas = SubResource("CompressedTexture2D_fvwon")
-region = Rect2(35, 323, 26, 26)
+[sub_resource type="AtlasTexture" id="AtlasTexture_fuuob"]
+atlas = SubResource("CompressedTexture2D_n2oit")
+region = Rect2(0, 0, 32, 32)
 
 [resource]
 script = ExtResource("1_n2oit")
 efficiency = 1
 name = "Axe"
 description = "Chop trees"
-texture = SubResource("AtlasTexture_b263h")
+texture = SubResource("AtlasTexture_fuuob")
 sellable = false

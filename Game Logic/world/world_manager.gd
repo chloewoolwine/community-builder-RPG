@@ -396,19 +396,18 @@ func modify_tilemap(loc: Location, _origin_pos: Vector2, action: String) -> bool
 		return false
 	modify_cooldown.start()
 	
-	#check player is not standing on it
-	var player_loc := Location.get_location_from_world(trh.elevations[0].local_to_map(_origin_pos))
-	#print(player_loc)
-	if player_loc.equals(loc):
-		return false
-	
-	print("global: ", loc)
+	#print("global: ", loc)
 	if layer == null:
 		print("modification failed, layer was null at global: ", loc) 
 	if action == "water":
 		trh.water_square_at(loc)
 	if action == "till": 
 		trh.apply_floor_at(loc, action)
+	#check player is not standing on it
+	var player_loc := Location.get_location_from_world(trh.elevations[0].local_to_map(_origin_pos))
+	#print(player_loc)
+	if player_loc.equals(loc):
+		return false
 	if action == "shovel":
 		var square := EnvironmentLogic.get_square(_world_data, loc)
 		if square.water_saturation >= Constants.SHALLOW_WATER:
