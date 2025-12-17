@@ -2,6 +2,7 @@ extends Node2D
 class_name PlayerActionHandler
 
 signal player_wants_to_eat(type:SlotData)
+signal action(type:String)
 
 var equiped_item: SlotData
 
@@ -46,8 +47,7 @@ func do_action() -> String:
 func use_tool(item:SlotData)->void:
 	match item.item_data.type:
 		ItemDataTool.WeaponType.SWORD:
-			player.state = player.PlayerStates.STATE_ACTION
-			player.sword_hitbox.disabled = false
+			action.emit("attack")
 		ItemDataTool.WeaponType.HOE:
 			tile_indicator.attempt_modify(player.global_position, "till")
 		ItemDataTool.WeaponType.AXE:

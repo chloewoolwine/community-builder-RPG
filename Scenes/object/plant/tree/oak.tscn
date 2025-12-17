@@ -131,6 +131,7 @@ things_to_offset = [NodePath("../TreeAppearance"), NodePath("../InteractionHitbo
 metadata/_custom_type_script = "uid://c1whaq778qys2"
 
 [node name="trueloc" type="Sprite2D" parent="."]
+visible = false
 scale = Vector2(0.105, 0.105)
 texture = ExtResource("12_1dyr6")
 

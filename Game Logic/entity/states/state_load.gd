@@ -3,6 +3,7 @@ class_name StateLoad
 
 func enter(prev_state: String, data:Dictionary = {}) -> void:
 	super.enter(prev_state, data)
+	tick_hunger = false
 	machine.print_if_debug("Entered StateLoad")
 	#eh?
 

@@ -25,3 +25,29 @@ class_name HitBox
 		return effect
 	set(value):
 		effect = value
+		
+@onready var down: CollisionShape2D = $Down
+@onready var up: CollisionShape2D = $Up
+@onready var left: CollisionShape2D = $Left
+@onready var right: CollisionShape2D = $Right
+
+func set_facing(facing: Vector2i) -> void: 
+	right.disabled = true
+	left.disabled = true
+	up.disabled = true
+	down.disabled = true
+
+	if facing.x > 0:
+		right.disabled = false
+	elif facing.x < 0:
+		left.disabled = false
+	elif facing.y > 0:
+		down.disabled = false
+	elif facing.y < 0:
+		up.disabled = false
+
+func disable_all() -> void:
+	right.disabled = true
+	left.disabled = true
+	up.disabled = true
+	down.disabled = true

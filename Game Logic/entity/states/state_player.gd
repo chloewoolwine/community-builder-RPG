@@ -14,6 +14,7 @@ const FORCEFALL = "ForceFall"
 #other possible states: knockback, death, attack, action (interact), swim, jumping into/out of water?, plus transitions?
 
 var player: Player
+var tick_hunger:bool = true
 	
 func _ready() -> void:
 	await owner.ready

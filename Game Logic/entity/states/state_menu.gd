@@ -5,6 +5,7 @@ var type: String = ""
 
 func enter(_prev_state: String, _data:Dictionary = {}) -> void:
 	super.enter(_prev_state, _data)
+	tick_hunger = false
 	prev_state = _prev_state
 	player.velocity_handler.purge_speed()
 	player.velocity_handler.stop()

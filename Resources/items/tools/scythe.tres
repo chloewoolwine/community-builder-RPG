@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemDataTool" load_steps=4 format=3 uid="uid://bkh2ennirm7gf"]
+
+[ext_resource type="Script" uid="uid://cmusmcngq68cl" path="res://Game Logic/data/inventory/item_data_tool.gd" id="1_y6js5"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_y6js5"]
+load_path = "res://.godot/imported/tools.png-ac29f591082a22e1845eccaf440bdebf.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cu8tm"]
+atlas = SubResource("CompressedTexture2D_y6js5")
+region = Rect2(32, 32, 32, 32)
+
+[resource]
+script = ExtResource("1_y6js5")
+type = 1
+name = "Scythe"
+description = "cuts grass c: "
+texture = SubResource("AtlasTexture_cu8tm")
+metadata/_custom_type_script = "uid://cmusmcngq68cl"

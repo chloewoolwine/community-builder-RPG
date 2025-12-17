@@ -1,4 +1,4 @@
-[gd_scene load_steps=178 format=3 uid="uid://dy236j24tdfmr"]
+[gd_scene load_steps=181 format=3 uid="uid://dy236j24tdfmr"]
 
 [ext_resource type="Script" uid="uid://bjjblaytsdioe" path="res://Game Logic/entity/player/player.gd" id="1_pwtpg"]
 [ext_resource type="Script" uid="uid://bcnyi4l6l1lro" path="res://Game Logic/entity/states/state_machine.gd" id="2_aqs8i"]
@@ -1759,7 +1759,16 @@ radius = 4.0
 height = 10.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1vrl1"]
-size = Vector2(20, 168)
+size = Vector2(286, 114.985)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pai8e"]
+size = Vector2(286, 114.985)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_770oy"]
+size = Vector2(114.985, 286)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d6fof"]
+size = Vector2(114.985, 286)
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 128
@@ -1958,15 +1967,27 @@ scale = Vector2(5.566, -11.166)
 shape = SubResource("CapsuleShape2D_ujgxj")
 
 [node name="HitBox" parent="." instance=ExtResource("9_ict53")]
-visible = false
-scale = Vector2(1, 1.2)
 collision_layer = 2
 touch_damage = 50
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(0, 30.985)
-scale = Vector2(14.28, 1)
+[node name="Down" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, 57.492504)
 shape = SubResource("RectangleShape2D_1vrl1")
+disabled = true
+
+[node name="Up" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, -57.49999)
+shape = SubResource("RectangleShape2D_pai8e")
+disabled = true
+
+[node name="Left" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(-58, 1)
+shape = SubResource("RectangleShape2D_770oy")
+disabled = true
+
+[node name="Right" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(58, 1)
+shape = SubResource("RectangleShape2D_d6fof")
 disabled = true
 
 [node name="TileIndicator" type="Sprite2D" parent="."]
@@ -1975,6 +1996,7 @@ texture = ExtResource("10_ypkgf")
 script = ExtResource("11_msv3g")
 
 [node name="trueloc" type="Sprite2D" parent="."]
+visible = false
 z_index = 1000
 scale = Vector2(0.105, 0.105)
 texture = ExtResource("15_pm2yg")

@@ -178,5 +178,6 @@ solid = false
 metadata/_custom_type_script = "uid://c1whaq778qys2"
 
 [node name="trueloc" type="Sprite2D" parent="."]
+visible = false
 scale = Vector2(0.19, 0.19)
 texture = ExtResource("11_ps71e")

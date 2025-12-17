@@ -107,5 +107,6 @@ texture_filter = 1
 tile_set = ExtResource("8_pj17r")
 
 [node name="HigherElevationWarner" type="TileMapLayer" parent="."]
+visible = false
 z_index = -1
 tile_set = ExtResource("13_2x6pn")

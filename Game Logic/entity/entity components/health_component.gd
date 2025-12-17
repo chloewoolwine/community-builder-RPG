@@ -20,6 +20,7 @@ signal health_zero()
 
 var in_iframe: bool = false
 var starving: bool = false
+var should_hunger_tick: bool = false
 var player: Player
 
 func change_health(amount: int, _culprit:HitBox = null)->void:
@@ -62,7 +63,7 @@ func hunger_tick(_day:int, _hour:int, _minute:int) -> void:
 	## TODO: these items
 	# var environment_rate
 	# var action_rate ## probably handled by Big Player
-	if player.state != Player.PlayerStates.STATE_MENU:
+	if should_hunger_tick:
 		current_hunger = current_hunger - hunger_base_fall_rate
 		if current_hunger <= 0:
 			current_hunger = 0

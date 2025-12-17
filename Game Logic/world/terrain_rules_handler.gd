@@ -443,8 +443,13 @@ func lower_elevation(loc: Location) -> void:
 		return
 	var chunk:ChunkData = loaded_chunks[loc.chunk]
 	var square:SquareData = chunk.square_datas[loc.position]
+	square.elevation = square.elevation - 1 
+	elevations[square.elevation+1].remove_grass(loc.get_world_coordinates())
+	elevations[square.elevation+1].remove_till(loc.get_world_coordinates())
 	elevations[square.elevation+1].remove_base(loc.get_world_coordinates())
 	elevations[square.elevation].remove_elevation_barrier(loc.get_world_coordinates())
+	elevations[square.elevation].remove_grass(loc.get_world_coordinates())
+	elevations[square.elevation].remove_till(loc.get_world_coordinates())
 	var mask := object_atlas.get_mask(loc)
 	if mask:
 		mask.decrease_elevation()
@@ -471,6 +476,8 @@ func raise_elevation(loc: Location) -> void:
 	print(elevations)
 	elevations[square.elevation].add_base(loc.get_world_coordinates())
 	elevations[square.elevation-1].add_elevation_barrier(loc.get_world_coordinates())
+	elevations[square.elevation-1].remove_grass(loc.get_world_coordinates())
+	elevations[square.elevation-1	].remove_till(loc.get_world_coordinates())
 	var mask := object_atlas.get_mask(loc)
 	if mask:
 		mask.increase_elevation()

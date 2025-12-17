@@ -1,7 +1,7 @@
 extends Node
 class_name GenericStateMachine
 #all from https://www.gdquest.com/tutorial/godot/design-patterns/finite-state-machine/
-
+signal state_change(new_state: State)
 @export var initial_state:State = null
 @export var debug:bool = false
 @onready var current_state:State = (func get_initial_state() -> State:
@@ -35,6 +35,7 @@ func set_state(new_state:String, calling_state: State, data:Dictionary = {}) -> 
 	var old_state := current_state
 	current_state = get_node(new_state)
 	current_state.enter(old_state.name, data)
+	state_change.emit(current_state)
 
 func _unhandled_input(event: InputEvent) -> void:
 	current_state.consume_input(event)

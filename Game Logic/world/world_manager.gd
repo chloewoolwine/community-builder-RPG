@@ -20,10 +20,6 @@ func do_setup() -> void:
 	EnvironmentLogic.run_water_calc(_world_data, get_chunks_around_point(player.get_global_position(), 2))
 	trh.object_atlas.removable_object_placed.connect(func(object: Node2D) -> void:
 		object.object_removed.connect(destroy_object))
-#	if player:
-#		print("player")
-#		player.velocity_handler.try_step.connect(is_stepable_layer)
-	#entity collisions afterwards
 
 func _process(_delta: float) -> void:
 	## TODO... do this maybe 1/10 frames or smthn
@@ -422,7 +418,6 @@ func modify_tilemap(loc: Location, _origin_pos: Vector2, action: String) -> bool
 				if nsquare.water_saturation >= Constants.SHALLOW_WATER:
 					return false
 			if square.elevation > 0 && square.type == SquareData.SquareType.Dirt:
-				square.elevation = square.elevation - 1 
 				trh.lower_elevation(loc)
 				var dirt_array: Array[ItemData]
 				dirt_array.append(DIRT)
