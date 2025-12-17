@@ -11,8 +11,9 @@ var current_elevation:int = 0:
 	set(value):
 		print("setting elevation in EH of ", entity.name, " old: ", current_elevation, " new: ", value)
 		_change_collision_layer(current_elevation, value)
+		var old:= current_elevation
 		current_elevation = value
-		_offset_sprites()
+		_offset_sprites(old)
 		
 func _ready() -> void:
 	#print(trueloc)
@@ -20,7 +21,7 @@ func _ready() -> void:
 	for off in offsettees:
 		original_positions.append(off.position.y)
 
-func _offset_sprites() -> void:
+func _offset_sprites(old: int) -> void:
 	#todo... some kind of animation thing needs to happen .>.
 	#tween or something
 	#print("offsetting sprites")
@@ -28,6 +29,9 @@ func _offset_sprites() -> void:
 		var off := offsettees[x]
 		#print(off.name)
 		off.position.y = (current_elevation * Constants.ELEVATION_Y_OFFSET) + original_positions[x]
+		if off is HitBox:
+			off.set_collision_layer_value(old+10, false)
+			off.set_collision_layer_value(current_elevation+10, true)
 
 func _change_collision_layer(prev: int, new: int) -> void:
 	entity.set_collision_mask_value(prev+10, false)
