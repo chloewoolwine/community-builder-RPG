@@ -2,6 +2,7 @@ extends CharacterBody2D
 class_name Player
 
 signal health_changed(new_health:int, total_health:int)
+signal officially_dead()
 @warning_ignore("unused_signal")
 signal toggle_menu()
 @warning_ignore("unused_signal")
@@ -39,7 +40,6 @@ var facing: Vector2 = Vector2(0, 1)
 func _ready() -> void:
 	#only leaves state load when told to by game.gd
 	#TODO: link these up with the GUI through GAME
-	health_handler.health_zero.connect(die)
 	health_handler.health_increased.connect(heal)
 	health_handler.health_decreased.connect(hurt)
 	
@@ -48,8 +48,10 @@ func _ready() -> void:
 	
 	state_machine.state_change.connect(func(state:PlayerState) -> void: 
 		health_handler.should_hunger_tick = state.tick_hunger)
-	#set hair and outfit... eventually 
-	#animation_player.add_animation_library()
+	
+	health_handler.health_zero.connect(initiate_death)
+	state_machine.find_child(PlayerState.DEATH).respawn_values.connect(func() -> void:
+		health_handler.reset_to_max())
 
 func loading_done() -> void: 
 	#print("loading done baby")
@@ -66,10 +68,15 @@ func action(type: String) -> void:
 		hit_box.set_facing(facing)
 		await get_tree().create_timer(.2).timeout
 		hit_box.disable_all()
+
+func respawn() -> void: 
+	state_machine.find_child(PlayerState.DEATH).respawn()
 	
-func die() -> void:
+func initiate_death() -> void:
 	print("if youre reading this... i am dead...")
 	health_changed.emit(health_handler.current_health, health_handler.max_health)
+	state_machine.force_transition(PlayerState.DEATH)
+	officially_dead.emit()
 	
 func hurt(culprit:HitBox, _current_health:int) -> void:
 	if culprit and "knockback" in culprit:

@@ -11,9 +11,10 @@ signal health_zero()
 @export var max_hunger: float = 100
 @export var current_hunger: float = 100
 @export var hunger_base_fall_rate: float = 1
+@export var starving_hunger_fall: float = 1
 
 @export var max_health : int = 100
-@export var current_health : int = 100
+@export var current_health : float = 100
 
 @export var has_iframes: bool = false
 @export var iframe_secs: float = .3
@@ -23,7 +24,15 @@ var starving: bool = false
 var should_hunger_tick: bool = false
 var player: Player
 
-func change_health(amount: int, _culprit:HitBox = null)->void:
+func reset_to_max(do_health: bool = true, do_hunger: bool = true) -> void:
+	if do_health:
+		current_health = max_health
+	if do_hunger:
+		current_hunger = max_hunger
+
+func change_health(amount: float, _culprit:HitBox = null)->void:
+	if current_health <= 0 and amount < 0:
+		return
 	current_health = current_health + amount
 	if amount > 0:
 		health_increased.emit(current_health)
@@ -33,7 +42,7 @@ func change_health(amount: int, _culprit:HitBox = null)->void:
 		return
 	if current_health > max_health:
 		current_health = max_health
-	if current_health < 0:
+	if current_health <= 0:
 		current_health = 0
 		health_zero.emit()
 	
@@ -59,15 +68,13 @@ func time_iframe() -> void:
 	#print("iframe over")
 
 func hunger_tick(_day:int, _hour:int, _minute:int) -> void:
-	#print("player hunger tick")
-	## TODO: these items
-	# var environment_rate
-	# var action_rate ## probably handled by Big Player
 	if should_hunger_tick:
 		current_hunger = current_hunger - hunger_base_fall_rate
+#		print("player hunger tick hunger: ", current_hunger)
 		if current_hunger <= 0:
 			current_hunger = 0
-			change_health(-1)
+			@warning_ignore("narrowing_conversion")
+			change_health(-starving_hunger_fall)
 			starving = true
 		else:
 			starving = false

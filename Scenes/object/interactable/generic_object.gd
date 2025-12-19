@@ -11,6 +11,8 @@ signal object_removed(me: ObjectData)
 @onready var interaction_hitbox: InteractionHitbox = $InteractionHitbox
 @onready var plant_component: PlantComponent= $PlantComponent
 #TODO: gotta figure out how to engineer this correctly
+#PROBABLY: make different components for each collectable type (use tool, click) and have them added
+#as individual components with seperate hitboxes :thumbsup"
 #@onready var simple_collectable: SimpleCollectable = $SimpleCollectable
 @onready var age_component: AgeingComponent = $AgeingComponent
 #don't worry about this for now- no animations

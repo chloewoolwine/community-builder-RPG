@@ -1,4 +1,4 @@
-[gd_scene load_steps=181 format=3 uid="uid://dy236j24tdfmr"]
+[gd_scene load_steps=182 format=3 uid="uid://dy236j24tdfmr"]
 
 [ext_resource type="Script" uid="uid://bjjblaytsdioe" path="res://Game Logic/entity/player/player.gd" id="1_pwtpg"]
 [ext_resource type="Script" uid="uid://bcnyi4l6l1lro" path="res://Game Logic/entity/states/state_machine.gd" id="2_aqs8i"]
@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://da0bxkbsh1hjv" path="res://Assets/misc/tile_indicator.png" id="10_ypkgf"]
 [ext_resource type="Script" uid="uid://b1dg7b6hoqvmm" path="res://Game Logic/world/tile_indicator.gd" id="11_msv3g"]
 [ext_resource type="Script" uid="uid://rartm0hpmluj" path="res://Game Logic/entity/states/state_force_fall.gd" id="11_uhw1m"]
+[ext_resource type="Script" uid="uid://c8kufqqxr82kb" path="res://Game Logic/entity/states/state_death.gd" id="12_ke5yh"]
 [ext_resource type="Script" uid="uid://cdf7pv6j4f303" path="res://Game Logic/entity/entity components/elevation_handler_v2.gd" id="14_at1v1"]
 [ext_resource type="Texture2D" uid="uid://bsr1y04qjpc8" path="res://Assets/tiles/redsquare.png" id="15_pm2yg"]
 [ext_resource type="Texture2D" uid="uid://ddtqgt2xkhhj3" path="res://Assets/jumps.png" id="17_udx2w"]
@@ -1818,6 +1819,9 @@ script = ExtResource("9_32wac")
 
 [node name="ForceFall" type="Node" parent="StateMachine"]
 script = ExtResource("11_uhw1m")
+
+[node name="Death" type="Node" parent="StateMachine"]
+script = ExtResource("12_ke5yh")
 
 [node name="VelocityHandler" type="Node" parent="." node_paths=PackedStringArray("body") groups=["velocity_handler"]]
 script = ExtResource("9_at1v1")

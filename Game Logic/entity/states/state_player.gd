@@ -5,14 +5,15 @@ const IDLE = "Idle"
 const WALK = "Walk"
 const JUMP = "Jump"
 const FALL = "Fall"
-const DYING = "Die"
+const DEATH = "Death"
 const LOAD = "Load"
 const MENU = "Menu"
 const FORCEJUMP = "ForceJump"
 const FORCEFALL = "ForceFall"
 
-#other possible states: knockback, death, attack, action (interact), swim, jumping into/out of water?, plus transitions?
+#other possible states: knockback, attack, action (interact), swim, jumping into/out of water?, plus transitions?
 
+var transition_to_die: bool = false
 var player: Player
 var tick_hunger:bool = true
 	

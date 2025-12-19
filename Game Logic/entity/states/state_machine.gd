@@ -43,3 +43,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func print_if_debug(msg: String) -> void:
 	if debug:
 		print(msg)
+
+#SHOULD ONLY BE used for non-returnable states, like death
+func force_transition(new_state:String, data:Dictionary = {}) -> void:
+	set_state(new_state, current_state, data)

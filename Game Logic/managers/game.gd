@@ -95,7 +95,7 @@ func connect_entity_to_player() -> void:
 ## Connects events involving the playe
 func handle_player_setup() -> void:
 	player.health_changed.connect(hot_bar_inventory.update_health)
-	player.health_handler.health_zero.connect(player_died)
+	player.officially_dead.connect(player_died)
 	player.tile_indicator.move_me.connect(world_manager.move_indicator)
 	player.tile_indicator.placement.connect(world_manager.place_object)
 	player.tile_indicator.modify.connect(world_manager.modify_tilemap)
@@ -199,12 +199,6 @@ func toggle_entity_interface(entity: Entity) -> void:
 
 func player_died() -> void:
 	#do cool stuff here 
-#	player.state = Player.PlayerStates.STATE_DEAD
-#	await get_tree().create_timer(3).timeout
-#	## TERRIBLE IDEA need better spawn point Stat
-#	player.global_position = Vector2.ZERO - Vector2(100,100)
-##	player.elevation_handler.current_elevation = 1 
-#	player.health_handler.change_health(50)
-#	player.health_handler.current_hunger = player.health_handler.max_hunger/2
-#	player.state = Player.PlayerStates.STATE_IDLE
-	pass
+	await get_tree().create_timer(3).timeout
+	player.teleport_to_square_data(world_manager.get_spawn_point(), EnvironmentLogic.get_real_pos_object(world_manager._world_data.spawn_point, 0))
+	player.respawn()
