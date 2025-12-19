@@ -243,3 +243,6 @@ static func has_objects(square: SquareData) -> bool:
 
 static func ele_y_offset(elevation: int) -> int:
 	return elevation * Constants.ELEVATION_Y_OFFSET
+
+static func get_minutes(day: int, hour: int, minute:int) -> int:
+	return (Constants.DAYS_TO_MINUTES * day) + (Constants.HOURS_TO_MINUTES * hour) + minute

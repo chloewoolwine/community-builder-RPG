@@ -1,8 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://d3kov3ehthpy"]
+[gd_scene load_steps=9 format=3 uid="uid://d3kov3ehthpy"]
 
 [ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="1_gfcto"]
-[ext_resource type="Script" uid="uid://b4vp6p8whfxdq" path="res://Scenes/object/interactable/GenericObject.gd" id="1_vw4sj"]
-[ext_resource type="Script" uid="uid://bel1qlmjcnajh" path="res://Game Logic/object/object_appearance.gd" id="3_47uqf"]
+[ext_resource type="Script" uid="uid://b4vp6p8whfxdq" path="res://Scenes/object/interactable/generic_object.gd" id="1_vw4sj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ubcxi"]
 
@@ -57,7 +56,6 @@ script = ExtResource("1_gfcto")
 shape = SubResource("CircleShape2D_s8677")
 
 [node name="ObjectAppearance" type="Node2D" parent="."]
-script = ExtResource("3_47uqf")
 
 [node name="Sprite2D" type="Sprite2D" parent="ObjectAppearance"]
 

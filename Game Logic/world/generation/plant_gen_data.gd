@@ -28,3 +28,6 @@ enum PLANT_TYPE{
 @export var spread_chance: float
 @export var density: int #how many plants am i OK being next too? 
 @export var rarity: int
+
+#@export_category("Harvesting")
+#@export var harvest_type:

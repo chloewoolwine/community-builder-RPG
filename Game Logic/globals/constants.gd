@@ -15,3 +15,6 @@ static var MILLISECONDS_BETWEEN_MODIFICATIONS: int = 100
 static var water_source_saturation_width: int = 4
 static var SHALLOW_WATER: int = 4
 static var DEEP_WATER: int = 5
+
+static var DAYS_TO_MINUTES: int = 1440 # 24*60
+static var HOURS_TO_MINUTES: int = 60
