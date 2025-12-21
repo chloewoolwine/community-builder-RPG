@@ -42,7 +42,7 @@ func _ready() -> void:
 		setup_age_component()
 
 func setup_age_component() -> void: 
-	age_component.update_age_in_data.connect(func(age: int) -> void:
+	age_component.update_age_in_data.connect(func(age: float) -> void:
 		if object_data:
 			object_data.object_tags["age"] = age
 		if plant_component:
