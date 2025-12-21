@@ -77,6 +77,7 @@ func unstuck_loading_callback(chunk: ChunkData) -> void:
 ## Connects events dynamically
 func handle_world_setup() -> void:
 	world_manager.trh.object_atlas.plant_placed.connect(connect_plant_to_sky)
+	world_manager.trh.object_atlas.reworked_object_placed.connect(connect_object_to_sky)
 	world_manager.spawn_pickups.connect(pickup_manager.generate_pickups_from_list)
 	world_manager.player = player
 	lighting.time_tick.connect(world_manager.water_timer)
@@ -88,11 +89,6 @@ func connect_plant_to_sky(plant: Node2D) -> void:
 		plant.spawn_pickups.connect(pickup_manager.generate_pickups_from_list)
 		plant.plant_component.propagate_plant.connect(world_manager.manage_propogation_attempt)
 		lighting.time_tick.connect(plant.plant_component.minute_pass)
-	if plant is GenericObject: #new
-		plant.spawn_pickups.connect(pickup_manager.generate_pickups_from_list)
-		plant.propogate.connect(world_manager.manage_propogation_attempt)
-		plant.replace_me.connect(world_manager.manage_replacement_attempt)
-		lighting.time_tick.connect(plant.age_component.minute_pass)
 
 func connect_object_to_sky(object: GenericObject) -> void: 
 	#these won't neccesarily get called, but they will be connected

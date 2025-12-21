@@ -20,7 +20,7 @@ func _ready() -> void:
 	interaction_hitbox.player_interacted.connect(player_interacted)
 
 func player_interacted() -> void:
-	#print("player interacted, curr hits: ", current_hits, " required: ", hits_required)
+	print("player interacted, curr hits: ", current_hits, " required: ", hits_required)
 	current_hits += 1
 	if current_hits >= hits_required:
 		var pickups: Array[ItemData] 

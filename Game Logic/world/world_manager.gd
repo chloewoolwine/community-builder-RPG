@@ -107,20 +107,22 @@ func manage_propogation_attempt(pos: Location, object_id: String, _with_tags: Di
 		var objects := trh.get_objects_at(pos.position, pos.chunk)
 		if !trh.has_objects(square) || (objects.size() > 1 && objects[0] == null and objects[1] == null):
 			_assign_object_data(object_id, pos.position, pos.chunk, trh.elevations[square.elevation])
-			print("propogation baby success at : ", pos)
+			print("propogation baby success at : ", pos, " object_id:", object_id)
 	else:
 		#plants could technically try to propagate to an unloaded chunk- 
 		#this should be theoretically fine, but im not doing that rn fuck that honestly
 		#TODO: plants should propagate in unloaded chunks
 		pass
 
-func manage_replacement_attempt(pos:Location, object_id:String, _with_tags: Dictionary, failure_callback: Callable) -> void:
-	var obj := EnvironmentLogic.place_object_data(_world_data, pos, StringName(object_id), 0, true)
-	if obj == null:
+func manage_replacement_attempt(pos:Location, old_obj_data:ObjectData, object_id:String, _with_tags: Dictionary, failure_callback: Callable) -> void:
+	var data := EnvironmentLogic.place_object_data(_world_data, pos, StringName(object_id), 0, true)
+	if data == null:
 		failure_callback.call()
+		print("replacement failure in environment logic")
 		return
 	var actual_pos := EnvironmentLogic.get_real_pos_object(pos, 0)
-	trh.object_atlas.place_object(obj, actual_pos, trh.get_square_at(pos.position, pos.chunk))
+	trh.object_atlas.remove_object(old_obj_data)
+	trh.object_atlas.place_object(data, actual_pos, trh.get_square_at(pos.position, pos.chunk))
 
 func place_object(pos: Vector2, _player_pos:Vector2, itemdata: ItemData)->void:
 	var arr: Array[Vector2i] = convert_to_chunks_at_world_pos(pos)

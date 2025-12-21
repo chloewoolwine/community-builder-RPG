@@ -1,10 +1,9 @@
-[gd_scene load_steps=24 format=3 uid="uid://bg5mso0xat7r5"]
+[gd_scene load_steps=23 format=3 uid="uid://bg5mso0xat7r5"]
 
 [ext_resource type="Script" uid="uid://b4vp6p8whfxdq" path="res://Scenes/object/interactable/generic_object.gd" id="1_4qxax"]
 [ext_resource type="Script" uid="uid://c1whaq778qys2" path="res://Game Logic/object/obj_elevation_handler.gd" id="2_x0nl2"]
 [ext_resource type="Script" uid="uid://dglfk4q361l45" path="res://Game Logic/object/plants/plant_component_v2.gd" id="3_h0pw4"]
 [ext_resource type="Resource" uid="uid://ce57ixnk7vlqh" path="res://Resources/plants/oak.tres" id="4_smw5f"]
-[ext_resource type="Script" uid="uid://dd8awtq2mqkmj" path="res://Game Logic/object/ageing_component.gd" id="5_fkps8"]
 [ext_resource type="Script" uid="uid://e04v7sivkgq8" path="res://Game Logic/object/tool_component.gd" id="6_buvpr"]
 [ext_resource type="Script" uid="uid://c72fhodjm4b2c" path="res://Game Logic/data/inventory/loot/loot_table_entry.gd" id="7_mogjp"]
 [ext_resource type="Resource" uid="uid://coc8478dbgool" path="res://Resources/items/stuff/timber.tres" id="8_32oa2"]
@@ -84,10 +83,6 @@ metadata/_custom_type_script = "uid://c1whaq778qys2"
 script = ExtResource("3_h0pw4")
 plant_gen_data = ExtResource("4_smw5f")
 current_stage_num = -1
-
-[node name="AgeingComponent" type="Node" parent="."]
-script = ExtResource("5_fkps8")
-metadata/_custom_type_script = "uid://dd8awtq2mqkmj"
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
 

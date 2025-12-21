@@ -2,7 +2,7 @@ extends Node2D
 class_name GenericObject
 
 signal spawn_pickups(spawnpoint: Vector2, datas: Array[ItemData])
-signal replace_me(pos:Location, object_id:String, with_tags: Dictionary, failure_callback: Callable)
+signal replace_me(pos:Location, my_data: ObjectData, object_id:String, with_tags: Dictionary, failure_callback: Callable)
 signal object_removed(me: ObjectData)
 signal propogate(location: Location, object_id: String, tags: Dictionary)
 
@@ -34,12 +34,12 @@ func _ready() -> void:
 		elif child is ToolComponent:
 			tool_component = child
 	
-	if age_component:
-		setup_age_component()
 	if tool_component:
 		setup_tool_component()
 	if plant_component:
 		setup_plant_component()
+	if age_component:
+		setup_age_component()
 
 func setup_age_component() -> void: 
 	age_component.update_age_in_data.connect(func(age: int) -> void:
@@ -49,9 +49,13 @@ func setup_age_component() -> void:
 			plant_component.try_propogate()
 	)
 	age_component.max_age_reached.connect(func(_max_age: int) -> void:
+		#print("max age reached by ", object_id, " at ", Location.new(object_data.position, object_data.chunk))
 		if plant_component && !plant_component.next_stage_name.is_empty():
-			replace_me.emit(Location.new(object_data.position, object_data.chunk), plant_component.next_stage_name, object_data.object_tags, on_failed_replacement)
+			#print("replacement underway")
+			replace_me.emit(Location.new(object_data.position, object_data.chunk), object_data, plant_component.next_stage_name, object_data.object_tags, on_failed_replacement.bind("regress"))
 	)
+	#age_component.current_age = object_data.object_tags.get_or_add("age", 0)
+	#age_component.owner_ready = true
 	
 	if plant_component:
 		if plant_component.current_stage_num >= 0:
@@ -72,7 +76,8 @@ func setup_tool_component() -> void:
 		spawn_pickups.emit(self.global_position, stuff))
 	tool_component.tool_use_complete.connect(func() -> void: 
 		if plant_component && !plant_component.death_stage_name.is_empty():
-			replace_me.emit(Location.new(object_data.position, object_data.chunk), plant_component.death_stage_name, object_data.object_tags, on_failed_replacement)
+			#print("replacement underway")
+			replace_me.emit(Location.new(object_data.position, object_data.chunk), object_data, plant_component.death_stage_name, object_data.object_tags, on_failed_replacement.bind("delete"))
 		else:
 			object_removed.emit()
 			self.queue_free())
@@ -82,5 +87,10 @@ func square_modified(square_data_new: SquareData) -> void:
 	if plant_component:
 		plant_component.tile_changed(square_data_new)
 
-func on_failed_replacement() -> void: 
-	age_component.current_age = age_component.current_age - Constants.DAYS_TO_MINUTES #try once/day
+func on_failed_replacement(type: String) -> void: 
+	print("replacement failed for: ", object_id, " doing: ", type)
+	if type == "delete":
+		object_removed.emit()
+		self.queue_free()
+	if type == "regress":
+		age_component.current_age = age_component.current_age - Constants.DAYS_TO_MINUTES #try once/day

@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_fi5w5")
-object_id = "plant_tree_oak2"
+object_id = "plant_tree_oak0"
 size = Vector2i(1, 1)
 last_loaded_minute = -1
 metadata/_custom_type_script = "uid://c40j31y4fl1i7"

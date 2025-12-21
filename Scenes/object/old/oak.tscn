@@ -1,46 +1,46 @@
 [gd_scene load_steps=28 format=3 uid="uid://ddp26hlnsmw5r"]
 
-[ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_8ph1v"]
-[ext_resource type="Script" uid="uid://c72fhodjm4b2c" path="res://Game Logic/data/inventory/loot/loot_table_entry.gd" id="2_uks68"]
-[ext_resource type="Resource" uid="uid://coc8478dbgool" path="res://Resources/items/stuff/timber.tres" id="3_8ph1v"]
-[ext_resource type="Script" uid="uid://dq4ap3sv81447" path="res://Game Logic/data/inventory/loot/loot_table.gd" id="4_mptq2"]
-[ext_resource type="Resource" uid="uid://2e81mj4x8ahl" path="res://Resources/items/stuff/foliage.tres" id="4_uks68"]
-[ext_resource type="Script" uid="uid://dd411rr7uquwy" path="res://Game Logic/object/plants/tree_appearance.gd" id="5_r54r7"]
-[ext_resource type="Script" uid="uid://bndjcrkta02c4" path="res://Game Logic/object/plants/plant_component.gd" id="6_1dyr6"]
-[ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="7_vbg4f"]
-[ext_resource type="Resource" uid="uid://ce57ixnk7vlqh" path="res://Resources/plants/oak.tres" id="8_vsbtn"]
-[ext_resource type="Script" uid="uid://bp4pf1bvr6hab" path="res://Game Logic/object/fade_overlap.gd" id="10_mptq2"]
-[ext_resource type="Script" uid="uid://c1whaq778qys2" path="res://Game Logic/object/obj_elevation_handler.gd" id="11_r54r7"]
-[ext_resource type="Texture2D" uid="uid://bsr1y04qjpc8" path="res://Assets/tiles/redsquare.png" id="12_1dyr6"]
+[ext_resource type="Script" uid="uid://4fia16mr7ogk" path="res://Game Logic/object/plants/generic_plant.gd" id="1_2061r"]
+[ext_resource type="Script" uid="uid://c72fhodjm4b2c" path="res://Game Logic/data/inventory/loot/loot_table_entry.gd" id="2_x328e"]
+[ext_resource type="Resource" uid="uid://coc8478dbgool" path="res://Resources/items/stuff/timber.tres" id="3_chr08"]
+[ext_resource type="Resource" uid="uid://2e81mj4x8ahl" path="res://Resources/items/stuff/foliage.tres" id="4_22k6b"]
+[ext_resource type="Script" uid="uid://dq4ap3sv81447" path="res://Game Logic/data/inventory/loot/loot_table.gd" id="5_nnrev"]
+[ext_resource type="Script" uid="uid://dd411rr7uquwy" path="res://Game Logic/object/plants/tree_appearance.gd" id="6_5khfs"]
+[ext_resource type="Script" uid="uid://bndjcrkta02c4" path="res://Game Logic/object/plants/plant_component.gd" id="7_m2ync"]
+[ext_resource type="Resource" uid="uid://ce57ixnk7vlqh" path="res://Resources/plants/oak.tres" id="8_a70rb"]
+[ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="9_65aw5"]
+[ext_resource type="Script" uid="uid://bp4pf1bvr6hab" path="res://Game Logic/object/fade_overlap.gd" id="10_0rdhf"]
+[ext_resource type="Script" uid="uid://c1whaq778qys2" path="res://Game Logic/object/obj_elevation_handler.gd" id="11_8i0dy"]
+[ext_resource type="Texture2D" uid="uid://bsr1y04qjpc8" path="res://Assets/tiles/redsquare.png" id="12_ybp88"]
 
 [sub_resource type="Resource" id="Resource_0qwql"]
-script = ExtResource("2_uks68")
+script = ExtResource("2_x328e")
 chance = 1.0
-item_data = ExtResource("3_8ph1v")
+item_data = ExtResource("3_chr08")
 amount = 3
 
 [sub_resource type="Resource" id="Resource_uks68"]
-script = ExtResource("2_uks68")
+script = ExtResource("2_x328e")
 chance = 0.524
-item_data = ExtResource("3_8ph1v")
+item_data = ExtResource("3_chr08")
 amount = 2
 
 [sub_resource type="Resource" id="Resource_vsbtn"]
-script = ExtResource("2_uks68")
+script = ExtResource("2_x328e")
 chance = 0.164
-item_data = ExtResource("3_8ph1v")
+item_data = ExtResource("3_chr08")
 amount = 1
 
 [sub_resource type="Resource" id="Resource_mptq2"]
-script = ExtResource("2_uks68")
+script = ExtResource("2_x328e")
 chance = 1.0
-item_data = ExtResource("4_uks68")
+item_data = ExtResource("4_22k6b")
 amount = 1
 metadata/_custom_type_script = "uid://c72fhodjm4b2c"
 
 [sub_resource type="Resource" id="Resource_ht84m"]
-script = ExtResource("4_mptq2")
-loot_table_entries = Array[ExtResource("2_uks68")]([SubResource("Resource_0qwql"), SubResource("Resource_uks68"), SubResource("Resource_vsbtn"), SubResource("Resource_mptq2")])
+script = ExtResource("5_nnrev")
+loot_table_entries = Array[ExtResource("2_x328e")]([SubResource("Resource_0qwql"), SubResource("Resource_uks68"), SubResource("Resource_vsbtn"), SubResource("Resource_mptq2")])
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_uks68"]
 load_path = "res://.godot/imported/sketch_crap_1.png-bea57c075dc9a87edb56ffe3da19b943.ctex"
@@ -77,13 +77,13 @@ size = Vector2(115, 50)
 radius = 231.17526
 
 [node name="Oak" type="Node2D" groups=["plant_growable", "player_interactable"]]
-script = ExtResource("1_8ph1v")
+script = ExtResource("1_2061r")
 object_id = "plant_tree_oak"
 loot_table = SubResource("Resource_ht84m")
 axe_hits = 20
 
 [node name="TreeAppearance" type="Node2D" parent="."]
-script = ExtResource("5_r54r7")
+script = ExtResource("6_5khfs")
 leaf_growth_textures = Array[Texture2D]([null, null])
 leaf_growth_texture_offset = Array[Vector2]([Vector2(0, -95), Vector2(0, -284.145), Vector2(0, 0)])
 stump_texture = SubResource("AtlasTexture_vsbtn")
@@ -97,16 +97,16 @@ offset = Vector2(0, -197.97)
 [node name="Sprite2D2" type="Sprite2D" parent="TreeAppearance"]
 
 [node name="PlantComponent" type="Node2D" parent="."]
-script = ExtResource("6_1dyr6")
+script = ExtResource("7_m2ync")
 growth_stage_minutes = Array[int]([0, 14400, 28800])
 collision = Array[bool]([false, true, true])
 prop_days = 30.0
-plant_gen_data = ExtResource("8_vsbtn")
+plant_gen_data = ExtResource("8_a70rb")
 
 [node name="InteractionHitbox" type="StaticBody2D" parent="."]
 collision_layer = 5
 collision_mask = 0
-script = ExtResource("7_vbg4f")
+script = ExtResource("9_65aw5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionHitbox"]
 position = Vector2(3, -2)
@@ -117,7 +117,7 @@ shape = SubResource("RectangleShape2D_k4rme")
 [node name="FadeOverlap" type="Area2D" parent="." node_paths=PackedStringArray("overlap_object")]
 collision_layer = 129
 collision_mask = 129
-script = ExtResource("10_mptq2")
+script = ExtResource("10_0rdhf")
 overlap_object = NodePath("../TreeAppearance")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FadeOverlap"]
@@ -125,14 +125,14 @@ position = Vector2(0, -249)
 shape = SubResource("CircleShape2D_mptq2")
 
 [node name="ObjElevationHandler" type="Node" parent="." node_paths=PackedStringArray("things_to_offset")]
-script = ExtResource("11_r54r7")
+script = ExtResource("11_8i0dy")
 things_to_offset = [NodePath("../TreeAppearance"), NodePath("../InteractionHitbox"), NodePath("../FadeOverlap")]
 metadata/_custom_type_script = "uid://c1whaq778qys2"
 
 [node name="trueloc" type="Sprite2D" parent="."]
 visible = false
 scale = Vector2(0.105, 0.105)
-texture = ExtResource("12_1dyr6")
+texture = ExtResource("12_ybp88")
 
 [connection signal="body_entered" from="FadeOverlap" to="FadeOverlap" method="_on_body_entered"]
 [connection signal="body_exited" from="FadeOverlap" to="FadeOverlap" method="_on_body_exited"]

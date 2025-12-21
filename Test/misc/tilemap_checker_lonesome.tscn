@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cphd7kfw38oua" path="res://Scenes/world/mask.tscn" id="3_omdd6"]
 [ext_resource type="Shader" uid="uid://cgdyfbxwsqtq4" path="res://Game Logic/shaders/masker.gdshader" id="3_q7nff"]
 [ext_resource type="TileSet" uid="uid://dayemb55av64c" path="res://Scenes/world/tilesets/dirt_tiles.tres" id="3_sium3"]
-[ext_resource type="PackedScene" uid="uid://ddp26hlnsmw5r" path="res://Scenes/object/plant/tree/oak.tscn" id="3_vybgh"]
+[ext_resource type="PackedScene" uid="uid://ddp26hlnsmw5r" path="res://Scenes/object/old/oak.tscn" id="3_vybgh"]
 [ext_resource type="Shader" uid="uid://bu5t54pynuau5" path="res://Game Logic/shaders/tilemap/hueshift.gdshader" id="4_heu65"]
 [ext_resource type="Script" uid="uid://db7a5vewyhna4" path="res://Plugins/TileMapDual.gd" id="4_ydyjh"]
 [ext_resource type="Texture2D" uid="uid://cm8p5qwvem1fv" path="res://Assets/tiles/dirt_texture.png" id="5_rglh7"]

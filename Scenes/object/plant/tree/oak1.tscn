@@ -77,7 +77,7 @@ radius = 110.01818
 
 [node name="Oak1" type="Node2D"]
 script = ExtResource("1_8s67v")
-object_id = "plant_tree_oak0"
+object_id = "plant_tree_oak1"
 
 [node name="ObjElevationHandler" type="Node" parent="." node_paths=PackedStringArray("things_to_offset")]
 script = ExtResource("2_cerdv")
@@ -87,6 +87,7 @@ metadata/_custom_type_script = "uid://c1whaq778qys2"
 [node name="PlantComponentV2" type="Node" parent="."]
 script = ExtResource("3_lbae0")
 plant_gen_data = ExtResource("4_t18mb")
+current_stage_num = 1
 next_stage_name = "plant_tree_oak2"
 
 [node name="AgeingComponent" type="Node" parent="."]

@@ -2,6 +2,7 @@ extends Node2D
 class_name ObjectAtlas
 
 signal plant_placed(plant: GenericPlant)
+signal reworked_object_placed(obj: GenericObject)
 signal new_object_placed(object: ObjectData)
 signal removable_object_placed(object: Node2D)
 
@@ -76,6 +77,20 @@ func remove_objects(object_datas: Array[ObjectData], pos: Location) -> Array[Obj
 				object.queue_free() # TODO: specific objects might have some stuff to do? not sure!
 			live_objects.erase(object_data)
 	return object_datas
+
+func remove_object(object_data: ObjectData) -> ObjectData:
+	if object_data != null && object_data.object_id != Constants.POINTER:
+		if object_data.object_id != Constants.POINTER && object_data not in live_objects.keys():
+			push_warning("Object_id: ", object_data.object_id, " expected to be in live objects, not found  ")
+		var object: Node2D = live_objects[object_data]
+		if object_data == null:
+			# object probably killed itself
+			live_objects.erase(object_data)
+		else:
+			object.queue_free() # TODO: specific objects might have some stuff to do? not sure!
+		live_objects.erase(object_data)
+		return object_data
+	return null
 	
 func place_object(object_data: ObjectData, overall_position: Vector2, square: SquareData)-> void:
 	if object_data.object_id != "":
@@ -113,9 +128,11 @@ func _parse_and_place(object_data: ObjectData, overall_position: Vector2, square
 			live_objects[object_data] = object
 			add_child(object)
 			object.owner = owner
-			if split[0] == "plant":
+			if split[0] == "plant" && split[2] != "oak": #lol
 				object.square_data = square
 				plant_placed.emit(object)
+			if object is GenericObject:
+				reworked_object_placed.emit(object)
 			return object
 		else: 
 			print("empty object id?")
