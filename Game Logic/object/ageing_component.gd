@@ -10,6 +10,8 @@ var current_age:int
 @export var max_age_minutes: int = 60
 
 func minute_pass(day:int, hour:int, minute:int) -> void:
+	if max_age_minutes == -1:
+		return
 	var current_minute := EnvironmentLogic.get_minutes(day, hour, minute)
 	if current_age < current_minute - 1:
 		#print("last loaded minute: ", last_loaded_age, " curr:", current_minute)

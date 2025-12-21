@@ -23,15 +23,15 @@ func do_action() -> String:
 	rotate_raycast()
 	var cast:Object = ray_cast_2d.get_collider()
 	if cast && cast is InteractionHitbox && cast.accepting_interactions:
-		if cast.needs_tool and equiped_item and equiped_item.item_data is ItemDataTool and equiped_item.item_data.type == cast.tool_required:
+		if cast.type == InteractionHitbox.TYPE.TOOL and equiped_item and equiped_item.item_data is ItemDataTool and equiped_item.item_data.type == cast.tool_required:
 			cast.player_interact()
-		elif cast.is_chest:
+		elif cast.type == InteractionHitbox.TYPE.CHEST:
 			cast.player_interact()
 			return "chest"
-		elif cast.is_entity:
+		elif cast.type == InteractionHitbox.TYPE.ENTITY:
 			cast.player_interact()
 			return "entity"
-		elif !cast.needs_tool:
+		elif cast.type == InteractionHitbox.TYPE.HAND:
 			cast.player_interact()
 	#if we are holding a usuable item...
 	elif equiped_item && equiped_item.item_data:

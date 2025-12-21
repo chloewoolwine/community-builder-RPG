@@ -240,7 +240,8 @@ func plant_tree(world_data: WorldData, loc: Location) -> String:
 	final = trees[valids.keys()[randi_range(0, valids.keys().size()-1)]]
 	
 	#print(final.object_id)
-	EnvironmentLogic.place_object_data(world_data, loc, StringName(final.object_id), 100000, true)
+	#always get the final stage- maybe fix this later probably
+	EnvironmentLogic.place_object_data(world_data, loc, StringName(final.object_id + str(final.stage_minutes.size()-1)), 100000, true)
 	return final.object_id
 
 func do_squaretype_stuff(world_data: WorldData) ->void:

@@ -12,6 +12,7 @@ enum PLANT_TYPE{
 @export var object_id: String
 @export var type: PLANT_TYPE
 @export var size: Vector2i = Vector2i.ONE
+@export var stage_minutes: Array[int]
 
 @export_category("Target Conditions")
 @export_range(0,5) var target_moisture: int

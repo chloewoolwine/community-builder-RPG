@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dqm8g7yybo0pf" path="res://Scenes/UI/Inventory/inventory.tscn" id="4_kq4io"]
 [ext_resource type="Script" uid="uid://bwjidfdugtnfu" path="res://Game Logic/managers/calendar_manager.gd" id="5_cki0q"]
 [ext_resource type="Script" uid="uid://diuxqukbk35hy" path="res://Game Logic/world/world_manager.gd" id="5_wonyh"]
-[ext_resource type="Resource" uid="uid://bqqc2d3jq71bv" path="res://Test/data/world_datas/wadadfasdf.tres" id="6_i26dy"]
+[ext_resource type="Resource" uid="uid://e7wv4ydw0q6n" path="res://test/data/world_datas/newoakwhodis.tres" id="6_lmoi6"]
 [ext_resource type="Script" uid="uid://bgmqoj67px6a3" path="res://Game Logic/inventory/inventory_interface.gd" id="6_uons4"]
 [ext_resource type="Script" uid="uid://vjmm4ct83rqu" path="res://Game Logic/world/terrain_rules_handler.gd" id="7_fkv55"]
 [ext_resource type="Script" uid="uid://dxha2h40ws5cy" path="res://Game Logic/managers/entity_manager.gd" id="8_3dv0o"]
@@ -32,7 +32,7 @@
 [ext_resource type="Resource" uid="uid://dtsowgtv4r3xb" path="res://Resources/items/build/dirt.tres" id="20_i26dy"]
 [ext_resource type="Resource" uid="uid://dospt1grrjq6w" path="res://Resources/items/tools/shovel.tres" id="20_lmoi6"]
 [ext_resource type="PackedScene" uid="uid://b2sgcn3ke8bos" path="res://Scenes/UI/entity_interface.tscn" id="20_vmo70"]
-[ext_resource type="Resource" uid="uid://b33haxa1ag8tc" path="res://Test/data/test_story_data.tres" id="21_hwjbe"]
+[ext_resource type="Resource" uid="uid://b33haxa1ag8tc" path="res://test/data/test_story_data.tres" id="21_hwjbe"]
 [ext_resource type="Script" uid="uid://c5wpksgdt3fdn" path="res://Game Logic/UI/debug_display.gd" id="27_1wgsj"]
 [ext_resource type="Theme" uid="uid://c5pjopti0rq5n" path="res://Scenes/UI/debug_menu.tres" id="28_ti2iv"]
 [ext_resource type="Script" uid="uid://b18kgtmd54e0v" path="res://Game Logic/world/WorldSaver.gd" id="36_lmoi6"]
@@ -114,7 +114,7 @@ light_gradient = SubResource("GradientTexture1D_6o1tu")
 y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("5_wonyh")
-_world_data = ExtResource("6_i26dy")
+_world_data = ExtResource("6_lmoi6")
 load_chunks = true
 unload_chunks = true
 

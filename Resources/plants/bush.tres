@@ -6,16 +6,8 @@
 script = ExtResource("1_was73")
 object_id = "plant_wild_bush"
 type = 5
-size = Vector2i(1, 1)
 target_moisture = 1
 target_tiles = Array[int]([0, 1])
-target_elevation = 0
-target_nutrition = 0
-pollution_tolerance = 0
-shallow_water = false
-deep_water = false
 spread_distance = 3
 spread_chance = 0.2
-density = 0
-rarity = 0
 metadata/_custom_type_script = "uid://cw3bscpglfbb7"

@@ -1,0 +1,82 @@
+[gd_scene load_steps=19 format=3 uid="uid://p2pj0idguvtc"]
+
+[ext_resource type="Script" uid="uid://b4vp6p8whfxdq" path="res://Scenes/object/interactable/generic_object.gd" id="1_mjsg7"]
+[ext_resource type="Script" uid="uid://c1whaq778qys2" path="res://Game Logic/object/obj_elevation_handler.gd" id="2_33ndl"]
+[ext_resource type="Script" uid="uid://dglfk4q361l45" path="res://Game Logic/object/plants/plant_component_v2.gd" id="3_g33vl"]
+[ext_resource type="Resource" uid="uid://ce57ixnk7vlqh" path="res://Resources/plants/oak.tres" id="4_ueahl"]
+[ext_resource type="Script" uid="uid://dd8awtq2mqkmj" path="res://Game Logic/object/ageing_component.gd" id="5_2yju6"]
+[ext_resource type="Script" uid="uid://e04v7sivkgq8" path="res://Game Logic/object/tool_component.gd" id="6_67mr8"]
+[ext_resource type="Script" uid="uid://c72fhodjm4b2c" path="res://Game Logic/data/inventory/loot/loot_table_entry.gd" id="7_s11lj"]
+[ext_resource type="Resource" uid="uid://coc8478dbgool" path="res://Resources/items/stuff/timber.tres" id="8_0nbup"]
+[ext_resource type="Resource" uid="uid://2e81mj4x8ahl" path="res://Resources/items/stuff/foliage.tres" id="9_tw435"]
+[ext_resource type="Script" uid="uid://dq4ap3sv81447" path="res://Game Logic/data/inventory/loot/loot_table.gd" id="10_ekx1c"]
+[ext_resource type="Script" uid="uid://c3qmsruatmctk" path="res://Game Logic/object/interaction_hitbox.gd" id="11_65yg0"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qxj6r"]
+load_path = "res://.godot/imported/sketch_crap_1.png-bea57c075dc9a87edb56ffe3da19b943.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqccw"]
+atlas = SubResource("CompressedTexture2D_qxj6r")
+region = Rect2(1206, 952, 81, 72)
+
+[sub_resource type="Resource" id="Resource_xvxcb"]
+script = ExtResource("7_s11lj")
+chance = 1.0
+item_data = ExtResource("8_0nbup")
+amount = 1
+
+[sub_resource type="Resource" id="Resource_t2yds"]
+script = ExtResource("7_s11lj")
+chance = 0.117
+item_data = ExtResource("8_0nbup")
+amount = 1
+
+[sub_resource type="Resource" id="Resource_sd00o"]
+script = ExtResource("7_s11lj")
+chance = 1.0
+item_data = ExtResource("9_tw435")
+amount = 1
+metadata/_custom_type_script = "uid://c72fhodjm4b2c"
+
+[sub_resource type="Resource" id="Resource_pnun4"]
+script = ExtResource("10_ekx1c")
+loot_table_entries = Array[ExtResource("7_s11lj")]([SubResource("Resource_xvxcb"), SubResource("Resource_t2yds"), SubResource("Resource_sd00o")])
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s8677"]
+radius = 29.0689
+
+[node name="Oak0" type="Node2D"]
+script = ExtResource("1_mjsg7")
+object_id = "plant_tree_oak0"
+
+[node name="ObjElevationHandler" type="Node" parent="." node_paths=PackedStringArray("things_to_offset")]
+script = ExtResource("2_33ndl")
+things_to_offset = [NodePath("../Sprite2D"), NodePath("../ToolComponent")]
+metadata/_custom_type_script = "uid://c1whaq778qys2"
+
+[node name="PlantComponentV2" type="Node" parent="."]
+script = ExtResource("3_g33vl")
+plant_gen_data = ExtResource("4_ueahl")
+next_stage_name = "plant_tree_oak1"
+
+[node name="AgeingComponent" type="Node" parent="."]
+script = ExtResource("5_2yju6")
+metadata/_custom_type_script = "uid://dd8awtq2mqkmj"
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_kqccw")
+offset = Vector2(0, -15)
+
+[node name="ToolComponent" type="Node2D" parent="."]
+script = ExtResource("6_67mr8")
+loot_table_complete = SubResource("Resource_pnun4")
+
+[node name="InteractionHitbox" type="StaticBody2D" parent="ToolComponent"]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("11_65yg0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ToolComponent/InteractionHitbox"]
+shape = SubResource("CircleShape2D_s8677")

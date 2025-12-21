@@ -11,25 +11,47 @@ func _init(pos: Vector2i = Vector2i.ZERO, chun: Vector2i = Vector2i.ZERO) -> voi
 func equals(other: Location) -> bool: 
 	return other.chunk == self.chunk and other.position == self.position
 
+func add_location(other: Location) -> Location:
+	var new_pos := position + other.position
+	var new_chunk := chunk + other.chunk
+
+	@warning_ignore("integer_division")
+	if new_pos.x >= 32:
+		@warning_ignore("integer_division")
+		new_chunk.x += int(new_pos.x / 32)
+		new_pos.x = new_pos.x % 32
+	elif new_pos.x < 0:
+		@warning_ignore("integer_division")
+		new_chunk.x += int(new_pos.x / 32)
+		new_pos.x = 32 + (new_pos.x % 32)
+	
+	@warning_ignore("integer_division")
+	if new_pos.y >= 32:
+		@warning_ignore("integer_division")
+		new_chunk.y += int(new_pos.y / 32)
+		new_pos.y = new_pos.y % 32
+	elif new_pos.y < 0:
+		@warning_ignore("integer_division")
+		new_chunk.y += int(new_pos.y / 32)
+		new_pos.y = 32 + (new_pos.y % 32)
+
+	return Location.new(new_pos, new_chunk)
+
 ## Please don't use this for distances more than a chunk away
 func get_location(dir:Vector2i) -> Location:
 	var pos := position + dir
 	var chu := Vector2i(chunk.x, chunk.y)
 	if pos.x >= 32:
-		var diff := pos.x - 32
-		pos.x = diff
+		pos.x = pos.x - 32
 		chu.x += 1
 	elif pos.x < 0:
-		var diff := 32 + pos.x
-		pos.x = diff
+		pos.x = 32 + pos.x
 		chu.x -= 1
 	if pos.y >= 32: 
-		var diff := pos.y - 32
-		pos.y = diff
+		pos.y = pos.y - 32
 		chu.y += 1
 	elif pos.y < 0: 
-		var diff := 32 + pos.y
-		pos.y = diff
+		pos.y = 32 + pos.y
 		chu.y -= 1
 	return Location.new(pos, chu)
 

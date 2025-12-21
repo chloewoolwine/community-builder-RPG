@@ -4,7 +4,6 @@ class_name ObjElevationHandler
 @export var things_to_offset: Array[Node2D] #this plus all its children are offset based on elevation
 var original_positions:Array[float]
 @export var current_elevation:int = 0
-@export var solid:bool = true
 
 func _ready() -> void:
 	for thing in things_to_offset:
@@ -20,7 +19,7 @@ func _offset_sprites() -> void:
 
 func _change_collision_layer(prev: int, new: int) -> void:
 	for thing in things_to_offset:
-		if thing is PhysicsBody2D && solid:
+		if thing is PhysicsBody2D && thing.name == "Wall":
 			thing.set_collision_layer_value(prev+10, false)
 			thing.set_collision_layer_value(new+10,true)
 			#print("collision layer: ", thing.collision_layer)
