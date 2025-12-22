@@ -285,6 +285,9 @@ func water_square_at(pos: Location) -> void:
 		square.water_saturation += 1
 		#print("new water: ", square.water_saturation)
 		elevations[square.elevation].update_specific_pixel(pos.get_world_coordinates(), square)
+		for obj in square.object_data:
+			if obj == GenericObject:
+				obj.square_modified(square)
 
 func remove_roof_at(square_pos: Vector2i, chunk_pos: Vector2i) -> void:
 	var chunk: ChunkData = loaded_chunks[chunk_pos]

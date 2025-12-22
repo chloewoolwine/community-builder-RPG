@@ -1,17 +1,6 @@
 extends Node
 class_name PlantComponentV2
 
-#TODO:
-	#Tile logic
-	#Propogation tags
-
-## for propogate:
-##make a signal requesting tile in propogate (like the tile it wants to prop too)
-##make a callback that checks the tile + emits propogate me if successful
-
-## for tile changed: 
-##literally just check square data against the gen_data
-
 signal change_age_rate(new_rate: float)
 signal propogate_me(relative_loc: Location, my_baby: ObjectData, with_tags: Dictionary)
 signal request_square_at(relative_loc: Location)
@@ -21,10 +10,26 @@ signal request_square_at(relative_loc: Location)
 @export var propogation_baby_name: String # really only need objectId + tags
 @export var death_stage_name: String
 
-func tile_changed(_new_square_data: SquareData) -> void:
+func tile_changed(square: SquareData) -> float:
 	# Placeholder for future logic when tile changes
-	if false:
-		change_age_rate.emit(1.0)
+	print("Square modified. doing something.")
+	var rate := 1.0
+	if square.type not in plant_gen_data.target_tiles: #how did this even happen?
+		rate -= 1
+	if square.pollution > plant_gen_data.pollution_tolerance:
+		rate -= 1
+	if square.water_saturation > plant_gen_data.target_moisture:
+		rate -= .2
+	if square.water_saturation < plant_gen_data.target_moisture:
+		rate -= .9
+	if square.fertility < plant_gen_data.target_nutrition:
+		rate -= .4
+	if square.fertility > plant_gen_data.target_nutrition:
+		rate += .2
+	if rate < 0:
+		rate = 0
+	change_age_rate.emit(rate)
+	return rate
 
 func try_propogate() -> void:
 	if propogation_baby_name.is_empty():
@@ -53,5 +58,5 @@ func request_square_callback(square: SquareData = null, relative_loc: Location =
 	#if square.fertility < plant_gen_data.target_nutrition:
 		#success = false
 	if success:
-		print("propogate success for: ", propogation_baby_name)
+		#print("propogate success for: ", propogation_baby_name)
 		propogate_me.emit(relative_loc, propogation_baby_name, {})

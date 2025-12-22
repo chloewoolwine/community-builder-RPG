@@ -55,7 +55,9 @@ func setup_age_component() -> void:
 			#print("replacement underway")
 			replace_me.emit(Location.new(object_data.position, object_data.chunk), object_data, plant_component.next_stage_name, object_data.object_tags, on_failed_replacement.bind("regress"))
 	)
-	#age_component.current_age = object_data.object_tags.get_or_add("age", 0)
+	if object_data.object_tags.has("age"):
+		print("Agh")
+	age_component.current_age = object_data.object_tags.get_or_add("age", 0)
 	#age_component.owner_ready = true
 	
 	if plant_component:
@@ -74,6 +76,8 @@ func setup_plant_component() -> void:
 	plant_component.request_square_at.connect(func(relative_loc: Location) -> void: 
 		var myloc := Location.new(object_data.position, object_data.chunk)
 		request_square_at.emit(myloc.add_location(relative_loc), plant_component.request_square_callback.bind(relative_loc)))
+	if age_component:
+		age_component.age_multiplier = plant_component.tile_changed(square_data)
 	
 func setup_tool_component() -> void: 
 	tool_component.spawn_stuff_please.connect(func(stuff: Array[ItemData]) -> void:

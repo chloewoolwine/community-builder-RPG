@@ -97,9 +97,10 @@ func manage_propogation_attempt(pos: Location, object_id: String, _with_tags: Di
 		if EnvironmentLogic.has_objects(square) && pos.chunk in trh.loaded_chunks:
 			trh.object_atlas.remove_objects(square.object_data, pos)
 		_assign_object_data(object_id, pos.position, pos.chunk, null, true)
-		print("propogation baby success at : ", pos, " object_id:", object_id)
+		#print("propogation baby success at : ", pos, " object_id:", object_id)
 	else:
-		print("propogation faliure at : ", pos, " object_id", object_id)
+		pass
+		#print("propogation faliure at : ", pos, " object_id", object_id)
 
 func manage_replacement_attempt(pos:Location, old_obj_data:ObjectData, object_id:String, _with_tags: Dictionary, failure_callback: Callable) -> void:
 	var data := EnvironmentLogic.place_object_data(_world_data, pos, StringName(object_id), 0, true)

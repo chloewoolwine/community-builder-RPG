@@ -126,6 +126,8 @@ func _parse_and_place(object_data: ObjectData, overall_position: Vector2, square
 			if elevation_hanlder != null:
 				elevation_hanlder.current_elevation = square.elevation
 			live_objects[object_data] = object
+			if object is GenericObject:
+				object.square_data = square
 			add_child(object)
 			object.owner = owner
 			if split[0] == "plant" && split[2] != "oak": #lol
