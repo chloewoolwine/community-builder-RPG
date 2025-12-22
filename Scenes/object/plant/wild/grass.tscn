@@ -174,7 +174,6 @@ shape = SubResource("CircleShape2D_0mxl1")
 [node name="ObjElevationHandler" type="Node" parent="." node_paths=PackedStringArray("things_to_offset")]
 script = ExtResource("10_oq85o")
 things_to_offset = [NodePath("../GrassAppearance/Sprite2D"), NodePath("../GrassAppearance/Sprite2D2"), NodePath("../GrassAppearance/Sprite2D3"), NodePath("../GrassAppearance/Sprite2D4"), NodePath("../InteractionHitbox"), NodePath("../StepCollision")]
-solid = false
 metadata/_custom_type_script = "uid://c1whaq778qys2"
 
 [node name="trueloc" type="Sprite2D" parent="."]

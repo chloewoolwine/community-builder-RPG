@@ -4,6 +4,7 @@ class_name PlantComponent
 # Handles growth and self propagation activity 
 
 signal change_stage(new_stage: int, collision: bool)
+@warning_ignore("unused_signal")
 signal propagate_plant(location: Vector2i, object_id: String)
 
 @onready var generic_plant: GenericPlant = $".."
@@ -47,8 +48,9 @@ func minute_pass(day:int, hour:int, minute:int) -> void:
 		if randf() < prop_chance:
 			#print("tree at ", generic_plant.object_data.position, " propagating")
 			var my_loc := Location.new(generic_plant.object_data.position, generic_plant.object_data.chunk)
+			@warning_ignore("unused_variable")
 			var new_loc := my_loc.get_location(Vector2i(randi_range(-plant_gen_data.spread_distance, plant_gen_data.spread_distance), randi_range(-plant_gen_data.spread_distance, plant_gen_data.spread_distance)))
-			propagate_plant.emit(new_loc, generic_plant.object_id)
+			#propagate_plant.emit(new_loc, generic_plant.object_id)
 
 func set_age(value: int) -> void:
 	#print("new age: ", value)

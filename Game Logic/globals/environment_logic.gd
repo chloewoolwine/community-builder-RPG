@@ -160,7 +160,6 @@ static func place_object_data(world_data: WorldData, loc: Location, name: String
 
 static func _fill_with_pointers(world_data:WorldData, loc: Location, size: Vector2i) -> void: 
 	var locs := _get_locs_of_size(size, loc)
-	
 #	print("location: ", loc, " pointer locs: ", locs)
 	for new_loc in locs:
 		if new_loc.equals(loc):
@@ -194,6 +193,32 @@ static func _get_locs_of_size(size: Vector2i, loc: Location) -> Array[Location]:
 		Vector2i(3,3):
 			locs = (loc.get_neighbor_matrix())
 	return locs
+	
+static func plant_can_succeed_here(new_plant: String, square: SquareData) -> bool:
+	if !has_objects(square): #nothing to succeed, yes
+		return true
+	var _plant_split := new_plant.split("_")
+	if square.object_data[0] != null:
+		var floor_split := square.object_data[0].object_id.split("_")
+		#ALL floors will block plants- except grass because she's special. so baby! 
+		#grass isnt' technically floor yet tho heh
+		if floor_split[2] != "grass":
+			return false
+	if square.object_data.size() < 2:
+		return true
+	if square.object_data[1] != null:
+		if square.object_data[1].object_id == "pointer": # too big, dont worry about it 
+			return false
+		var obj_split := square.object_data[1].object_id.split("_")
+		if obj_split[1] == "crop": #crops are #1- TODO, maybe make weeds later that win lol
+			return false		   #could do some kind of rock paper sisscor. weed beats crop, crop beats wild plant, wild plant beats weed
+		if obj_split[2] == "grass": # grass always looses TODO: grass needs some work
+			return true
+		if obj_split[1] == "tree":
+			return false
+	if square.object_data[2] != null: #huh. roof. 
+		return false
+	return false
 
 static func object_is_valid_to_place(clear:bool, additive:bool, square:SquareData, ele_targ: int) -> bool:
 	if square == null:
@@ -226,7 +251,7 @@ static func remove_object(world_data:WorldData, loc: Location) -> void:
 	var locs:Array = object.object_tags.get(Constants.POINTER, [])
 	for x:Location in locs:
 		var o_square := get_square(world_data, x)
-		if square.object_data == null || square.object_data[1] == null:
+		if o_square.object_data == null || o_square.object_data.size() < 2 || o_square.object_data[1] == null:
 			continue
 		o_square.object_data[1] = null
 	square.object_data[1] = null

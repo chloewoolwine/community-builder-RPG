@@ -90,29 +90,16 @@ func give_requested_layer(layer:int, callback: Callable) -> void:
 		callback.call(trh.elevations[layer])
 
 func manage_propogation_attempt(pos: Location, object_id: String, _with_tags: Dictionary = {}) -> void: 
-	# TODO: properly use environment logic to place things instead of this
-	var _split := object_id.split("_")
-	if pos.chunk in trh.loaded_chunks.keys():
-		var square := trh.get_square_at(pos.position, pos.chunk)
-		match square.type:
-			SquareData.SquareType.Rock:
-				return
-			SquareData.SquareType.Sand:
-				# no plants for sand. Yet
-				return
-			SquareData.SquareType.Grass:
-				pass
-			SquareData.SquareType.Dirt:
-				pass
-		var objects := trh.get_objects_at(pos.position, pos.chunk)
-		if !trh.has_objects(square) || (objects.size() > 1 && objects[0] == null and objects[1] == null):
-			_assign_object_data(object_id, pos.position, pos.chunk, trh.elevations[square.elevation])
-			print("propogation baby success at : ", pos, " object_id:", object_id)
+	var square := EnvironmentLogic.get_square(_world_data, pos)
+	var success: bool = EnvironmentLogic.plant_can_succeed_here(object_id, square)
+	if success:
+		#need to destroy current object if it exists 
+		if EnvironmentLogic.has_objects(square) && pos.chunk in trh.loaded_chunks:
+			trh.object_atlas.remove_objects(square.object_data, pos)
+		_assign_object_data(object_id, pos.position, pos.chunk, null, true)
+		print("propogation baby success at : ", pos, " object_id:", object_id)
 	else:
-		#plants could technically try to propagate to an unloaded chunk- 
-		#this should be theoretically fine, but im not doing that rn fuck that honestly
-		#TODO: plants should propagate in unloaded chunks
-		pass
+		print("propogation faliure at : ", pos, " object_id", object_id)
 
 func manage_replacement_attempt(pos:Location, old_obj_data:ObjectData, object_id:String, _with_tags: Dictionary, failure_callback: Callable) -> void:
 	var data := EnvironmentLogic.place_object_data(_world_data, pos, StringName(object_id), 0, true)
@@ -123,6 +110,9 @@ func manage_replacement_attempt(pos:Location, old_obj_data:ObjectData, object_id
 	var actual_pos := EnvironmentLogic.get_real_pos_object(pos, 0)
 	trh.object_atlas.remove_object(old_obj_data)
 	trh.object_atlas.place_object(data, actual_pos, trh.get_square_at(pos.position, pos.chunk))
+
+func return_square_at(location: Location, returner: Callable) -> void:
+	returner.call(EnvironmentLogic.get_square(_world_data, location))
 
 func place_object(pos: Vector2, _player_pos:Vector2, itemdata: ItemData)->void:
 	var arr: Array[Vector2i] = convert_to_chunks_at_world_pos(pos)
@@ -164,12 +154,14 @@ func _place_build_object(arr: Array[Vector2i], split: Array[String], layer: Elev
 		if split[2] == "dirt":
 			raise_elevation(Location.new(arr[0], arr[1]), SquareData.SquareType.Dirt)
 
-func _assign_object_data(id: String, pos: Vector2i, chunk: Vector2i, _layer:ElevationLayer) -> void:
-	var obj := EnvironmentLogic.place_object_data(_world_data, Location.new(pos, chunk), StringName(id))
+func _assign_object_data(id: String, pos: Vector2i, chunk: Vector2i, _layer:ElevationLayer = null, clear:bool = false) -> void:
+	var obj := EnvironmentLogic.place_object_data(_world_data, Location.new(pos, chunk), StringName(id), 0, clear)
 	if obj == null:
 		push_warning("EnvironmentLogic couldn't place object ", id, " at pos: ", pos, " chunk: ", chunk)
 		return #not a valid place
-	var actual_pos := EnvironmentLogic.get_real_pos_object(Location.new(pos, chunk), _layer.elevation)
+	if chunk not in trh.loaded_chunks:
+		return
+	var actual_pos := EnvironmentLogic.get_real_pos_object(Location.new(pos, chunk), 0)
 	trh.object_atlas.place_object(obj, actual_pos, trh.get_square_at(pos, chunk))
 
 func raise_elevation(loc: Location, type: SquareData.SquareType) -> void:

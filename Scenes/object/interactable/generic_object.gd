@@ -5,6 +5,7 @@ signal spawn_pickups(spawnpoint: Vector2, datas: Array[ItemData])
 signal replace_me(pos:Location, my_data: ObjectData, object_id:String, with_tags: Dictionary, failure_callback: Callable)
 signal object_removed(me: ObjectData)
 signal propogate(location: Location, object_id: String, tags: Dictionary)
+signal request_square_at(location: Location, returner: Callable)
 
 @export var object_id: String
 
@@ -70,6 +71,9 @@ func setup_plant_component() -> void:
 		var myloc := Location.new(object_data.position, object_data.chunk)
 		propogate.emit(myloc.add_location(location), new_id, tags)
 	)
+	plant_component.request_square_at.connect(func(relative_loc: Location) -> void: 
+		var myloc := Location.new(object_data.position, object_data.chunk)
+		request_square_at.emit(myloc.add_location(relative_loc), plant_component.request_square_callback.bind(relative_loc)))
 	
 func setup_tool_component() -> void: 
 	tool_component.spawn_stuff_please.connect(func(stuff: Array[ItemData]) -> void:

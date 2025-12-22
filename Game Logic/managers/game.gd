@@ -76,6 +76,7 @@ func unstuck_loading_callback(chunk: ChunkData) -> void:
 
 ## Connects events dynamically
 func handle_world_setup() -> void:
+	#why is this handled all the way up here? in the future i need some kind of Glue
 	world_manager.trh.object_atlas.plant_placed.connect(connect_plant_to_sky)
 	world_manager.trh.object_atlas.reworked_object_placed.connect(connect_object_to_sky)
 	world_manager.spawn_pickups.connect(pickup_manager.generate_pickups_from_list)
@@ -95,6 +96,8 @@ func connect_object_to_sky(object: GenericObject) -> void:
 	object.spawn_pickups.connect(pickup_manager.generate_pickups_from_list)
 	object.propogate.connect(world_manager.manage_propogation_attempt)
 	object.replace_me.connect(world_manager.manage_replacement_attempt)
+	object.request_square_at.connect(func (location: Location, returner: Callable) -> void:
+		world_manager.return_square_at(location, returner))
 	if object.age_component:
 		lighting.time_tick.connect(object.age_component.minute_pass)
 
